@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 
 class HomeView(TemplateView):
-    template_name = 'Home/home.html'
+    template_name = 'Home/index.html'
     
 class AboutView(TemplateView):
     template_name = 'Home/about.html'
