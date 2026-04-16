@@ -1,0 +1,496 @@
+{% extends "Home/base.html" %}
+
+{% load static %}
+
+{% block title %}East Africa Tours - Days Safaris Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">East Africa Tours</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Category</li>
+        </ol>    
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Destination Start -->
+<div class="container-fluid destination py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">East African Tour Gallery</h5>
+            <h1 class="mb-0">Experience Breathtaking Moments in East Africa</h1>
+        </div>
+        <div class="tab-class text-center">
+            <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
+                <li class="nav-item">
+                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-1">
+                        <span class="text-dark" style="width: 150px;">All Destinations</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-2">
+                        <span class="text-dark" style="width: 150px;">National Parks</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-3">
+                        <span class="text-dark" style="width: 150px;">Beach Destinations</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-4">
+                        <span class="text-dark" style="width: 150px;">Mountain Treks</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-5">
+                        <span class="text-dark" style="width: 150px;">Cultural Sites</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-6">
+                        <span class="text-dark" style="width: 150px;">Lakes & Crater</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane fade show p-0 active">
+                    <div class="row g-4">
+                        <div class="col-xl-8">
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="destination-img">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/destination-1.jpg' %}" alt="Masai Mara">
+                                        <div class="destination-overlay p-4">
+                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">45 Photos</a>
+                                            <h4 class="text-white mb-2 mt-3">Masai Mara, Kenya</h4>
+                                            <a href="" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                        </div>
+                                        <div class="search-icon">
+                                            <a href="{% static 'img/destination-1.jpg' %}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="destination-img">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/destination-2.jpg' %}" alt="Zanzibar">
+                                        <div class="destination-overlay p-4">
+                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">38 Photos</a>
+                                            <h4 class="text-white mb-2 mt-3">Zanzibar, Tanzania</h4>
+                                            <a href="" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                        </div>
+                                        <div class="search-icon">
+                                            <a href="{% static 'img/destination-2.jpg' %}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="destination-img">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/destination-7.jpg' %}" alt="Amboseli">
+                                        <div class="destination-overlay p-4">
+                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">52 Photos</a>
+                                            <h4 class="text-white mb-2 mt-3">Amboseli, Kenya</h4>
+                                            <a href="" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                        </div>
+                                        <div class="search-icon">
+                                            <a href="{% static 'img/destination-7.jpg' %}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="destination-img">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/destination-8.jpg' %}" alt="Serengeti">
+                                        <div class="destination-overlay p-4">
+                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">60 Photos</a>
+                                            <h4 class="text-white mb-2 mt-3">Serengeti, Tanzania</h4>
+                                            <a href="" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                        </div>
+                                        <div class="search-icon">
+                                            <a href="{% static 'img/destination-8.jpg' %}" data-lightbox="destination-8"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="destination-img h-100">
+                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/destination-9.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="Victoria Falls">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">42 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Victoria Falls</h4>
+                                    <a href="" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-9.jpg' %}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-4.jpg' %}" alt="Lake Nakuru">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">35 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Lake Nakuru, Kenya</h4>
+                                    <a href="" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-4.jpg' %}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-5.jpg' %}" alt="Mount Kilimanjaro">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">28 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Mt. Kilimanjaro</h4>
+                                    <a href="" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-5.jpg' %}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-6.jpg' %}" alt="Ngorongoro Crater">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">33 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Ngorongoro Crater</h4>
+                                    <a href="" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-6.jpg' %}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Remaining tabs follow same pattern - shortened for brevity -->
+                <div id="tab-2" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-5.jpg' %}" alt="National Park">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Tsavo National Park</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-5.jpg' %}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-6.jpg' %}" alt="National Park">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Samburu Reserve</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-6.jpg' %}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-3" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-5.jpg' %}" alt="Beach">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Diani Beach</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-5.jpg' %}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-6.jpg' %}" alt="Beach">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Watamu Beach</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-6.jpg' %}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-4" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-5.jpg' %}" alt="Mountain">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Mt. Kenya</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-5.jpg' %}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-6.jpg' %}" alt="Mountain">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Mt. Rwenzori</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-6.jpg' %}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-5" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-5.jpg' %}" alt="Cultural">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Maasai Village</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-5.jpg' %}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-6.jpg' %}" alt="Cultural">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Stone Town</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-6.jpg' %}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-6" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-5.jpg' %}" alt="Lake">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Lake Naivasha</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-5.jpg' %}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/destination-6.jpg' %}" alt="Lake">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                    <h4 class="text-white mb-2 mt-3">Lake Victoria</h4>
+                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/destination-6.jpg' %}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Destination End -->
+
+<!-- Packages Start -->
+<div class="container-fluid packages py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">Packages</h5>
+            <h1 class="mb-0">Awesome East Africa Tour Packages</h1>
+        </div>
+        <div class="packages-carousel owl-carousel">
+            <div class="packages-item">
+                <div class="packages-img">
+                    <img src="{% static 'img/packages-4.jpg' %}" class="img-fluid w-100 rounded-top" alt="Safari Package">
+                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Masai Mara, Kenya</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>4 days</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>2-6 Persons</small>
+                    </div>
+                    <div class="packages-price py-2 px-4">$849.00</div>
+                </div>
+                <div class="packages-content bg-light">
+                    <div class="p-4 pb-0">
+                        <h5 class="mb-0">Masai Mara Safari Adventure</h5>
+                        <small class="text-uppercase">Wildlife Safari Package</small>
+                        <div class="mb-3">
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                        </div>
+                        <p class="mb-4">Experience the breathtaking Great Wildebeest Migration, spot the Big Five, and enjoy stunning sunsets over the African savannah. Includes game drives, accommodation, and meals.</p>
+                    </div>
+                    <div class="row bg-primary rounded-bottom mx-0">
+                        <div class="col-6 text-start px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                        </div>
+                        <div class="col-6 text-end px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="packages-item">
+                <div class="packages-img">
+                    <img src="{% static 'img/packages-2.jpg' %}" class="img-fluid w-100 rounded-top" alt="Safari Package">
+                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Zanzibar, Tanzania</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>6 days</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>2 Persons</small>
+                    </div>
+                    <div class="packages-price py-2 px-4">$1,299.00</div>
+                </div>
+                <div class="packages-content bg-light">
+                    <div class="p-4 pb-0">
+                        <h5 class="mb-0">Zanzibar Beach Holiday</h5>
+                        <small class="text-uppercase">Tropical Paradise Package</small>
+                        <div class="mb-3">
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                        </div>
+                        <p class="mb-4">Relax on pristine white-sand beaches, swim in turquoise waters, explore Stone Town's rich history, and enjoy spice tours. Perfect for honeymooners and beach lovers.</p>
+                    </div>
+                    <div class="row bg-primary rounded-bottom mx-0">
+                        <div class="col-6 text-start px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                        </div>
+                        <div class="col-6 text-end px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="packages-item">
+                <div class="packages-img">
+                    <img src="{% static 'img/packages-3.jpg' %}" class="img-fluid w-100 rounded-top" alt="Safari Package">
+                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Serengeti, Tanzania</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>5 days</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>4-8 Persons</small>
+                    </div>
+                    <div class="packages-price py-2 px-4">$1,499.00</div>
+                </div>
+                <div class="packages-content bg-light">
+                    <div class="p-4 pb-0">
+                        <h5 class="mb-0">Serengeti Migration Safari</h5>
+                        <small class="text-uppercase">Wildlife Photography Package</small>
+                        <div class="mb-3">
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                        </div>
+                        <p class="mb-4">Witness the world's largest animal migration with over 1.5 million wildebeest. Includes expert guides, luxury tented camps, and hot air balloon safari option.</p>
+                    </div>
+                    <div class="row bg-primary rounded-bottom mx-0">
+                        <div class="col-6 text-start px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                        </div>
+                        <div class="col-6 text-end px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="packages-item">
+                <div class="packages-img">
+                    <img src="{% static 'img/packages-1.jpg' %}" class="img-fluid w-100 rounded-top" alt="Safari Package">
+                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Amboseli, Kenya</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>3 days</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>2-4 Persons</small>
+                    </div>
+                    <div class="packages-price py-2 px-4">$649.00</div>
+                </div>
+                <div class="packages-content bg-light">
+                    <div class="p-4 pb-0">
+                        <h5 class="mb-0">Amboseli Elephant Experience</h5>
+                        <small class="text-uppercase">Family Safari Package</small>
+                        <div class="mb-3">
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                        </div>
+                        <p class="mb-4">Get up close with massive elephant herds against the backdrop of Mount Kilimanjaro. Perfect for family safaris with guided nature walks and cultural visits.</p>
+                    </div>
+                    <div class="row bg-primary rounded-bottom mx-0">
+                        <div class="col-6 text-start px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                        </div>
+                        <div class="col-6 text-end px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Packages End -->
+
+<!-- Subscribe Start -->
+<div class="container-fluid subscribe py-5">
+    <div class="container text-center py-5">
+        <div class="mx-auto text-center" style="max-width: 900px;">
+            <h5 class="subscribe-title px-3">Subscribe</h5>
+            <h1 class="text-white mb-4">Our Newsletter</h1>
+            <p class="text-white mb-5">Stay informed with the latest updates, exclusive offers, and insider insights.
+Be the first to discover what’s new, what’s trending, and what matters most.
+Subscribe to our newsletter today and stay one step ahead.
+            </p>
+            <div class="position-relative mx-auto">
+                <input class="form-control border-primary rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                <button type="button" class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 px-4 mt-2 me-2">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Subscribe End -->
+
+{% endblock body %}
