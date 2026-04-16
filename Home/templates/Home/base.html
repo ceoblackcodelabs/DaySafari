@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Days Safaris Adventures</title>
+        <title>{% block title %}{% endblock title %}</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -85,31 +85,31 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="{% url "home" %}" class="nav-item nav-link active">Home</a>
-                        <a href="{% url "about" %}" class="nav-item nav-link">About</a>
+                        <a href="{% url "home" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "home" %}active{% endif %}">Home</a>
+                        <a href="{% url "about" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "about" %}active{% endif %}">About</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tours</a>
                             <div class="dropdown-menu m-0">
-                                <a href="tour.html" class="dropdown-item">Africa Tours</a>
-                                <a href="tour.html" class="dropdown-item">East Africa Tours</a>
-                                <a href="tour.html" class="dropdown-item">International Tours</a>
+                                <a href="{% url "africa_tours" %}" class="dropdown-item">Africa Tours</a>
+                                <a href="{% url "east_africa_tours" %}" class="dropdown-item">East Africa Tours</a>
+                                <a href="{% url "international_africa_tours" %}" class="dropdown-item">International Africa Tours</a>
                             </div>
                         </div>
-                        <a href="about.html" class="nav-item nav-link">Cruises</a>
+                        <a href="{% url "cruises" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "cruises" %}active{% endif %}">Cruises</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
                             <div class="dropdown-menu m-0">
-                                <a href="" class="dropdown-item">African WildLife Tours</a>
-                                <a href="" class="dropdown-item">Travel Partnerships</a>
-                                <a href="" class="dropdown-item">Holiday Tailor Made Tours</a>
-                                <a href="" class="dropdown-item">AirPort Transfers</a>
+                                <a href="{% url "african_wildlife_tours" %}" class="dropdown-item">African WildLife Tours</a>
+                                <a href="{% url "travel_partnerships" %}" class="dropdown-item">Travel Partnerships</a>
+                                <a href="{% url "holiday_tailor_made_tours" %}" class="dropdown-item">Holiday Tailor Made Tours</a>
+                                <a href="{% url "airport_transfers" %}" class="dropdown-item">AirPort Transfers</a>
                             </div>
                         </div>
-                        <a href="about.html" class="nav-item nav-link">AirLine</a>
-                        <a href="blog.html" class="nav-item nav-link">Blogs</a>
-                        <a href="packages.html" class="nav-item nav-link">Gallery</a>
-                        <a href="contact.html" class="nav-item nav-link">AirBNB</a>
-                        <a href="{% url "contact" %}" class="nav-item nav-link">Contact</a>
+                        <a href="{% url "airline" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airline" %}active{% endif %}">AirLine</a>
+                        <a href="{% url "blog" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "blog" %}active{% endif %}">Blogs</a>
+                        <a href="{% url "packages" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "packages" %}active{% endif %}">Gallery</a>
+                        <a href="{% url "airbnb" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airbnb" %}active{% endif %}">AirBNB</a>
+                        <a href="{% url "contact" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "contact" %}active{% endif %}">Contact</a>
                     </div>
                     <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
                 </div>
