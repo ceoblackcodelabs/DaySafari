@@ -1,12 +1,52 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
+from .models import Services
+from colorama import Fore, Style
 
 
-class HomeView(TemplateView):
+class HomeView(ListView):
+    model = Services
+    context_object_name = 'services'
     template_name = 'Home/index.html'
     
-class AboutView(TemplateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        services1 = []
+        services2 = []
+        for i, service in enumerate(Services.objects.all()):
+            if i <= 1:
+                services1.append(service)
+            else:
+                services2.append(service)
+        if len(services2) == 0: 
+            print(f"{Fore.RED}No services found in the database.")
+        else:
+            print(f"{Fore.GREEN}Successfully retrieved {len(services2)} services from the database.")
+        context['services1'] = services1
+        context['services2'] = services2
+        return context
+    
+class AboutView(ListView):
+    model = Services
+    context_object_name = 'services'
     template_name = 'Home/about.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        services1 = []
+        services2 = []
+        for i, service in enumerate(Services.objects.all()):
+            if i <= 1:
+                services1.append(service)
+            else:
+                services2.append(service)
+        if len(services2) == 0: 
+            print(f"{Fore.RED}No services found in the database.")
+        else:
+            print(f"{Fore.GREEN}Successfully retrieved {len(services2)} services from the database.")
+        context['services1'] = services1
+        context['services2'] = services2
+        return context
     
 class ContactView(TemplateView):
     template_name = 'Home/contact.html'
