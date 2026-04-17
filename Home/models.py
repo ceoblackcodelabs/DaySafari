@@ -87,3 +87,21 @@ class Blogs(models.Model):
 
     def __str__(self):
         return self.title
+    
+class DestinationsCategory(models.Model):
+    location = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='destinations_category/', blank=True, null=True)
+    image_orientation = models.CharField(max_length=50, choices=[('landscape', 'Landscape'), ('portrait', 'Portrait')], default='landscape')
+
+    def __str__(self):
+        return self.category
+    
+class Destinations(models.Model):
+    category = models.ForeignKey(DestinationsCategory, on_delete=models.CASCADE )
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to='destinations/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
