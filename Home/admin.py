@@ -52,9 +52,9 @@ class TestimonialsAdmin(admin.ModelAdmin):
     
 @admin.register(BlogComments)
 class BlogCommentsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'blog')
-    search_fields = ('name', 'email', 'blog__title')
-    list_filter = ('blog',)
+    list_display = ('name', 'email', 'created_date')
+    search_fields = ('name', 'email', 'comment')
+    list_filter = ('created_date',)
     
 @admin.register(Blogs)
 class BlogsAdmin(admin.ModelAdmin):
