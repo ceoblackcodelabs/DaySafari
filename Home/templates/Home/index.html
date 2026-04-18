@@ -656,456 +656,57 @@
             <h1 class="mb-0">Awesome Safari Packages</h1>
         </div>
         <div class="packages-carousel owl-carousel">
+            {% for package in awesome_packages %}
             <div class="packages-item">
                 <div class="packages-img">
-                    <img src="{% static 'img/packages-4.jpg' %}" class="img-fluid w-100 rounded-top" alt="Safari Package">
+                    {% if package.image %}
+                    <img src="{{ package.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    {% else %}
+                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    {% endif %}
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Masai Mara, Kenya</small>
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>4 days</small>
-                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>2-6 Persons</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ package.days }} days</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ package.persons }} Persons</small>
                     </div>
-                    <div class="packages-price py-2 px-4">$849.00</div>
+                    <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div>
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
-                        <h5 class="mb-0">Masai Mara Safari Adventure</h5>
-                        <small class="text-uppercase">Wildlife Safari Package</small>
+                        <h5 class="mb-0">{{ package.name }}</h5>
+                        <small class="text-uppercase">{{ package.package_type|default:"Safari Package" }}</small>
                         <div class="mb-3">
+                            {% for i in ""|ljust:package.starRating %}
                             <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
+                            {% endfor %}
+                            {% for i in ""|ljust:5 %}
+                            {% if forloop.counter > package.starRating %}
+                            <small class="fa fa-star text-muted"></small>
+                            {% endif %}
+                            {% endfor %}
                         </div>
-                        <p class="mb-4">Experience the breathtaking Great Wildebeest Migration, spot the Big Five, and enjoy stunning sunsets over the African savannah. Includes game drives, accommodation, and meals.</p>
+                        <p class="mb-4">{{ package.description|truncatewords:30 }}</p>
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                            <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">Read More</a>
                         </div>
                         <div class="col-6 text-end px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                            <a href="{% url 'book_package' package.id %}" class="btn-hover btn text-white py-2 px-4">Book Now</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="packages-item">
-                <div class="packages-img">
-                    <img src="{% static 'img/packages-2.jpg' %}" class="img-fluid w-100 rounded-top" alt="Safari Package">
-                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Zanzibar, Tanzania</small>
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>6 days</small>
-                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>2 Persons</small>
-                    </div>
-                    <div class="packages-price py-2 px-4">$1,299.00</div>
-                </div>
-                <div class="packages-content bg-light">
-                    <div class="p-4 pb-0">
-                        <h5 class="mb-0">Zanzibar Beach Holiday</h5>
-                        <small class="text-uppercase">Tropical Paradise Package</small>
-                        <div class="mb-3">
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                        </div>
-                        <p class="mb-4">Relax on pristine white-sand beaches, swim in turquoise waters, explore Stone Town's rich history, and enjoy spice tours. Perfect for honeymooners and beach lovers.</p>
-                    </div>
-                    <div class="row bg-primary rounded-bottom mx-0">
-                        <div class="col-6 text-start px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
-                        </div>
-                        <div class="col-6 text-end px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
-                        </div>
-                    </div>
-                </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <h3>No packages available at the moment</h3>
+                <p>Please check back later for exciting safari packages!</p>
             </div>
-            <div class="packages-item">
-                <div class="packages-img">
-                    <img src="{% static 'img/packages-3.jpg' %}" class="img-fluid w-100 rounded-top" alt="Safari Package">
-                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Serengeti, Tanzania</small>
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>5 days</small>
-                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>4-8 Persons</small>
-                    </div>
-                    <div class="packages-price py-2 px-4">$1,499.00</div>
-                </div>
-                <div class="packages-content bg-light">
-                    <div class="p-4 pb-0">
-                        <h5 class="mb-0">Serengeti Migration Safari</h5>
-                        <small class="text-uppercase">Wildlife Photography Package</small>
-                        <div class="mb-3">
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                        </div>
-                        <p class="mb-4">Witness the world's largest animal migration with over 1.5 million wildebeest. Includes expert guides, luxury tented camps, and hot air balloon safari option.</p>
-                    </div>
-                    <div class="row bg-primary rounded-bottom mx-0">
-                        <div class="col-6 text-start px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
-                        </div>
-                        <div class="col-6 text-end px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="packages-item">
-                <div class="packages-img">
-                    <img src="{% static 'img/packages-1.jpg' %}" class="img-fluid w-100 rounded-top" alt="Safari Package">
-                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Amboseli, Kenya</small>
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>3 days</small>
-                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>2-4 Persons</small>
-                    </div>
-                    <div class="packages-price py-2 px-4">$649.00</div>
-                </div>
-                <div class="packages-content bg-light">
-                    <div class="p-4 pb-0">
-                        <h5 class="mb-0">Amboseli Elephant Experience</h5>
-                        <small class="text-uppercase">Family Safari Package</small>
-                        <div class="mb-3">
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                        </div>
-                        <p class="mb-4">Get up close with massive elephant herds against the backdrop of Mount Kilimanjaro. Perfect for family safaris with guided nature walks and cultural visits.</p>
-                    </div>
-                    <div class="row bg-primary rounded-bottom mx-0">
-                        <div class="col-6 text-start px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
-                        </div>
-                        <div class="col-6 text-end px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
 <!-- Packages End -->
-
-<!-- Gallery Start -->
-<div class="container-fluid gallery py-5 my-5">
-    <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-        <h5 class="section-title px-3">Our Gallery</h5>
-        <h1 class="mb-4">Unforgettable Safari Moments Captured</h1>
-        <p class="mb-0">Explore stunning images from our recent safaris across East Africa. From breathtaking wildlife encounters to beautiful landscapes and cultural experiences, our gallery showcases the magic of African adventures.</p>
-    </div>
-    <div class="tab-class text-center">
-        <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
-            <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#GalleryTab-1">
-                    <span class="text-dark" style="width: 150px;">All Photos</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-2">
-                    <span class="text-dark" style="width: 150px;">Wildlife Safari</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-3">
-                    <span class="text-dark" style="width: 150px;">Beach Holiday</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-4">
-                    <span class="text-dark" style="width: 150px;">Mountain Treks</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-5">
-                    <span class="text-dark" style="width: 150px;">Cultural Tours</span>
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div id="GalleryTab-1" class="tab-pane fade show p-0 active">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-1.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Lion in Masai Mara">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Lion Pride</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-1.jpg' %}" data-lightbox="gallery-1" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Elephants at Amboseli">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Elephant Herd</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Giraffe">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Giraffe Family</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-4.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Zebra Migration">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Zebra Crossing</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-4.jpg' %}" data-lightbox="gallery-4" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-5.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Beach Sunset">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Diani Sunset</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-5.jpg' %}" data-lightbox="gallery-5" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-6.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Leopard">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Leopard Spotting</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-6.jpg' %}" data-lightbox="gallery-6" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-7.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Flamingos">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Lake Nakuru Flamingos</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-7.jpg' %}" data-lightbox="gallery-7" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-8.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Maasai Warriors">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Maasai Culture</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-8.jpg' %}" data-lightbox="gallery-8" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-9.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Hot Air Balloon">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Balloon Safari</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-9.jpg' %}" data-lightbox="gallery-9" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-10.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Rhino">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">White Rhino</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-10.jpg' %}" data-lightbox="gallery-10" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Remaining gallery tabs would follow similar pattern -->
-            <div id="GalleryTab-2" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Elephants">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Elephant Herd</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Giraffe">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Giraffe Family</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="GalleryTab-3" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Beach">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Beach Paradise</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Ocean">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Ocean View</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="GalleryTab-4" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Mountain">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Mountain Trek</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Summit">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Summit View</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="GalleryTab-5" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Culture">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Cultural Dance</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Tradition">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Traditional Ceremony</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Gallery End -->
 
 <!-- Tour Booking Start -->
 <div class="container-fluid booking py-5">
@@ -1209,75 +810,40 @@
             <p class="mb-0">Discover expert travel advice, safari planning guides, and inspiring stories from our adventures across East Africa. Learn about the best times to visit, wildlife photography tips, and hidden gems off the beaten path.</p>
         </div>
         <div class="row g-4 justify-content-center">
+            {% for blog in blogs %}
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item">
                     <div class="blog-img">
                         <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-1.jpg' %}" alt="Safari Tips">
+                            {% if blog.image %}
+                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                            {% else %}
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-placeholder.jpg' %}" alt="{{ blog.title }}">
+                            {% endif %}
                             <div class="blog-icon">
                                 <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>15 Jan 2024</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-thumbs-up text-primary me-2"></i>2.3K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-comments text-primary me-2"></i>156</a>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ blog.published_date|date:"d M Y" }}</small>
+                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-thumbs-up text-primary me-2"></i>{{ blog.likes|floatformat:"0" }}K</a>
+                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-comments text-primary me-2"></i>{{ blog.comments.count }}</a>
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Posted By: Sarah Johnson, Safari Guide</p>
-                        <a href="#" class="h4">Top 10 Tips for Your First Safari</a>
-                        <p class="my-3">Planning your first African safari? Learn essential tips on what to pack, how to spot wildlife, and making the most of your game drives for an unforgettable experience.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Read More</a>
+                        <p class="mb-3">Posted By: {{ blog.author }}</p>
+                        <a href="{% url 'blog_detail' blog.id %}" class="h4">{{ blog.title }}</a>
+                        <p class="my-3">{{ blog.content|truncatewords:30 }}</p>
+                        <a href="{% url 'blog_detail' blog.id %}" class="btn btn-primary rounded-pill py-2 px-4">Read More</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-2.jpg' %}" alt="Migration Guide">
-                            <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>28 Dec 2023</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-thumbs-up text-primary me-2"></i>3.1K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-comments text-primary me-2"></i>234</a>
-                        </div>
-                    </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Posted By: Michael Otieno, Wildlife Expert</p>
-                        <a href="#" class="h4">Complete Guide to the Great Migration</a>
-                        <p class="my-3">Everything you need to know about the wildebeest migration in Masai Mara and Serengeti. Best viewing locations, timing, and photography tips included.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Read More</a>
-                    </div>
-                </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <h3>No blog posts yet</h3>
+                <p>Check back soon for exciting travel stories and tips!</p>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-3.jpg' %}" alt="Cultural Experience">
-                            <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>10 Dec 2023</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-thumbs-up text-primary me-2"></i>1.8K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-comments text-primary me-2"></i>98</a>
-                        </div>
-                    </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Posted By: Grace Mwangi, Cultural Specialist</p>
-                        <a href="#" class="h4">Immersive Cultural Experiences in Kenya</a>
-                        <p class="my-3">Discover authentic Maasai village visits, traditional dances, and local cuisine. Learn how responsible tourism supports local communities.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Read More</a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -1291,82 +857,39 @@
             <h1 class="mb-0">What Our Clients Say About Us</h1>
         </div>
         <div class="testimonial-carousel owl-carousel">
+            {% for testimonial in testimonials %}
             <div class="testimonial-item text-center rounded pb-4">
                 <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">"An absolutely incredible experience! Day Safaris planned every detail perfectly. Our guide was knowledgeable and passionate about wildlife. We saw the Big Five within three days! The accommodations were luxurious and the food was excellent. Highly recommend this company for anyone visiting East Africa."</p>
+                    <p class="text-center mb-5">"{{ testimonial.feedback }}"</p>
                 </div>
                 <div class="testimonial-img p-1">
-                    <img src="{% static 'img/testimonial-1.jpg' %}" class="img-fluid rounded-circle" alt="Client">
+                    {% if testimonial.image %}
+                    <img src="{{ testimonial.image.url }}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}">
+                    {% else %}
+                    <img src="{% static 'img/avatar-placeholder.jpg' %}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}">
+                    {% endif %}
                 </div>
                 <div style="margin-top: -35px;">
-                    <h5 class="mb-0">Sarah Thompson</h5>
-                    <p class="mb-0">London, United Kingdom</p>
+                    <h5 class="mb-0">{{ testimonial.name }}</h5>
+                    <p class="mb-0">{{ testimonial.location }}</p>
                     <div class="d-flex justify-content-center">
+                        {% for i in ""|ljust:testimonial.starRating %}
                         <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
+                        {% endfor %}
+                        {% for i in ""|ljust:5 %}
+                        {% if forloop.counter > testimonial.starRating %}
+                        <i class="fas fa-star text-muted"></i>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-            <div class="testimonial-item text-center rounded pb-4">
-                <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">"Our family safari with Day Safaris exceeded all expectations. The team was professional, friendly, and went above and beyond to make our trip special. The kids loved the educational aspects, and we felt completely safe throughout. Will definitely book with them again!"</p>
-                </div>
-                <div class="testimonial-img p-1">
-                    <img src="{% static 'img/testimonial-2.jpg' %}" class="img-fluid rounded-circle" alt="Client">
-                </div>
-                <div style="margin-top: -35px;">
-                    <h5 class="mb-0">David & Maria Chen</h5>
-                    <p class="mb-0">Sydney, Australia</p>
-                    <div class="d-flex justify-content-center">
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                    </div>
-                </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <h3>No testimonials yet</h3>
+                <p>Be the first to share your experience with us!</p>
             </div>
-            <div class="testimonial-item text-center rounded pb-4">
-                <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">"The attention to detail was remarkable. From the moment we landed until our departure, everything was seamless. The hot air balloon safari over Masai Mara was breathtaking - a once-in-a-lifetime experience! Thank you Day Safaris for creating such wonderful memories."</p>
-                </div>
-                <div class="testimonial-img p-1">
-                    <img src="{% static 'img/testimonial-3.jpg' %}" class="img-fluid rounded-circle" alt="Client">
-                </div>
-                <div style="margin-top: -35px;">
-                    <h5 class="mb-0">Robert van der Berg</h5>
-                    <p class="mb-0">Amsterdam, Netherlands</p>
-                    <div class="d-flex justify-content-center">
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item text-center rounded pb-4">
-                <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">"I've traveled to over 30 countries, and Day Safaris provided one of the best tour experiences I've ever had. Their guides are incredibly knowledgeable about wildlife behavior and local culture. The value for money is outstanding. Five stars isn't enough!"</p>
-                </div>
-                <div class="testimonial-img p-1">
-                    <img src="{% static 'img/testimonial-4.jpg' %}" class="img-fluid rounded-circle" alt="Client">
-                </div>
-                <div style="margin-top: -35px;">
-                    <h5 class="mb-0">Jennifer Williams</h5>
-                    <p class="mb-0">New York, USA</p>
-                    <div class="d-flex justify-content-center">
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

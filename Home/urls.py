@@ -4,7 +4,7 @@ from .views import (HomeView, AboutView, ContactView,
                     AfricaTourView, EastAfricaTourView, InternationalAfricaTourView,
                     CruisesView, AirLineView, BlogsView, GalleryView, AirBNBView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
-                    DestinationDetailView
+                    DestinationDetailView, PackagesDetailView, BlogDetailView
                     )
 
 urlpatterns = [
@@ -12,6 +12,9 @@ urlpatterns = [
     path('about/', AboutView.as_view(), name='about'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('destination/<int:pk>/', DestinationDetailView.as_view(), name='destination_detail'),
+    
+    # packages
+    path('packages/<int:pk>/', PackagesDetailView.as_view(), name='package_detail'),
     
     # services
     path('services/', ServicesView.as_view(), name='services'),
@@ -31,6 +34,11 @@ urlpatterns = [
     path('africa-tours/', AfricaTourView.as_view(), name='africa_tours'),
     path('east-africa-tours/', EastAfricaTourView.as_view(), name='east_africa_tours'),
     path('international-africa-tours/', InternationalAfricaTourView.as_view(), name='international_africa_tours'),
+    
     # bookings
     path('booking/', BookingView.as_view(), name='booking'),
+    path('booking/<int:pk>/', BookingView.as_view(), name='book_package'),
+    
+    # blogs
+    path('blog/<int:pk>/', BlogDetailView.as_view(), name='blog_detail'),
 ]
