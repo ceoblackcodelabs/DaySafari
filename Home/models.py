@@ -25,7 +25,7 @@ class AwesomePackages(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     persons = models.IntegerField()
     description = models.TextField()
-    image = models.ImageField(upload_to='awesome_packages/')
+    image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
 
     def __str__(self):
         return self.name
@@ -61,29 +61,28 @@ class Testimonials(models.Model):
     location = models.CharField(max_length=100)
     feedback = models.TextField()
     starRating = models.IntegerField(choices=[(1, '1 Star'), (2, '2 Stars'), (3, '3 Stars'), (4, '4 Stars'), (5, '5 Stars')], default=5)
-    image = models.ImageField(upload_to='testimonials/', default='testimonials/default.jpg')
+    image = models.ImageField(upload_to='testimonials/', default='testimonials/default.jpg', blank=True, null=True)
 
     def __str__(self):
         return self.name
     
 class BlogComments(models.Model):
-    blog = models.ForeignKey('Blogs', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
-    content = models.TextField()
-    published_date = models.DateTimeField(auto_now_add=True)
-
+    comment = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
-        return f"Comment by {self.name} on {self.blog.title}"
+        return f"Comment by {self.name} on {self.created_date}"
 
 class Blogs(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     content = models.TextField()
     likes = models.IntegerField(default=0)
-    comment = models.ManyToManyField(BlogComments, blank=True)
+    comments = models.ManyToManyField(BlogComments, blank=True)
     published_date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
+    image = models.ImageField(default='blog_images/default.jpg', upload_to='blog_images/', blank=True, null=True)
 
     def __str__(self):
         return self.title
