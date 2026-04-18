@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import (Services, DestinationsCategory, Destinations,
-                     
+                     AwesomePackages, GalleryCategory, Gallery,
+                     Bookings, Testimonials, Blogs
                      )
 from colorama import Fore, Style
 
@@ -48,6 +49,10 @@ class HomeView(ListView):
             tab_destinations[category.id] = self.organize_destinations(category_destinations)
         
         context['tab_destinations'] = tab_destinations
+        
+        context['awesome_packages'] = AwesomePackages.objects.all()
+        context['testimonials'] = Testimonials.objects.all().order_by('-id')[:6]
+        context['blogs'] = Blogs.objects.all().order_by('-published_date')[:3]  # Latest 6 blogs
         
         return context
     
@@ -99,6 +104,11 @@ class HomeView(ListView):
         
         return organized
     
+class PackagesDetailView(DetailView):
+    model = AwesomePackages
+    context_object_name = 'package'
+    template_name = 'Packages/package_detail.html'
+
 class DestinationDetailView(DetailView):
     model = Destinations
     context_object_name = 'destination'
@@ -169,6 +179,11 @@ class AirLineView(TemplateView):
     
 class BlogsView(TemplateView):
     template_name = 'Blogs/blogs.html'
+    
+class BlogDetailView(DetailView):
+    model = Blogs
+    context_object_name = 'blog'
+    template_name = 'Blogs/blog_detail.html'
     
 class GalleryView(TemplateView):
     template_name = 'Home/gallery.html'
