@@ -1,16 +1,40 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from .models import (Services, DestinationsCategory, Destinations,
                      AwesomePackages, GalleryCategory, Gallery,
                      Bookings, Testimonials, Blogs
                      )
 from colorama import Fore, Style
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from .forms import BookingsForm
+from django.contrib import messages
 
 
 class HomeView(ListView):
     model = Services
     context_object_name = 'services'
     template_name = 'Home/index.html'
+    
+    def get(self, request, *args, **kwargs):
+        # Handle booking form submission
+        if 'booking_submit' in request.GET or request.method == 'POST' and 'booking_submit' in request.POST:
+            form = BookingsForm(request.POST or None)
+            if request.method == 'POST' and form.is_valid():
+                booking = form.save()
+                messages.success(request, 
+                    f"Thank you {booking.name}! Your booking request has been submitted successfully. "
+                    "We will contact you within 24 hours to confirm your safari adventure."
+                )
+                return redirect('home')
+            else:
+                # If form is invalid, store errors in context
+                context = self.get_context_data(**kwargs)
+                context['booking_form'] = form
+                return self.render_to_response(context)
+        
+        # Normal GET request
+        return super().get(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -24,9 +48,9 @@ class HomeView(ListView):
             else:
                 services2.append(service)
         if len(services2) == 0: 
-            print(f"{Fore.RED}No services found in the database.")
+            print(f"{Fore.RED}No services found in the database.{Style.RESET_ALL}")
         else:
-            print(f"{Fore.GREEN}Successfully retrieved {len(services2)} services from the database.")
+            print(f"{Fore.GREEN}Successfully retrieved {len(services2)} services from the database.{Style.RESET_ALL}")
         context['services1'] = services1
         context['services2'] = services2
         
@@ -168,8 +192,50 @@ class EastAfricaTourView(TemplateView):
 class InternationalAfricaTourView(TemplateView):
     template_name = 'Tours/international_africa_tours.html'
     
-class BookingView(TemplateView):
-    template_name = 'Home/booking.html'
+class BookingCreateView(CreateView):
+    model = Bookings
+    form_class = BookingsForm
+    template_name = 'bookings/booking_form.html'  # Update to your template path
+    success_url = reverse_lazy('home')  # Create a success URL or use redirect
+    
+    def form_valid(self, form):
+        # You can add additional logic here before saving
+        response = super().form_valid(form)
+        
+        # Add success message
+        messages.success(self.request, 
+            f"Thank you {form.cleaned_data['name']}! Your booking request has been submitted successfully. "
+            f"We will contact you within 24 hours to confirm your {form.cleaned_data['destination']} safari."
+        )
+        
+        # Optional: Send email notification (you'll need to set up email backend)
+        # self.send_booking_confirmation_email(form.cleaned_data)
+        
+        return response
+    
+    def form_invalid(self, form):
+        # Add error message
+        messages.error(self.request, 
+            "There was an error with your booking. Please check the form and try again."
+        )
+        return super().form_invalid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add any additional context data needed for the template
+        context['title'] = 'Book Your Safari Adventure'
+        context['destinations'] = Destinations.objects.all()[:5]  # Featured destinations
+        context['packages'] = AwesomePackages.objects.all()[:3]  # Featured packages
+        return context
+    
+    def send_booking_confirmation_email(self, booking_data):
+        """Optional: Send confirmation email to user"""
+        pass
+    
+class BookingDetailView(DetailView):
+    model = Bookings
+    context_object_name = 'booking'
+    template_name = 'bookings/booking_detail.html' 
     
 class CruisesView(TemplateView):
     template_name = 'Home/cruises.html'

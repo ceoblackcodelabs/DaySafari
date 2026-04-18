@@ -1,5 +1,6 @@
 from django.db import models
 from PIL import Image   
+from django.utils import timezone
 
 class Services(models.Model):
     name = models.CharField(max_length=100)
@@ -45,13 +46,13 @@ class Gallery(models.Model):
         return self.name
     
 class Bookings(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    phone = models.CharField(max_length=20)
-    destination = models.CharField(max_length=100)
-    persons = models.IntegerField()
-    categories = models.CharField(max_length=100, choices=[('children', 'Children'), ('adults', 'Adults')], default='adults')
-    message = models.TextField(blank=True)
+    name = models.CharField(default='', max_length=100)
+    email = models.EmailField(default='email@example.com')
+    phone = models.CharField(default='', max_length=20)
+    destination = models.ForeignKey('Destinations', on_delete=models.CASCADE, blank=True, null=True)
+    persons = models.IntegerField(default=1)
+    date = models.DateField(default=timezone.now)
+    message = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} - {self.destination}"

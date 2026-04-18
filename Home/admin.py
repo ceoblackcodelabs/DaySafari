@@ -38,10 +38,10 @@ class GalleryAdmin(admin.ModelAdmin):
 
 @admin.register(Bookings)
 class BookingsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'destination', 'persons', 'categories')
+    list_display = ('name', 'email', 'phone', 'destination', 'persons', 'date')
     search_fields = ('name', 'email', 'destination')
-    list_filter = ('categories', 'destination')
-    readonly_fields = ('name', 'email', 'phone', 'destination', 'persons', 'categories', 'message')
+    list_filter = ('date', 'destination')
+    readonly_fields = ('name', 'email', 'phone', 'destination', 'persons', 'date', 'message')
 
 @admin.register(Testimonials)
 class TestimonialsAdmin(admin.ModelAdmin):
