@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (HomeView, AboutView, ContactView, 
-                    ServicesView, TourView, BookingView,
+                    ServicesView, TourView, BookingCreateView, BookingDetailView,
                     AfricaTourView, EastAfricaTourView, InternationalAfricaTourView,
                     CruisesView, AirLineView, BlogsView, GalleryView, AirBNBView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
@@ -36,8 +36,8 @@ urlpatterns = [
     path('international-africa-tours/', InternationalAfricaTourView.as_view(), name='international_africa_tours'),
     
     # bookings
-    path('booking/', BookingView.as_view(), name='booking'),
-    path('booking/<int:pk>/', BookingView.as_view(), name='book_package'),
+    path('booking/', BookingCreateView.as_view(), name='booking_create'),
+    path('booking/<int:pk>/', BookingDetailView.as_view(), name='book_package'),
     
     # blogs
     path('blog/<int:pk>/', BlogDetailView.as_view(), name='blog_detail'),
