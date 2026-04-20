@@ -5,6 +5,9 @@ from .models import (
     DestinationsCategory, Destinations
 )
 
+admin.site.site_header = "DAY SAFARIS ADVENTURES"
+admin.site.site_title = "Day Safari Admin"
+
 @admin.register(Services)
 class ServicesAdmin(admin.ModelAdmin):
     list_display = ('name', 'icon')

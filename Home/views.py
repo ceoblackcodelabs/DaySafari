@@ -17,24 +17,52 @@ class HomeView(ListView):
     template_name = 'Home/index.html'
     
     def get(self, request, *args, **kwargs):
-        # Handle booking form submission
-        if 'booking_submit' in request.GET or request.method == 'POST' and 'booking_submit' in request.POST:
-            form = BookingsForm(request.POST or None)
-            if request.method == 'POST' and form.is_valid():
-                booking = form.save()
-                messages.success(request, 
-                    f"Thank you {booking.name}! Your booking request has been submitted successfully. "
-                    "We will contact you within 24 hours to confirm your safari adventure."
-                )
-                return redirect('home')
-            else:
-                # If form is invalid, store errors in context
-                context = self.get_context_data(**kwargs)
-                context['booking_form'] = form
-                return self.render_to_response(context)
+        """
+        Handle GET requests - display the homepage with booking form
+        """
+        # Call the parent get method to get the context
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(**kwargs)
         
-        # Normal GET request
-        return super().get(request, *args, **kwargs)
+        # Add empty booking form to context for GET request
+        context['booking_form'] = BookingsForm()
+        
+        return self.render_to_response(context)
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests - process booking form submission
+        """
+        # Create form instance with POST data
+        form = BookingsForm(request.POST)
+        
+        if form.is_valid():
+            # Save the booking
+            booking = form.save()
+            
+            # Add success message
+            messages.success(
+                request, 
+                f"Thank you {booking.name}! Your booking request has been submitted successfully. "
+                "We will contact you within 24 hours to confirm your safari adventure."
+            )
+            
+            # Redirect to home page to prevent form resubmission
+            return redirect('home')
+        else:
+            # Form is invalid - show errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+            
+            # Get the normal context data
+            self.object_list = self.get_queryset()
+            context = self.get_context_data(**kwargs)
+            
+            # Add the invalid form to context to show errors
+            context['booking_form'] = form
+            
+            return self.render_to_response(context)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

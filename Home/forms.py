@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Bookings, Destinations
-from datetime import date
+from datetime import date, datetime, timedelta
 
 class BookingsForm(forms.ModelForm):
     class Meta:
@@ -31,9 +31,12 @@ class BookingsForm(forms.ModelForm):
                 'class': 'form-select bg-white border-0',
                 'required': 'required'
             }, choices=[(1, '1 Person'), (2, '2 Persons'), (3, '3 Persons'), (4, '4 Persons'), (5, '5 Persons'), (6, '6+ Persons')]),
-            'date': forms.Select(attrs={
-                'class': 'form-select bg-white border-0',
-                'required': 'required'
+            'date': forms.DateInput(attrs={
+                'class': 'form-control bg-white border-0',
+                'type': 'date',
+                'required': 'required',
+                'min': date.today().isoformat(),
+                'placeholder': 'Select Date'
             }),
             'message': forms.Textarea(attrs={
                 'class': 'form-control bg-white border-0',
@@ -49,17 +52,10 @@ class BookingsForm(forms.ModelForm):
         self.fields['destination'].queryset = Destinations.objects.all().order_by('name')
         self.fields['destination'].empty_label = "Select Destination"
         
-        # Set up date choices (next 6 months)
-        from datetime import datetime, timedelta
-        today = datetime.now().date()
-        date_choices = []
-        for i in range(6):
-            next_month = today + timedelta(days=30*i)
-            date_choices.append((next_month.strftime('%Y-%m'), next_month.strftime('%B %Y')))
-        self.fields['date'].widget.choices = date_choices
-        self.fields['date'].empty_label = "Select Date"
+        # Set min date for date picker (today's date)
+        self.fields['date'].widget.attrs['min'] = date.today().isoformat()
         
-        # Customize labels
+        # Customize labels (set to False for floating labels)
         self.fields['name'].label = False
         self.fields['email'].label = False
         self.fields['phone'].label = False
@@ -72,17 +68,28 @@ class BookingsForm(forms.ModelForm):
         persons = self.cleaned_data.get('persons')
         if persons and persons < 1:
             raise ValidationError("Number of persons must be at least 1.")
+        if persons and persons > 50:
+            raise ValidationError("For groups larger than 50 persons, please contact us directly.")
         return persons
     
     def clean_date(self):
         booking_date = self.cleaned_data.get('date')
         if booking_date:
-            from datetime import datetime
-            try:
-                # Convert from YYYY-MM format to date
-                booking_date_obj = datetime.strptime(booking_date, '%Y-%m').date()
-                if booking_date_obj < datetime.now().date():
-                    raise ValidationError("Travel date cannot be in the past. Please select a future date.")
-            except:
-                pass
+            if booking_date < date.today():
+                raise ValidationError("Travel date cannot be in the past. Please select a future date.")
         return booking_date
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and '@' not in email:
+            raise ValidationError("Please enter a valid email address.")
+        return email
+    
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone:
+            # Remove common separators
+            cleaned_phone = phone.replace('+', '').replace('-', '').replace(' ', '').replace('(', '').replace(')', '')
+            if len(cleaned_phone) < 10:
+                raise ValidationError("Please enter a valid phone number with at least 10 digits.")
+        return phone
