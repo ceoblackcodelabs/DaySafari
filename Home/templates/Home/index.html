@@ -722,72 +722,82 @@
             <div class="col-lg-6">
                 <h1 class="text-white mb-3">Book A Tour Deals</h1>
                 <p class="text-white mb-4">Get <span class="text-warning">50% Off</span> On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here.</p>
-                <form method="post" action="">
+                
+                <!-- Display messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Booking Form -->
+                <form method="post" action="{% url 'home' %}">
                     {% csrf_token %}
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control bg-white border-0" id="name" name="name" placeholder="Your Name" required>
-                                <label for="name">Your Name</label>
+                                {{ booking_form.name }}
+                                <label for="{{ booking_form.name.id_for_label }}">Your Name</label>
+                                {% if booking_form.name.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.name.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="email" class="form-control bg-white border-0" id="email" name="email" placeholder="Your Email" required>
-                                <label for="email">Your Email</label>
+                                {{ booking_form.email }}
+                                <label for="{{ booking_form.email.id_for_label }}">Your Email</label>
+                                {% if booking_form.email.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.email.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="tel" class="form-control bg-white border-0" id="phone" name="phone" placeholder="Phone Number" required>
-                                <label for="phone">Phone Number</label>
+                                {{ booking_form.phone }}
+                                <label for="{{ booking_form.phone.id_for_label }}">Phone Number</label>
+                                {% if booking_form.phone.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.phone.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <select class="form-select bg-white border-0" id="destination" name="destination" required>
-                                    <option value="">Select Destination</option>
-                                    <option value="masai-mara">Masai Mara, Kenya</option>
-                                    <option value="serengeti">Serengeti, Tanzania</option>
-                                    <option value="amboseli">Amboseli, Kenya</option>
-                                    <option value="zanzibar">Zanzibar, Tanzania</option>
-                                    <option value="nakuru">Lake Nakuru, Kenya</option>
-                                    <option value="tsavo">Tsavo, Kenya</option>
-                                </select>
-                                <label for="destination">Destination</label>
+                                {{ booking_form.destination }}
+                                <label for="{{ booking_form.destination.id_for_label }}">Destination</label>
+                                {% if booking_form.destination.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.destination.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <select class="form-select bg-white border-0" id="persons" name="persons" required>
-                                    <option value="1">1 Person</option>
-                                    <option value="2" selected>2 Persons</option>
-                                    <option value="3">3 Persons</option>
-                                    <option value="4">4 Persons</option>
-                                    <option value="5">5 Persons</option>
-                                    <option value="6">6+ Persons</option>
-                                </select>
-                                <label for="persons">Number of Persons</label>
+                                {{ booking_form.persons }}
+                                <label for="{{ booking_form.persons.id_for_label }}">Number of Persons</label>
+                                {% if booking_form.persons.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.persons.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <select class="form-select bg-white border-0" id="tour_date" name="tour_date" required>
-                                    <option value="">Select Date</option>
-                                    <option value="2024-01">January 2024</option>
-                                    <option value="2024-02">February 2024</option>
-                                    <option value="2024-03">March 2024</option>
-                                    <option value="2024-04">April 2024</option>
-                                    <option value="2024-05">May 2024</option>
-                                    <option value="2024-06">June 2024</option>
-                                </select>
-                                <label for="tour_date">Preferred Date</label>
+                                {{ booking_form.date }}
+                                <label for="{{ booking_form.date.id_for_label }}">Travel Date</label>
+                                {% if booking_form.date.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.date.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control bg-white border-0" placeholder="Special Requests" id="message" name="message" style="height: 100px"></textarea>
-                                <label for="message">Special Requests (Dietary, Accessibility, etc.)</label>
+                                {{ booking_form.message }}
+                                <label for="{{ booking_form.message.id_for_label }}">Special Requests (Dietary, Accessibility, etc.)</label>
+                                {% if booking_form.message.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.message.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-12">
@@ -894,21 +904,5 @@
     </div>
 </div>
 <!-- Testimonial End -->
-
-<!-- Subscribe Start -->
-<div class="container-fluid subscribe py-5">
-    <div class="container text-center py-5">
-        <div class="mx-auto text-center" style="max-width: 900px;">
-            <h5 class="subscribe-title px-3">Newsletter</h5>
-            <h1 class="text-white mb-4">Subscribe for Safari Updates & Special Offers</h1>
-            <p class="text-white mb-5">Join our newsletter to receive exclusive travel deals, safari tips, and inspiring stories from East Africa. Get 10% off your first booking when you subscribe today!</p>
-            <div class="position-relative mx-auto">
-                <input class="form-control border-primary rounded-pill w-100 py-3 ps-4 pe-5" type="email" placeholder="Enter your email address">
-                <button type="button" class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 px-4 mt-2 me-2">Subscribe Now</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Subscribe End -->
 
 {% endblock body %}
