@@ -1,0 +1,114 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+
+{% block title %}Chatbot Test{% endblock %}
+
+{% block body %}
+<br>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Day Safaris Chatbot Test</h4>
+                </div>
+                <div class="card-body" style="height: 500px; overflow-y: auto;" id="chat-messages">
+                    <div class="message received mb-3">
+                        <strong>Bot:</strong>
+                        <p>Hello! Welcome to Day Safaris Adventures! 🦁 How can I help you plan your East African safari today?</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="chat-input" placeholder="Ask about safaris, destinations, packages...">
+                        <button class="btn btn-primary" id="send-btn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+    
+    function addMessage(message, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'text-end' : 'received'} mb-3`;
+        
+        if (isUser) {
+            messageDiv.innerHTML = `
+                <strong>You:</strong>
+                <p class="bg-primary text-white p-2 rounded d-inline-block">${escapeHtml(message)}</p>
+            `;
+        } else {
+            messageDiv.innerHTML = `
+                <strong>Bot:</strong>
+                <p class="bg-light p-2 rounded">${escapeHtml(message)}</p>
+            `;
+        }
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+        
+        addMessage(message, true);
+        chatInput.value = '';
+        
+        try {
+            const response = await fetch('/api/chatbot/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ message: message })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                addMessage(data.response, false);
+            } else {
+                addMessage("Sorry, I encountered an error. Please contact us directly.", false);
+            }
+        } catch (error) {
+            addMessage("Network error. Please try again later.", false);
+        }
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+{% endblock %}
