@@ -1,17 +1,17 @@
 {% extends "Home/base.html" %}
 
-{% load static %}
+{% load static custom_filters %}
 
-{% block title %}Gallery - Days Safaris Adventures{% endblock title %}
+{% block title %}Gallery - Day Safaris Adventures{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Our Gallery</h1>
+        <h3 class="text-white display-3 mb-4">Our Gallery</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Pages</a></li>
             <li class="breadcrumb-item active text-white">Gallery</li>
         </ol>    
@@ -27,307 +27,78 @@
         <p class="mb-0">Explore stunning images from our recent safaris across East Africa. From breathtaking wildlife encounters to beautiful landscapes and cultural experiences, our gallery showcases the magic of African adventures.</p>
     </div>
     <div class="tab-class text-center">
-        <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
+        <ul class="nav nav-pills d-inline-flex justify-content-center mb-5 flex-wrap">
             <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#GalleryTab-1">
+                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-all">
                     <span class="text-dark" style="width: 150px;">All Photos</span>
                 </a>
             </li>
+            {% for category in categories %}
             <li class="nav-item">
-                <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-2">
-                    <span class="text-dark" style="width: 150px;">Wildlife Safari</span>
+                <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-{{ category.id }}">
+                    <span class="text-dark" style="width: 150px;">{{ category.name }}</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-3">
-                    <span class="text-dark" style="width: 150px;">Beach Holiday</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-4">
-                    <span class="text-dark" style="width: 150px;">Mountain Treks</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-5">
-                    <span class="text-dark" style="width: 150px;">Cultural Tours</span>
-                </a>
-            </li>
+            {% endfor %}
         </ul>
         <div class="tab-content">
-            <div id="GalleryTab-1" class="tab-pane fade show p-0 active">
+            <!-- All Photos Tab -->
+            <div id="tab-all" class="tab-pane fade show p-0 active">
                 <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-1.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Lion in Masai Mara">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Lion Pride</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-1.jpg' %}" data-lightbox="gallery-1" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    {% for gallery in all_galleries %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                         <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Elephants at Amboseli">
+                            <img src="{{ gallery.image.url }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;">
                             <div class="gallery-content">
                                 <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Elephant Herd</h5>
+                                    <h5 class="text-white text-uppercase mb-2">{{ gallery.name }}</h5>
                                     <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                             </div>
                             <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                <a href="{{ gallery.image.url }}" data-lightbox="gallery-{{ gallery.id }}" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Giraffe">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Giraffe Family</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-5">
+                        <h3>No images available</h3>
+                        <p>Check back soon for amazing gallery photos!</p>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-4.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Zebra Migration">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Zebra Crossing</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-4.jpg' %}" data-lightbox="gallery-4" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-5.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Beach Sunset">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Diani Sunset</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-5.jpg' %}" data-lightbox="gallery-5" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-6.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Leopard">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Leopard Spotting</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-6.jpg' %}" data-lightbox="gallery-6" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-7.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Flamingos">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Lake Nakuru Flamingos</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-7.jpg' %}" data-lightbox="gallery-7" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-8.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Maasai Warriors">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Maasai Culture</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-8.jpg' %}" data-lightbox="gallery-8" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-9.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Hot Air Balloon">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Balloon Safari</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-9.jpg' %}" data-lightbox="gallery-9" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-10.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Rhino">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">White Rhino</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-10.jpg' %}" data-lightbox="gallery-10" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
-            <!-- Remaining gallery tabs would follow similar pattern -->
-            <div id="GalleryTab-2" class="tab-pane fade show p-0">
+
+            <!-- Dynamic Category Tabs -->
+            {% for category in categories %}
+            <div id="tab-{{ category.id }}" class="tab-pane fade show p-0">
                 <div class="row g-2">
+                    {% with galleries=galleries_by_category|get_item:category.id %}
+                    {% for gallery in galleries %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                         <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Elephants">
+                            <img src="{{ gallery.image.url }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;">
                             <div class="gallery-content">
                                 <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Elephant Herd</h5>
+                                    <h5 class="text-white text-uppercase mb-2">{{ gallery.name }}</h5>
                                     <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                             </div>
                             <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                <a href="{{ gallery.image.url }}" data-lightbox="gallery-{{ gallery.id }}" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Giraffe">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Giraffe Family</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-5">
+                        <h3>No images in this category</h3>
+                        <p>Check back soon for amazing photos!</p>
                     </div>
+                    {% endfor %}
+                    {% endwith %}
                 </div>
             </div>
-            <div id="GalleryTab-3" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Beach">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Beach Paradise</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Ocean">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Ocean View</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="GalleryTab-4" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Mountain">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Mountain Trek</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Summit">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Summit View</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="GalleryTab-5" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-2.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Culture">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Cultural Dance</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{% static 'img/gallery-3.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Tradition">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">Traditional Ceremony</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
