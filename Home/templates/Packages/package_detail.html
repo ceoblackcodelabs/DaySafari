@@ -12,7 +12,7 @@
         <h3 class="text-white display-3 mb-4">{{ package.name }}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'packages' %}">Packages</a></li>
+            <li class="breadcrumb-item"><a href="">Packages</a></li>
             <li class="breadcrumb-item active text-white">{{ package.name }}</li>
         </ol>    
     </div>
@@ -107,7 +107,7 @@
                     
                     <div class="d-flex gap-3">
                         <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'booking_create' %}?package={{ package.id }}">Book Now</a>
-                        <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="{% url 'packages' %}">View All Packages</a>
+                        <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="">View All Packages</a>
                     </div>
                 </div>
             </div>

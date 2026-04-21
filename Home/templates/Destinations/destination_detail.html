@@ -1,0 +1,288 @@
+{% extends "Home/base.html" %}
+
+{% load static %}
+
+{% block title %}{{ destination.name }} - Day Safaris Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">{{ destination.name }}</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'africa_tours' %}">Destinations</a></li>
+            <li class="breadcrumb-item active text-white">{{ destination.name }}</li>
+        </ol>    
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Destination Detail Start -->
+<div class="container-fluid about py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
+                    {% if destination.image %}
+                    <img src="{{ destination.image.url }}" class="img-fluid w-100 h-100" alt="{{ destination.name }}" style="object-fit: cover;">
+                    {% else %}
+                    <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100 h-100" alt="{{ destination.name }}" style="object-fit: cover;">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6" style="background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .9)), url('{% static 'img/about-img-1.png' %}'); background-size: cover;">
+                <div class="p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="section-about-title pe-3">{{ destination.category.category }}</h5>
+                        <div class="packages-price bg-primary text-white rounded-pill py-2 px-4">
+                            {{ destination.category.location }}
+                        </div>
+                    </div>
+                    <h1 class="mb-4">{{ destination.name }}</h1>
+                    
+                    <!-- Quick Info Cards -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-4">
+                            <div class="bg-light rounded text-center p-3">
+                                <i class="fa fa-tag fa-2x text-primary mb-2"></i>
+                                <h6 class="mb-0">{{ destination.category.category }}</h6>
+                                <small class="text-muted">Category</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="bg-light rounded text-center p-3">
+                                <i class="fa fa-map-marker-alt fa-2x text-primary mb-2"></i>
+                                <h6 class="mb-0">{{ destination.category.location|truncatechars:15 }}</h6>
+                                <small class="text-muted">Location</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="bg-light rounded text-center p-3">
+                                <i class="fa fa-camera fa-2x text-primary mb-2"></i>
+                                <h6 class="mb-0">{{ destination.category.image_orientation|title }}</h6>
+                                <small class="text-muted">Orientation</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Category Badge -->
+                    <div class="mb-4">
+                        <h6 class="d-inline-block me-2">Category:</h6>
+                        <span class="badge bg-primary rounded-pill px-3 py-2">{{ destination.category.category }}</span>
+                        <span class="badge bg-info rounded-pill px-3 py-2 ms-2">{{ destination.category.location }}</span>
+                    </div>
+                    
+                    <p class="mb-4">{{ destination.description }}</p>
+                    
+                    <!-- Features List -->
+                    <div class="row gy-2 gx-4 mb-4">
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Expert Local Guides</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Best Price Guarantee</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Customized Itineraries</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>24/7 Customer Support</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Safe & Reliable</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Eco-Friendly Practices</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-3">
+                        <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'booking_create' %}?destination={{ destination.id }}">Book This Destination</a>
+                        <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="{% url 'africa_tours' %}">View All Destinations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Best Time to Visit Section -->
+<div class="container-fluid bg-light py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5" style="max-width: 800px;">
+            <h5 class="section-title px-3">Plan Your Trip</h5>
+            <h1 class="mb-4">Best Time to Visit {{ destination.name }}</h1>
+            <p class="mb-0">Choose the perfect season for your adventure based on wildlife viewing, weather, and crowds.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="bg-white rounded p-4 h-100">
+                    <h4><i class="fa fa-sun text-primary me-2"></i> Peak Season</h4>
+                    <p class="mb-2"><strong>July - October:</strong></p>
+                    <p>Best for wildlife viewing, dry weather, and optimal safari conditions. Expect more visitors but incredible sightings.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="bg-white rounded p-4 h-100">
+                    <h4><i class="fa fa-leaf text-primary me-2"></i> Green Season</h4>
+                    <p class="mb-2"><strong>November - December & March - May:</strong></p>
+                    <p>Lush landscapes, fewer crowds, lower prices, and excellent bird watching opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Destination Highlights Section -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5" style="max-width: 800px;">
+            <h5 class="section-title px-3">Destination Highlights</h5>
+            <h1 class="mb-4">Why Visit {{ destination.name }}?</h1>
+            <p class="mb-0">Discover what makes this destination special and why it should be on your bucket list.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded shadow-sm h-100 p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-eye fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Breathtaking Views</h5>
+                    <p class="mb-0">Experience stunning landscapes and panoramic views that will take your breath away.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded shadow-sm h-100 p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-paw fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Incredible Wildlife</h5>
+                    <p class="mb-0">Spot diverse wildlife including the Big Five and unique species native to this region.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded shadow-sm h-100 p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-users fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Rich Culture</h5>
+                    <p class="mb-0">Immerse yourself in local traditions and authentic cultural experiences.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded shadow-sm h-100 p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-camera fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Photo Opportunities</h5>
+                    <p class="mb-0">Capture stunning images of wildlife, landscapes, and cultural moments.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded shadow-sm h-100 p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-sun fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Perfect Climate</h5>
+                    <p class="mb-0">Enjoy favorable weather conditions for year-round travel and activities.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded shadow-sm h-100 p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-shield-alt fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Safe Travel</h5>
+                    <p class="mb-0">Well-maintained facilities and professional guides ensure your safety.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Booking CTA Section -->
+<div class="container-fluid py-5 bg-primary">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-7">
+                <h2 class="text-white mb-3">Ready to Visit {{ destination.name }}?</h2>
+                <p class="text-white mb-0">Book your safari adventure today and create memories that will last a lifetime.</p>
+            </div>
+            <div class="col-lg-5 text-lg-end">
+                <a class="btn btn-light text-primary rounded-pill py-3 px-5" href="{% url 'booking_create' %}?destination={{ destination.id }}">Book This Destination Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Similar Destinations Section -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5" style="max-width: 800px;">
+            <h5 class="section-title px-3">You May Also Like</h5>
+            <h1 class="mb-4">Similar Destinations</h1>
+            <p class="mb-0">Explore other amazing destinations in the same region.</p>
+        </div>
+        <div class="row g-4">
+            {% for similar in similar_destinations %}
+            <div class="col-lg-4 col-md-6">
+                <div class="packages-item">
+                    <div class="packages-img">
+                        {% if similar.image %}
+                        <img src="{{ similar.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="packages-price py-2 px-4">{{ similar.category.category }}</div>
+                    </div>
+                    <div class="packages-content bg-white rounded-bottom p-4">
+                        <h5>{{ similar.name }}</h5>
+                        <div class="mb-3">
+                            <small class="fa fa-map-marker-alt me-1 text-primary"></small>
+                            <small>{{ similar.category.location }}</small>
+                        </div>
+                        <p class="mb-3">{{ similar.description|truncatewords:15 }}</p>
+                        <a href="{% url 'destination_detail' similar.id %}" class="btn btn-primary rounded-pill py-2 px-4">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No similar destinations found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .service-item {
+        transition: all 0.3s ease;
+    }
+    
+    .service-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    }
+    
+    .packages-item {
+        transition: transform 0.3s ease;
+    }
+    
+    .packages-item:hover {
+        transform: translateY(-5px);
+    }
+    
+    @media (max-width: 768px) {
+        .packages-price {
+            font-size: 12px;
+            padding: 4px 12px;
+        }
+    }
+</style>
+
+{% endblock body %}
