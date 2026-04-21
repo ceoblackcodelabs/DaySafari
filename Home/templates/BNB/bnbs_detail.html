@@ -1,0 +1,376 @@
+{% extends "Home/base.html" %}
+
+{% load static %}
+
+{% block title %}{{ bnb.title|default:bnb.location }} - Day Safaris Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">{{ bnb.title|default:bnb.location }}</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'airbnb' %}">Airbnb</a></li>
+            <li class="breadcrumb-item active text-white">{{ bnb.title|default:bnb.location }}</li>
+        </ol>    
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- About Start -->
+<div class="container-fluid about py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
+                    {% with main_image=bnb.images.filter.is_featured.first %}
+                        {% if main_image %}
+                        <img src="{{ main_image.image.url }}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}" style="object-fit: cover;">
+                        {% elif bnb.images.first %}
+                        <img src="{{ bnb.images.first.image.url }}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}" style="object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'img/placeholder-bnb.jpg' %}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}">
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="col-lg-7" style="background: linear-gradient(rgba(255, 255, 255, .8), rgba(255, 255, 255, .8)), url('{% static 'img/about-img-1.png' %}');">
+                <h5 class="section-about-title pe-3">Premium Accommodation</h5>
+                <h1 class="mb-4">{{ bnb.title|default:bnb.location }}</h1>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="me-3">
+                        <i class="fa fa-map-marker-alt text-primary me-1"></i>
+                        <span>{{ bnb.location }}</span>
+                    </div>
+                    <div class="me-3">
+                        <i class="fa fa-bed text-primary me-1"></i>
+                        <span>{{ bnb.get_specification_display }}</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-users text-primary me-1"></i>
+                        <span>{{ bnb.max_guests }} Guests</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <i class="fa fa-dollar-sign text-primary me-1"></i>
+                    <span class="h4">${{ bnb.price_per_night }}</span>
+                    <span class="text-muted">/ night</span>
+                    <div class="d-inline-block ms-3">
+                        <i class="fa fa-star text-warning"></i>
+                        <i class="fa fa-star text-warning"></i>
+                        <i class="fa fa-star text-warning"></i>
+                        <i class="fa fa-star text-warning"></i>
+                        <i class="fa fa-star-half-alt text-warning"></i>
+                        <span class="text-muted ms-1">(4.8)</span>
+                    </div>
+                </div>
+                <p class="mb-4">{{ bnb.description }}</p>
+                <div class="row gy-2 gx-4 mb-4">
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Free WiFi</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Air Conditioning</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Fully Equipped Kitchen</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Private Bathroom</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Parking Available</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>24/7 Security</p>
+                    </div>
+                </div>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'booking_create' %}?property={{ bnb.id }}">Book Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+<!-- Amenities Section -->
+<div class="container-fluid py-5 bg-light">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">Amenities</h5>
+            <h1 class="mb-0">What This Property Offers</h1>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-wifi fa-3x text-primary"></i>
+                </div>
+                <h5>Free WiFi</h5>
+                <p class="small">High-speed internet available throughout</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-snowflake fa-3x text-primary"></i>
+                </div>
+                <h5>Air Conditioning</h5>
+                <p class="small">Fully air-conditioned rooms</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-utensils fa-3x text-primary"></i>
+                </div>
+                <h5>Kitchen</h5>
+                <p class="small">Fully equipped kitchen available</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-tv fa-3x text-primary"></i>
+                </div>
+                <h5>Smart TV</h5>
+                <p class="small">Flat-screen TV with streaming services</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-car fa-3x text-primary"></i>
+                </div>
+                <h5>Free Parking</h5>
+                <p class="small">On-site parking available</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-shield-alt fa-3x text-primary"></i>
+                </div>
+                <h5>24/7 Security</h5>
+                <p class="small">Round-the-clock security service</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-swimming-pool fa-3x text-primary"></i>
+                </div>
+                <h5>Swimming Pool</h5>
+                <p class="small">Access to swimming pool</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-dumbbell fa-3x text-primary"></i>
+                </div>
+                <h5>Fitness Center</h5>
+                <p class="small">Gym facilities available</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Property Gallery Start -->
+<div class="container-fluid destination py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">Property Gallery</h5>
+            <h1 class="mb-0">Explore {{ bnb.title|default:bnb.location }}</h1>
+            <p class="mt-2">Take a visual tour of this beautiful accommodation</p>
+        </div>
+        <div class="tab-class text-center">
+            
+            <div class="tab-content">
+                <!-- All Photos Tab -->
+                <div id="tab-all" class="tab-pane fade show p-0 active">
+                    <div class="row g-4">
+                        {% for image in all_images %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{{ image.image.url }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">Photo {{ forloop.counter }}</a>
+                                    <h4 class="text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h4>
+                                    <p class="text-white small mb-2">{{ image.caption|default:"Beautiful view of the property" }}</p>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery">View Full Size <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-all"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12 text-center py-5">
+                            <h3>No images available</h3>
+                            <p>Check back soon for photos of this property!</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Exterior Tab -->
+                <div id="tab-exterior" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        {% for image in all_images %}
+                        {% if "exterior" in image.caption|lower or forloop.counter <= 2 %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{{ image.image.url }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">Exterior</a>
+                                    <h4 class="text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h4>
+                                    <p class="text-white small mb-2">Property exterior view</p>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-exterior">View Full Size <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-exterior"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Interior Tab -->
+                <div id="tab-interior" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        {% for image in all_images %}
+                        {% if forloop.counter >= 3 and forloop.counter <= 5 %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{{ image.image.url }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">Interior</a>
+                                    <h4 class="text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h4>
+                                    <p class="text-white small mb-2">Beautiful interior design</p>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-interior">View Full Size <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-interior"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Amenities Tab -->
+                <div id="tab-amenities" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-pool.jpg' %}" alt="Swimming Pool" style="height: 300px; object-fit: cover;">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">Amenity</a>
+                                    <h4 class="text-white mb-2 mt-3">Swimming Pool</h4>
+                                    <p class="text-white small mb-2">Relax and unwind</p>
+                                    <a href="#" class="btn-hover text-white">View Details <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/amenity-pool.jpg' %}" data-lightbox="property-amenities"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-gym.jpg' %}" alt="Fitness Center" style="height: 300px; object-fit: cover;">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">Amenity</a>
+                                    <h4 class="text-white mb-2 mt-3">Fitness Center</h4>
+                                    <p class="text-white small mb-2">Stay fit while traveling</p>
+                                    <a href="#" class="btn-hover text-white">View Details <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/amenity-gym.jpg' %}" data-lightbox="property-amenities"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-kitchen.jpg' %}" alt="Kitchen" style="height: 300px; object-fit: cover;">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">Amenity</a>
+                                    <h4 class="text-white mb-2 mt-3">Modern Kitchen</h4>
+                                    <p class="text-white small mb-2">Fully equipped</p>
+                                    <a href="#" class="btn-hover text-white">View Details <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{% static 'img/amenity-kitchen.jpg' %}" data-lightbox="property-amenities"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Surroundings Tab -->
+                <div id="tab-surroundings" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        {% for image in all_images|slice:":3" %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                <img class="img-fluid rounded w-100" src="{{ image.image.url }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;">
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">Location</a>
+                                    <h4 class="text-white mb-2 mt-3">{{ bnb.location }}</h4>
+                                    <p class="text-white small mb-2">Beautiful surroundings</p>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-surroundings">View Full Size <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    <a href="{{ image.image.url }}" data-lightbox="property-surroundings"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Property Gallery End -->
+
+
+<!-- Location Section -->
+<div class="container-fluid py-5 bg-light">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h5 class="section-title px-3">Location</h5>
+                <h1 class="mb-4">Perfectly Situated in {{ bnb.location }}</h1>
+                <p class="mb-4">This property is ideally located in the heart of {{ bnb.location }}, offering easy access to local attractions, restaurants, and shopping areas. Whether you're here for business or leisure, you'll find everything you need within close proximity.</p>
+                <div class="row gy-2 gx-4 mb-4">
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Near City Center</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Close to Restaurants</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Shopping Nearby</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Public Transport Access</p>
+                    </div>
+                </div>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="https://maps.google.com/?q={{ bnb.location }}" target="_blank">View on Map</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-light rounded p-4 text-center">
+                    <i class="fa fa-map-marker-alt fa-4x text-primary mb-3"></i>
+                    <h4>{{ bnb.location }}</h4>
+                    <p class="mb-0">Exact location details provided upon booking confirmation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .feature-icon {
+        transition: transform 0.3s ease;
+    }
+    
+    .feature-icon:hover {
+        transform: translateY(-5px);
+    }
+    
+    .destination-overlay {
+        background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7), transparent);
+    }
+</style>
+
+{% endblock body %}
