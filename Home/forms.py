@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Bookings, Destinations
+from .models import Bookings, Destinations, Contact
 from datetime import date, datetime, timedelta
 
 class BookingsForm(forms.ModelForm):
@@ -93,3 +93,40 @@ class BookingsForm(forms.ModelForm):
             if len(cleaned_phone) < 10:
                 raise ValidationError("Please enter a valid phone number with at least 10 digits.")
         return phone
+    
+    
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'subject', 'message']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control border-0',
+                'placeholder': 'Your Name'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control border-0',
+                'placeholder': 'Your Email'
+            }),
+            'subject': forms.TextInput(attrs={
+                'class': 'form-control border-0',
+                'placeholder': 'Subject'
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control border-0',
+                'placeholder': 'Leave a message here',
+                'style': 'height: 160px'
+            }),
+        }
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and '@' not in email:
+            raise forms.ValidationError("Please enter a valid email address.")
+        return email
+    
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if name and len(name.strip()) < 2:
+            raise forms.ValidationError("Name must be at least 2 characters long.")
+        return name
