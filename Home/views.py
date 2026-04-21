@@ -155,11 +155,6 @@ class HomeView(ListView):
                 organized[pos] = destinations_list[i]
         
         return organized
-    
-class PackagesDetailView(DetailView):
-    model = AwesomePackages
-    context_object_name = 'package'
-    template_name = 'Packages/package_detail.html'
 
 class DestinationDetailView(DetailView):
     model = Destinations
@@ -292,6 +287,25 @@ class InternationalAfricaTourView(ListView):
             destinations_by_category[category.id] = category_destinations
         
         context['destinations_by_category'] = destinations_by_category
+        
+        return context
+    
+class PackagesDetailView(DetailView):
+    model = AwesomePackages
+    context_object_name = 'package'
+    template_name = 'Packages/package_detail.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get itineraries for this package
+        context['itineraries'] = self.object.itineraries.all().order_by('day_number')
+        
+        # Get similar packages
+        similar_packages = AwesomePackages.objects.filter(
+            category=self.object.category
+        ).exclude(id=self.object.id)[:3]
+        context['similar_packages'] = similar_packages
         
         return context
     
