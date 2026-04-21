@@ -218,6 +218,25 @@ class AfricaTourView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        # Get all destination categories for tabs
+        categories = DestinationsCategory.objects.all()
+        context['categories'] = categories
+        
+        # Get all destinations
+        all_destinations = Destinations.objects.select_related('category')[:9]
+        context['all_destinations'] = all_destinations
+        
+        # Organize destinations by category for filtering
+        destinations_by_category = {}
+        for category in categories:
+            category_destinations = Destinations.objects.filter(
+                category=category
+            ).select_related('category')
+            destinations_by_category[category.id] = category_destinations
+        
+        context['destinations_by_category'] = destinations_by_category
+        
         return context
     
 class EastAfricaTourView(ListView):
@@ -225,10 +244,56 @@ class EastAfricaTourView(ListView):
     context_object_name = "africaPackages"
     template_name = 'Tours/east_africa_tours.html'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get all destination categories for tabs
+        categories = DestinationsCategory.objects.all()
+        context['categories'] = categories
+        
+        # Get all destinations
+        all_destinations = Destinations.objects.select_related('category')[:9]
+        context['all_destinations'] = all_destinations
+        
+        # Organize destinations by category for filtering
+        destinations_by_category = {}
+        for category in categories:
+            category_destinations = Destinations.objects.filter(
+                category=category
+            ).select_related('category')
+            destinations_by_category[category.id] = category_destinations
+        
+        context['destinations_by_category'] = destinations_by_category
+        
+        return context
+    
 class InternationalAfricaTourView(ListView):
     model = AwesomePackages
     context_object_name = "africaPackages"
     template_name = 'Tours/international_africa_tours.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get all destination categories for tabs
+        categories = DestinationsCategory.objects.all()
+        context['categories'] = categories
+        
+        # Get all destinations
+        all_destinations = Destinations.objects.select_related('category')[:9]
+        context['all_destinations'] = all_destinations
+        
+        # Organize destinations by category for filtering
+        destinations_by_category = {}
+        for category in categories:
+            category_destinations = Destinations.objects.filter(
+                category=category
+            ).select_related('category')
+            destinations_by_category[category.id] = category_destinations
+        
+        context['destinations_by_category'] = destinations_by_category
+        
+        return context
     
 class BookingCreateView(CreateView):
     model = Bookings
