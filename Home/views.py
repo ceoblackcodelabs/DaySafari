@@ -370,9 +370,32 @@ class BlogDetailView(DetailView):
     model = Blogs
     context_object_name = 'blog'
     template_name = 'Blogs/blog_detail.html'
-    
-class GalleryView(TemplateView):
+
+# Gallery
+class GalleryView(ListView):
+    model = Gallery
     template_name = 'Home/gallery.html'
+    context_object_name = 'galleries'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get all categories
+        categories = GalleryCategory.objects.all()
+        context['categories'] = categories
+        
+        # Get all galleries
+        all_galleries = Gallery.objects.select_related('category')[:16]
+        context['all_galleries'] = all_galleries
+        
+        # Group galleries by category
+        galleries_by_category = {}
+        for category in categories:
+            galleries_by_category[category.id] = Gallery.objects.filter(category=category).select_related('category')
+        
+        context['galleries_by_category'] = galleries_by_category
+        
+        return context
 
 #  AirBNB
 class AirBNBView(ListView):
@@ -391,6 +414,7 @@ class AirBNBDetailView(DetailView):
         context['featured_image'] = context['all_images'].filter(is_featured=True).first() or context['all_images'].first()
         return context
     
+# contact  
 class ContactView(FormView):
     template_name = 'Home/contact.html'
     form_class = ContactForm
