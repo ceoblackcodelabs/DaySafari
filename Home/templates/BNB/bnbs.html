@@ -1,0 +1,173 @@
+{% extends "Home/base.html" %}
+
+{% load static %}
+
+{% block title %}AirBNB - Day Safaris Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">Airbnb Accommodations</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Accommodation</a></li>
+            <li class="breadcrumb-item active text-white">Airbnb</li>
+        </ol>    
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- BNB Listing Start -->
+<div class="container-fluid blog py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">Premium Stays</h5>
+            <h1 class="mb-4">Experience Luxury Accommodations Across Africa</h1>
+            <p class="mb-0">Handpicked Airbnb properties for your perfect African getaway</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            {% for bnb in bnbs %}
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item">
+                    <div class="blog-img">
+                        <div class="blog-img-inner">
+                            {% with main_image=bnb.images.filter.is_featured.first %}
+                                {% if main_image %}
+                                <img class="img-fluid w-100 rounded-top" src="{{ main_image.image.url }}" alt="{{ bnb.title|default:bnb.location }}" style="height: 250px; object-fit: cover;">
+                                {% elif bnb.images.first %}
+                                <img class="img-fluid w-100 rounded-top" src="{{ bnb.images.first.image.url }}" alt="{{ bnb.title|default:bnb.location }}" style="height: 250px; object-fit: cover;">
+                                {% else %}
+                                <img class="img-fluid w-100 rounded-top" src="{% static 'img/placeholder-bnb.jpg' %}" alt="{{ bnb.title|default:bnb.location }}" style="height: 250px; object-fit: cover;">
+                                {% endif %}
+                            {% endwith %}
+                            <div class="blog-icon">
+                                <a href="#" class="my-auto"><i class="fas fa-home fa-2x text-white"></i></a>
+                            </div>
+                        </div>
+                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-map-marker-alt text-primary me-2"></i>{{ bnb.location|truncatechars:15 }}
+                            </small>
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-bed text-primary me-2"></i>{{ bnb.get_specification_display }}
+                            </small>
+                            <small class="flex-fill text-center py-2">
+                                <i class="fa fa-dollar-sign text-primary me-2"></i>{{ bnb.price_per_night }}/night
+                            </small>
+                        </div>
+                    </div>
+                    <div class="blog-content border border-top-0 rounded-bottom p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <p class="mb-0 text-muted small">
+                                <i class="fa fa-users me-1"></i> {{ bnb.max_guests }} guests
+                            </p>
+                            <div class="bnb-rating">
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star-half-alt text-warning"></i>
+                                <span class="text-muted ms-1">(4.8)</span>
+                            </div>
+                        </div>
+                        <a href="{% url 'bnb_detail' bnb.id %}" class="h4">{{ bnb.title|default:bnb.location }}</a>
+                        <p class="my-3">{{ bnb.description|truncatewords:25 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="bnb-amenities">
+                                {% if bnb.specification == 'Studio' %}
+                                <small class="text-muted"><i class="fa fa-wifi me-1"></i> WiFi</small>
+                                <small class="text-muted ms-2"><i class="fa fa-snowflake me-1"></i> AC</small>
+                                {% else %}
+                                <small class="text-muted"><i class="fa fa-wifi me-1"></i> WiFi</small>
+                                <small class="text-muted ms-2"><i class="fa fa-snowflake me-1"></i> AC</small>
+                                <small class="text-muted ms-2"><i class="fa fa-utensils me-1"></i> Kitchen</small>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'bnb_detail' bnb.id %}" class="btn btn-primary rounded-pill py-2 px-4">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <h3>No properties available</h3>
+                <p>Check back soon for amazing accommodations!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- BNB Listing End -->
+
+<!-- Features Section -->
+<div class="container-fluid py-5 bg-light">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-shield-alt fa-3x text-primary"></i>
+                </div>
+                <h5>Verified Properties</h5>
+                <p class="small">All properties are handpicked and verified</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-headset fa-3x text-primary"></i>
+                </div>
+                <h5>24/7 Support</h5>
+                <p class="small">Round-the-clock customer assistance</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-credit-card fa-3x text-primary"></i>
+                </div>
+                <h5>Secure Payments</h5>
+                <p class="small">Safe and encrypted transactions</p>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fa fa-map-marked-alt fa-3x text-primary"></i>
+                </div>
+                <h5>Best Locations</h5>
+                <p class="small">Prime locations across East Africa</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center bg-primary rounded-4 p-5">
+            <div class="col-lg-8">
+                <h2 class="text-white mb-3">Looking for a specific property?</h2>
+                <p class="text-white mb-0">Contact us for custom accommodation arrangements or long-term stays.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a class="btn btn-light text-primary rounded-pill py-3 px-5" href="{% url 'contact' %}">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .feature-icon {
+        transition: transform 0.3s ease;
+    }
+    
+    .feature-icon:hover {
+        transform: translateY(-5px);
+    }
+    
+    .bnb-rating {
+        font-size: 12px;
+    }
+    
+    .destination-overlay {
+        background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7), transparent);
+    }
+</style>
+
+{% endblock body %}

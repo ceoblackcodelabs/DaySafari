@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import (
     Services, MustVisit, AwesomePackages, GalleryCategory, 
     Gallery, Bookings, Testimonials, BlogComments, Blogs,
-    DestinationsCategory, Destinations, Itinerary
+    DestinationsCategory, Destinations, Itinerary,
+    AirBNB, AirBNBImage
 )
 
 admin.site.site_header = "DAY SAFARIS ADVENTURES"
@@ -148,3 +149,21 @@ class DestinationsAdmin(admin.ModelAdmin):
         updated = queryset.update(category__image_orientation='portrait')
         self.message_user(request, f'{updated} destinations set to portrait orientation.')
     make_portrait.short_description = "Set selected destinations' categories to portrait"
+    
+    
+class AirBNBImageInline(admin.TabularInline):
+    model = AirBNBImage
+    extra = 3
+    fields = ['image', 'caption', 'is_featured', 'order']
+
+@admin.register(AirBNB)
+class AirBNBAdmin(admin.ModelAdmin):
+    list_display = ['location', 'specification', 'created_at']
+    list_filter = ['specification']
+    search_fields = ['location']
+    inlines = [AirBNBImageInline]
+
+@admin.register(AirBNBImage)
+class AirBNBImageAdmin(admin.ModelAdmin):
+    list_display = ['airbnb', 'is_featured', 'order', 'uploaded_at']
+    list_filter = ['is_featured', 'airbnb']
