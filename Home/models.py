@@ -35,6 +35,28 @@ class AwesomePackages(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Itinerary(models.Model):
+    package = models.ForeignKey(AwesomePackages, on_delete=models.CASCADE, related_name='itineraries')
+    day_number = models.IntegerField()
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    activities = models.TextField(help_text="List activities for this day, separated by commas", blank=True)
+    accommodation = models.CharField(max_length=200, blank=True)
+    meals = models.CharField(max_length=100, choices=[
+        ('Breakfast', 'Breakfast Only'),
+        ('Half Board', 'Breakfast & Dinner'),
+        ('Full Board', 'Breakfast, Lunch & Dinner'),
+        ('All Inclusive', 'All Meals & Drinks'),
+    ], default='Full Board')
+    image = models.ImageField(upload_to='itinerary_images/', blank=True, null=True)
+    
+    class Meta:
+        ordering = ['day_number']
+        unique_together = ['package', 'day_number']
+    
+    def __str__(self):
+        return f"Day {self.day_number}: {self.title} - {self.package.name}"
 
 class GalleryCategory(models.Model):
     name = models.CharField(max_length=100)
