@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from .models import (Services, DestinationsCategory, Destinations,
                      AwesomePackages, GalleryCategory, Gallery,
-                     Bookings, Testimonials, Blogs
+                     Bookings, Testimonials, Blogs, AirBNBImage, AirBNB
                      )
 from colorama import Fore, Style
 from django.urls import reverse_lazy
@@ -360,7 +360,9 @@ class CruisesView(TemplateView):
 class AirLineView(TemplateView):
     template_name = 'Home/airline.html'
     
-class BlogsView(TemplateView):
+class BlogsView(ListView):
+    model = Blogs
+    context_object_name = "blogs"
     template_name = 'Blogs/blogs.html'
     
 class BlogDetailView(DetailView):
@@ -371,5 +373,18 @@ class BlogDetailView(DetailView):
 class GalleryView(TemplateView):
     template_name = 'Home/gallery.html'
     
-class AirBNBView(TemplateView):
-    template_name = 'Home/airbnb.html'
+class AirBNBView(ListView):
+    model = AirBNB
+    context_object_name = 'bnbs'
+    template_name = 'BNB/bnbs.html'
+    
+class AirBNBDetailView(DetailView):
+    model = AirBNB
+    context_object_name = 'bnb'
+    template_name = "BNB/bnbs_detail.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_images'] = self.object.images.all().order_by('order')
+        context['featured_image'] = context['all_images'].filter(is_featured=True).first() or context['all_images'].first()
+        return context
