@@ -26,6 +26,11 @@ class AwesomePackages(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     persons = models.IntegerField()
     description = models.TextField()
+    category = models.CharField(default="East Africa Tours", max_length=50, choices=(
+        ("East Africa Tours", "EA-T"), 
+        ("Africa Tours", "A-T"),
+        ("International Tours", "I-T"),
+    ))
     image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
 
     def __str__(self):

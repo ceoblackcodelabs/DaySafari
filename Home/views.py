@@ -211,13 +211,23 @@ class AirportTransfersView(TemplateView):
 class TourView(TemplateView):
     template_name = 'Home/tours.html'
     
-class AfricaTourView(TemplateView):
+class AfricaTourView(ListView):
+    model = AwesomePackages
+    context_object_name = "africaPackages"
     template_name = 'Tours/africa_tours.html'
     
-class EastAfricaTourView(TemplateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+    
+class EastAfricaTourView(ListView):
+    model = AwesomePackages
+    context_object_name = "africaPackages"
     template_name = 'Tours/east_africa_tours.html'
     
-class InternationalAfricaTourView(TemplateView):
+class InternationalAfricaTourView(ListView):
+    model = AwesomePackages
+    context_object_name = "africaPackages"
     template_name = 'Tours/international_africa_tours.html'
     
 class BookingCreateView(CreateView):

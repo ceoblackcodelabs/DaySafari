@@ -22,10 +22,10 @@ class MustVisitAdmin(admin.ModelAdmin):
 
 @admin.register(AwesomePackages)
 class AwesomePackagesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location', 'starRating', 'days', 'price', 'persons')
-    search_fields = ('name', 'location')
-    list_filter = ('starRating', 'location')
-    list_editable = ('price', 'days')
+    list_display = ('name', 'category', 'location', 'starRating', 'days', 'price', 'persons')
+    search_fields = ('name', 'category', 'location')
+    list_filter = ('starRating', 'category', 'location')
+    list_editable = ('price', 'category', 'days')
     ordering = ('-starRating', 'price')
 
 @admin.register(GalleryCategory)
