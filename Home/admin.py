@@ -2,11 +2,21 @@ from django.contrib import admin
 from .models import (
     Services, MustVisit, AwesomePackages, GalleryCategory, 
     Gallery, Bookings, Testimonials, BlogComments, Blogs,
-    DestinationsCategory, Destinations
+    DestinationsCategory, Destinations, Itinerary
 )
 
 admin.site.site_header = "DAY SAFARIS ADVENTURES"
 admin.site.site_title = "Day Safari Admin"
+
+class ItineraryInline(admin.TabularInline):
+    model = Itinerary
+    extra = 1
+    fields = ['day_number', 'title', 'description', 'accommodation', 'meals']
+
+@admin.register(Itinerary)
+class ItineraryAdmin(admin.ModelAdmin):
+    list_display = ['package', 'day_number', 'title']
+    list_filter = ['package']
 
 @admin.register(Services)
 class ServicesAdmin(admin.ModelAdmin):
@@ -23,6 +33,7 @@ class MustVisitAdmin(admin.ModelAdmin):
 @admin.register(AwesomePackages)
 class AwesomePackagesAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'location', 'starRating', 'days', 'price', 'persons')
+    inlines = [ItineraryInline]
     search_fields = ('name', 'category', 'location')
     list_filter = ('starRating', 'category', 'location')
     list_editable = ('price', 'category', 'days')
@@ -53,11 +64,11 @@ class TestimonialsAdmin(admin.ModelAdmin):
     list_filter = ('starRating', 'location')
     list_editable = ('starRating',)
     
-@admin.register(BlogComments)
-class BlogCommentsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'created_date')
-    search_fields = ('name', 'email', 'comment')
-    list_filter = ('created_date',)
+# @admin.register(BlogComments)
+# class BlogCommentsAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'email', 'created_date')
+#     search_fields = ('name', 'email', 'comment')
+#     list_filter = ('created_date',)
     
 @admin.register(Blogs)
 class BlogsAdmin(admin.ModelAdmin):
@@ -93,7 +104,7 @@ class DestinationsAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     ordering = ('category', 'name')
     list_per_page = 20
-    autocomplete_fields = ['category']  # Useful if you have many categories
+    autocomplete_fields = ['category'] 
     
     # Add fieldsets for better organization
     fieldsets = (
