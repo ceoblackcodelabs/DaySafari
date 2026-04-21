@@ -159,7 +159,19 @@ class HomeView(ListView):
 class DestinationDetailView(DetailView):
     model = Destinations
     context_object_name = 'destination'
-    template_name = 'Home/destination_detail.html'
+    template_name = 'Destinations/destination_detail.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get similar destinations (same category)
+        similar_destinations = Destinations.objects.filter(
+            category=self.object.category
+        ).exclude(id=self.object.id)[:3]
+        
+        context['similar_destinations'] = similar_destinations
+        
+        return context
     
 class AboutView(ListView):
     model = Services
