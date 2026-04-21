@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, FormView
 from .models import (Services, DestinationsCategory, Destinations,
-                     AwesomePackages, GalleryCategory, Gallery,
+                     AwesomePackages, GalleryCategory, Gallery, Contact,
                      Bookings, Testimonials, Blogs, AirBNBImage, AirBNB
                      )
 from colorama import Fore, Style
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from .forms import BookingsForm
+from .forms import BookingsForm, ContactForm
 from django.contrib import messages
 
 
@@ -289,7 +289,8 @@ class InternationalAfricaTourView(ListView):
         context['destinations_by_category'] = destinations_by_category
         
         return context
-    
+
+#  packages
 class PackagesDetailView(DetailView):
     model = AwesomePackages
     context_object_name = 'package'
@@ -372,7 +373,8 @@ class BlogDetailView(DetailView):
     
 class GalleryView(TemplateView):
     template_name = 'Home/gallery.html'
-    
+
+#  AirBNB
 class AirBNBView(ListView):
     model = AirBNB
     context_object_name = 'bnbs'
@@ -387,4 +389,35 @@ class AirBNBDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['all_images'] = self.object.images.all().order_by('order')
         context['featured_image'] = context['all_images'].filter(is_featured=True).first() or context['all_images'].first()
+        return context
+    
+class ContactView(FormView):
+    template_name = 'Home/contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('contact')
+    
+    def form_valid(self, form):
+        # Save the contact message
+        contact = form.save()
+        
+        # Add success message
+        messages.success(self.request, 
+            f"Thank you {contact.name}! Your message has been sent successfully. "
+            "We will get back to you within 24 hours."
+        )
+        
+        # Optional: Send email notification
+        # self.send_notification_email(contact)
+        
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{field}: {error}")
+        return super().form_invalid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Contact Us - Day Safaris Adventures'
         return context
