@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, FormView
 from .models import (Services, DestinationsCategory, Destinations,
                      AwesomePackages, GalleryCategory, Gallery, Contact,
-                     Bookings, Testimonials, Blogs, AirBNBImage, AirBNB
+                     Bookings, Testimonials, Blogs
                      )
 from colorama import Fore, Style
 from django.urls import reverse_lazy
@@ -407,23 +407,6 @@ class GalleryView(ListView):
         
         context['galleries_by_category'] = galleries_by_category
         
-        return context
-
-#  AirBNB
-class AirBNBView(ListView):
-    model = AirBNB
-    context_object_name = 'bnbs'
-    template_name = 'BNB/bnbs.html'
-    
-class AirBNBDetailView(DetailView):
-    model = AirBNB
-    context_object_name = 'bnb'
-    template_name = "BNB/bnbs_detail.html"
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['all_images'] = self.object.images.all().order_by('order')
-        context['featured_image'] = context['all_images'].filter(is_featured=True).first() or context['all_images'].first()
         return context
     
 # contact  

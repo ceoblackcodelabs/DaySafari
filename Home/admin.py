@@ -3,7 +3,7 @@ from .models import (
     Services, MustVisit, AwesomePackages, GalleryCategory, 
     Gallery, Bookings, Testimonials, BlogComments, Blogs,
     DestinationsCategory, Destinations, Itinerary,
-    AirBNB, AirBNBImage, Contact
+    Contact
 )
 
 admin.site.site_header = "DAY SAFARIS ADVENTURES"
@@ -150,23 +150,6 @@ class DestinationsAdmin(admin.ModelAdmin):
         self.message_user(request, f'{updated} destinations set to portrait orientation.')
     make_portrait.short_description = "Set selected destinations' categories to portrait"
     
-# Airbnb    
-class AirBNBImageInline(admin.TabularInline):
-    model = AirBNBImage
-    extra = 3
-    fields = ['image', 'caption', 'is_featured', 'order']
-
-@admin.register(AirBNB)
-class AirBNBAdmin(admin.ModelAdmin):
-    list_display = ['location', 'specification', 'created_at']
-    list_filter = ['specification']
-    search_fields = ['location']
-    inlines = [AirBNBImageInline]
-
-@admin.register(AirBNBImage)
-class AirBNBImageAdmin(admin.ModelAdmin):
-    list_display = ['airbnb', 'is_featured', 'order', 'uploaded_at']
-    list_filter = ['is_featured', 'airbnb']
     
 # contact
 @admin.register(Contact)
@@ -197,3 +180,4 @@ class ContactAdmin(admin.ModelAdmin):
         queryset.update(is_read=False)
         self.message_user(request, f"{queryset.count()} messages marked as unread.")
     mark_as_unread.short_description = "Mark selected messages as unread"
+    
