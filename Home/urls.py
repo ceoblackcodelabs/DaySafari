@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (HomeView, AboutView, ContactView, 
                     ServicesView, TourView, BookingCreateView, BookingDetailView,
                     AfricaTourView, EastAfricaTourView, InternationalAfricaTourView,
-                    CruisesView, AirLineView, BlogsView, GalleryView, AirBNBView, AirBNBDetailView,
+                    CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
                     DestinationDetailView, PackagesDetailView, BlogDetailView
                     )
@@ -26,10 +26,6 @@ urlpatterns = [
     path('cruises/', CruisesView.as_view(), name='cruises'),
     path('airline/', AirLineView.as_view(), name='airline'),
     path('gallery/', GalleryView.as_view(), name='gallary'),
-    
-    # airbnb
-    path('airbnb/', AirBNBView.as_view(), name='airbnb'),
-    path('airbnb/<int:pk>/', AirBNBDetailView.as_view(), name='bnb_detail'),
 
     # tours
     path('tours/', TourView.as_view(), name='tours'),
