@@ -1,20 +1,15 @@
 from django.urls import path
 from .views import (HomeView, AboutView, ContactView, 
-                    ServicesView, TourView, BookingCreateView, BookingDetailView,
-                    AfricaTourView, EastAfricaTourView, InternationalAfricaTourView,
+                    ServicesView, BookingCreateView, BookingDetailView,
                     CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
-                    DestinationDetailView, PackagesDetailView, BlogDetailView
+                    BlogDetailView
                     )
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('about/', AboutView.as_view(), name='about'),
     path('contact/', ContactView.as_view(), name='contact'),
-    path('destination/<int:pk>/', DestinationDetailView.as_view(), name='destination_detail'),
-    
-    # packages
-    path('packages/<int:pk>/', PackagesDetailView.as_view(), name='package_detail'),
     
     # services
     path('services/', ServicesView.as_view(), name='services'),
@@ -27,11 +22,6 @@ urlpatterns = [
     path('airline/', AirLineView.as_view(), name='airline'),
     path('gallery/', GalleryView.as_view(), name='gallary'),
 
-    # tours
-    path('tours/', TourView.as_view(), name='tours'),
-    path('africa-tours/', AfricaTourView.as_view(), name='africa_tours'),
-    path('east-africa-tours/', EastAfricaTourView.as_view(), name='east_africa_tours'),
-    path('international-africa-tours/', InternationalAfricaTourView.as_view(), name='international_africa_tours'),
     
     # bookings
     path('booking/', BookingCreateView.as_view(), name='booking_create'),
