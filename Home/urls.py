@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import (HomeView, AboutView, ContactView, 
-                    ServicesView, BookingCreateView, BookingDetailView,
+from .views import (HomeView, AboutView, ServicesView, 
                     CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
                     BlogDetailView
@@ -9,7 +8,6 @@ from .views import (HomeView, AboutView, ContactView,
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('about/', AboutView.as_view(), name='about'),
-    path('contact/', ContactView.as_view(), name='contact'),
     
     # services
     path('services/', ServicesView.as_view(), name='services'),
@@ -21,11 +19,6 @@ urlpatterns = [
     path('cruises/', CruisesView.as_view(), name='cruises'),
     path('airline/', AirLineView.as_view(), name='airline'),
     path('gallery/', GalleryView.as_view(), name='gallary'),
-
-    
-    # bookings
-    path('booking/', BookingCreateView.as_view(), name='booking_create'),
-    path('booking/<int:pk>/', BookingDetailView.as_view(), name='book_package'),
     
     # blogs
     path('blog/', BlogsView.as_view(), name='blog'),
