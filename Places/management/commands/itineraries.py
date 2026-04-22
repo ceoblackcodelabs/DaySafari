@@ -1,6 +1,6 @@
 # management/commands/seed_itineraries.py
 from django.core.management.base import BaseCommand
-from Home.models import AwesomePackages, Itinerary
+from Places.models import AwesomePackages, Itinerary
 
 class Command(BaseCommand):
     help = 'Seed itineraries for existing packages'

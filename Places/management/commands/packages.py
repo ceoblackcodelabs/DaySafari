@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.core.files import File
-from Home.models import AwesomePackages
+from Places.models import AwesomePackages
 import os
 from decimal import Decimal
 

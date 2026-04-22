@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Bookings, Destinations, Contact
+from .models import Bookings, Contact
+from Places.models import Destinations
 from datetime import date, datetime, timedelta
 
 class BookingsForm(forms.ModelForm):
