@@ -1,8 +1,7 @@
 from django.contrib import admin
 from .models import (
     Services, GalleryCategory, 
-    Gallery, Bookings, Testimonials, BlogComments, Blogs,
-    Contact
+    Gallery, Testimonials, BlogComments, Blogs,
 )
 
 admin.site.site_header = "DAY SAFARIS ADVENTURES"
@@ -25,13 +24,6 @@ class GalleryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_filter = ('category',)
 
-@admin.register(Bookings)
-class BookingsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'destination', 'persons', 'date')
-    search_fields = ('name', 'email', 'destination')
-    list_filter = ('date', 'destination')
-    readonly_fields = ('name', 'email', 'phone', 'destination', 'persons', 'date', 'message')
-
 @admin.register(Testimonials)
 class TestimonialsAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'starRating')
@@ -50,35 +42,4 @@ class BlogsAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'published_date')
     search_fields = ('title', 'author')
     list_filter = ('published_date',)
-    
-    
-# contact
-@admin.register(Contact)
-class ContactAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email', 'subject', 'created_at', 'is_read']
-    list_filter = ['is_read', 'created_at']
-    search_fields = ['name', 'email', 'subject', 'message']
-    readonly_fields = ['created_at']
-    list_editable = ['is_read']
-    
-    fieldsets = (
-        ('Contact Information', {
-            'fields': ('name', 'email', 'subject', 'message')
-        }),
-        ('Status', {
-            'fields': ('is_read', 'created_at')
-        }),
-    )
-    
-    actions = ['mark_as_read', 'mark_as_unread']
-    
-    def mark_as_read(self, request, queryset):
-        queryset.update(is_read=True)
-        self.message_user(request, f"{queryset.count()} messages marked as read.")
-    mark_as_read.short_description = "Mark selected messages as read"
-    
-    def mark_as_unread(self, request, queryset):
-        queryset.update(is_read=False)
-        self.message_user(request, f"{queryset.count()} messages marked as unread.")
-    mark_as_unread.short_description = "Mark selected messages as unread"
-    
+       
