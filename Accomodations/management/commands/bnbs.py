@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.core.files import File
 from pathlib import Path
 import os
-from Home.models import AirBNB, AirBNBImage  # Change to your app name
+from Accomodations.models import AirBNB, AirBNBImage  # Change to your app name
 
 class Command(BaseCommand):
     help = 'Seed 9 AirBNB properties with multiple images'
