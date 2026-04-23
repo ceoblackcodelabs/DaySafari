@@ -1,0 +1,402 @@
+{% extends "Home/base.html" %}
+{% load static %}
+
+{% block title %}My Profile - Day Safaris Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">My Profile</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Account</a></li>
+            <li class="breadcrumb-item active text-white">My Profile</li>
+        </ol>    
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Profile Content Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Profile Sidebar -->
+            <div class="col-lg-4">
+                <div class="bg-light rounded p-4 text-center">
+                    <div class="mb-4 position-relative">
+                        {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" alt="{{ user.username }}" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                        {% else %}
+                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 120px; height: 120px;">
+                            <i class="fa fa-user fa-4x text-white"></i>
+                        </div>
+                        {% endif %}
+                        <a href="#" class="position-absolute" style="bottom: 5px; right: 35%; background: white; border-radius: 50%; padding: 5px 8px;">
+                            <i class="fa fa-camera text-primary"></i>
+                        </a>
+                    </div>
+                    <h3>{{ user.get_full_name|default:user.username }}</h3>
+                    <p class="text-muted">@{{ user.username }}</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-2"></i> {{ user.email }}</p>
+                    <p class="mb-3"><i class="fa fa-phone me-2"></i> {{ user.phone|default:"+254 XXX XXX XXX" }}</p>
+                    <p class="mb-4"><i class="fa fa-map-marker-alt me-2"></i> {{ user.location|default:"Nairobi, Kenya" }}</p>
+                    <div class="border-top pt-3 mt-2">
+                        <small class="text-muted"><i class="fa fa-calendar me-1"></i> Member since {{ user.date_joined|date:"F j, Y" }}</small>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-outline-primary w-100 mb-2">
+                            <i class="fa fa-edit me-2"></i>Edit Profile
+                        </a>
+                        <a href="{% url 'logout' %}" class="btn btn-outline-danger w-100">
+                            <i class="fa fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Main Content -->
+            <div class="col-lg-8">
+                <div class="bg-light rounded p-4">
+                    <h3 class="mb-4">My Dashboard</h3>
+                    
+                    <!-- Stats Cards -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-3 col-6">
+                            <div class="bg-white rounded p-3 text-center">
+                                <i class="fa fa-suitcase fa-2x text-primary mb-2"></i>
+                                <h4 class="mb-1">{{ total_bookings|default:"0" }}</h4>
+                                <p class="text-muted mb-0 small">Total Bookings</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="bg-white rounded p-3 text-center">
+                                <i class="fa fa-clock fa-2x text-warning mb-2"></i>
+                                <h4 class="mb-1">{{ upcoming_bookings|default:"0" }}</h4>
+                                <p class="text-muted mb-0 small">Upcoming</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="bg-white rounded p-3 text-center">
+                                <i class="fa fa-check-circle fa-2x text-success mb-2"></i>
+                                <h4 class="mb-1">{{ completed_bookings|default:"0" }}</h4>
+                                <p class="text-muted mb-0 small">Completed</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="bg-white rounded p-3 text-center">
+                                <i class="fa fa-star fa-2x text-info mb-2"></i>
+                                <h4 class="mb-1">{{ loyalty_points|default:"0" }}</h4>
+                                <p class="text-muted mb-0 small">Loyalty Points</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="bg-white rounded p-3 text-center">
+                                <i class="fa fa-suitcase fa-3x text-primary mb-2"></i>
+                                <h5>My Bookings</h5>
+                                <p class="mb-2">View and manage your safari bookings</p>
+                                <a href="#current-bookings" class="btn btn-sm btn-outline-primary">View Bookings</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bg-white rounded p-3 text-center">
+                                <i class="fa fa-heart fa-3x text-danger mb-2"></i>
+                                <h5>Saved Destinations</h5>
+                                <p class="mb-2">Your favorite safari destinations</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View Favorites</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bg-white rounded p-3 text-center">
+                                <i class="fa fa-gift fa-3x text-success mb-2"></i>
+                                <h5>Special Offers</h5>
+                                <p class="mb-2">Exclusive member deals just for you</p>
+                                <a href="{% url 'offers' %}" class="btn btn-sm btn-outline-primary">View Offers</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bg-white rounded p-3 text-center">
+                                <i class="fa fa-cog fa-3x text-secondary mb-2"></i>
+                                <h5>Account Settings</h5>
+                                <p class="mb-2">Update password and preferences</p>
+                                <a href="{% url 'account_settings' %}" class="btn btn-sm btn-outline-primary">Edit Settings</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Current Bookings Section -->
+<div class="container-fluid blog py-5 bg-light">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3"><i class="fa fa-clock me-2"></i>Current Bookings</h5>
+            <h1 class="mb-4">Your Upcoming Safaris</h1>
+            <p class="mb-0">Track and manage your upcoming safari adventures. Get ready for an unforgettable experience with Day Safaris!</p>
+        </div>
+        
+        {% if current_bookings %}
+        <div class="row g-4 justify-content-center">
+            {% for booking in current_bookings %}
+            <div class="col-lg-6 col-md-6">
+                <div class="blog-item h-100">
+                    <div class="blog-img">
+                        <div class="blog-img-inner">
+                            {% if booking.tour.image %}
+                            <img class="img-fluid w-100 rounded-top" src="{{ booking.tour.image.url }}" alt="{{ booking.tour.title }}" style="height: 250px; object-fit: cover;">
+                            {% else %}
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/safari-placeholder.jpg' %}" alt="{{ booking.tour.title }}" style="height: 250px; object-fit: cover;">
+                            {% endif %}
+                            <div class="blog-icon">
+                                <a href="{% url 'booking_detail' booking.id %}" class="my-auto"><i class="fas fa-eye fa-2x text-white"></i></a>
+                            </div>
+                        </div>
+                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-calendar-alt text-primary me-2"></i>{{ booking.booking_date|date:"d M Y" }}
+                            </small>
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-users text-primary me-2"></i>{{ booking.number_of_people }} Person(s)
+                            </small>
+                            <small class="flex-fill text-center py-2">
+                                <i class="fa fa-money-bill text-primary me-2"></i>${{ booking.total_price }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="blog-content border border-top-0 rounded-bottom p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <p class="mb-0 text-muted"><i class="fa fa-tag me-1"></i> Booking #{{ booking.id }}</p>
+                            <span class="badge bg-success">{{ booking.status }}</span>
+                        </div>
+                        <a href="{% url 'tour_detail' booking.tour.id %}" class="h4">{{ booking.tour.title }}</a>
+                        <p class="my-2"><i class="fa fa-calendar-week text-primary me-2"></i>{{ booking.tour.duration }} days</p>
+                        <p class="my-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ booking.tour.location }}</p>
+                        <p class="my-3">{{ booking.tour.short_description|truncatewords:20 }}</p>
+                        <div class="d-flex justify-content-between gap-2">
+                            <a href="{% url 'booking_detail' booking.id %}" class="btn btn-primary rounded-pill py-2 px-4 flex-grow-1">
+                                <i class="fa fa-eye me-2"></i>View Details
+                            </a>
+                            <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-outline-danger rounded-pill py-2 px-4" onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                <i class="fa fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 bg-white rounded">
+            <i class="fa fa-suitcase fa-4x text-muted mb-3"></i>
+            <h3>No Upcoming Bookings</h3>
+            <p class="mb-3">You haven't booked any safaris yet. Start planning your adventure!</p>
+            <a href="{% url 'tours' %}" class="btn btn-primary rounded-pill py-2 px-4">
+                <i class="fa fa-search me-2"></i>Browse Safaris
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Past Bookings Section -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3"><i class="fa fa-history me-2"></i>Past Bookings</h5>
+            <h1 class="mb-4">Your Safari Memories</h1>
+            <p class="mb-0">Relive your past safari experiences and share your stories with us. Write a review and inspire other travelers!</p>
+        </div>
+        
+        {% if past_bookings %}
+        <div class="row g-4 justify-content-center">
+            {% for booking in past_bookings %}
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item h-100">
+                    <div class="blog-img">
+                        <div class="blog-img-inner">
+                            {% if booking.tour.image %}
+                            <img class="img-fluid w-100 rounded-top" src="{{ booking.tour.image.url }}" alt="{{ booking.tour.title }}" style="height: 200px; object-fit: cover;">
+                            {% else %}
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/safari-placeholder.jpg' %}" alt="{{ booking.tour.title }}" style="height: 200px; object-fit: cover;">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="blog-content border border-top-0 rounded-bottom p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <p class="mb-0 text-muted"><i class="fa fa-calendar me-1"></i> {{ booking.tour_date|date:"d M Y" }}</p>
+                            {% if booking.reviewed %}
+                            <span class="badge bg-info">Reviewed</span>
+                            {% else %}
+                            <span class="badge bg-warning">Pending Review</span>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'tour_detail' booking.tour.id %}" class="h5">{{ booking.tour.title }}</a>
+                        <p class="my-2"><i class="fa fa-users text-primary me-2"></i>{{ booking.number_of_people }} travelers</p>
+                        {% if booking.reviewed %}
+                        <div class="my-2">
+                            {% for i in "12345"|make_list %}
+                            <i class="fa fa-star {% if forloop.counter <= booking.rating %}text-warning{% else %}text-muted{% endif %} small"></i>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="mt-3">
+                            {% if not booking.reviewed %}
+                            <a href="{% url 'write_review' booking.id %}" class="btn btn-outline-primary rounded-pill py-2 px-4 w-100">
+                                <i class="fa fa-star me-2"></i>Write a Review
+                            </a>
+                            {% else %}
+                            <a href="{% url 'view_review' booking.id %}" class="btn btn-outline-secondary rounded-pill py-2 px-4 w-100">
+                                <i class="fa fa-eye me-2"></i>View Your Review
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 bg-light rounded">
+            <i class="fa fa-history fa-4x text-muted mb-3"></i>
+            <h3>No Past Bookings Yet</h3>
+            <p>Complete your first safari adventure to see it here!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Recommended Safaris Section -->
+<div class="container-fluid blog py-5 bg-light">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3"><i class="fa fa-star me-2"></i>Recommended For You</h5>
+            <h1 class="mb-4">Based on Your Interests</h1>
+            <p class="mb-0">Discover personalized safari recommendations tailored to your travel preferences and past adventures.</p>
+        </div>
+        
+        {% if recommended_tours %}
+        <div class="row g-4 justify-content-center">
+            {% for tour in recommended_tours %}
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item h-100">
+                    <div class="blog-img">
+                        <div class="blog-img-inner">
+                            {% if tour.image %}
+                            <img class="img-fluid w-100 rounded-top" src="{{ tour.image.url }}" alt="{{ tour.title }}" style="height: 220px; object-fit: cover;">
+                            {% else %}
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/safari-placeholder.jpg' %}" alt="{{ tour.title }}" style="height: 220px; object-fit: cover;">
+                            {% endif %}
+                            <div class="blog-icon">
+                                <a href="{% url 'tour_detail' tour.id %}" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                            </div>
+                        </div>
+                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-clock text-primary me-2"></i>{{ tour.duration }} Days
+                            </small>
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-map-marker-alt text-primary me-2"></i>{{ tour.location }}
+                            </small>
+                            <small class="flex-fill text-center py-2">
+                                <i class="fa fa-dollar-sign text-primary me-2"></i>{{ tour.price }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="blog-content border border-top-0 rounded-bottom p-4">
+                        <a href="{% url 'tour_detail' tour.id %}" class="h4">{{ tour.title }}</a>
+                        <div class="my-2">
+                            {% for i in "12345"|make_list %}
+                            <i class="fa fa-star {% if forloop.counter <= tour.rating %}text-warning{% else %}text-muted{% endif %}"></i>
+                            {% endfor %}
+                            <span class="text-muted">({{ tour.review_count }} reviews)</span>
+                        </div>
+                        <p class="my-3">{{ tour.short_description|truncatewords:20 }}</p>
+                        <div class="d-flex justify-content-between gap-2">
+                            <a href="{% url 'tour_detail' tour.id %}" class="btn btn-primary rounded-pill py-2 px-4 flex-grow-1">
+                                <i class="fa fa-info-circle me-2"></i>View Details
+                            </a>
+                            <a href="{% url 'book_tour' tour.id %}" class="btn btn-success rounded-pill py-2 px-4">
+                                <i class="fa fa-shopping-cart me-2"></i>Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 bg-white rounded">
+            <i class="fa fa-compass fa-4x text-muted mb-3"></i>
+            <h3>Discover Amazing Safaris</h3>
+            <p class="mb-3">Browse our collection of incredible safari adventures</p>
+            <a href="{% url 'tours' %}" class="btn btn-primary rounded-pill py-2 px-4">
+                <i class="fa fa-search me-2"></i>Explore Safaris
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Recent Activity / Notifications Section -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="bg-light rounded p-4 h-100">
+                    <h5 class="mb-3"><i class="fa fa-bell text-primary me-2"></i>Recent Notifications</h5>
+                    {% if notifications %}
+                    <div class="list-group list-group-flush bg-transparent">
+                        {% for notification in notifications|slice:":5" %}
+                        <div class="list-group-item bg-transparent border-bottom">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="mb-1">{{ notification.message }}</p>
+                                    <small class="text-muted">{{ notification.created_at|timesince }} ago</small>
+                                </div>
+                                {% if not notification.is_read %}
+                                <span class="badge bg-danger rounded-pill">New</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fa fa-bell-slash fa-3x text-muted mb-2"></i>
+                        <p class="mb-0">No new notifications</p>
+                    </div>
+                    {% endif %}
+                    {% if notifications %}
+                    <div class="mt-3 text-center">
+                        <a href="{% url 'all_notifications' %}" class="btn btn-sm btn-outline-primary">View All Notifications</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-light rounded p-4 h-100">
+                    <h5 class="mb-3"><i class="fa fa-tag text-primary me-2"></i>Exclusive Offer Just For You</h5>
+                    <div class="text-center py-4">
+                        <i class="fa fa-gift fa-3x text-warning mb-3"></i>
+                        <h6>Get 15% off on your next booking!</h6>
+                        <p class="mb-3">Use code: <strong class="text-primary">SAFARI15</strong></p>
+                        <p class="small text-muted">Valid for first-time bookings of 5+ days safaris</p>
+                        <a href="{% url 'tours' %}" class="btn btn-primary rounded-pill py-2 px-4">
+                            <i class="fa fa-rocket me-2"></i>Book Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
