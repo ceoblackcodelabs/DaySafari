@@ -1,0 +1,627 @@
+{% extends "Home/base.html" %}
+{% load static %}
+
+{% block title %}Edit Profile - Day Safaris Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start - KEPT ORIGINAL -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">Edit Profile</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'profile' %}">My Profile</a></li>
+            <li class="breadcrumb-item active text-white">Edit Profile</li>
+        </ol>    
+    </div>
+</div>
+<!-- Header End -->
+
+<style>
+    /* Responsive Button Styles */
+    .btn-responsive {
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+    
+    /* Desktop (1200px and above) */
+    @media (min-width: 1200px) {
+        .btn-responsive {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+        }
+        .btn-icon-only {
+            padding: 0.75rem 1.5rem;
+        }
+    }
+    
+    /* Tablet Landscape (992px - 1199px) */
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .btn-responsive {
+            padding: 0.65rem 1.75rem;
+            font-size: 0.95rem;
+        }
+        .btn-icon-only {
+            padding: 0.65rem 1.25rem;
+        }
+        .card-body {
+            padding: 2rem !important;
+        }
+    }
+    
+    /* Tablet Portrait (768px - 991px) */
+    @media (min-width: 768px) and (max-width: 991px) {
+        .btn-responsive {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+        }
+        .btn-icon-only {
+            padding: 0.6rem 1rem;
+        }
+        .card-body {
+            padding: 1.75rem !important;
+        }
+        .btn-responsive i {
+            font-size: 0.85rem;
+        }
+        .btn-group-responsive {
+            flex-direction: row;
+            gap: 1rem;
+        }
+    }
+    
+    /* Mobile Landscape (576px - 767px) */
+    @media (min-width: 576px) and (max-width: 767px) {
+        .btn-responsive {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.85rem;
+        }
+        .btn-icon-only {
+            padding: 0.5rem 0.875rem;
+        }
+        .card-body {
+            padding: 1.5rem !important;
+        }
+        .btn-responsive i {
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+        .btn-group-responsive {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .btn-group-responsive .btn-responsive {
+            width: 100%;
+        }
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .d-flex.justify-content-between .btn-responsive {
+            width: 100%;
+        }
+    }
+    
+    /* Mobile Portrait (below 575px) */
+    @media (max-width: 575px) {
+        .btn-responsive {
+            padding: 0.45rem 1rem;
+            font-size: 0.8rem;
+        }
+        .btn-icon-only {
+            padding: 0.45rem 0.75rem;
+        }
+        .card-body {
+            padding: 1.25rem !important;
+        }
+        .btn-responsive i {
+            font-size: 0.75rem;
+            margin-right: 0.4rem;
+        }
+        .btn-group-responsive {
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .btn-group-responsive .btn-responsive {
+            width: 100%;
+        }
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .d-flex.justify-content-between .btn-responsive {
+            width: 100%;
+        }
+    }
+    
+    /* Form Input Responsive */
+    @media (max-width: 767px) {
+        .form-control {
+            font-size: 16px !important; /* Prevents zoom on mobile */
+        }
+        .input-group-text {
+            padding: 0.5rem 0.75rem;
+        }
+        .form-label {
+            font-size: 0.9rem;
+        }
+        small.text-muted {
+            font-size: 0.7rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        .display-3 {
+            font-size: 2rem !important;
+        }
+    }
+    
+    /* Sidebar Responsive */
+    @media (max-width: 991px) {
+        .col-lg-4 {
+            margin-bottom: 1.5rem;
+        }
+        .bg-light.rounded.p-4 {
+            position: sticky;
+            top: 20px;
+        }
+    }
+    
+    /* Smooth transitions */
+    .btn-responsive {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-responsive:active {
+        transform: scale(0.97);
+    }
+    
+    /* Responsive Alert Messages */
+    @media (max-width: 575px) {
+        .alert {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+        }
+        .alert i {
+            font-size: 0.9rem;
+        }
+        .alert .btn-close {
+            padding: 0.5rem;
+        }
+    }
+    
+    /* Responsive Grid Gaps */
+    @media (max-width: 767px) {
+        .g-4 {
+            --bs-gutter-y: 1rem;
+        }
+        .row.g-4 {
+            margin-top: -0.5rem;
+        }
+    }
+</style>
+
+<!-- Edit Profile Content Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row g-4 g-lg-5">
+            <!-- Profile Sidebar -->
+            <div class="col-lg-4">
+                <div class="bg-light rounded p-3 p-md-4 text-center sticky-lg-top" style="top: 20px;">
+                    <div class="mb-4 position-relative d-inline-block">
+                        {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" alt="{{ user.username }}" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                        {% else %}
+                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+                            <i class="fa fa-user fa-3x text-white"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <h3 class="h4 mb-1">{{ user.get_full_name|default:user.username }}</h3>
+                    <p class="text-muted small">@{{ user.username }}</p>
+                    <p class="mb-2 small"><i class="fa fa-envelope me-2"></i> {{ user.email }}</p>
+                    <p class="mb-3 small"><i class="fa fa-calendar me-2"></i> Member since {{ user.date_joined|date:"M Y" }}</p>
+                    <div class="border-top pt-3 mt-2">
+                        <a href="{% url 'profile' %}" class="btn btn-outline-primary w-100 btn-responsive">
+                            <i class="fa fa-arrow-left me-2"></i>Back to Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Profile Form -->
+            <div class="col-lg-8">
+                <!-- Section Title -->
+                <div class="mb-4">
+                    <h2 class="h2 mb-2">Edit Your Profile</h2>
+                    <p class="text-muted small">Update your personal information and account details</p>
+                </div>
+
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                        <i class="fa fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Premium Form Card -->
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-body p-3 p-md-4 p-lg-5">
+                        <form method="post" enctype="multipart/form-data" id="profileForm">
+                            {% csrf_token %}
+                            
+                            <!-- Hidden file input for profile image -->
+                            <input type="file" id="profile_image_input" name="profile_image" accept="image/*" style="display: none;">
+                            
+                            <div class="row g-3 g-md-4">
+                                <!-- First Name -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label fw-semibold mb-2 small">
+                                            <i class="fa fa-user text-primary me-2"></i>First Name
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0 rounded-start-3">
+                                                <i class="fa fa-user text-primary"></i>
+                                            </span>
+                                            <input type="text" 
+                                                   class="form-control border-0 bg-light py-2 py-md-3 {% if form.first_name.errors %}is-invalid{% endif %}" 
+                                                   id="first_name" 
+                                                   name="first_name" 
+                                                   value="{{ form.first_name.value|default:user.first_name }}"
+                                                   placeholder="Enter your first name"
+                                                   style="border-radius: 0 12px 12px 0;">
+                                        </div>
+                                        {% if form.first_name.errors %}
+                                            <div class="invalid-feedback d-block small">
+                                                {% for error in form.first_name.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <!-- Last Name -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label fw-semibold mb-2 small">
+                                            <i class="fa fa-user text-primary me-2"></i>Last Name
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0 rounded-start-3">
+                                                <i class="fa fa-user text-primary"></i>
+                                            </span>
+                                            <input type="text" 
+                                                   class="form-control border-0 bg-light py-2 py-md-3 {% if form.last_name.errors %}is-invalid{% endif %}" 
+                                                   id="last_name" 
+                                                   name="last_name" 
+                                                   value="{{ form.last_name.value|default:user.last_name }}"
+                                                   placeholder="Enter your last name"
+                                                   style="border-radius: 0 12px 12px 0;">
+                                        </div>
+                                        {% if form.last_name.errors %}
+                                            <div class="invalid-feedback d-block small">
+                                                {% for error in form.last_name.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <!-- Username -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label fw-semibold mb-2 small">
+                                            <i class="fa fa-user-circle text-primary me-2"></i>Username
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0 rounded-start-3">
+                                                <i class="fa fa-at text-primary"></i>
+                                            </span>
+                                            <input type="text" 
+                                                   class="form-control border-0 bg-light py-2 py-md-3 {% if form.username.errors %}is-invalid{% endif %}" 
+                                                   id="username" 
+                                                   name="username" 
+                                                   value="{{ form.username.value|default:user.username }}"
+                                                   placeholder="Choose a username"
+                                                   required
+                                                   style="border-radius: 0 12px 12px 0;">
+                                        </div>
+                                        <small class="text-muted mt-2 d-block small">
+                                            <i class="fa fa-info-circle me-1"></i>Your username is unique and cannot be changed easily
+                                        </small>
+                                        <div id="username-feedback" class="mt-2"></div>
+                                        {% if form.username.errors %}
+                                            <div class="invalid-feedback d-block small">
+                                                {% for error in form.username.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <!-- Email -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label fw-semibold mb-2 small">
+                                            <i class="fa fa-envelope text-primary me-2"></i>Email Address
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0 rounded-start-3">
+                                                <i class="fa fa-envelope text-primary"></i>
+                                            </span>
+                                            <input type="email" 
+                                                   class="form-control border-0 bg-light py-2 py-md-3 {% if form.email.errors %}is-invalid{% endif %}" 
+                                                   id="email" 
+                                                   name="email" 
+                                                   value="{{ form.email.value|default:user.email }}"
+                                                   placeholder="Enter your email address"
+                                                   required
+                                                   style="border-radius: 0 12px 12px 0;">
+                                        </div>
+                                        <small class="text-muted mt-2 d-block small">
+                                            <i class="fa fa-shield-alt me-1"></i>We'll send booking confirmations and updates to this email
+                                        </small>
+                                        {% if form.email.errors %}
+                                            <div class="invalid-feedback d-block small">
+                                                {% for error in form.email.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <!-- Phone Number -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label fw-semibold mb-2 small">
+                                            <i class="fa fa-phone text-primary me-2"></i>Phone Number
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0 rounded-start-3">
+                                                <i class="fa fa-phone text-primary"></i>
+                                            </span>
+                                            <input type="tel" 
+                                                   class="form-control border-0 bg-light py-2 py-md-3" 
+                                                   id="phone" 
+                                                   name="phone" 
+                                                   value="{{ user.phone|default:'' }}"
+                                                   placeholder="+254 XXX XXX XXX"
+                                                   style="border-radius: 0 12px 12px 0;">
+                                        </div>
+                                        <small class="text-muted small">For emergency contact and updates</small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Location -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label fw-semibold mb-2 small">
+                                            <i class="fa fa-map-marker-alt text-primary me-2"></i>Location
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0 rounded-start-3">
+                                                <i class="fa fa-map-marker-alt text-primary"></i>
+                                            </span>
+                                            <input type="text" 
+                                                   class="form-control border-0 bg-light py-2 py-md-3" 
+                                                   id="location" 
+                                                   name="location" 
+                                                   value="{{ user.location|default:'' }}"
+                                                   placeholder="Nairobi, Kenya"
+                                                   style="border-radius: 0 12px 12px 0;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Password Change Alert -->
+                            <div class="alert alert-info mt-4 rounded-3 small" role="alert">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa fa-key fa-2x me-3"></i>
+                                    <div>
+                                        <strong>Want to change your password?</strong><br>
+                                        Go to <a href="{% url 'account_settings' %}" class="alert-link">Account Settings</a> to update your password and security preferences.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Form Buttons - Responsive -->
+                            <div class="d-flex justify-content-between gap-3 mt-4 pt-3 btn-group-responsive">
+                                <a href="{% url 'profile' %}" class="btn btn-outline-secondary rounded-pill btn-responsive">
+                                    <i class="fa fa-times me-2"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary rounded-pill btn-responsive" id="submitBtn">
+                                    <i class="fa fa-save me-2"></i>Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Privacy Note -->
+                <div class="bg-light rounded p-3 p-md-4 mt-4">
+                    <div class="d-flex align-items-start">
+                        <i class="fa fa-shield-alt fa-2x text-primary me-3"></i>
+                        <div>
+                            <h6 class="mb-1 small fw-bold">Privacy & Security</h6>
+                            <p class="small text-muted mb-0">
+                                Your personal information is protected and will only be used for booking confirmations 
+                                and safari updates. We never share your data with third parties without your consent.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Content End -->
+
+{% block extra_js %}
+<script>
+    // Enhanced Form Validation
+    
+    // Profile image upload handler
+    const changePhotoBtn = document.getElementById('changePhotoBtn');
+    const profileImageInput = document.getElementById('profile_image_input');
+    
+    // Real-time email validation
+    const emailInput = document.getElementById('email');
+    if (emailInput) {
+        emailInput.addEventListener('input', function() {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.length > 0 && !emailRegex.test(email)) {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            }
+        });
+    }
+    
+    // Username validation
+    const usernameInput = document.getElementById('username');
+    const usernameFeedback = document.getElementById('username-feedback');
+    let usernameCheckTimeout;
+    
+    if (usernameInput) {
+        usernameInput.addEventListener('input', function() {
+            const username = this.value;
+            const usernameRegex = /^[a-zA-Z0-9_]+$/;
+            
+            clearTimeout(usernameCheckTimeout);
+            
+            if (username.length > 0 && username.length < 3) {
+                this.classList.add('is-invalid');
+                this.classList.remove('is-valid');
+                usernameFeedback.innerHTML = '<small class="text-warning"><i class="fa fa-info-circle"></i> Username must be at least 3 characters</small>';
+                return;
+            }
+            
+            if (!usernameRegex.test(username)) {
+                this.classList.add('is-invalid');
+                this.classList.remove('is-valid');
+                usernameFeedback.innerHTML = '<small class="text-danger"><i class="fa fa-exclamation-circle"></i> Username can only contain letters, numbers, and underscores</small>';
+                return;
+            }
+            
+            // Simulate availability check
+            usernameCheckTimeout = setTimeout(() => {
+                // In production, make an AJAX call here
+                if (username === '{{ user.username }}') {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                    usernameFeedback.innerHTML = '<small class="text-success"><i class="fa fa-check-circle"></i> Username is available</small>';
+                } else {
+                    // Simulated check - in production, check with server
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                    usernameFeedback.innerHTML = '<small class="text-success"><i class="fa fa-check-circle"></i> Username is available</small>';
+                }
+            }, 800);
+        });
+    }
+    
+    // Phone number formatting
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = value;
+                } else if (value.length <= 6) {
+                    value = value.slice(0, 3) + ' ' + value.slice(3);
+                } else {
+                    value = value.slice(0, 3) + ' ' + value.slice(3, 6) + ' ' + value.slice(6, 10);
+                }
+                e.target.value = value;
+            }
+        });
+    }
+    
+    // Form submission loading state
+    const profileForm = document.getElementById('profileForm');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    if (profileForm) {
+        profileForm.addEventListener('submit', function(e) {
+            // Validate required fields
+            const username = usernameInput?.value;
+            const email = emailInput?.value;
+            
+            if (!username || username.length < 3) {
+                e.preventDefault();
+                usernameInput?.focus();
+                return;
+            }
+            
+            if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                e.preventDefault();
+                emailInput?.focus();
+                return;
+            }
+            
+            // Show loading state
+            if (submitBtn) {
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Saving...';
+                submitBtn.disabled = true;
+            }
+        });
+    }
+    
+    // Input focus effects
+    const inputs = document.querySelectorAll('.form-control');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+    });
+    
+    // Add hover effect to form groups
+    const formGroups = document.querySelectorAll('.form-group');
+    formGroups.forEach(group => {
+        group.addEventListener('mouseenter', function() {
+            this.querySelector('.input-group-text')?.classList.add('bg-primary', 'bg-opacity-10');
+        });
+        group.addEventListener('mouseleave', function() {
+            this.querySelector('.input-group-text')?.classList.remove('bg-primary', 'bg-opacity-10');
+        });
+    });
+    
+    // Responsive touch optimization for mobile
+    if ('ontouchstart' in window) {
+        const buttons = document.querySelectorAll('.btn-responsive');
+        buttons.forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.97)';
+            });
+            btn.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    }
+</script>
+{% endblock extra_js %}
+
+{% endblock body %}
