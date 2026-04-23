@@ -6,8 +6,8 @@ from .models import (
 # contact
 @admin.register(Bookings)
 class BookingsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'destination', 'persons', 'date')
-    search_fields = ('name', 'email', 'destination')
+    list_display = ('client', 'name', 'email', 'phone', 'destination', 'persons', 'date')
+    search_fields = ('client', 'name', 'email', 'destination')
     list_filter = ('date', 'destination')
     readonly_fields = ('name', 'email', 'phone', 'destination', 'persons', 'date', 'message')
     
@@ -15,15 +15,15 @@ class BookingsAdmin(admin.ModelAdmin):
 # contact
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email', 'subject', 'created_at', 'is_read']
+    list_display = ['client', 'name', 'email', 'subject', 'created_at', 'is_read']
     list_filter = ['is_read', 'created_at']
-    search_fields = ['name', 'email', 'subject', 'message']
+    search_fields = ['client', 'name', 'email', 'subject', 'message']
     readonly_fields = ['created_at']
     list_editable = ['is_read']
     
     fieldsets = (
         ('Contact Information', {
-            'fields': ('name', 'email', 'subject', 'message')
+            'fields': ('client', 'name', 'email', 'subject', 'message')
         }),
         ('Status', {
             'fields': ('is_read', 'created_at')
