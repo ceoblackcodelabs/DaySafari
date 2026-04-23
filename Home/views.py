@@ -24,8 +24,18 @@ class HomeView(ListView):
         self.object_list = self.get_queryset()
         context = self.get_context_data(**kwargs)
         
+        # Pre-populate form if user is logged in
+        initial_data = {}
+        if request.user.is_authenticated:
+            initial_data = {
+                'name': request.user.get_full_name() or request.user.username,
+                'email': request.user.email,
+            }
+            if getattr(request.user, 'phone', None):
+                initial_data['phone'] = getattr(request.user, 'phone', '')
+        
         # Add empty booking form to context for GET request
-        context['booking_form'] = BookingsForm()
+        context['booking_form'] = BookingsForm(initial=initial_data)
         
         return self.render_to_response(context)
     
@@ -38,7 +48,24 @@ class HomeView(ListView):
         
         if form.is_valid():
             # Save the booking
-            booking = form.save()
+            booking = form.save(commit=False)
+            
+            # Check if user is logged in
+            if request.user.is_authenticated:
+                booking.client = request.user
+                # Auto-fill name and email from user profile if not provided in form
+                if not booking.name and request.user.get_full_name():
+                    booking.name = request.user.get_full_name()
+                elif not booking.name:
+                    booking.name = request.user.username
+                    
+                if not booking.email and request.user.email:
+                    booking.email = request.user.email
+            else:
+                booking.client = None
+            
+            # Save the booking to database
+            booking.save()
             
             # Add success message
             messages.success(
