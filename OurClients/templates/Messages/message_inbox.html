@@ -1,0 +1,1075 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Main Layout */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        /* Logo Area */
+        .logo-area {
+            padding: 24px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 2px;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: #5f6368;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #f1f3f4;
+        }
+
+        .nav-item.active {
+            background: #e8f0fe;
+            color: #1a73e8;
+        }
+
+        .nav-item i {
+            width: 20px;
+            font-size: 1.1rem;
+        }
+
+        .nav-item span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-item .badge {
+            margin-left: auto;
+            background: #e0e0e0;
+            color: #5f6368;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .nav-item.active .badge {
+            background: #1a73e8;
+            color: white;
+        }
+
+        /* Message Center Section */
+        .message-section {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5f6368;
+            margin-bottom: 12px;
+            padding: 0 12px;
+        }
+
+        /* Priority Filters */
+        .priority-filters {
+            padding: 0 20px 20px;
+        }
+
+        .priority-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #5f6368;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .priority-link:hover {
+            background: #f1f3f4;
+        }
+
+        .priority-link.active {
+            color: #1a73e8;
+            font-weight: 500;
+        }
+
+        .priority-link i {
+            width: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            margin-top: auto;
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: white;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f1f3f4;
+            border-radius: 8px;
+            padding: 8px 16px;
+            width: 300px;
+        }
+
+        .search-bar i {
+            color: #5f6368;
+            margin-right: 12px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Message List and Detail Container */
+        .messages-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Message List Sidebar */
+        .message-list {
+            width: 400px;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .list-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .message-item {
+            padding: 16px;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .message-item:hover {
+            background: #f8f9fa;
+        }
+
+        .message-item.active {
+            background: #e8f0fe;
+        }
+
+        .message-item.unread .message-subject {
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .priority-indicator {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+
+        .priority-urgent { background: #dc3545; }
+        .priority-high { background: #ffc107; }
+        .priority-medium { background: #667eea; }
+        .priority-low { background: #17a2b8; }
+
+        .message-sender {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .message-subject {
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: #5f6368;
+        }
+
+        .message-preview {
+            font-size: 0.8rem;
+            color: #9aa0a6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .message-date {
+            font-size: 0.7rem;
+            color: #9aa0a6;
+        }
+
+        /* Message Detail View */
+        .message-detail {
+            flex: 1;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .detail-header {
+            padding: 24px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .detail-actions button {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            color: #5f6368;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .detail-actions button:hover {
+            background: #f1f3f4;
+        }
+
+        .detail-subject {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .detail-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .detail-sender {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sender-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .sender-info h4 {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .sender-info p {
+            font-size: 0.7rem;
+            color: #5f6368;
+        }
+
+        .detail-date {
+            font-size: 0.8rem;
+            color: #5f6368;
+        }
+
+        .detail-body {
+            padding: 24px;
+            line-height: 1.6;
+            color: #3c4043;
+        }
+
+        .reply-section {
+            padding: 24px;
+            border-top: 1px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .reply-section h4 {
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .reply-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 12px;
+        }
+
+        .reply-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-send:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .previous-replies {
+            padding: 24px;
+            background: #f8f9fa;
+        }
+
+        .reply-item {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .reply-author {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .reply-date {
+            color: #9aa0a6;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #9aa0a6;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+            .message-list {
+                width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo-area">
+                <a href="/" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Day Safaris</h1>
+                        <p>Adventures</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Main Navigation -->
+            <div class="main-nav">
+                <a href="{% url "home" %}" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="{% url "about" %}" class="nav-item">
+                    <i class="fas fa-compass"></i>
+                    <span>Discover</span>
+                </a>
+                <a href="{% url "profile" %}" class="nav-item">
+                    <i class="fas fa-suitcase"></i>
+                    <span>Bookings</span>
+                </a>
+                <div class="nav-item active" data-status="all">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="badge" id="unreadBadge">0</span>
+                </div>
+                <a href="{% url "profile" %}" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="{% url "account_settings" %}" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+
+            <!-- Message Center -->
+            <div class="message-section">
+                <div class="section-title">Message Center</div>
+                <div class="nav-item" data-status="all">
+                    <i class="fas fa-inbox"></i>
+                    <span>All Messages</span>
+                    <span class="badge" id="totalCount">0</span>
+                </div>
+                <div class="nav-item" data-status="unread">
+                    <i class="fas fa-envelope"></i>
+                    <span>Unread</span>
+                    <span class="badge" id="unreadCount">0</span>
+                </div>
+                <div class="nav-item" data-status="read">
+                    <i class="fas fa-envelope-open"></i>
+                    <span>Read</span>
+                    <span class="badge" id="readCount">0</span>
+                </div>
+                <div class="nav-item" data-status="archived">
+                    <i class="fas fa-archive"></i>
+                    <span>Archived</span>
+                    <span class="badge" id="archivedCount">0</span>
+                </div>
+            </div>
+
+            <!-- Priority Filters -->
+            <div class="section-title" style="padding: 0 20px; margin-bottom: 8px;">Priority</div>
+            <div class="priority-filters">
+                <div class="priority-link" data-priority="urgent">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Urgent</span>
+                </div>
+                <div class="priority-link" data-priority="high">
+                    <i class="fas fa-exclamation"></i>
+                    <span>High Priority</span>
+                </div>
+                <div class="priority-link" data-priority="medium">
+                    <i class="fas fa-flag-checkered"></i>
+                    <span>Medium Priority</span>
+                </div>
+                <div class="priority-link" data-priority="low">
+                    <i class="fas fa-flag"></i>
+                    <span>Low Priority</span>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <div class="bottom-nav">
+                <a href="{% url "contact" %}" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help & Support</span>
+                </a>
+                <a href="{% url "logout" %}" class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search messages..." id="searchInput">
+                </div>
+                <div class="user-menu">
+                    <i class="fas fa-bell"></i>
+                    <div class="user-avatar">
+                        <span>{{ user.username|first|upper }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="messages-container">
+                <!-- Message List -->
+                <div class="message-list" id="messageList">
+                    <div class="list-header">
+                        <h3>Messages</h3>
+                        <i class="fas fa-sort-alpha-down" style="cursor: pointer;"></i>
+                    </div>
+                    <div id="messagesListContainer">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Detail -->
+                <div class="message-detail" id="messageDetail">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No message selected</h3>
+                        <p>Select a message from the list to view it here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get CSRF token
+        function getCsrfToken() {
+            return document.querySelector('[name=csrf-token]').getAttribute('content');
+        }
+
+        let currentFilter = {
+            status: "all",
+            priority: "all",
+            search: ""
+        };
+
+        let selectedMessageId = null;
+        let allMessages = [];
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            const days = diff / (1000 * 60 * 60 * 24);
+            
+            if (days < 1) {
+                return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else if (days < 7) {
+                return date.toLocaleDateString([], { weekday: 'short' });
+            } else {
+                return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+            }
+        }
+
+        function getPriorityClass(priority) {
+            return `priority-${priority}`;
+        }
+
+        // Load counts
+        async function loadCounts() {
+            try {
+                const response = await fetch('/api/messages/counts/');
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('totalCount').textContent = data.counts.total;
+                    document.getElementById('unreadCount').textContent = data.counts.unread;
+                    document.getElementById('readCount').textContent = data.counts.read;
+                    document.getElementById('archivedCount').textContent = data.counts.archived;
+                    document.getElementById('unreadBadge').textContent = data.counts.unread;
+                }
+            } catch (error) {
+                console.error('Error loading counts:', error);
+            }
+        }
+
+        // Load messages
+        async function loadMessages() {
+            try {
+                let url = `/api/messages/?status=${currentFilter.status}&priority=${currentFilter.priority}&search=${encodeURIComponent(currentFilter.search)}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data.success) {
+                    allMessages = data.messages;
+                    renderMessageList();
+                }
+            } catch (error) {
+                console.error('Error loading messages:', error);
+            }
+        }
+
+        // Render message list
+        function renderMessageList() {
+            const container = document.getElementById('messagesListContainer');
+            
+            if (allMessages.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #9aa0a6;">
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 16px;"></i>
+                        <p>No messages found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = allMessages.map(message => `
+                <div class="message-item ${!message.isRead ? 'unread' : ''} ${selectedMessageId === message.id ? 'active' : ''}" 
+                     onclick="selectMessage(${message.id})">
+                    <div class="priority-indicator ${getPriorityClass(message.priority)}"></div>
+                    <div class="message-sender">
+                        <span>${escapeHtml(message.sender)}</span>
+                        <span class="message-date">${formatDate(message.date)}</span>
+                    </div>
+                    <div class="message-subject">${escapeHtml(message.subject)}</div>
+                    <div class="message-preview">${escapeHtml(message.preview)}</div>
+                </div>
+            `).join('');
+        }
+
+        // Select message
+        async function selectMessage(id) {
+            selectedMessageId = id;
+            renderMessageList();
+            
+            try {
+                const response = await fetch(`/api/messages/${id}/`);
+                const data = await response.json();
+                if (data.success) {
+                    renderMessageDetail(data.message);
+                    // Reload counts and list to update unread status
+                    await loadCounts();
+                    await loadMessages();
+                }
+            } catch (error) {
+                console.error('Error loading message:', error);
+            }
+        }
+
+        // Render message detail
+        function renderMessageDetail(message) {
+            const detailContainer = document.getElementById('messageDetail');
+            
+            detailContainer.innerHTML = `
+                <div class="detail-header">
+                    <div class="detail-actions">
+                        <button onclick="archiveMessage(${message.id})" title="Archive">
+                            <i class="fas fa-archive"></i>
+                        </button>
+                        <button onclick="deleteMessage(${message.id})" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button onclick="markAsUnread(${message.id})" title="Mark as unread">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                    </div>
+                    <div class="detail-subject">${escapeHtml(message.subject)}</div>
+                    <div class="detail-meta">
+                        <div class="detail-sender">
+                            <div class="sender-avatar">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="sender-info">
+                                <h4>${escapeHtml(message.sender)}</h4>
+                                <p>to me</p>
+                            </div>
+                        </div>
+                        <div class="detail-date">${message.formatted_date}</div>
+                    </div>
+                </div>
+                <div class="detail-body">
+                    ${message.message.replace(/\n/g, '<br>')}
+                </div>
+                ${renderReplies(message.replies)}
+                <div class="reply-section">
+                    <h4>Reply to this message</h4>
+                    <textarea id="replyMessage" class="reply-textarea" rows="4" placeholder="Type your reply here..."></textarea>
+                    <button class="btn-send" onclick="sendReply(${message.id})">Send Reply</button>
+                </div>
+            `;
+        }
+
+        function renderReplies(replies) {
+            if (!replies || replies.length === 0) return '';
+            
+            return `
+                <div class="previous-replies">
+                    <h4>Previous Replies (${replies.length})</h4>
+                    ${replies.map(reply => `
+                        <div class="reply-item">
+                            <div class="reply-header">
+                                <span class="reply-author">You</span>
+                                <span class="reply-date">${reply.created_at}</span>
+                            </div>
+                            <div class="reply-content">${escapeHtml(reply.reply_message)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Archive message
+        async function archiveMessage(id) {
+            if (!confirm('Archive this message?')) return;
+            
+            try {
+                const formData = new FormData();
+                formData.append('message_id', id);
+                const response = await fetch('/api/messages/archive/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': getCsrfToken()
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    selectedMessageId = null;
+                    await loadCounts();
+                    await loadMessages();
+                    document.getElementById('messageDetail').innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <h3>Message archived</h3>
+                            <p>The message has been moved to archive</p>
+                        </div>
+                    `;
+                } else {
+                    alert(data.error || 'Failed to archive message');
+                }
+            } catch (error) {
+                console.error('Error archiving message:', error);
+                alert('Failed to archive message');
+            }
+        }
+
+        // Delete message
+        async function deleteMessage(id) {
+            if (!confirm('Delete this message permanently?')) return;
+            
+            try {
+                const formData = new FormData();
+                formData.append('message_id', id);
+                const response = await fetch('/api/messages/delete/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': getCsrfToken()
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    selectedMessageId = null;
+                    await loadCounts();
+                    await loadMessages();
+                    document.getElementById('messageDetail').innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <h3>Message deleted</h3>
+                            <p>The message has been permanently deleted</p>
+                        </div>
+                    `;
+                } else {
+                    alert(data.error || 'Failed to delete message');
+                }
+            } catch (error) {
+                console.error('Error deleting message:', error);
+                alert('Failed to delete message');
+            }
+        }
+
+        // Mark as unread
+        async function markAsUnread(id) {
+            try {
+                const formData = new FormData();
+                formData.append('message_id', id);
+                const response = await fetch('/api/messages/unread/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': getCsrfToken()
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    await loadCounts();
+                    await loadMessages();
+                    if (selectedMessageId === id) {
+                        const msgResponse = await fetch(`/api/messages/${id}/`);
+                        const msgData = await msgResponse.json();
+                        if (msgData.success) {
+                            renderMessageDetail(msgData.message);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error marking as unread:', error);
+            }
+        }
+
+        // Send reply
+        async function sendReply(id) {
+            const replyMessage = document.getElementById('replyMessage')?.value;
+            if (!replyMessage || !replyMessage.trim()) {
+                alert('Please enter a reply message');
+                return;
+            }
+            
+            try {
+                const formData = new FormData();
+                formData.append('message_id', id);
+                formData.append('reply_message', replyMessage);
+                const response = await fetch('/api/messages/reply/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': getCsrfToken()
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('replyMessage').value = '';
+                    alert('Reply sent successfully!');
+                    // Reload the message to show the reply
+                    const msgResponse = await fetch(`/api/messages/${id}/`);
+                    const msgData = await msgResponse.json();
+                    if (msgData.success) {
+                        renderMessageDetail(msgData.message);
+                    }
+                } else {
+                    alert(data.error || 'Failed to send reply');
+                }
+            } catch (error) {
+                console.error('Error sending reply:', error);
+                alert('Failed to send reply');
+            }
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Event listeners
+        document.querySelectorAll('[data-status]').forEach(el => {
+            el.addEventListener('click', () => {
+                document.querySelectorAll('[data-status]').forEach(nav => nav.classList.remove('active'));
+                el.classList.add('active');
+                currentFilter.status = el.getAttribute('data-status');
+                currentFilter.priority = 'all';
+                document.querySelectorAll('.priority-link').forEach(link => link.classList.remove('active'));
+                selectedMessageId = null;
+                loadMessages();
+                document.getElementById('messageDetail').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No message selected</h3>
+                        <p>Select a message from the list to view it here</p>
+                    </div>
+                `;
+            });
+        });
+
+        document.querySelectorAll('.priority-link').forEach(el => {
+            el.addEventListener('click', () => {
+                document.querySelectorAll('.priority-link').forEach(link => link.classList.remove('active'));
+                el.classList.add('active');
+                currentFilter.priority = el.getAttribute('data-priority');
+                selectedMessageId = null;
+                loadMessages();
+                document.getElementById('messageDetail').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No message selected</h3>
+                        <p>Select a message from the list to view it here</p>
+                    </div>
+                `;
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentFilter.search = e.target.value;
+            selectedMessageId = null;
+            loadMessages();
+            document.getElementById('messageDetail').innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <h3>No message selected</h3>
+                    <p>Select a message from the list to view it here</p>
+                </div>
+            `;
+        });
+
+        // Initial load
+        loadCounts();
+        loadMessages();
+    </script>
+</body>
+</html>
