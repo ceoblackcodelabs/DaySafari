@@ -56,15 +56,33 @@ class BookingDetailView(DetailView):
     context_object_name = 'booking'
     template_name = 'bookings/booking_detail.html' 
     
-# contact  
+# contact views
 class ContactView(FormView):
-    template_name = 'Home/contact.html'
+    template_name = 'Requests/contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('contact')
     
     def form_valid(self, form):
-        # Save the contact message
-        contact = form.save()
+        # Save the contact message with commit=False
+        contact = form.save(commit=False)
+        
+        # Check if user is logged in and associate with the contact
+        if self.request.user.is_authenticated:
+            contact.client = self.request.user
+            
+            # Auto-fill name and email from user profile if fields are empty
+            if not contact.name and self.request.user.get_full_name():
+                contact.name = self.request.user.get_full_name()
+            elif not contact.name:
+                contact.name = self.request.user.username
+                
+            if not contact.email and self.request.user.email:
+                contact.email = self.request.user.email
+        else:
+            contact.user = None
+        
+        # Save to database
+        contact.save()
         
         # Add success message
         messages.success(self.request, 
@@ -85,5 +103,16 @@ class ContactView(FormView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        # Pre-populate form if user is logged in
+        if self.request.user.is_authenticated and not self.request.POST:
+            initial_data = {
+                'name': self.request.user.get_full_name() or self.request.user.username,
+                'email': self.request.user.email,
+            }
+            context['form'] = self.form_class(initial=initial_data)
+        
         context['title'] = 'Contact Us - Day Safaris Adventures'
+        context['user'] = self.request.user
+        
         return context
