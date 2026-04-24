@@ -1,0 +1,52 @@
+{% extends 'emails/email_base.html' %}
+
+{% block title %}Booking Confirmation - Day Safaris Adventures{% endblock %}
+
+{% block header %}Booking Confirmed! ✅{% endblock %}
+
+{% block content %}
+<h2 style="color: #420d24;">Dear {{ booking.name }},</h2>
+
+<p>Thank you for booking your safari adventure with <strong>Day Safaris Adventures</strong>! We're excited to help you create unforgettable memories.</p>
+
+<div style="background: #e8f5e9; padding: 15px; border-radius: 10px; text-align: center; margin: 20px 0;">
+    <h3 style="color: #28a745; margin: 0;">✓ Booking Status: CONFIRMED</h3>
+</div>
+
+<div class="highlight-box">
+    <h3 style="color: #420d24; margin-top: 0;">📋 Booking Details:</h3>
+    <p><strong>Booking ID:</strong> #{{ booking.id }}</p>
+    <p><strong>Destination:</strong> {{ booking.destination.name|default:"TBD" }}</p>
+    <p><strong>Travel Date:</strong> {{ booking.date }}</p>
+    <p><strong>Number of Persons:</strong> {{ booking.persons }}</p>
+    {% if booking.message %}
+    <p><strong>Special Requests:</strong> {{ booking.message }}</p>
+    {% endif %}
+</div>
+
+<div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h3 style="color: #856404; margin-top: 0;">📌 Next Steps:</h3>
+    <ol style="margin-bottom: 0;">
+        <li>Our travel expert will contact you within <strong>24 hours</strong></li>
+        <li>Pay <strong>30% deposit</strong> to confirm your spot</li>
+        <li>Receive your detailed itinerary and packing list</li>
+        <li>Get ready for an unforgettable adventure!</li>
+    </ol>
+</div>
+
+<div class="highlight-box">
+    <h3 style="color: #420d24; margin-top: 0;">❓ Need Help?</h3>
+    <p>Contact us anytime:</p>
+    <p>📞 +254 734 962 965 | 💬 WhatsApp: +254 783 457 058<br>
+    📧 bookings@daysafarisadventures.co.ke</p>
+</div>
+
+<div style="text-align: center;">
+    <a href="https://daysafarisadventures.co.ke" class="button">Visit Our Website</a>
+</div>
+
+<p>We look forward to hosting you in East Africa! 🦁</p>
+
+<p style="margin-top: 30px;">Best regards,<br>
+<strong>The Day Safaris Adventures Team</strong></p>
+{% endblock %}
