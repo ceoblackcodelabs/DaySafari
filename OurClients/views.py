@@ -15,6 +15,10 @@ from ClientRequests.models import Bookings
 from .models import UserRecommendations, UserMessage, MessageReply
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponseRedirect
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 class CustomLoginView(LoginView):
@@ -40,10 +44,34 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('home')
     
+    @method_decorator(never_cache)
+    @method_decorator(csrf_protect)
     def dispatch(self, request, *args, **kwargs):
-        messages.info(request, "You have been successfully logged out. Come back soon! 🦁")
-        return super().dispatch(request, *args, **kwargs)
-
+        # Clear session completely
+        request.session.flush()
+        
+        # Clear the session ID cookie
+        if request.COOKIES.get('sessionid'):
+            response = HttpResponseRedirect(self.next_page)
+            response.delete_cookie('sessionid')
+            response.delete_cookie('csrftoken')
+            
+            # Add cache control headers to prevent back button from loading cached pages
+            response['Cache-Control'] = 'no-cache, no-store, must-revalidate, private'
+            response['Pragma'] = 'no-cache'
+            response['Expires'] = '0'
+            
+            messages.info(request, "You have been successfully logged out. Come back soon! 🦁")
+            return response
+        
+        response = super().dispatch(request, *args, **kwargs)
+        
+        # Add cache control headers to prevent back button from working
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate, private'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        
+        return response
 
 class RegisterView(CreateView):
     template_name = 'registration/register.html'
