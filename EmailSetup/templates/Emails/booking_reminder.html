@@ -1,0 +1,48 @@
+{% extends 'emails/email_base.html' %}
+
+{% block title %}Booking Reminder - Day Safaris Adventures{% endblock %}
+
+{% block header %}Your Safari Adventure is Coming Soon! 🦁{% endblock %}
+
+{% block content %}
+<h2 style="color: #420d24;">Dear {{ booking.name }},</h2>
+
+<p>Your safari to <strong>{{ booking.destination.name|default:"TBD" }}</strong> is just <strong style="color: #420d24; font-size: 18px;">{{ days_left }} days away</strong>!</p>
+
+<div class="highlight-box">
+    <h3 style="color: #420d24; margin-top: 0;">🎒 Packing Essentials:</h3>
+    <ul style="margin-bottom: 0;">
+        <li>✓ Neutral-colored clothing (khaki, olive, beige)</li>
+        <li>✓ High-SPF sunscreen and insect repellent</li>
+        <li>✓ Camera with extra batteries and memory cards</li>
+        <li>✓ Valid passport and visa</li>
+        <li>✓ Comfortable walking shoes</li>
+        <li>✓ Warm jacket for early morning drives</li>
+        <li>✓ Binoculars for wildlife viewing</li>
+    </ul>
+</div>
+
+<div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h3 style="color: #856404; margin-top: 0;">📋 Quick Reminders:</h3>
+    <ul style="margin-bottom: 0;">
+        <li>Confirm your flight details with us</li>
+        <li>Complete any outstanding payments</li>
+        <li>Share your dietary requirements</li>
+        <li>Charge your camera batteries</li>
+    </ul>
+</div>
+
+<div class="highlight-box">
+    <h3 style="color: #420d24; margin-top: 0;">📞 Emergency Contact:</h3>
+    <p>24/7 Safari Emergency: <strong>+254 782 390 295</strong></p>
+    <p>Email: <strong>support@daysafarisadventures.co.ke</strong></p>
+</div>
+
+<div style="text-align: center;">
+    <a href="https://daysafarisadventures.co.ke/contact" class="button">Contact Us</a>
+</div>
+
+<p>We can't wait to host you on this incredible adventure!</p>
+
+<p style="margin-top: 30px;">The Day Safaris Team 🦁</p>
+{% endblock %}
