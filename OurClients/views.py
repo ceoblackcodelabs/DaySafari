@@ -138,7 +138,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             'title': 'My Profile - Day Safaris Adventures',
             'current_bookings': current_bookings,
             'past_bookings': past_bookings,
-            'recommended_packages': recommended_packages,  # Changed from recommended_tours
+            'recommended_packages': recommended_packages,  
             'total_bookings': total_bookings,
             'upcoming_bookings': upcoming_bookings,
             'completed_bookings': completed_bookings,
