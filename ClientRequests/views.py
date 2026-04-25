@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
+from EmailSetup.utils import send_contact_response, send_booking_confirmation
 from Places.models import AwesomePackages, Destinations
 from .models import (
     Bookings, Contact
@@ -80,6 +81,8 @@ class ContactView(FormView):
                 contact.email = self.request.user.email
         else:
             contact.user = None
+
+        send_contact_response(contact)  # Send email response to user
         
         # Save to database
         contact.save()
