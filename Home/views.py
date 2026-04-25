@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from ClientRequests.forms import BookingsForm
 from django.contrib import messages
+from EmailSetup.utils import send_booking_confirmation
 
 
 class HomeView(ListView):
@@ -65,7 +66,11 @@ class HomeView(ListView):
                 booking.client = None
             
             # Save the booking to database
+            
             booking.save()
+            
+            # Send booking confirmation email
+            send_booking_confirmation(booking)
             
             # Add success message
             messages.success(

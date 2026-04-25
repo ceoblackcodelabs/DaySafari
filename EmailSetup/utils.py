@@ -48,6 +48,7 @@ def send_welcome_email(name="", email=""):
 def send_booking_confirmation(booking):
     """Send booking confirmation using template"""
     try:
+        print(f"Preparing to send booking confirmation email to {booking.email} for booking ID {booking.id}...")
         html_content = render_to_string('Emails/booking_confirmation.html', {'booking': booking})
         return send_transactional_email(
             booking.email, 
@@ -62,6 +63,7 @@ def send_booking_confirmation(booking):
 def send_contact_response(contact):
     """Send contact response using template"""
     try:
+        print(f"Preparing to send contact response email to {contact.email}...")
         html_content = render_to_string('Emails/contact_response.html', {'contact': contact})
         return send_transactional_email(
             contact.email, 
@@ -85,6 +87,7 @@ def send_test_email(email):
 def send_booking_reminder(booking):
     """Send booking reminder using template"""
     try:
+        print(f"Preparing to send booking reminder email to {booking.email} for booking ID {booking.id}...")
         from datetime import date
         days_left = (booking.date - date.today()).days if booking.date else 0
         html_content = render_to_string('Emails/booking_reminder.html', {
