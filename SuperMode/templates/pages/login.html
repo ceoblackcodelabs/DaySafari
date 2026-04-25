@@ -1,0 +1,37 @@
+{% extends "Auth/base.html" %}
+
+{% load static %}
+
+{% block title %}Login To Continue{% endblock title %}
+
+{% block body %}
+
+<h3 class="card-title text-center mb-3">Login</h3>
+<center><img style="height: 120px; margin-bottom: 10px"class =" rounded-circle " src="{% static "assets/images/logo.png" %}" alt=""></center>
+<h3 class="card-title text-center mb-3">Welcome Back Admin</h3>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+    <label>Username</label>
+    <input type="text" class="form-control p_input" name = "username" placeholder="Enter Username">
+    </div>
+    <div class="form-group">
+    <label>Password</label>
+    <input type="password" class="form-control p_input" name = "password" placeholder="Enter Password">
+    </div>
+    <div class="text-center d-grid gap-2">
+    <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
+    </div>
+    <div class="form-group d-flex align-items-center justify-content-between">
+        <div class="form-check">
+            <label class="form-check-label">
+            <input type="checkbox" class="form-check-input"> Remember me </label>
+        </div>
+        <a href="#" class="forgot-pass">Forgot password</a>
+        </div>
+    <p class="sign-up text-center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login as Normal Employee<a href="{% url "login" %}"> employee </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+</form>
+
+{% endblock body %}
+
+    
