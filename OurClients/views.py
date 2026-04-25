@@ -88,6 +88,14 @@ class RegisterView(CreateView):
             "Please log in to continue."
         )
         send_welcome_email(email=form.cleaned_data.get('email'), name=form.cleaned_data.get('username'))
+        UserMessage.objects.create(
+            user=self.object,
+            sender_name='Day Safaris Team',
+            subject='Welcome to Day Safaris Adventures!',
+            message=f"""Dear {form.cleaned_data.get('username')},
+            Welcome to the Day Safaris Adventures family! We're thrilled to have you on board. Get ready to explore the wild and experience unforgettable safari adventures with us. If you have any questions or need assistance, our team is here to help. Happy travels! 🦁🌍
+        """
+        )
         return response
     
     def form_invalid(self, form):
