@@ -1,43 +1,26 @@
-{% extends 'emails/email_base.html' %}
+{% extends 'Emails/email_base.html' %}
 
-{% block title %}We Received Your Message - Day Safaris Adventures{% endblock %}
-
-{% block header %}We've Received Your Message! 📧{% endblock %}
+{% block title %}We Received Your Message{% endblock %}
 
 {% block content %}
-<h2 style="color: #420d24;">Dear {{ contact.name }},</h2>
+<h2>Dear {{ contact.name }},</h2>
 
-<p>Thank you for reaching out to <strong>Day Safaris Adventures</strong>!</p>
+<p>Thank you for reaching out to Day Safaris Adventures!</p>
 
-<div class="highlight-box">
-    <h3 style="color: #420d24; margin-top: 0;">Your Message:</h3>
-    <p style="font-style: italic;">"{{ contact.message|truncatechars:200 }}"</p>
+<div class="box">
+    <p><strong>Your message:</strong><br>
+    "{{ contact.message|truncatechars:200 }}"</p>
 </div>
 
-<p>We have received your message and our team will respond within <strong>24 hours</strong>.</p>
+<p>We have received your message and will respond within <strong>24 hours</strong>.</p>
 
-<div style="background: #d1ecf1; padding: 20px; border-radius: 10px; margin: 20px 0;">
-    <h3 style="color: #0c5460; margin-top: 0;">⏱️ Quick Response</h3>
-    <p>In the meantime, you can:</p>
-    <ul>
-        <li>📞 Call us immediately: +254 734 962 965</li>
-        <li>💬 WhatsApp us: +254 783 457 058</li>
-        <li>🌐 Browse our website: daysafarisadventures.co.ke</li>
-    </ul>
+<p>In the meantime, you can reach us at:</p>
+<div class="box">
+    <p>📞 Call: +254 734 962 965<br>
+    💬 WhatsApp: +254 783 457 058<br>
+    📧 Email: info@daysafarisadventures.co.ke</p>
 </div>
 
-<div class="highlight-box">
-    <h3 style="color: #420d24; margin-top: 0;">🦁 Popular Destinations</h3>
-    <ul>
-        <li>Masai Mara National Reserve, Kenya</li>
-        <li>Serengeti National Park, Tanzania</li>
-        <li>Zanzibar Beach, Tanzania</li>
-        <li>Mount Kilimanjaro, Tanzania</li>
-    </ul>
-</div>
-
-<p>We look forward to helping you plan your African adventure!</p>
-
-<p style="margin-top: 30px;">Warm regards,<br>
-<strong>The Day Safaris Adventures Team</strong></p>
+<p>Warm regards,<br>
+The Day Safaris Team 🦁</p>
 {% endblock %}

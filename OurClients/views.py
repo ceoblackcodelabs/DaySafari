@@ -20,6 +20,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from EmailSetup.utils import send_welcome_email
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
@@ -86,6 +87,7 @@ class RegisterView(CreateView):
             f"Account created successfully! Welcome {form.cleaned_data.get('username')}! 🎉 "
             "Please log in to continue."
         )
+        send_welcome_email(email=form.cleaned_data.get('email'), name=form.cleaned_data.get('username'))
         return response
     
     def form_invalid(self, form):

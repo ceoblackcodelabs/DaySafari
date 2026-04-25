@@ -1,45 +1,38 @@
-{% extends 'emails/email_base.html' %}
+{% extends 'Emails/email_base.html' %}
 
 {% block title %}Welcome to Day Safaris Adventures{% endblock %}
 
-{% block header %}Welcome to the Adventure! 🦁{% endblock %}
-
 {% block content %}
-<h2 style="color: #420d24;">Hello {{ name }}!</h2>
+<h2>Hello {{ name }},</h2>
 
-<p>Thank you for joining the <strong>Day Safaris Adventures</strong> family! We're thrilled to have you on board and can't wait to help you create unforgettable memories across East Africa.</p>
+<p>Thank you for joining Day Safaris Adventures!</p>
 
-<div class="highlight-box">
-    <h3 style="color: #420d24; margin-top: 0;">✨ Here's what you get:</h3>
-    <ul style="padding-left: 20px;">
-        <li>✓ Exclusive member discounts on safari packages</li>
-        <li>✓ Early access to special promotions</li>
-        <li>✓ Personalized itinerary recommendations</li>
-        <li>✓ Expert travel tips and guides</li>
-        <li>✓ Priority 24/7 customer support</li>
-    </ul>
+<div class="box">
+    <p style="margin-bottom: 10px;"><strong>✨ What you get:</strong></p>
+    <p style="margin-bottom: 5px;">✓ Exclusive member discounts<br>
+    ✓ Early access to promotions<br>
+    ✓ Personalized itinerary recommendations<br>
+    ✓ 24/7 customer support</p>
 </div>
 
-<div style="background: #420d24; color: white; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0;">
-    <h3 style="color: white; margin-top: 0;">🎁 Exclusive Welcome Offer!</h3>
-    <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">WELCOME10</p>
-    <p>Get <strong>10% off</strong> your first safari booking!</p>
+<div class="box">
+    <p style="margin-bottom: 5px;"><strong>🎁 Welcome offer:</strong> <strong style="color: #0066cc;">WELCOME10</strong> for 10% off your first booking</p>
 </div>
 
-<div style="text-align: center;">
-    <a href="https://daysafarisadventures.co.ke/destinations" class="button">Explore Destinations</a>
+<p style="text-align: center;">
+    <a href="https://daysafarisadventures.co.ke" class="button">Explore Destinations</a>
+</p>
+
+<div class="box">
+    <p style="margin-bottom: 5px;"><strong>📞 Need help?</strong></p>
+    <p style="margin-bottom: 5px;">Phone: +254 734 962 965<br>
+    WhatsApp: +254 783 457 058<br>
+    Email: info@daysafarisadventures.co.ke</p>
 </div>
 
-<div class="highlight-box">
-    <h3 style="color: #420d24; margin-top: 0;">📞 Need Help?</h3>
-    <p>Our travel experts are here 24/7:</p>
-    <p><strong>Phone:</strong> +254 734 962 965<br>
-    <strong>WhatsApp:</strong> +254 783 457 058<br>
-    <strong>Email:</strong> info@daysafarisadventures.co.ke</p>
-</div>
+<hr>
 
-<p>We look forward to creating magical safari moments with you!</p>
+<p style="color: #666;">We look forward to creating amazing safari memories with you!</p>
 
-<p style="margin-top: 30px;">Warm regards,<br>
-<strong>The Day Safaris Team</strong></p>
+<p>The Day Safaris Team 🦁</p>
 {% endblock %}
