@@ -28,8 +28,7 @@ class BookingCreateView(CreateView):
             f"We will contact you within 24 hours to confirm your {form.cleaned_data['destination']} safari."
         )
         
-        # Optional: Send email notification (you'll need to set up email backend)
-        # self.send_booking_confirmation_email(form.cleaned_data)
+        send_booking_confirmation(self.object)
         
         return response
     
@@ -47,10 +46,6 @@ class BookingCreateView(CreateView):
         context['destinations'] = Destinations.objects.all()[:5]  # Featured destinations
         context['packages'] = AwesomePackages.objects.all()[:3]  # Featured packages
         return context
-    
-    def send_booking_confirmation_email(self, booking_data):
-        """Optional: Send confirmation email to user"""
-        pass
     
 class BookingDetailView(DetailView):
     model = Bookings
