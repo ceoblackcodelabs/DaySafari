@@ -1,0 +1,306 @@
+{% extends "Store/base.html" %}
+
+{% load static %}
+
+{% block title %}Add An Employee{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.cash_at_hand }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Cash at Hand</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.cash_at_bank }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+11%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Cash At Bank</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.expenses }}</h3>
+              <p class="text-danger ms-2 mb-0 font-weight-medium">-2.4%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger">
+              <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Expenses</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.total_sales }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Sales</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Add An Employee</h4>
+          <form method="POST">
+            {% csrf_token %}
+            <div class='row'>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label for="quantity">Employee Name</label>
+                            {{ form.username }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label for="quantity">Employee Email</label>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Password</label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                <label for="quantity">Confirm Password</label>
+                {{ form.password2 }}
+            </div>
+            <div class="col-md-6">
+              <div class="form-check form-check-primary">
+                <label class="form-check-label">
+                  {{ form.is_superuser }} User Status </label>
+              </div>
+          </div>
+          <br>
+            <button type="submit" class="btn btn-primary me-2">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Daily Sales</h4>
+            <div class="position-relative">
+              <div class="daoughnutchart-wrapper">
+                <canvas id="transaction-history" class="transaction-chart"></canvas>
+              </div>
+              <div class="custom-value">{{ dashboard.total_sales }} <span>Total</span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block injectjs %}
+
+(function($) {
+  'use strict';
+  $.fn.andSelf = function() {
+    return this.addBack.apply(this, arguments);
+  }
+  $(function() {
+
+    //check all boxes in order status 
+    $("#check-all").click(function () {
+      $(".form-check-input").prop('checked', $(this).prop('checked'));
+    });
+
+    if ($("#transaction-history").length) { 
+      const doughnutChartCanvas = document.getElementById('transaction-history');
+      new Chart(doughnutChartCanvas, {
+        type: 'doughnut',
+        data: {
+          labels: ["Cash", "Till","Expense"],
+          datasets: [{
+              data: [{{ dashboard.cash_at_hand }}, {{ dashboard.cash_at_bank }}, {{ dashboard.expenses }}],
+              backgroundColor: [
+                 "yellow","green","red",
+              ],
+              borderColor: "#191c24"
+          }]
+        },
+        options: {
+          cutout: 70,
+          animationEasing: "easeOutBounce",
+          animateRotate: true,
+          animateScale: false,
+          responsive: true,
+          maintainAspectRatio: true,
+          showScale: false,
+          legend: false,
+          plugins: {
+            legend: {
+                display: false,
+            },
+          },
+        },
+      });
+    }
+    if ($('#owl-carousel-basic').length) {
+      $('#owl-carousel-basic').owlCarousel({
+        loop: true,
+        margin: 10,
+        dots: false,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 4500,
+        navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
+        }
+      });
+    }
+    if($('#audience-map').length) {
+      $('#audience-map').vectorMap({
+        map: 'world_mill_en',
+        backgroundColor: 'transparent',
+        panOnDrag: true,
+        focusOn: {
+          x: 0.5,
+          y: 0.5,
+          scale: 1,
+          animate: true
+        },
+        series: {
+          regions: [{
+            scale: ['#3d3c3c', '#f2f2f2'],
+            normalizeFunction: 'polynomial',
+            values: {
+
+              "BZ": 75.00,
+              "US": 56.25,
+              "AU": 15.45,
+              "GB": 25.00,
+              "RO": 10.25,
+              "GE": 33.25
+            }
+          }]
+        }
+      });
+    }
+    if ($('#owl-carousel-rtl').length) {
+      $('#owl-carousel-rtl').owlCarousel({
+        loop: true,
+        margin: 10,
+        dots: false,
+        nav: true,
+        rtl: isrtl,
+        autoplay: true,
+        autoplayTimeout: 4500,
+        navText: ["<i class='mdi mdi-chevron-right'></i>", "<i class='mdi mdi-chevron-left'></i>"],
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
+        }
+      });
+    }
+    if ($("#currentBalanceCircle").length) { 
+      var bar = new ProgressBar.Circle(currentBalanceCircle, {
+        color: '#ccc',
+        // This has to be the same size as the maximum width to
+        // prevent clipping
+        strokeWidth: 12,
+        trailWidth: 12,
+        trailColor: '#0d0d0d',
+        easing: 'easeInOut',
+        duration: 1400,
+        text: {
+          autoStyleContainer: false,
+        },
+        from: { color: '#d53f3a', width: 12 },
+        to: { color: '#d53f3a', width: 12 },
+        // Set default step function for all animate calls
+        step: function(state, circle) {
+          circle.path.setAttribute('stroke', state.color);
+          circle.path.setAttribute('stroke-width', state.width);
+      
+          var value = Math.round(circle.value() * 100);
+          circle.setText('');
+      
+        }
+      });
+
+      bar.text.style.fontSize = '1.5rem';
+
+      bar.animate(0.4);  // Number from 0.0 to 1.0
+    }
+  });
+})(jQuery);
+
+{% endblock injectjs %}

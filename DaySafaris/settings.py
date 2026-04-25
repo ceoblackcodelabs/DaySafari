@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'Invoices',
     'ChatBot',
     'EmailSetup',
-    
+    'SuperMode',
 ]
 
 MIDDLEWARE = [

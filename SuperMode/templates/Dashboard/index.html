@@ -1,0 +1,620 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}Store DashBoard{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.cash_at_hand }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Cash at Hand</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.cash_at_bank }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+11%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Cash At Bank</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.expenses }}</h3>
+              <p class="text-danger ms-2 mb-0 font-weight-medium">-2.4%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger">
+              <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Expenses</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.total_sales }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Sales</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Products Below 20</h4>
+        <canvas id="areaChart" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Daily Sales</h4>
+        <canvas id="barChart" style="height:230px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Orderd Products From </h4>
+      </p>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                <div class="form-check form-check-muted m-0">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="check-all">
+                  </label>
+                </div>
+              </th>
+              <th> ID </th>
+              <th> Product </th>
+              <th> Cost </th>
+              <th> Opening Stock </th>
+              <th> Added Stock </th>
+              <th> Sold Stock </th>
+              <th> Closing Stock </th>
+              <th> Status </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <td>
+                <div class="form-check form-check-muted m-0">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input">
+                  </label>
+                </div>
+              </td>
+              <td> {{ product.product.id }} </td>
+              <td> {{ product.product.name }}</td>
+              <td> {{ product.product.cost }} </td>
+              <td> {{ product.product.opening_stock }} </td>
+              <td> {{ product.product.added_stock }} </td>
+              <td> {{ product.product.sold_stock }} </td>
+              <td> {{ product.product.closing_stock }} </td>
+              <td><div class="badge badge-outline-warning"><a class="text-warning" href="" style="text-decoration: None; Color: white">Pending</a></div></td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+        <!-- Pagination -->
+        <div class="d-flex mt-4 flex-wrap justify-content-between align-items-center">
+          <p class="text-muted mb-0">
+            {% comment %} Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries, {{ page_obj.paginator.count|subtract:page_obj.end_index }} remaining {% endcomment %}
+          </p>
+          <nav>
+            <ul class="pagination pagination-sm">
+              <!-- First Page Button -->
+              {% if page_obj.has_previous %}
+                <li class="page-item">
+                  <a href="?page=1" class="page-link" aria-label="First">
+                    <i class="fa fa-fast-backward"></i>
+                  </a>
+                </li>
+                <!-- Previous Page Button -->
+                <li class="page-item">
+                  <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                    <i class="fa fa-backward"></i>
+                  </a>
+                </li>
+              {% else %}
+
+              {% endif %}
+
+              <!-- Page Numbers -->
+              {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                  <li class="page-item active">
+                    <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                  </li>
+                {% else %}
+                  <li class="page-item">
+                    <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+
+              <!-- Next Page Button -->
+              {% if page_obj.has_next %}
+                <li class="page-item">
+                  <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
+                    <i class="fa fa-forward"></i>
+                  </a>
+                </li>
+                <!-- Last Page Button -->
+                <li class="page-item">
+                  <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link" aria-label="Last">
+                    <i class="fa fa-fast-forward"></i>
+                  </a>
+                </li>
+              {% else %}
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+        <!-- Pagination -->
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block injectjs %}
+
+$(function() {
+  /* ChartJS
+   * -------
+   * Data and config for chartjs
+   */
+  'use strict';
+  var dashdata = {{ dashdata|safe }};
+  var data = {
+    labels: ["T.S", "C.A.H", "C.A.B", "Expenses", "Debts"],
+    datasets: [{
+      label: 'Daily Sales graph',
+      data: dashdata,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1,
+      fill: false
+    }]
+  };
+  var multiLineData = {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [{
+        label: 'Dataset 1',
+        data: [12, 19, 3, 5, 2, 3],
+        borderColor: [
+          '#587ce4'
+        ],
+        borderWidth: 2,
+        fill: false
+      },
+      {
+        label: 'Dataset 2',
+        data: [5, 23, 7, 12, 42, 23],
+        borderColor: [
+          '#ede190'
+        ],
+        borderWidth: 2,
+        fill: false
+      },
+      {
+        label: 'Dataset 3',
+        data: [15, 10, 21, 32, 12, 33],
+        borderColor: [
+          '#f44252'
+        ],
+        borderWidth: 2,
+        fill: false
+      }
+    ]
+  };
+  var options = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        },
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }],
+      xAxes: [{
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }]
+    },
+    legend: {
+      display: false
+    },
+    elements: {
+      line: {
+        tension: 0.5,
+      },
+      point: {
+        radius: 0
+      }
+    }
+  };
+
+
+  var doughnutPieData = {
+    datasets: [{
+      data: [{{ 2011data }}, {{ 2012data }}, {{ 2013data }}],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+      'Inpatient',
+      'Out Patient',
+      'Hospital',
+    ]
+  };
+  var doughnutPieOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+  };
+  var products = {{productsB20|safe}};
+  var productsids = {{ productsidB20|safe }};
+  var areaData = {
+    labels: products,
+    datasets: [{
+      label: 'Products Below 10',
+      data: productsids,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1,
+      fill: true, // 3: no fill
+    }]
+  };
+
+  var areaOptions = {
+    plugins: {
+      filler: {
+        propagate: true
+      }
+    },
+    scales: {
+      yAxes: [{
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }],
+      xAxes: [{
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }]
+    },
+    elements: {
+      line: {
+        tension: 0.5,
+      }
+    }
+  }
+
+  var multiAreaData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    datasets: [{
+        label: 'Facebook',
+        data: [8, 11, 13, 15, 12, 13, 16, 15, 13, 19, 11, 14],
+        borderColor: ['rgba(255, 99, 132, 0.5)'],
+        backgroundColor: ['rgba(255, 99, 132, 0.5)'],
+        borderWidth: 1,
+        fill: true
+      },
+      {
+        label: 'Twitter',
+        data: [7, 17, 12, 16, 14, 18, 16, 12, 15, 11, 13, 9],
+        borderColor: ['rgba(54, 162, 235, 0.5)'],
+        backgroundColor: ['rgba(54, 162, 235, 0.5)'],
+        borderWidth: 1,
+        fill: true
+      },
+      {
+        label: 'Linkedin',
+        data: [6, 14, 16, 20, 12, 18, 15, 12, 17, 19, 15, 11],
+        borderColor: ['rgba(255, 206, 86, 0.5)'],
+        backgroundColor: ['rgba(255, 206, 86, 0.5)'],
+        borderWidth: 1,
+        fill: true
+      }
+    ]
+  };
+
+  var multiAreaOptions = {
+    plugins: {
+      filler: {
+        propagate: true
+      }
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
+    },
+    scales: {
+      xAxes: [{
+        gridLines: {
+          display: false
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          display: false
+        }
+      }]
+    }
+  }
+
+  var scatterChartData = {
+    datasets: [{
+        label: 'First Dataset',
+        data: [{
+            x: -10,
+            y: 0
+          },
+          {
+            x: 0,
+            y: 3
+          },
+          {
+            x: -25,
+            y: 5
+          },
+          {
+            x: 40,
+            y: 5
+          }
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'Second Dataset',
+        data: [{
+            x: 10,
+            y: 5
+          },
+          {
+            x: 20,
+            y: -30
+          },
+          {
+            x: -25,
+            y: 15
+          },
+          {
+            x: -10,
+            y: 5
+          }
+        ],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)',
+        ],
+        borderWidth: 1
+      }
+    ]
+  }
+
+  var scatterChartOptions = {
+    scales: {
+      xAxes: [{
+        type: 'linear',
+        position: 'bottom',
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }]
+    }
+  }
+  // Get context with jQuery - using jQuery's .get() method.
+  if ($("#barChart").length) {
+    var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection.
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: data,
+      options: options
+    });
+  }
+
+  if ($("#lineChart").length) {
+    var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+    var lineChart = new Chart(lineChartCanvas, {
+      type: 'line',
+      data: data,
+      options: options
+    });
+  }
+
+  if ($("#linechart-multi").length) {
+    var multiLineCanvas = $("#linechart-multi").get(0).getContext("2d");
+    var lineChart = new Chart(multiLineCanvas, {
+      type: 'line',
+      data: multiLineData,
+      options: options
+    });
+  }
+
+  if ($("#areachart-multi").length) {
+    var multiAreaCanvas = $("#areachart-multi").get(0).getContext("2d");
+    var multiAreaChart = new Chart(multiAreaCanvas, {
+      type: 'line',
+      data: multiAreaData,
+      options: multiAreaOptions
+    });
+  }
+
+  if ($("#doughnutChart").length) {
+    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
+    var doughnutChart = new Chart(doughnutChartCanvas, {
+      type: 'doughnut',
+      data: doughnutPieData,
+      options: doughnutPieOptions
+    });
+  }
+
+  if ($("#pieChart").length) {
+    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: doughnutPieData,
+      options: doughnutPieOptions
+    });
+  }
+
+  if ($("#areaChart").length) {
+    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+    var areaChart = new Chart(areaChartCanvas, {
+      type: 'line',
+      data: areaData,
+      options: areaOptions
+    });
+  }
+
+  if ($("#scatterChart").length) {
+    var scatterChartCanvas = $("#scatterChart").get(0).getContext("2d");
+    var scatterChart = new Chart(scatterChartCanvas, {
+      type: 'scatter',
+      data: scatterChartData,
+      options: scatterChartOptions
+    });
+  }
+
+  if ($("#browserTrafficChart").length) {
+    var doughnutChartCanvas = $("#browserTrafficChart").get(0).getContext("2d");
+    var doughnutChart = new Chart(doughnutChartCanvas, {
+      type: 'doughnut',
+      data: browserTrafficData,
+      options: doughnutPieOptions
+    });
+  }
+});
+
+{% endblock injectjs %}
