@@ -1,0 +1,330 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}Invoices Day Safari DashBoard{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.cash_at_hand }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Cash at Hand</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.cash_at_bank }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+11%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Cash At Bank</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.expenses }}</h3>
+              <p class="text-danger ms-2 mb-0 font-weight-medium">-2.4%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger">
+              <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Expenses</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ dashboard.total_sales }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Sales</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row">
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Invoices (Last 6 Months)</h4>
+        <canvas id="areaChart" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Cash Flow (Last 6 Months)</h4>
+        <canvas id="barChart" style="height:230px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pending Invoices Table -->
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Pending Invoices</h4>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Invoice Number</th>
+              <th>Customer</th>
+              <th>Total Amount</th>
+              <th>Amount Paid</th>
+              <th>Balance</th>
+              <th>Invoice Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for invoice in invoices %}
+            <tr>
+              <td>{{ invoice.invoice_number }}</td>
+              <td>{{ invoice.customer_name }}</td>
+              <td>Ksh {{ invoice.amount }}</td>
+              <td>Ksh {{ invoice.amount_paid }}</td>
+              <td>Ksh {{ invoice.balance }}</td>
+              <td>{{ invoice.date }}</td>
+              <td>
+                {% if invoice.status == 'Paid' %}
+                  <div class="badge badge-outline-success">Paid</div>
+                {% elif invoice.status == 'Partial' %}
+                  <div class="badge badge-outline-warning">Partial</div>
+                {% else %}
+                  <div class="badge badge-outline-danger">Unpaid</div>
+                {% endif %}
+              </td>
+              <td>
+                <a href="{% url 'update_invoice' invoice.pk %}" class="btn btn-sm btn-primary">Edit</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="7" class="text-center">No invoices found</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="d-flex mt-4 flex-wrap justify-content-between align-items-center">
+        <p class="text-muted mb-0">
+          Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
+        </p>
+        <nav>
+          <ul class="pagination pagination-sm">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a href="?page=1" class="page-link">&laquo;&laquo;</a>
+              </li>
+              <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo;</a>
+              </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if num == page_obj.number %}
+                <li class="page-item active">
+                  <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                </li>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                  <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a>
+              </li>
+              <li class="page-item">
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">&raquo;&raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block injectjs %}
+
+$(function() {
+  'use strict';
+  
+  // Area Chart - Invoice Trends
+  if ($("#areaChart").length) {
+    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+    var areaData = {
+      labels: {{ chart_months|safe }},
+      datasets: [{
+        label: 'Number of Invoices',
+        data: {{ invoice_counts|safe }},
+        backgroundColor: 'rgba(90, 18, 51, 0.2)',
+        borderColor: 'rgba(90, 18, 51, 1)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: '#5a1233'
+      }]
+    };
+    var areaOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          },
+          ticks: {
+            stepSize: 1
+          }
+        },
+        x: {
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        }
+      }
+    };
+    var areaChart = new Chart(areaChartCanvas, {
+      type: 'line',
+      data: areaData,
+      options: areaOptions
+    });
+  }
+
+  // Bar Chart - Cash Flow
+  if ($("#barChart").length) {
+    var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    var barData = {
+      labels: {{ chart_months|safe }},
+      datasets: [
+        {
+          label: 'Cash In (Paid Invoices)',
+          data: {{ chart_cash_in|safe }},
+          backgroundColor: 'rgba(40, 167, 69, 0.7)',
+          borderColor: 'rgba(40, 167, 69, 1)',
+          borderWidth: 1,
+          borderRadius: 4
+        },
+        {
+          label: 'Cash Out (Expenses)',
+          data: {{ chart_cash_out|safe }},
+          backgroundColor: 'rgba(220, 53, 69, 0.7)',
+          borderColor: 'rgba(220, 53, 69, 1)',
+          borderWidth: 1,
+          borderRadius: 4
+        }
+      ]
+    };
+    var barOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          },
+          ticks: {
+            callback: function(value) {
+              return 'Ksh ' + value.toLocaleString();
+            }
+          }
+        },
+        x: {
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.dataset.label + ': Ksh ' + context.raw.toLocaleString();
+            }
+          }
+        }
+      }
+    };
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barData,
+      options: barOptions
+    });
+  }
+});
+
+{% endblock injectjs %}
