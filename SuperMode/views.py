@@ -9,7 +9,8 @@ from django.db import models
 from django.urls import reverse_lazy
 from django.contrib import messages
 from Invoices.forms import InvoiceForm
-from datetime import date
+from datetime import date, timedelta
+from django.db.models import Q
 
 class AdminDashboardView(ListView):
     template_name = 'Dashboard/index.html'
@@ -286,3 +287,136 @@ class UpdateInvoiceView(UpdateView):
     def get_total_invoice_amount(self):
         total = Invoice.objects.aggregate(total=models.Sum('amount'))['total'] or 0
         return float(total)
+    
+
+# class Employee
+from Office.models import Employee
+class EmployeeListView(ListView):
+    model = Employee
+    template_name = 'Employees/employees.html'
+    context_object_name = 'employees'
+    paginate_by = 10
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Dashboard summary data
+        total_employees = Employee.objects.filter(is_active=True).count()
+        total_salary = Employee.objects.aggregate(total=Sum('salary'))['total'] or 0
+        
+        # Role distribution
+        role_counts = {}
+        for role_choice in Employee.ROLE_CHOICES:
+            role = role_choice[0]
+            count = Employee.objects.filter(role=role, is_active=True).count()
+            if count > 0:
+                role_counts[role] = count
+        
+        # Department distribution
+        dept_counts = {}
+        for dept_choice in Employee.DEPT_CHOICES:
+            dept = dept_choice[0]
+            count = Employee.objects.filter(department=dept, is_active=True).count()
+            if count > 0:
+                dept_counts[dept] = count
+        
+        # Monthly hiring trends (last 6 months)
+        months = []
+        hiring_counts = []
+        salary_trends = []
+        
+        for i in range(5, -1, -1):
+            month_date = date.today() - timedelta(days=30*i)
+            month_name = month_date.strftime('%b %Y')
+            months.append(month_name)
+            
+            # Hiring count for this month
+            hired_count = Employee.objects.filter(
+                hire_date__year=month_date.year,
+                hire_date__month=month_date.month
+            ).count()
+            hiring_counts.append(hired_count)
+            
+            # New hires salary trend
+            new_salaries = Employee.objects.filter(
+                hire_date__year=month_date.year,
+                hire_date__month=month_date.month
+            ).aggregate(total=Sum('salary'))['total'] or 0
+            salary_trends.append(float(new_salaries))
+        
+        context['dashboard'] = {
+            'total_employees': total_employees,
+            'total_salary': float(total_salary),
+            'avg_salary': float(total_salary / total_employees if total_employees > 0 else 0),
+            'active_count': total_employees,
+            'new_hires': Employee.objects.filter(hire_date__month=date.today().month).count(),
+        }
+        
+        context['role_counts'] = role_counts
+        context['dept_counts'] = dept_counts
+        context['chart_months'] = months
+        context['hiring_counts'] = hiring_counts
+        context['salary_trends'] = salary_trends
+        
+        # Search functionality
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            context['employees'] = context['employees'].filter(
+                Q(name__icontains=search_query) |
+                Q(email__icontains=search_query) |
+                Q(employee_id__icontains=search_query) |
+                Q(role__icontains=search_query)
+            )
+            context['search_query'] = search_query
+        
+        return context
+
+from Office.forms import EmployeeForm
+class EmployeeCreateView(CreateView):
+    model = Employee
+    form_class = EmployeeForm
+    template_name = 'Employees/add_employee.html'
+    success_url = reverse_lazy('employee_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Employee {form.instance.name} has been added successfully!')
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f'{field}: {error}')
+        return super().form_invalid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Add New Employee'
+        context['button_text'] = 'Add Employee'
+        return context
+
+
+class EmployeeUpdateView(UpdateView):
+    model = Employee
+    form_class = EmployeeForm
+    template_name = 'Employees/update_employee.html'
+    success_url = reverse_lazy('employee_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Employee {form.instance.name} has been updated successfully!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        total_employees = Employee.objects.filter(is_active=True).count()
+        total_salary = Employee.objects.aggregate(total=Sum('salary'))['total'] or 0
+        
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Edit-{self.object.name}'
+        context['button_text'] = 'Update Employee'
+        context['dashboard'] = {
+            'total_employees': total_employees,
+            'total_salary': float(total_salary),
+            'avg_salary': float(total_salary / total_employees if total_employees > 0 else 0),
+            'active_count': total_employees,
+            'new_hires': Employee.objects.filter(hire_date__month=date.today().month).count(),
+        }
+        return context
