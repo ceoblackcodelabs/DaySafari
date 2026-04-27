@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'Invoices',
     'ChatBot',
     'EmailSetup',
+    'FinanceManagement',
     'SuperMode',
 ]
 

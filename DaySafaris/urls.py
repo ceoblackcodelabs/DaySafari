@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('ClientRequests.urls')),
     path('', include("Accomodations.urls")),
     path('', include('ChatBot.urls')),
+    # path('', include('FinanceManagement.urls')),
     path('SudoSu/', include('SuperMode.urls')),
 ]
 

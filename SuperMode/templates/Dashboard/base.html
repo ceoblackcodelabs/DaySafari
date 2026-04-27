@@ -179,20 +179,40 @@
             </div>
           </li>
 
+          <!--Finance-->
+          <li class="nav-item menu-items">
+            <a class="nav-link" data-bs-toggle="collapse" href="#auth6" aria-expanded="false" aria-controls="auth">
+              <span class="menu-icon">
+                <i class="mdi mdi-cash-multiple"></i>
+              </span>
+              <span class="menu-title">Finance</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth6">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url "finance_dashboard" %}"> Dashboard </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "income_list" %}"> Incomes </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "add_income" %}"> Add Income </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "expense_list" %}"> Expenses </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "add_expense" %}"> Add Expense </a></li>
+              </ul>
+            </div>
+          </li>
+
           <li class="nav-item nav-category">
             <span class="nav-link">Automations</span>
           </li>
 
           <!--Itineraries-->
           <li class="nav-item menu-items">
-            <a class="nav-link" data-bs-toggle="collapse" href="#auth4" aria-expanded="false" aria-controls="auth">
+            <a class="nav-link" data-bs-toggle="collapse" href="#auth7" aria-expanded="false" aria-controls="auth">
               <span class="menu-icon">
                 <i class="mdi mdi-table-large"></i>
               </span>
               <span class="menu-title">Itinerary</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="auth4">
+            <div class="collapse" id="auth7">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href=""> Itineraries </a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Smart Builder </a></li>
@@ -202,14 +222,14 @@
 
           <!--insight-->
           <li class="nav-item menu-items">
-            <a class="nav-link" data-bs-toggle="collapse" href="#auth6" aria-expanded="false" aria-controls="auth">
+            <a class="nav-link" data-bs-toggle="collapse" href="#auth8" aria-expanded="false" aria-controls="auth">
               <span class="menu-icon">
                 <i class="mdi mdi-robot"></i>
               </span>
               <span class="menu-title">AI Insights</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="auth6">
+            <div class="collapse" id="auth8">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href=""> Insights </a></li>
               </ul>
@@ -218,14 +238,14 @@
 
           <!--Social Media Marketing-->
           <li class="nav-item menu-items">
-            <a class="nav-link" data-bs-toggle="collapse" href="#auth7" aria-expanded="false" aria-controls="auth">
+            <a class="nav-link" data-bs-toggle="collapse" href="#auth9" aria-expanded="false" aria-controls="auth">
               <span class="menu-icon">
                 <i class="mdi mdi-account-group"></i>
               </span>
               <span class="menu-title">Social Marketing</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="auth7">
+            <div class="collapse" id="auth9">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href=""> Current Schedule</a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Schedule Posting</a></li>

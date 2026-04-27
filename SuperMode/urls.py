@@ -2,7 +2,9 @@ from django.urls import path
 from .views import (AdminDashboardView, InvoiceView, InvoiceCreateView,
                     UpdateInvoiceView, EmployeeListView, EmployeeCreateView, EmployeeUpdateView,
                     BookingListView, BookingCreateView, BookingUpdateView, BookingDeleteView,
-                    ContactListView, ContactUpdateView, ContactDeleteView
+                    ContactListView, ContactUpdateView, ContactDeleteView, 
+                    FinanceDashboardView, IncomeListView, ExpenseListView, IncomeCreateView, ExpenseCreateView,
+                    IncomeUpdateView, ExpenseUpdateView, IncomeDeleteView, ExpenseDeleteView
                     )
 
 urlpatterns = [
@@ -26,4 +28,19 @@ urlpatterns = [
     path('contacts/', ContactListView.as_view(), name='contact_list'),
     path('contacts/update/<int:pk>/', ContactUpdateView.as_view(), name='update_contact'),
     path('contacts/delete/<int:pk>/', ContactDeleteView.as_view(), name='delete_contact'),
+
+    # finance
+    path('finance/', FinanceDashboardView.as_view(), name='finance_dashboard'),
+
+    # income 
+    path('finance/income/', IncomeListView.as_view(), name='income_list'),
+    path('finance/income/<int:pk>/edit/', IncomeUpdateView.as_view(), name='update_income'),
+    path('finance/income/<int:pk>/delete/', IncomeDeleteView.as_view(), name='delete_income'),
+    path('finance/income/add/', IncomeCreateView.as_view(), name='add_income'),
+
+    # expense
+    path('finance/expense/', ExpenseListView.as_view(), name='expense_list'),
+    path('finance/expense/add/', ExpenseCreateView.as_view(), name='add_expense'),
+    path('finance/expense/<int:pk>/edit/', ExpenseUpdateView.as_view(), name='update_expense'),
+    path('finance/expense/<int:pk>/delete/', ExpenseDeleteView.as_view(), name='delete_expense'),
 ]
