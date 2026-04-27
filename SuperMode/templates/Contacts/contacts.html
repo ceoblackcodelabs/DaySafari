@@ -1,0 +1,341 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}Admin Day Safari DashBoard{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Total {{ dashboard.total_contacts }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Contacts</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Total {{ dashboard.new_contacts }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+11%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">New Contacts</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Total {{ dashboard.read_contacts }}</h3>
+              <p class="text-danger ms-2 mb-0 font-weight-medium">-2.4%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger">
+              <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Read Contacts</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Total {{ dashboard.closed_contacts }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Closed Contacts</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row">
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Contact Trends (Last 6 Months)</h4>
+        <canvas id="areaChart" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Contact Status Distribution</h4>
+        <canvas id="barChart" style="height:230px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pending Invoices Table -->
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Contacts From Users</h4>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>User</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Subject</th>
+              <th>Message</th>
+              <th>Date/Time Sent</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for contact in contacts %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{% if contact.client %}{{ contact.client }} {% else %}Not Registerd{% endif %}</td>
+              <td>{{ contact.name }}</td>
+              <td>{{ contact.email }}</td>
+              <td>{{ contact.subject }}</td>
+              <td>{{ contact.message }}</td>
+              <td>{{ contact.created_at }}</td>
+              <td>
+                {% if contact.status == 'New' %}
+                  <div class="badge badge-outline-warning">New Message</div>
+                {% elif contact.status == 'Closed' %}
+                  <div class="badge badge-outline-success">Message Closed</div>
+                {% else %}
+                  <div class="badge badge-outline-danger">Unresponded</div>
+                {% endif %}
+              </td>
+              <td>
+                <a href="{% url 'update_contact' contact.pk %}" class="btn btn-sm btn-primary">Update</a>
+              </td>
+              <td>
+                <form method="POST" action="{% url 'delete_contact' contact.id %}" class="d-inline" onsubmit="return confirm('Are you sure you want to delete contact for {{ contact.name }}? This action cannot be undone!');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-danger">
+                    <i class="mdi mdi-delete"></i> Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="7" class="text-center">No one contacted yet</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="d-flex mt-4 flex-wrap justify-content-between align-items-center">
+        <p class="text-muted mb-0">
+          Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
+        </p>
+        <nav>
+          <ul class="pagination pagination-sm">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a href="?page=1" class="page-link">&laquo;&laquo;</a>
+              </li>
+              <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo;</a>
+              </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if num == page_obj.number %}
+                <li class="page-item active">
+                  <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                </li>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                  <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a>
+              </li>
+              <li class="page-item">
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">&raquo;&raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block injectjs %}
+
+$(function() {
+  'use strict';
+  
+  // Area Chart - Invoice Trends
+  if ($("#areaChart").length) {
+    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+    var areaData = {
+      labels: {{ chart_months|safe }},
+      datasets: [{
+        label: 'Number of contacts',
+        data: {{ total_trends|safe }},
+        backgroundColor: 'rgba(90, 18, 51, 0.2)',
+        borderColor: 'rgba(90, 18, 51, 1)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: '#5a1233'
+      }]
+    };
+    var areaOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          },
+          ticks: {
+            stepSize: 1
+          }
+        },
+        x: {
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        }
+      }
+    };
+    var areaChart = new Chart(areaChartCanvas, {
+      type: 'line',
+      data: areaData,
+      options: areaOptions
+    });
+  }
+
+  // Bar Chart - Contact Status Distribution
+  if ($("#barChart").length) {
+    var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    var barData = {
+      labels: {{ chart_months|safe }},
+      datasets: [
+        {
+          label: 'New Contacts',
+          data: {{ new_trends|safe }},
+          backgroundColor: 'rgba(255, 193, 7, 0.7)',
+          borderColor: 'rgba(255, 193, 7, 1)',
+          borderWidth: 1,
+          borderRadius: 4
+        },
+        {
+          label: 'Closed Contacts',
+          data: {{ closed_trends|safe }},
+          backgroundColor: 'rgba(40, 167, 69, 0.7)',
+          borderColor: 'rgba(40, 167, 69, 1)',
+          borderWidth: 1,
+          borderRadius: 4
+        }
+      ]
+    };
+    var barOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          },
+          ticks: {
+            stepSize: 1,
+            callback: function(value) {
+              return value;
+            }
+          }
+        },
+        x: {
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.dataset.label + ': ' + context.raw;
+            }
+          }
+        }
+      }
+    };
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barData,
+      options: barOptions
+    });
+  }
+});
+
+{% endblock injectjs %}

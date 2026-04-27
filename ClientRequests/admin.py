@@ -15,29 +15,29 @@ class BookingsAdmin(admin.ModelAdmin):
 # contact
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['client', 'name', 'email', 'subject', 'created_at', 'is_read']
-    list_filter = ['is_read', 'created_at']
+    list_display = ['client', 'name', 'email', 'subject', 'created_at', 'status']
+    list_filter = ['status', 'created_at']
     search_fields = ['client', 'name', 'email', 'subject', 'message']
     readonly_fields = ['created_at']
-    list_editable = ['is_read']
+    list_editable = ['status']
     
     fieldsets = (
         ('Contact Information', {
             'fields': ('client', 'name', 'email', 'subject', 'message')
         }),
         ('Status', {
-            'fields': ('is_read', 'created_at')
+            'fields': ('status', 'created_at')
         }),
     )
     
     actions = ['mark_as_read', 'mark_as_unread']
     
     def mark_as_read(self, request, queryset):
-        queryset.update(is_read=True)
+        queryset.update(status='Read')
         self.message_user(request, f"{queryset.count()} messages marked as read.")
     mark_as_read.short_description = "Mark selected messages as read"
     
     def mark_as_unread(self, request, queryset):
-        queryset.update(is_read=False)
+        queryset.update(status='New')
         self.message_user(request, f"{queryset.count()} messages marked as unread.")
     mark_as_unread.short_description = "Mark selected messages as unread"
