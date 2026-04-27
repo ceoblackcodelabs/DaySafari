@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import (TemplateView, ListView, DetailView, 
-                                  CreateView, UpdateView, DeleteView
+                                  CreateView, UpdateView, DeleteView,
+                                  View
                                   )
 from Invoices.models import Invoice
 from django.db.models import Sum
@@ -587,6 +588,7 @@ class BookingDeleteView(DeleteView):
     def post(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
     
+# contact
 from ClientRequests.models import Contact
 class ContactListView(ListView):
     model = Contact
@@ -696,6 +698,46 @@ class ContactDeleteView(DeleteView):
     
     def post(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
+    
+from EmailSetup.utils import reply_contact_via_email_at_admin
+from EmailSetup.forms import ContactReplyForm
+
+class ContactReplyView(View):
+    def post(self, request, pk, *args, **kwargs):
+        try:
+            contact = Contact.objects.get(pk=pk)
+            reply_subject = request.POST.get('reply_subject')
+            reply_message = request.POST.get('reply_message')
+            
+            if not reply_subject or not reply_message:
+                messages.error(request, 'Please fill in both subject and message fields.')
+                return redirect(reverse_lazy('update_contact', kwargs={'pk': pk}))
+            
+            # Create a temporary contact object with original message and response
+            class TempContact:
+                pass
+            
+            temp_contact = TempContact()
+            temp_contact.email = contact.email
+            temp_contact.name = contact.name
+            temp_contact.subject = reply_subject
+            temp_contact.original_message = contact.message  # Store original message
+            temp_contact.response_message = reply_message    # Store admin's response
+            
+            # Send email using your utility function
+            email_sent = reply_contact_via_email_at_admin(temp_contact)
+            
+            if email_sent:
+                contact.status = 'Closed'
+                contact.save()
+                messages.success(request, f'Reply sent successfully to {contact.email}!')
+            else:
+                messages.error(request, 'Failed to send email. Please try again.')
+                    
+        except Contact.DoesNotExist:
+            messages.error(request, 'Contact message not found.')
+        
+        return redirect(reverse_lazy('update_contact', kwargs={'pk': pk}))
 
 # Finance Management Views
 from FinanceManagement.models import Income, Expense

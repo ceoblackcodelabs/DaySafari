@@ -74,6 +74,23 @@ def send_contact_response(contact):
     except Exception as e:
         print(f"Error: {e}")
         return False
+    
+def reply_contact_via_email_at_admin(contact):
+    '''from admin reply to client'''
+    try:
+        print(f"Preparing to send contact response email to {contact.email}...")
+        html_content = render_to_string('Emails/contact_response_admin.html', {'contact': contact})
+        return send_transactional_email(
+            contact.email, 
+            contact.name, 
+            f"Response to: {contact.subject} - Day Safaris Adventures", 
+            html_content
+        )
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+
+
 
 def send_test_email(email):
     """Send test email using template"""

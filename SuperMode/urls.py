@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (AdminDashboardView, InvoiceView, InvoiceCreateView,
                     UpdateInvoiceView, EmployeeListView, EmployeeCreateView, EmployeeUpdateView,
                     BookingListView, BookingCreateView, BookingUpdateView, BookingDeleteView,
-                    ContactListView, ContactUpdateView, ContactDeleteView, 
+                    ContactListView, ContactUpdateView, ContactDeleteView,  ContactReplyView,
                     FinanceDashboardView, IncomeListView, ExpenseListView, IncomeCreateView, ExpenseCreateView,
                     IncomeUpdateView, ExpenseUpdateView, IncomeDeleteView, ExpenseDeleteView
                     )
@@ -28,6 +28,7 @@ urlpatterns = [
     path('contacts/', ContactListView.as_view(), name='contact_list'),
     path('contacts/update/<int:pk>/', ContactUpdateView.as_view(), name='update_contact'),
     path('contacts/delete/<int:pk>/', ContactDeleteView.as_view(), name='delete_contact'),
+    path('contact/<int:pk>/reply/', ContactReplyView.as_view(), name='reply_contact'),
 
     # finance
     path('finance/', FinanceDashboardView.as_view(), name='finance_dashboard'),
