@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Payment - Day Safaris Adventures</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            padding: 30px;
+            color: #1a1a2e;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #420d24 0%, #5a1233 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            margin-top: 8px;
+            color: #28a745;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        .payment-form {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .form-header {
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 24px;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .amount-box {
+            background: linear-gradient(135deg, #420d24 0%, #5a1233 100%);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .amount-box .label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 8px;
+        }
+
+        .amount-box .amount {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #5a1233;
+            font-size: 18px;
+        }
+
+        .input-wrapper input, .card-element {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #5a1233;
+            box-shadow: 0 0 0 3px rgba(90, 18, 51, 0.1);
+        }
+
+        .card-icons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            justify-content: flex-end;
+        }
+
+        .card-icons i {
+            font-size: 32px;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #6772e5 0%, #5469d4 100%);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(103, 114, 229, 0.3);
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .package-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #420d24 0%, #5a1233 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .package-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .package-desc {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .package-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .package-features i {
+            color: #28a745;
+            font-size: 14px;
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #6772e5 0%, #5469d4 100%);
+            border-radius: 24px;
+            padding: 25px;
+            color: white;
+        }
+
+        .insight-card h4 {
+            font-size: 14px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .insight-value {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .security-badge {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .security-badge i {
+            font-size: 32px;
+            color: #5a1233;
+            margin-bottom: 10px;
+        }
+
+        .security-badge p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 15px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Countries Served</div>
+                <div class="stat-change"><i class="fas fa-arrow-up"></i> +5 new markets</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Secure Transactions</div>
+                <div class="stat-change"><i class="fas fa-shield-alt"></i> PCI DSS Level 1</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="stat-value">Instant</div>
+                <div class="stat-label">Payment Processing</div>
+                <div class="stat-change"><i class="fas fa-check"></i> Real-time confirmation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Fraud Protection</div>
+                <div class="stat-change"><i class="fas fa-lock"></i> 3D Secure enabled</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="payment-form">
+                <div class="form-header">
+                    <h2>Pay with Card</h2>
+                    <p>Secure payment powered by Stripe</p>
+                </div>
+
+                <div class="amount-box">
+                    <div class="label">Total Amount to Pay</div>
+                    <div class="amount">
+                        <span class="currency">Ksh</span> 12,990.00
+                    </div>
+                </div>
+
+                <form id="paymentForm">
+                    <div class="card-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-discover"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-credit-card"></i>
+                            <input type="text" placeholder="1234 5678 9012 3456" id="card_number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cardholder Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" placeholder="John Doe" id="card_name">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Expiry Date</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-calendar"></i>
+                                <input type="text" placeholder="MM/YY" id="expiry">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV/CVC</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="text" placeholder="123" id="cvv">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" placeholder="you@example.com" id="email">
+                        </div>
+                    </div>
+
+                    <button type="button" class="pay-btn" onclick="processPayment()">
+                        <i class="fab fa-stripe"></i>
+                        Pay Ksh 12,990.00
+                    </button>
+                </form>
+            </div>
+
+            <div class="side-panel">
+                <div class="package-card">
+                    <div class="package-badge">🌟 Premium Package</div>
+                    <div class="package-title">Serengeti Migration Safari</div>
+                    <div class="package-desc">5-day wildlife photography safari in Serengeti National Park.</div>
+                    
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> Luxury tented camp accommodation</li>
+                        <li><i class="fas fa-check-circle"></i> Expert photography guide</li>
+                        <li><i class="fas fa-check-circle"></i> Hot air balloon safari option</li>
+                        <li><i class="fas fa-check-circle"></i> Night game drives</li>
+                        <li><i class="fas fa-check-circle"></i> Photography workshop</li>
+                        <li><i class="fas fa-check-circle"></i> Full board meals</li>
+                    </ul>
+                    
+                    <div style="margin-top: 15px;">
+                        <span style="font-size: 12px; color: #999;">Bonus:</span>
+                        <div><strong style="color: #28a745;">✓ Free Photography E-Book</strong></div>
+                        <div><strong style="color: #28a745;">✓ 10% off next booking</strong></div>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <h4><i class="fas fa-chart-line"></i> Payment Insights</h4>
+                    <div class="insight-value">89%</div>
+                    <div style="margin-bottom: 15px;">Customers prefer card payments</div>
+                    <div class="insight-value">100%</div>
+                    <div>Money-back guarantee</div>
+                </div>
+
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <p>Your card details are encrypted using AES-256. Stripe handles all payment processing securely.</p>
+                    <div style="margin-top: 15px;">
+                        <i class="fas fa-lock" style="color: #28a745;"></i>
+                        <span style="font-size: 11px;"> PCI DSS Level 1 Certified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function processPayment() {
+            const cardNumber = document.getElementById('card_number').value;
+            const cardName = document.getElementById('card_name').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            const email = document.getElementById('email').value;
+            
+            if (!cardNumber || !cardName || !expiry || !cvv || !email) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (cardNumber.replace(/\s/g, '').length < 16) {
+                alert('Please enter a valid card number');
+                return;
+            }
+            
+            if (cvv.length < 3) {
+                alert('Please enter a valid CVV');
+                return;
+            }
+            
+            alert(`🔒 Processing Payment...\n\nAmount: Ksh 12,990.00\nCard: •••• •••• •••• ${cardNumber.slice(-4)}\n\nYour payment is being processed securely. Please wait...`);
+            
+            // In production, this would integrate with Stripe.js
+            // stripe.redirectToCheckout({ sessionId: sessionId });
+        }
+    </script>
+</body>
+</html>
