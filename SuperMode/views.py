@@ -585,3 +585,113 @@ class BookingDeleteView(DeleteView):
     
     def post(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
+    
+from ClientRequests.models import Contact
+class ContactListView(ListView):
+    model = Contact
+    template_name = 'Contacts/contacts.html'
+    context_object_name = 'contacts'
+    paginate_by = 10
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Dashboard summary data
+        total_contacts = Contact.objects.count()
+        new_contacts = Contact.objects.filter(status='New').count()
+        read_contacts = Contact.objects.filter(status='Read').count()
+        closed_contacts = Contact.objects.filter(status='Closed').count()
+        
+        # Monthly contact trends (last 6 months)
+        months = []
+        total_trends = []
+        new_trends = []
+        closed_trends = []
+        
+        for i in range(5, -1, -1):
+            month_date = date.today() - timedelta(days=30*i)
+            month_name = month_date.strftime('%b %Y')
+            months.append(month_name)
+            
+            # Total contacts for this month
+            total = Contact.objects.filter(
+                created_at__year=month_date.year,
+                created_at__month=month_date.month
+            ).count()
+            total_trends.append(total)
+            
+            # New contacts for this month
+            new = Contact.objects.filter(
+                status='New',
+                created_at__year=month_date.year,
+                created_at__month=month_date.month
+            ).count()
+            new_trends.append(new)
+            
+            # Closed contacts for this month
+            closed = Contact.objects.filter(
+                status='Closed',
+                created_at__year=month_date.year,
+                created_at__month=month_date.month
+            ).count()
+            closed_trends.append(closed)
+        
+        context['dashboard'] = {
+            'total_contacts': total_contacts,
+            'new_contacts': new_contacts,
+            'read_contacts': read_contacts,
+            'closed_contacts': closed_contacts,
+        }
+        
+        context['chart_months'] = months
+        context['total_trends'] = total_trends
+        context['new_trends'] = new_trends
+        context['closed_trends'] = closed_trends
+        
+        return context
+    
+
+from ClientRequests.forms import SudoContactForm    
+class ContactUpdateView(UpdateView):
+    model = Contact
+    form_class = SudoContactForm
+    template_name = 'Contacts/update_contact.html'
+    success_url = reverse_lazy('contact_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Contact message from {form.instance.name} has been updated successfully!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Update Contact Message'
+        context['button_text'] = 'Update Message'
+        
+        # Dashboard summary data
+        total_messages = Contact.objects.count()
+        unread_messages = Contact.objects.filter(status='New').count()
+        read_messages = Contact.objects.filter(status='Read').count()
+        total_responded = Contact.objects.filter(~Q(response='')).count() if hasattr(Contact, 'response') else 0
+        
+        context['dashboard'] = {
+            'total_messages': total_messages,
+            'unread_messages': unread_messages,
+            'read_messages': read_messages,
+            'total_responded': total_responded,
+        }
+        
+        return context
+    
+class ContactDeleteView(DeleteView):
+    model = Contact
+    success_url = reverse_lazy('contact_list')
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        contact_name = self.object.name
+        self.object.delete()
+        messages.success(request, f'Contact message from {contact_name} has been deleted successfully!')
+        return redirect(self.success_url)
+    
+    def post(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)

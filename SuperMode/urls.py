@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (AdminDashboardView, InvoiceView, InvoiceCreateView,
                     UpdateInvoiceView, EmployeeListView, EmployeeCreateView, EmployeeUpdateView,
-                    BookingListView, BookingCreateView, BookingUpdateView, BookingDeleteView
+                    BookingListView, BookingCreateView, BookingUpdateView, BookingDeleteView,
+                    ContactListView, ContactUpdateView, ContactDeleteView
                     )
 
 urlpatterns = [
@@ -20,4 +21,9 @@ urlpatterns = [
     path('bookings/create/', BookingCreateView.as_view(), name='create_booking'),
     path('bookings/update/<int:pk>/', BookingUpdateView.as_view(), name='update_booking'),
     path('bookings/delete/<int:pk>/', BookingDeleteView.as_view(), name='delete_booking'),
+
+    # contact
+    path('contacts/', ContactListView.as_view(), name='contact_list'),
+    path('contacts/update/<int:pk>/', ContactUpdateView.as_view(), name='update_contact'),
+    path('contacts/delete/<int:pk>/', ContactDeleteView.as_view(), name='delete_contact'),
 ]

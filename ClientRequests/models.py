@@ -24,7 +24,7 @@ class Contact(models.Model):
     subject = models.CharField(max_length=200)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, default='New', choices=[('New', 'New'), ('Read', 'Read'), ('Closed', 'Closed')])
     
     class Meta:
         ordering = ['-created_at']
