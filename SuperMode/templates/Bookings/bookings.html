@@ -1,0 +1,394 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}Bookings - Day Safari Dashboard{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ dashboard.total_bookings }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+{{ dashboard.pending_bookings }}</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-calendar-check icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Bookings</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ dashboard.pending_bookings }}</h3>
+              <p class="text-warning ms-2 mb-0 font-weight-medium">Upcoming</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-warning">
+              <span class="mdi mdi-clock icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Pending Bookings</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ dashboard.completed_bookings }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">Past</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-check-circle icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Completed Bookings</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ dashboard.total_persons }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">Guests</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-account-group icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Travelers</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row">
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Booking Trends (Last 6 Months)</h4>
+        <canvas id="bookingChart" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Traveler Trends (Last 6 Months)</h4>
+        <canvas id="personsChart" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bookings Table -->
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="card-title mb-0">Booking Directory</h4>
+        <div>
+          <form method="GET" class="d-flex">
+            <input type="text" name="search" class="form-control me-2" placeholder="Search bookings..." value="{{ search_query|default:'' }}" style="width: 250px;">
+            <button type="submit" class="btn btn-primary">Search</button>
+            {% if search_query %}
+              <a href="{% url 'booking_list' %}" class="btn btn-secondary ms-2">Clear</a>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Destination</th>
+              <th>Persons</th>
+              <th>Travel Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for booking in bookings %}
+            <tr>
+              <td>{{ booking.id }}</td>
+              <td><strong>{{ booking.name }}</strong></td>
+              <td>{{ booking.email }}</td>
+              <td>{{ booking.phone }}</td>
+              <td>{{ booking.destination.name|default:"TBD" }}</td>
+              <td>{{ booking.persons }}</td>
+              <td>{{ booking.date }}</td>
+              <td>
+                {% if booking.date >= today %}
+                  <div class="badge badge-outline-success">Upcoming</div>
+                {% else %}
+                  <div class="badge badge-outline-secondary">Completed</div>
+                {% endif %}
+              </td>
+              <td>
+                <a href="{% url 'update_booking' booking.id %}" class="btn btn-sm btn-primary">Edit</a>
+              </td>
+              <td>
+                <form method="POST" action="{% url 'delete_booking' booking.id %}" class="d-inline" onsubmit="return confirm('Are you sure you want to delete booking for {{ booking.name }}? This action cannot be undone!');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-danger">
+                    <i class="mdi mdi-delete"></i> Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="8" class="text-center">No bookings found</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="d-flex mt-4 flex-wrap justify-content-between align-items-center">
+        <p class="text-muted mb-0">
+          Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} bookings
+        </p>
+        <nav>
+          <ul class="pagination pagination-sm">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">&laquo;&laquo;</a>
+              </li>
+              <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">&laquo;</a>
+              </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if num == page_obj.number %}
+                <li class="page-item active">
+                  <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">{{ num }}</a>
+                </li>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                  <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">&raquo;</a>
+              </li>
+              <li class="page-item">
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">&raquo;&raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Destination Distribution Bar Chart -->
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Destination Distribution</h4>
+        <canvas id="destinationChart" style="height:350px"></canvas>
+        <div class="text-center mt-3">
+          <small class="text-muted">Number of bookings per destination</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block injectjs %}
+
+$(function() {
+  'use strict';
+  
+  // Booking Trends Chart
+  if ($("#bookingChart").length) {
+    var bookingCanvas = $("#bookingChart").get(0).getContext("2d");
+    new Chart(bookingCanvas, {
+      type: 'line',
+      data: {
+        labels: {{ chart_months|safe }},
+        datasets: [{
+          label: 'Number of Bookings',
+          data: {{ booking_counts|safe }},
+          backgroundColor: 'rgba(90, 18, 51, 0.2)',
+          borderColor: '#5a1233',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 4,
+          pointBackgroundColor: '#5a1233',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: "rgba(204, 204, 204, 0.1)" },
+            ticks: { stepSize: 1 }
+          },
+          x: { grid: { color: "rgba(204, 204, 204, 0.1)" } }
+        },
+        plugins: {
+          legend: { display: true, position: 'top' }
+        }
+      }
+    });
+  }
+
+  // Traveler Trends Chart
+  if ($("#personsChart").length) {
+    var personsCanvas = $("#personsChart").get(0).getContext("2d");
+    new Chart(personsCanvas, {
+      type: 'bar',
+      data: {
+        labels: {{ chart_months|safe }},
+        datasets: [{
+          label: 'Number of Travelers',
+          data: {{ persons_trends|safe }},
+          backgroundColor: 'rgba(40, 167, 69, 0.7)',
+          borderColor: '#28a745',
+          borderWidth: 1,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: "rgba(204, 204, 204, 0.1)" },
+            ticks: {
+              stepSize: 1,
+              callback: function(value) {
+                return value;
+              }
+            }
+          },
+          x: { grid: { color: "rgba(204, 204, 204, 0.1)" } }
+        },
+        plugins: {
+          legend: { display: true, position: 'top' }
+        }
+      }
+    });
+  }
+
+  // Destination Distribution Bar Chart
+  if ($("#destinationChart").length) {
+    var destCanvas = $("#destinationChart").get(0).getContext("2d");
+    
+    var destLabels = [];
+    var destData = [];
+    {% for dest, count in destination_counts.items %}
+      destLabels.push("{{ dest|escapejs }}");
+      destData.push({{ count }});
+    {% endfor %}
+    
+    new Chart(destCanvas, {
+      type: 'bar',
+      data: {
+        labels: destLabels,
+        datasets: [{
+          label: 'Number of Bookings',
+          data: destData,
+          backgroundColor: '#5a1233',
+          borderColor: '#5a1233',
+          borderWidth: 1,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: "rgba(204, 204, 204, 0.1)" },
+            title: {
+              display: true,
+              text: 'Number of Bookings',
+              color: '#888'
+            },
+            ticks: {
+              stepSize: 1,
+              callback: function(value) {
+                return value;
+              }
+            }
+          },
+          x: {
+            grid: { color: "rgba(204, 204, 204, 0.1)" },
+            title: {
+              display: true,
+              text: 'Destinations',
+              color: '#888'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.raw + ' booking(s)';
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+});
+
+{% endblock injectjs %}
