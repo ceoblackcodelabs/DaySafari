@@ -14,6 +14,7 @@ from datetime import date, timedelta
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Q
+from OurClients.models import UserMessage
 
 class AdminDashboardView(ListView):
     template_name = 'Dashboard/index.html'
@@ -726,10 +727,41 @@ class ContactReplyView(View):
             
             # Send email using your utility function
             email_sent = reply_contact_via_email_at_admin(temp_contact)
-            
+
             if email_sent:
                 contact.status = 'Closed'
                 contact.save()
+                message_content = f"""
+                Dear {contact.name},
+
+                Thank you for reaching out to Day Safaris Adventures. We truly appreciate your interest in our services and are delighted that you are considering us for your safari experience. Our team is committed to providing you with exceptional service and unforgettable adventures, and we look forward to assisting you every step of the way.
+
+                📝 Your Original Message:
+                "{contact.message}"
+
+                ✅ Our Response:
+                {reply_message}
+
+                If you have any further questions, please don't hesitate to contact us:
+
+                📞 Phone: +254 734 962 965
+                💬 WhatsApp: +254 783 457 058
+                📧 Email: info@daysafarisadventures.co.ke
+
+                We look forward to assisting you with your African adventure!
+
+                Warm regards,
+                The Day Safaris Adventures Team
+                                """
+                                
+                UserMessage.objects.create(
+                    user=contact.client if hasattr(contact, 'client') and contact.client else None,
+                    subject=f"Reply to: {contact.subject}",
+                    priority='high',
+                    email_sent=True,
+                    email_sent_at=timezone.now(),
+                    message=message_content
+                )
                 messages.success(request, f'Reply sent successfully to {contact.email}!')
             else:
                 messages.error(request, 'Failed to send email. Please try again.')
