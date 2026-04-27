@@ -1,0 +1,240 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+
+{% block title %}{{ title }} - Day Safari Dashboard{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ total_income|default:"0"|floatformat:2 }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+{{ income_count|default:"0" }}</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-up icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Income</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ income_count|default:"0" }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">Records</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-file-document icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Records</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ monthly_income_count|default:"0" }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">This Month</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-calendar-month icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">This Month</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ average_income|default:"0"|floatformat:0 }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">Avg</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-chart-line icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Average Income</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">{{ title }}</h4>
+          <p class="card-description">Fill in the income details below</p>
+          
+          <!-- Display Messages -->
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+          
+          <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+              <label for="source">Source *</label>
+              {{ form.source }}
+              {% if form.source.errors %}
+                <small class="text-danger">{{ form.source.errors.0 }}</small>
+              {% endif %}
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="amount">Amount (Ksh) *</label>
+                  {{ form.amount }}
+                  {% if form.amount.errors %}
+                    <small class="text-danger">{{ form.amount.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="date_received">Date Received *</label>
+                  {{ form.date_received }}
+                  {% if form.date_received.errors %}
+                    <small class="text-danger">{{ form.date_received.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="category">Category</label>
+                  {{ form.category }}
+                  {% if form.category.errors %}
+                    <small class="text-danger">{{ form.category.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="payment_method">Payment Method</label>
+                  {{ form.payment_method }}
+                  {% if form.payment_method.errors %}
+                    <small class="text-danger">{{ form.payment_method.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="reference_number">Reference Number</label>
+              {{ form.reference_number }}
+              {% if form.reference_number.errors %}
+                <small class="text-danger">{{ form.reference_number.errors.0 }}</small>
+              {% endif %}
+            </div>
+            
+            <div class="form-group">
+              <label for="notes">Notes</label>
+              {{ form.notes }}
+              {% if form.notes.errors %}
+                <small class="text-danger">{{ form.notes.errors.0 }}</small>
+              {% endif %}
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Income record will be saved to your financial records</label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary me-2">{{ button_text }}</button>
+            <a href="{% url 'finance_dashboard' %}" class="btn btn-secondary">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Income Information</h4>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <tbody>
+                  <tr>
+                    <td><span class="badge badge-outline-primary">Common Sources</span></td>
+                    <td>Safari Bookings, Tours, Accommodation, Transport</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-outline-primary">Payment Methods</span></td>
+                    <td>M-Pesa, Bank Transfer, Cash, Card, Cheque</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-outline-primary">Categories</span></td>
+                    <td>Masai Mara Safaris, Serengeti Tours, Zanzibar Packages</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-outline-primary">Reference Format</span></td>
+                    <td>INV-YYYY-XXXX or TRX-YYYY-XXXX</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="text-center mt-3">
+              <small class="text-muted">* All fields are required</small>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Quick Tips</h4>
+        <ul class="text-muted">
+          <li>Always record income as soon as it's received</li>
+          <li>Use clear source names for easier reporting</li>
+          <li>Add reference numbers for bank reconciliation</li>
+          <li>Categorize income properly for financial analysis</li>
+          <li>Keep notes for any special circumstances</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

@@ -11,6 +11,7 @@ from django.contrib import messages
 from Invoices.forms import InvoiceForm
 from datetime import date, timedelta
 from django.http import JsonResponse
+from django.utils import timezone
 from django.db.models import Q
 
 class AdminDashboardView(ListView):
@@ -695,3 +696,314 @@ class ContactDeleteView(DeleteView):
     
     def post(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
+
+# Finance Management Views
+from FinanceManagement.models import Income, Expense
+from FinanceManagement.forms import IncomeForm, ExpenseForm
+class FinanceDashboardView(ListView):
+    template_name = 'Finance/dashboard.html'
+    context_object_name = 'transactions'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        return Income.objects.all()  # Default queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Financial Summary
+        total_income = Income.objects.aggregate(total=Sum('amount'))['total'] or 0
+        total_expense = Expense.objects.aggregate(total=Sum('amount'))['total'] or 0
+        net_balance = total_income - total_expense
+        
+        # Monthly trends (last 6 months)
+        months = []
+        income_trends = []
+        expense_trends = []
+        
+        current_date = timezone.now()
+        
+        for i in range(5, -1, -1):
+            month_date = current_date - timedelta(days=30*i)
+            month_name = month_date.strftime('%b %Y')
+            months.append(month_name)
+            
+            # Income for this month
+            month_income = Income.objects.filter(
+                date_received__year=month_date.year,
+                date_received__month=month_date.month
+            ).aggregate(total=Sum('amount'))['total'] or 0
+            income_trends.append(float(month_income))
+            
+            # Expense for this month
+            month_expense = Expense.objects.filter(
+                date_incurred__year=month_date.year,
+                date_incurred__month=month_date.month
+            ).aggregate(total=Sum('amount'))['total'] or 0
+            expense_trends.append(float(month_expense))
+        
+        context['dashboard'] = {
+            'total_income': total_income,
+            'total_expense': total_expense,
+            'net_balance': net_balance,
+            'profit_margin': (net_balance / total_income * 100) if total_income > 0 else 0,
+        }
+        
+        context['chart_months'] = months
+        context['income_trends'] = income_trends
+        context['expense_trends'] = expense_trends
+        context['incomes'] = Income.objects.all().order_by('-date_received')[:10]
+        context['expenses'] = Expense.objects.all().order_by('-date_incurred')[:10]
+        
+        # Debug output (check console)
+        print(f"Months: {months}")
+        print(f"Income Trends: {income_trends}")
+        print(f"Expense Trends: {expense_trends}")
+        
+        return context
+
+
+class IncomeListView(ListView):
+    model = Income
+    template_name = 'Finance/incomes.html'
+    context_object_name = 'incomes'
+    paginate_by = 10
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Total income
+        total_income = Income.objects.aggregate(total=Sum('amount'))['total'] or 0
+        
+        # Monthly trends (last 6 months)
+        months = []
+        income_trends = []
+        current_date = timezone.now()
+        
+        for i in range(5, -1, -1):
+            month_date = current_date - timedelta(days=30*i)
+            month_name = month_date.strftime('%b %Y')
+            months.append(month_name)
+            
+            month_income = Income.objects.filter(
+                date_received__year=month_date.year,
+                date_received__month=month_date.month
+            ).aggregate(total=Sum('amount'))['total'] or 0
+            income_trends.append(float(month_income))
+        
+        # Monthly count
+        current_month = timezone.now().month
+        current_year = timezone.now().year
+        monthly_income_count = Income.objects.filter(
+            date_received__year=current_year,
+            date_received__month=current_month
+        ).count()
+        
+        # Average income
+        avg_income = total_income / Income.objects.count() if Income.objects.count() > 0 else 0
+        
+        context['total_income'] = total_income
+        context['chart_months'] = months
+        context['income_trends'] = income_trends
+        context['monthly_income_count'] = monthly_income_count
+        context['average_income'] = avg_income
+        
+        # Search functionality
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            context['incomes'] = context['incomes'].filter(
+                Q(source__icontains=search_query) |
+                Q(reference_number__icontains=search_query) |
+                Q(category__name__icontains=search_query)
+            )
+            context['search_query'] = search_query
+        
+        return context
+
+class IncomeCreateView(CreateView):
+    model = Income
+    form_class = IncomeForm
+    template_name = 'Finance/income_form.html'
+    success_url = reverse_lazy('income_list')
+    
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.created_by = self.request.user
+        messages.success(self.request, f'Income from {form.instance.source} has been added successfully!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Add Income'
+        context['button_text'] = 'Add Income'
+        
+        # Dashboard data
+        total_income = Income.objects.aggregate(total=Sum('amount'))['total'] or 0
+        income_count = Income.objects.count()
+        
+        current_month = timezone.now().month
+        current_year = timezone.now().year
+        monthly_income_count = Income.objects.filter(
+            date_received__year=current_year,
+            date_received__month=current_month
+        ).count()
+        
+        avg_income = total_income / income_count if income_count > 0 else 0
+        
+        context['total_income'] = total_income
+        context['income_count'] = income_count
+        context['monthly_income_count'] = monthly_income_count
+        context['average_income'] = avg_income
+        
+        return context
+
+
+
+class ExpenseListView(ListView):
+    model = Expense
+    template_name = 'Finance/expenses.html'
+    context_object_name = 'expenses'
+    paginate_by = 10
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Total expense
+        total_expense = Expense.objects.aggregate(total=Sum('amount'))['total'] or 0
+        
+        # Monthly trends (last 6 months)
+        months = []
+        expense_trends = []
+        current_date = timezone.now()
+        
+        for i in range(5, -1, -1):
+            month_date = current_date - timedelta(days=30*i)
+            month_name = month_date.strftime('%b %Y')
+            months.append(month_name)
+            
+            month_expense = Expense.objects.filter(
+                date_incurred__year=month_date.year,
+                date_incurred__month=month_date.month
+            ).aggregate(total=Sum('amount'))['total'] or 0
+            expense_trends.append(float(month_expense))
+        
+        # Monthly count
+        current_month = timezone.now().month
+        current_year = timezone.now().year
+        monthly_expense_count = Expense.objects.filter(
+            date_incurred__year=current_year,
+            date_incurred__month=current_month
+        ).count()
+        
+        # Average expense
+        avg_expense = total_expense / Expense.objects.count() if Expense.objects.count() > 0 else 0
+        
+        context['total_expense'] = total_expense
+        context['chart_months'] = months
+        context['expense_trends'] = expense_trends
+        context['monthly_expense_count'] = monthly_expense_count
+        context['average_expense'] = avg_expense
+        
+        # Search functionality
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            context['expenses'] = context['expenses'].filter(
+                Q(name__icontains=search_query) |
+                Q(description__icontains=search_query) |
+                Q(vendor__icontains=search_query) |
+                Q(category__name__icontains=search_query)
+            )
+            context['search_query'] = search_query
+        
+        return context
+
+class ExpenseCreateView(CreateView):
+    model = Expense
+    form_class = ExpenseForm
+    template_name = 'Finance/expense_form.html'
+    success_url = reverse_lazy('expense_list')
+    
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.created_by = self.request.user
+        messages.success(self.request, f'Expense {form.instance.name} has been added successfully!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Add Expense'
+        context['button_text'] = 'Add Expense'
+        
+        # Dashboard data
+        total_expense = Expense.objects.aggregate(total=Sum('amount'))['total'] or 0
+        expense_count = Expense.objects.count()
+        
+        current_month = timezone.now().month
+        current_year = timezone.now().year
+        monthly_expense_count = Expense.objects.filter(
+            date_incurred__year=current_year,
+            date_incurred__month=current_month
+        ).count()
+        
+        avg_expense = total_expense / expense_count if expense_count > 0 else 0
+        
+        context['total_expense'] = total_expense
+        context['expense_count'] = expense_count
+        context['monthly_expense_count'] = monthly_expense_count
+        context['average_expense'] = avg_expense
+        
+        return context
+
+
+class IncomeUpdateView(UpdateView):
+    model = Income
+    form_class = IncomeForm
+    template_name = 'Finance/income_form.html'
+    success_url = reverse_lazy('income_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Income has been updated successfully!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Edit Income'
+        context['button_text'] = 'Update Income'
+        return context
+
+
+class ExpenseUpdateView(UpdateView):
+    model = Expense
+    form_class = ExpenseForm
+    template_name = 'Finance/expense_form.html'
+    success_url = reverse_lazy('expense_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Expense has been updated successfully!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Edit Expense'
+        context['button_text'] = 'Update Expense'
+        return context
+
+
+class IncomeDeleteView(DeleteView):
+    model = Income
+    success_url = reverse_lazy('income_list')
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        messages.success(request, f'Income from {self.object.source} has been deleted successfully!')
+        return super().delete(request, *args, **kwargs)
+
+
+class ExpenseDeleteView(DeleteView):
+    model = Expense
+    success_url = reverse_lazy('expense_list')
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        messages.success(request, f'Expense {self.object.name} has been deleted successfully!')
+        return super().delete(request, *args, **kwargs)

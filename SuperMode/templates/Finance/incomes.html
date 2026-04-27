@@ -1,0 +1,286 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}Income - Day Safari Dashboard{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ total_income|floatformat:2 }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+{{ incomes.count }}</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-up icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Income</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ incomes.count }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">Records</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-file-document icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Records</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ monthly_income_count }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">This Month</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-calendar-month icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">This Month</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ average_income|floatformat:0 }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">Avg</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-chart-line icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Average Income</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Income Trends (Last 6 Months)</h4>
+        <canvas id="incomeTrendsChart" style="height:300px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Income Table -->
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="card-title mb-0">Income Records</h4>
+        <div>
+          <form method="GET" class="d-flex">
+            <input type="text" name="search" class="form-control me-2" placeholder="Search income..." value="{{ search_query|default:'' }}" style="width: 250px;">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="{% url 'add_income' %}" class="btn btn-primary ms-2">+ Add Income</a>
+            {% if search_query %}
+              <a href="{% url 'income_list' %}" class="btn btn-secondary ms-2">Clear</a>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Source</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Payment Method</th>
+              <th>Date Received</th>
+              <th>Reference</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for income in incomes %}
+            <tr>
+              <td>{{ income.id }}</td>
+              <td><strong>{{ income.source|truncatechars:30 }}</strong></td>
+              <td class="text-success">Ksh {{ income.amount|floatformat:2 }}</td>
+              <td>{{ income.category.name|default:"-" }}</td>
+              <td>{{ income.get_payment_method_display }}</td>
+              <td>{{ income.date_received|date:"M d, Y" }}</td>
+              <td>{{ income.reference_number|default:"-" }}</td>
+              <td>
+                <div class="btn-group">
+                  <a href="{% url 'update_income' income.pk %}" class="btn btn-sm btn-primary">Edit</a>&nbsp;&nbsp;
+                  <form method="POST" action="{% url 'delete_income' income.pk %}" class="d-inline" onsubmit="return confirm('Delete this income record?')">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="8" class="text-center">No income records found</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="d-flex mt-4 flex-wrap justify-content-between align-items-center">
+        <p class="text-muted mb-0">
+          Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} records
+        </p>
+        <nav>
+          <ul class="pagination pagination-sm">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">&laquo;&laquo;</a>
+              </li>
+              <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">&laquo;</a>
+              </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if num == page_obj.number %}
+                <li class="page-item active">
+                  <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">{{ num }}</a>
+                </li>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                  <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">&raquo;</a>
+              </li>
+              <li class="page-item">
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">&raquo;&raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Tips -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Income Tips</h4>
+        <ul class="text-muted">
+          <li>Track all income sources including safaris, accommodations, and transport</li>
+          <li>Record payment method for easy reconciliation</li>
+          <li>Add reference numbers for easier tracking</li>
+          <li>Categorize income properly for better financial analysis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block injectjs %}
+<script>
+$(function() {
+  'use strict';
+  
+  // Income Trends Chart
+  if ($("#incomeTrendsChart").length) {
+    var incomeChartCanvas = $("#incomeTrendsChart").get(0).getContext("2d");
+    new Chart(incomeChartCanvas, {
+      type: 'line',
+      data: {
+        labels: {{ chart_months|safe }},
+        datasets: [{
+          label: 'Income Amount (Ksh)',
+          data: {{ income_trends|safe }},
+          backgroundColor: 'rgba(40, 167, 69, 0.2)',
+          borderColor: '#28a745',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 4,
+          pointBackgroundColor: '#28a745',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: "rgba(204, 204, 204, 0.1)" },
+            ticks: {
+              callback: function(value) {
+                return 'Ksh ' + value.toLocaleString();
+              }
+            }
+          },
+          x: {
+            grid: { color: "rgba(204, 204, 204, 0.1)" }
+          }
+        },
+        plugins: {
+          legend: { display: true, position: 'top' },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return 'Income: Ksh ' + context.raw.toLocaleString();
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+});
+</script>
+{% endblock injectjs %}

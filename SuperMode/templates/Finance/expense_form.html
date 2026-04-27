@@ -1,0 +1,253 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+
+{% block title %}{{ title }} - Day Safari Dashboard{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ total_expense|default:"0"|floatformat:2 }}</h3>
+              <p class="text-danger ms-2 mb-0 font-weight-medium">+{{ expense_count|default:"0" }}</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger ">
+              <span class="mdi mdi-arrow-down icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Expenses</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ expense_count|default:"0" }}</h3>
+              <p class="text-warning ms-2 mb-0 font-weight-medium">Records</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-warning">
+              <span class="mdi mdi-file-document icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Records</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ monthly_expense_count|default:"0" }}</h3>
+              <p class="text-danger ms-2 mb-0 font-weight-medium">This Month</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger">
+              <span class="mdi mdi-calendar-month icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">This Month</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ average_expense|default:"0"|floatformat:0 }}</h3>
+              <p class="text-danger ms-2 mb-0 font-weight-medium">Avg</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger ">
+              <span class="mdi mdi-chart-line icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Average Expense</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">{{ title }}</h4>
+          <p class="card-description">Fill in the expense details below</p>
+          
+          <!-- Display Messages -->
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+          
+          <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+              <label for="name">Expense Name *</label>
+              {{ form.name }}
+              {% if form.name.errors %}
+                <small class="text-danger">{{ form.name.errors.0 }}</small>
+              {% endif %}
+            </div>
+            
+            <div class="form-group">
+              <label for="description">Description</label>
+              {{ form.description }}
+              {% if form.description.errors %}
+                <small class="text-danger">{{ form.description.errors.0 }}</small>
+              {% endif %}
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="amount">Amount (Ksh) *</label>
+                  {{ form.amount }}
+                  {% if form.amount.errors %}
+                    <small class="text-danger">{{ form.amount.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="date_incurred">Date Incurred *</label>
+                  {{ form.date_incurred }}
+                  {% if form.date_incurred.errors %}
+                    <small class="text-danger">{{ form.date_incurred.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="category">Category</label>
+                  {{ form.category }}
+                  {% if form.category.errors %}
+                    <small class="text-danger">{{ form.category.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="payment_method">Payment Method</label>
+                  {{ form.payment_method }}
+                  {% if form.payment_method.errors %}
+                    <small class="text-danger">{{ form.payment_method.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="receipt_number">Receipt Number</label>
+                  {{ form.receipt_number }}
+                  {% if form.receipt_number.errors %}
+                    <small class="text-danger">{{ form.receipt_number.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="vendor">Vendor</label>
+                  {{ form.vendor }}
+                  {% if form.vendor.errors %}
+                    <small class="text-danger">{{ form.vendor.errors.0 }}</small>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Expense record will be saved to your financial records</label>
+            </div>
+            
+            <button type="submit" class="btn btn-danger me-2">{{ button_text }}</button>
+            <a href="{% url 'finance_dashboard' %}" class="btn btn-secondary">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Expense Information</h4>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <tbody>
+                  <tr>
+                    <td><span class="badge badge-outline-danger">Common Expenses</span></td>
+                    <td>Salaries, Fuel, Maintenance, Marketing, Rent</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-outline-danger">Payment Methods</span></td>
+                    <td>M-Pesa, Bank Transfer, Cash, Card, Cheque</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-outline-danger">Categories</span></td>
+                    <td>Staff Salaries, Fuel & Transport, Office Operations</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-outline-danger">Receipt Format</span></td>
+                    <td>RCP-YYYY-XXXX or INV-YYYY-XXXX</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="text-center mt-3">
+              <small class="text-muted">* All fields are required</small>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Quick Tips</h4>
+        <ul class="text-muted">
+          <li>Keep all receipts for audit purposes</li>
+          <li>Record expenses as soon as they occur</li>
+          <li>Add vendor names for easier tracking</li>
+          <li>Categorize expenses properly for financial analysis</li>
+          <li>Monitor recurring expenses to identify cost-saving opportunities</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
