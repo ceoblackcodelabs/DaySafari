@@ -132,9 +132,9 @@
             </a>
             <div class="collapse" id="auth2">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href=""> Daily Bookings </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Past Bookings </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Add Booking </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "booking_list" %}"> Daily Bookings </a></li>
+                {% comment %} <li class="nav-item"> <a class="nav-link" href=""> Past Bookings </a></li> {% endcomment %}
+                <li class="nav-item"> <a class="nav-link" href="{% url "create_booking" %}"> Add Booking </a></li>
               </ul>
             </div>
           </li>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import (TemplateView, ListView, DetailView, 
                                   CreateView, UpdateView, DeleteView
                                   )
@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from Invoices.forms import InvoiceForm
 from datetime import date, timedelta
+from django.http import JsonResponse
 from django.db.models import Q
 
 class AdminDashboardView(ListView):
@@ -420,3 +421,167 @@ class EmployeeUpdateView(UpdateView):
             'new_hires': Employee.objects.filter(hire_date__month=date.today().month).count(),
         }
         return context
+    
+
+# bookings
+from ClientRequests.models import Bookings
+class BookingListView(ListView):
+    model = Bookings
+    template_name = 'Bookings/bookings.html'
+    context_object_name = 'bookings'
+    paginate_by = 10
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Dashboard summary data
+        total_bookings = Bookings.objects.count()
+        pending_bookings = Bookings.objects.filter(date__gte=date.today()).count()
+        completed_bookings = Bookings.objects.filter(date__lt=date.today()).count()
+        total_persons = Bookings.objects.aggregate(total=Sum('persons'))['total'] or 0
+        
+        # Monthly booking trends (last 6 months)
+        months = []
+        booking_counts = []
+        persons_trends = []
+        
+        for i in range(5, -1, -1):
+            month_date = date.today() - timedelta(days=30*i)
+            month_name = month_date.strftime('%b %Y')
+            months.append(month_name)
+            
+            # Booking count for this month
+            count = Bookings.objects.filter(
+                date__year=month_date.year,
+                date__month=month_date.month
+            ).count()
+            booking_counts.append(count)
+            
+            # Persons count for this month
+            persons = Bookings.objects.filter(
+                date__year=month_date.year,
+                date__month=month_date.month
+            ).aggregate(total=Sum('persons'))['total'] or 0
+            persons_trends.append(persons)
+        
+        # Destinations distribution
+        destination_counts = {}
+        for booking in Bookings.objects.select_related('destination').all():
+            dest_name = booking.destination.name if booking.destination else 'TBD'
+            destination_counts[dest_name] = destination_counts.get(dest_name, 0) + 1
+        
+        context['dashboard'] = {
+            'total_bookings': total_bookings,
+            'pending_bookings': pending_bookings,
+            'completed_bookings': completed_bookings,
+            'total_persons': total_persons,
+        }
+        
+        context['chart_months'] = months
+        context['booking_counts'] = booking_counts
+        context['persons_trends'] = persons_trends
+        context['destination_counts'] = destination_counts
+        
+        # Search functionality
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            context['bookings'] = context['bookings'].filter(
+                Q(name__icontains=search_query) |
+                Q(email__icontains=search_query) |
+                Q(phone__icontains=search_query) |
+                Q(destination__name__icontains=search_query)
+            )
+            context['search_query'] = search_query
+        
+        return context
+    
+from ClientRequests.forms import SudoBookingsForm
+class BookingCreateView(CreateView):
+    model = Bookings
+    form_class = SudoBookingsForm
+    template_name = 'Bookings/create.html'
+    success_url = reverse_lazy('booking_list')
+    
+    def form_valid(self, form):
+        # Set the client if user is logged in
+        if self.request.user.is_authenticated:
+            form.instance.client = self.request.user
+        
+        messages.success(self.request, f'Booking for {form.instance.name} has been created successfully!')
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f'{field}: {error}')
+        return super().form_invalid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Create New Booking'
+        context['button_text'] = 'Create Booking'
+        
+        # Add dashboard data for the metrics cards
+        from django.db.models import Sum, Count
+        from datetime import date, timedelta
+        
+        total_bookings = Bookings.objects.count()
+        pending_bookings = Bookings.objects.filter(date__gte=date.today()).count()
+        completed_bookings = Bookings.objects.filter(date__lt=date.today()).count()
+        total_persons = Bookings.objects.aggregate(total=Sum('persons'))['total'] or 0
+        
+        context['dashboard'] = {
+            'total_bookings': total_bookings,
+            'pending_bookings': pending_bookings,
+            'completed_bookings': completed_bookings,
+            'total_persons': total_persons,
+        }
+        
+        return context
+    
+class BookingUpdateView(UpdateView):
+    model = Bookings
+    form_class = SudoBookingsForm
+    template_name = 'Bookings/update_bookings.html'
+    success_url = reverse_lazy('booking_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Booking for {form.instance.name} has been updated successfully!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Edit Booking - {self.object.name}'
+        context['button_text'] = 'Update Booking'
+        
+        # Add dashboard data for the metrics cards
+        from django.db.models import Sum, Count
+        from datetime import date, timedelta
+        
+        total_bookings = Bookings.objects.count()
+        pending_bookings = Bookings.objects.filter(date__gte=date.today()).count()
+        completed_bookings = Bookings.objects.filter(date__lt=date.today()).count()
+        total_persons = Bookings.objects.aggregate(total=Sum('persons'))['total'] or 0
+        
+        context['dashboard'] = {
+            'total_bookings': total_bookings,
+            'pending_bookings': pending_bookings,
+            'completed_bookings': completed_bookings,
+            'total_persons': total_persons,
+        }
+        
+        return context
+    
+class BookingDeleteView(DeleteView):
+    model = Bookings
+    success_url = reverse_lazy('booking_list')
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        booking_name = self.object.name
+        self.object.delete()
+        messages.success(request, f'Booking for {booking_name} has been deleted successfully!')
+        return redirect(self.success_url)
+    
+    def post(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
