@@ -1,8 +1,10 @@
 from django.contrib import admin
 from .models import (
     DestinationsCategory, Destinations, Itinerary,
-    MustVisit, AwesomePackages, 
+    MustVisit, AwesomePackages, PackagePurchase
 )
+from django.utils.html import format_html
+
 # Register your models here.
 class ItineraryInline(admin.TabularInline):
     model = Itinerary
@@ -46,6 +48,90 @@ class DestinationsCategoryAdmin(admin.ModelAdmin):
             'description': 'Upload an image for this category. Choose orientation based on the image shape.'
         }),
     )
+
+@admin.register(PackagePurchase)
+class PackagePurchaseAdmin(admin.ModelAdmin):
+    list_display = ['id', 'full_name', 'package', 'number_of_persons', 'amount_spent_formatted', 'travel_date', 'status', 'status_badge', 'purchase_date']
+    list_filter = ['status', 'package', 'travel_date', 'purchase_date']
+    search_fields = ['full_name', 'email', 'phone_number', 'package__name']
+    readonly_fields = ['amount_spent_calculated']
+    list_per_page = 20
+    date_hierarchy = 'travel_date'
+    list_editable = ['status']
+    
+    fieldsets = (
+        ('Customer Information', {
+            'fields': ('full_name', 'email', 'phone_number')
+        }),
+        ('Booking Details', {
+            'fields': ('package', 'number_of_persons', 'travel_date', 'special_requests', 'amount_spent_calculated', 'status')
+        }),
+        ('User Account', {
+            'fields': ('user',),
+            'classes': ('collapse',)
+        }),
+        ('Payment Information', {
+            'fields': ('purchase_date',),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def amount_spent_formatted(self, obj):
+        return f"${obj.amount_spent:,.2f}"
+    amount_spent_formatted.short_description = 'Amount Spent'
+    amount_spent_formatted.admin_order_field = 'amount_spent'
+    
+    def amount_spent_calculated(self, obj):
+        """Show calculated amount based on package price and persons"""
+        if obj.package:
+            calculated = obj.package.price * obj.number_of_persons
+            return f"${calculated:,.2f}"
+        return "N/A"
+    amount_spent_calculated.short_description = 'Calculated Amount'
+    
+    def status_badge(self, obj):
+        colors = {
+            'Pending': 'orange',
+            'Confirmed': 'green',
+            'Cancelled': 'red',
+        }
+        color = colors.get(obj.status, 'gray')
+        return format_html(
+            '<span style="background-color: {}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">{}</span>',
+            color, obj.status
+        )
+    status_badge.short_description = 'Status'
+    
+    actions = ['mark_as_confirmed', 'mark_as_cancelled', 'mark_as_pending']
+    
+    def mark_as_confirmed(self, request, queryset):
+        updated = queryset.update(status='Confirmed')
+        self.message_user(request, f"{updated} booking(s) marked as confirmed.")
+    mark_as_confirmed.short_description = "Mark selected as Confirmed"
+    
+    def mark_as_cancelled(self, request, queryset):
+        updated = queryset.update(status='Cancelled')
+        self.message_user(request, f"{updated} booking(s) marked as cancelled.")
+    mark_as_cancelled.short_description = "Mark selected as Cancelled"
+    
+    def mark_as_pending(self, request, queryset):
+        updated = queryset.update(status='Pending')
+        self.message_user(request, f"{updated} booking(s) marked as pending.")
+    mark_as_pending.short_description = "Mark selected as Pending"
+
+    def resend_payment_email(self, request, queryset):
+        sent_count = 0
+        for purchase in queryset:
+            if send_package_payment_email(purchase):
+                sent_count += 1
+        self.message_user(request, f"Payment email resent to {sent_count} customer(s).")
+    resend_payment_email.short_description = "Resend payment email to selected customers"
+    
+    def save_model(self, request, obj, form, change):
+        # Auto-calculate amount_spent if not set
+        if not obj.amount_spent and obj.package:
+            obj.amount_spent = obj.package.price * obj.number_of_persons
+        super().save_model(request, obj, form, change)
 
 # Register Destinations model
 @admin.register(Destinations)

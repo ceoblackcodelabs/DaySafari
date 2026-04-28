@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from google.auth import default
 
 # Create your models here.
 class DestinationsCategory(models.Model):
@@ -44,6 +46,28 @@ class AwesomePackages(models.Model):
 
     def __str__(self):
         return self.name
+    
+class PackagePurchase(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases')
+    package = models.ForeignKey(AwesomePackages, on_delete=models.CASCADE, related_name='purchases')
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    number_of_persons = models.IntegerField()
+    travel_date = models.DateField()
+    special_requests = models.TextField(blank=True)
+    purchase_date = models.DateTimeField(auto_now_add=True)
+    amount_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Confirmed', 'Confirmed'), ('Cancelled', 'Cancelled')], default='Pending')
+
+    def __str__(self):
+        return f"{self.full_name} - {self.package.name}"
+    
+    def save(self, *args, **kwargs):
+        # Auto-calculate amount_spent based on package price and persons
+        if self.package and not self.amount_spent:
+            self.amount_spent = self.package.price * self.number_of_persons
+        super().save(*args, **kwargs)
     
 class Itinerary(models.Model):
     package = models.ForeignKey(AwesomePackages, on_delete=models.CASCADE, related_name='itineraries')

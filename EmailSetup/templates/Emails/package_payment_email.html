@@ -1,0 +1,62 @@
+{% extends 'Emails/email_base.html' %}
+
+{% block title %}Complete Your Payment - {{ package.name }}{% endblock %}
+
+{% block header %}Complete Your Payment! 💰{% endblock %}
+
+{% block content %}
+<h2>Dear {{ purchase.full_name }},</h2>
+
+<p>Thank you for choosing <strong>Day Safaris Adventures</strong>! We're excited to help you create unforgettable memories in East Africa.</p>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h3 style="color: #420d24; margin-top: 0;">📋 Your Booking Details:</h3>
+    <p><strong>Package:</strong> {{ package.name }}</p>
+    <p><strong>Duration:</strong> {{ package.days }} days</p>
+    <p><strong>Location:</strong> {{ package.location }}</p>
+    <p><strong>Travel Date:</strong> {{ purchase.travel_date|date:"F j, Y" }}</p>
+    <p><strong>Number of Persons:</strong> {{ purchase.number_of_persons }}</p>
+    <p><strong>Booking Reference:</strong> #{{ purchase.id }}</p>
+</div>
+
+<div style="background: #e8f5e9; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h3 style="color: #28a745; margin-top: 0;">💰 Payment Summary:</h3>
+    <p><strong>Package Price:</strong> ${{ package_price|floatformat:2 }} per person</p>
+    <p><strong>Number of Persons:</strong> {{ persons }}</p>
+    <p><strong style="font-size: 18px;">Total Amount Due:</strong> <strong style="color: #28a745; font-size: 24px;">${{ total_amount|floatformat:2 }}</strong></p>
+</div>
+
+<div style="background: #d1ecf1; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0;">
+    <h3 style="color: #0c5460; margin-top: 0;">🔐 Secure Payment</h3>
+    <p>Click the button below to complete your payment securely</p>
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="{{ payment_link }}" style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; text-decoration: none; border-radius: 50px; font-weight: bold;">
+            <i class="fas fa-lock"></i> Pay Now
+        </a>
+    </div>
+</div>
+
+<div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h3 style="color: #856404; margin-top: 0;">✅ What Happens Next?</h3>
+    <p>After payment confirmation:</p>
+    <ul>
+        <li>✓ You'll receive a booking confirmation email</li>
+        <li>✓ Our travel expert will contact you within 24 hours</li>
+        <li>✓ You'll get a detailed itinerary and packing list</li>
+        <li>✓ 24/7 support throughout your journey</li>
+    </ul>
+</div>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h3 style="color: #420d24;">❓ Need Help?</h3>
+    <p>Our customer support team is available 24/7:</p>
+    <p>📞 Phone: {{ company_phone }}<br>
+    💬 WhatsApp: {{ company_whatsapp }}<br>
+    📧 Email: {{ company_email }}</p>
+</div>
+
+<p style="margin-top: 30px;">We look forward to hosting you in East Africa! 🦁</p>
+
+<p>Best regards,<br>
+<strong>The Day Safaris Adventures Team</strong></p>
+{% endblock %}
