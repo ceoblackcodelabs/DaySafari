@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title|default:"Day Safaris Adventures" }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% block injectcss %}{% endblock injectcss %}
+</head>
+<body>
+    <div class="container">
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-safari"></i>
+                </div>
+                <div class="stat-value">1,284</div>
+                <div class="stat-label">Happy Travelers</div>
+                <div class="stat-change"><i class="fas fa-arrow-up"></i> +23% this month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-value">4.9</div>
+                <div class="stat-label">Customer Rating</div>
+                <div class="stat-change"><i class="fas fa-star"></i> Based on 1,234 reviews</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Support Available</div>
+                <div class="stat-change"><i class="fas fa-headset"></i> Instant assistance</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Secure Payments</div>
+                <div class="stat-change"><i class="fas fa-lock"></i> SSL Encrypted</div>
+            </div>
+        </div>
+
+        {% block content %}{% endblock content %}
+        
+    </div>
+
+    <script>
+        {% block injectjs %}{% endblock injectjs %}
+    </script>
+</body>
+</html>

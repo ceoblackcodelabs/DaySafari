@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-
 # Create your views here.
-class StripePaymentView(TemplateView):
-    template_name = 'Stripe/index.html'
+
+class CryptoPaymentView(TemplateView):
+    template_name = 'Crypto/index.html'

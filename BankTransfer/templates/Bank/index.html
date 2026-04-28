@@ -1,0 +1,164 @@
+{% extends "Payments/base.html" %}
+
+{% block title %}Bank Transfer - Day Safari{% endblock title %}
+
+{% load static %}
+
+{% block injectcss %} <link rel="stylesheet" href="{% static 'Bank/css/bank.css' %}"> {% endblock injectcss %}
+
+{% block content %}
+
+<div class="main-content">
+    <div class="payment-form">
+        <div class="form-header">
+            <h2>Bank Transfer</h2>
+            <p>Direct bank transfer payment</p>
+        </div>
+
+        <div class="amount-box">
+            <div class="label">Total Amount to Pay</div>
+            <div class="amount">
+                <span class="currency">Ksh</span> 12,990.00
+            </div>
+        </div>
+
+        <div class="alert">
+            <i class="fas fa-info-circle"></i>
+            <p>Please use your <strong>Order ID</strong> as reference when making the transfer</p>
+        </div>
+
+        <div class="bank-details">
+            <h3><i class="fas fa-university"></i> Bank Account Details</h3>
+            <div class="detail-row">
+                <span class="detail-label">Bank Name:</span>
+                <span class="detail-value">Equity Bank Kenya <button class="copy-btn" onclick="copyText('Equity Bank Kenya')">Copy</button></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Account Name:</span>
+                <span class="detail-value">Day Safaris Adventures Ltd <button class="copy-btn" onclick="copyText('Day Safaris Adventures Ltd')">Copy</button></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Account Number:</span>
+                <span class="detail-value">0123456789 <button class="copy-btn" onclick="copyText('0123456789')">Copy</button></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Branch Code:</span>
+                <span class="detail-value">001 <button class="copy-btn" onclick="copyText('001')">Copy</button></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">SWIFT Code:</span>
+                <span class="detail-value">EQBLKENA <button class="copy-btn" onclick="copyText('EQBLKENA')">Copy</button></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Reference:</span>
+                <span class="detail-value">INV-2025-001 <button class="copy-btn" onclick="copyText('INV-2025-001')">Copy</button></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Transaction Reference Number</label>
+            <div class="input-wrapper">
+                <i class="fas fa-hashtag"></i>
+                <input type="text" placeholder="Enter bank transaction reference" id="reference">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Upload Payment Receipt (Optional)</label>
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload or drag and drop</p>
+                <p style="font-size: 11px; margin-top: 5px;">PNG, JPG, PDF (Max 5MB)</p>
+                <input type="file" id="receipt" style="display: none;" accept="image/*,.pdf">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Additional Notes</label>
+            <div class="input-wrapper">
+                <i class="fas fa-pen"></i>
+                <textarea rows="3" placeholder="Any additional information..." id="notes"></textarea>
+            </div>
+        </div>
+
+        <button type="button" class="pay-btn" onclick="processPayment()">
+            <i class="fas fa-check-circle"></i>
+            Confirm Bank Transfer
+        </button>
+    </div>
+
+    <div class="side-panel">
+        <div class="package-card">
+            <div class="package-badge">🏆 Popular Choice</div>
+            <div class="package-title">Zanzibar Beach Holiday</div>
+            <div class="package-desc">6-day tropical paradise getaway to Zanzibar.</div>
+            
+            <ul class="package-features">
+                <li><i class="fas fa-check-circle"></i> Beachfront resort accommodation</li>
+                <li><i class="fas fa-check-circle"></i> Stone Town tour</li>
+                <li><i class="fas fa-check-circle"></i> Spice plantation visit</li>
+                <li><i class="fas fa-check-circle"></i> Snorkeling equipment</li>
+                <li><i class="fas fa-check-circle"></i> Sunset dhow cruise</li>
+                <li><i class="fas fa-check-circle"></i> Breakfast and dinner daily</li>
+            </ul>
+            
+            <div style="margin-top: 15px;">
+                <span style="font-size: 12px; color: #999;">Special Offer:</span>
+                <div><strong style="color: #28a745;">✓ Free Airport Transfer</strong></div>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <h4><i class="fas fa-chart-line"></i> Bank Transfer Insights</h4>
+            <div class="insight-value">95%</div>
+            <div style="margin-bottom: 15px;">Customers receive confirmation within 24hrs</div>
+            <div class="insight-value">No Fees</div>
+            <div>Zero transaction fees</div>
+        </div>
+
+        <div class="security-badge" style="background: white; border-radius: 16px; padding: 20px; text-align: center;">
+            <i class="fas fa-shield-alt" style="font-size: 32px; color: #5a1233;"></i>
+            <p style="margin-top: 10px;">Your bank transfer is directly deposited into our verified business account. Receipt will be emailed upon confirmation.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block injectjs %}
+
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('receipt');
+
+uploadArea.addEventListener('click', () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        uploadArea.style.borderColor = '#28a745';
+        uploadArea.innerHTML = `
+            <i class="fas fa-check-circle" style="color: #28a745;"></i>
+            <p>File uploaded: ${e.target.files[0].name}</p>
+            <p style="font-size: 11px; margin-top: 5px;">Click to change</p>
+        `;
+    }
+});
+
+function copyText(text) {
+    navigator.clipboard.writeText(text);
+    alert(`✓ Copied: ${text}`);
+}
+
+function processPayment() {
+    const reference = document.getElementById('reference').value;
+    
+    if (!reference) {
+        alert('Please enter the transaction reference number');
+        return;
+    }
+    
+    alert(`✓ Bank Transfer Confirmation Submitted!\n\nReference: ${reference}\nAmount: Ksh 12,990.00\n\nWe will verify your payment within 24 hours and send confirmation to your email.`);
+}
+
+{% endblock injectjs %}

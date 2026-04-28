@@ -47,6 +47,11 @@ INSTALLED_APPS = [
     'ChatBot',
     'EmailSetup',
     'FinanceManagement',
+    'Payments',
+    'MpesaPayment',
+    'StripePayment',
+    'CryptoTransfer',
+    'BankTransfer',
     'SuperMode',
 ]
 

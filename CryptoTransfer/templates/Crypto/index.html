@@ -1,0 +1,194 @@
+{% extends "Payments/base.html" %}
+
+{% block title %}Cryptomus Gateway - Day Safari{% endblock title %}
+
+{% load static %}
+
+{% block injectcss %} <link rel="stylesheet" href="{% static 'Crypto/css/crypto.css' %}"> {% endblock injectcss %}
+
+{% block content %}
+
+<div class="main-content">
+    <div class="payment-form">
+        <div class="form-header">
+            <h2>Pay with Cryptocurrency</h2>
+            <p>Powered by Cryptomus - Fast, Secure, Anonymous</p>
+        </div>
+
+        <div class="amount-box">
+            <div class="label">Total Amount to Pay</div>
+            <div class="amount">
+                <span class="currency">Ksh</span> 12,990.00
+            </div>
+        </div>
+
+        <div class="crypto-badge">
+            <div class="crypto-icons" id="cryptoSelector">
+                <div class="crypto-item selected" data-crypto="BTC">
+                    <i class="fab fa-bitcoin"></i>
+                    <span>BTC</span>
+                </div>
+                <div class="crypto-item" data-crypto="ETH">
+                    <i class="fab fa-ethereum"></i>
+                    <span>ETH</span>
+                </div>
+                <div class="crypto-item" data-crypto="USDT">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>USDT</span>
+                </div>
+                <div class="crypto-item" data-crypto="LTC">
+                    <i class="fab fa-leanpub"></i>
+                    <span>LTC</span>
+                </div>
+                <div class="crypto-item" data-crypto="BNB">
+                    <i class="fab fa-bity"></i>
+                    <span>BNB</span>
+                </div>
+            </div>
+
+            <div class="crypto-rate" id="cryptoRate">
+                <span class="label">1 BTC = </span>
+                <span class="value" id="rateValue">Ksh 4,567,890.00</span>
+            </div>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-placeholder">
+                <i class="fas fa-qrcode"></i>
+            </div>
+            <div class="wallet-address">
+                <code id="walletAddress">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</code>
+                <button class="copy-address" onclick="copyAddress()">Copy Address</button>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 12px;">Scan QR code or copy address to pay</p>
+        </div>
+
+        <div class="form-group">
+            <label>Transaction ID (Optional)</label>
+            <div class="input-wrapper">
+                <i class="fas fa-hashtag"></i>
+                <input type="text" placeholder="Enter transaction hash or reference" id="tx_hash">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Email Address (For confirmation)</label>
+            <div class="input-wrapper">
+                <i class="fas fa-envelope"></i>
+                <input type="email" placeholder="you@example.com" id="email">
+            </div>
+        </div>
+
+        <div class="alert" style="background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 12px; padding: 12px; margin: 15px 0;">
+            <i class="fas fa-info-circle" style="color: #ffc107;"></i>
+            <p style="font-size: 12px; margin: 0;">Make sure to send the exact amount. Overpayment will be refunded after confirmation.</p>
+        </div>
+
+        <button type="button" class="pay-btn" onclick="processPayment()">
+            <i class="fab fa-bitcoin"></i>
+            Pay with Crypto
+        </button>
+    </div>
+
+    <div class="side-panel">
+        <div class="package-card">
+            <div class="package-badge">🚀 Crypto Special</div>
+            <div class="package-title">Luxury Safari Experience</div>
+            <div class="package-desc">7-day premium safari package with exclusive benefits.</div>
+            
+            <ul class="package-features">
+                <li><i class="fas fa-check-circle"></i> Private 4x4 safari vehicle</li>
+                <li><i class="fas fa-check-circle"></i> Luxury lodge accommodation</li>
+                <li><i class="fas fa-check-circle"></i> Private guide & chef</li>
+                <li><i class="fas fa-check-circle"></i> Hot air balloon safari</li>
+                <li><i class="fas fa-check-circle"></i> Champagne sundowners</li>
+                <li><i class="fas fa-check-circle"></i> Spa treatment included</li>
+            </ul>
+            
+            <div style="margin-top: 15px;">
+                <span style="font-size: 12px; color: #999;">Crypto Bonus:</span>
+                <div><strong style="color: #28a745;">✓ 5% extra crypto cashback</strong></div>
+                <div><strong style="color: #28a745;">✓ NFT souvenir included</strong></div>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <h4><i class="fas fa-chart-line"></i> Crypto Insights</h4>
+            <div class="insight-value">2,500+</div>
+            <div style="margin-bottom: 15px;">Crypto transactions completed</div>
+            <div class="insight-value">~15 min</div>
+            <div>Average confirmation time</div>
+        </div>
+
+        <div class="security-badge">
+            <i class="fas fa-shield-alt"></i>
+            <p>Your crypto payment is processed by Cryptomus - never stored, fully non-custodial. Payments are confirmed on-chain.</p>
+            <div style="margin-top: 15px;">
+                <i class="fab fa-bitcoin" style="color: #f7931a;"></i>
+                <i class="fab fa-ethereum" style="color: #627eea; margin-left: 10px;"></i>
+                <i class="fas fa-dollar-sign" style="color: #26a17b; margin-left: 10px;"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block injectjs %}
+
+// Crypto data
+const cryptoData = {
+    BTC: { rate: 4567890, address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', icon: 'fab fa-bitcoin' },
+    ETH: { rate: 198500, address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', icon: 'fab fa-ethereum' },
+    USDT: { rate: 129, address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', icon: 'fas fa-dollar-sign' },
+    LTC: { rate: 8500, address: 'ltc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', icon: 'fab fa-leanpub' },
+    BNB: { rate: 48500, address: 'bnb1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', icon: 'fab fa-bity' }
+};
+
+let selectedCrypto = 'BTC';
+const amountKsh = 12990;
+
+// Update crypto selector
+document.querySelectorAll('.crypto-item').forEach(item => {
+    item.addEventListener('click', function() {
+        document.querySelectorAll('.crypto-item').forEach(i => i.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedCrypto = this.dataset.crypto;
+        updateCryptoDisplay();
+    });
+});
+
+function updateCryptoDisplay() {
+    const data = cryptoData[selectedCrypto];
+    const cryptoAmount = (amountKsh / data.rate).toFixed(8);
+    document.getElementById('rateValue').innerHTML = `${selectedCrypto} ${cryptoAmount} ≈ Ksh ${amountKsh.toLocaleString()}`;
+    document.getElementById('walletAddress').innerHTML = data.address;
+}
+
+function copyAddress() {
+    const address = cryptoData[selectedCrypto].address;
+    navigator.clipboard.writeText(address);
+    alert('✓ Wallet address copied to clipboard');
+}
+
+function processPayment() {
+    const txHash = document.getElementById('tx_hash').value;
+    const email = document.getElementById('email').value;
+    
+    if (!email) {
+        alert('Please enter your email address for confirmation');
+        return;
+    }
+    
+    const cryptoAmount = (amountKsh / cryptoData[selectedCrypto].rate).toFixed(8);
+    
+    alert(`🔒 Crypto Payment Initiated\n\nAmount: ${cryptoAmount} ${selectedCrypto}\nNetwork: ${selectedCrypto}\nWallet: ${cryptoData[selectedCrypto].address}\n\nPlease send the exact amount to the provided address. Your payment will be confirmed within 15-30 minutes.\n\nA confirmation will be sent to ${email}`);
+    
+    // In production, this would integrate with Cryptomus API
+    // window.location.href = `/cryptomus/pay/${orderId}/`;
+}
+
+// Initialize display
+updateCryptoDisplay();
+
+{% endblock injectjs %}
