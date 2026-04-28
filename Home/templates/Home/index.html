@@ -692,7 +692,7 @@
                             <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">Read More</a>
                         </div>
                         <div class="col-6 text-end px-0">
-                            <a href="{% url 'book_package' package.id %}" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                            <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">Book Now</a>
                         </div>
                     </div>
                 </div>
@@ -717,7 +717,7 @@
                 <h1 class="text-white mb-4">Book Your Safari Adventure</h1>
                 <p class="text-white mb-4">Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains.</p>
                 <p class="text-white mb-4">Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!</p>
-                <a href="#" class="btn btn-light text-primary rounded-pill py-3 px-5 mt-2">Learn More</a>
+                <a href="{% url "about" %}" class="btn btn-light text-primary rounded-pill py-3 px-5 mt-2">Learn More</a>
             </div>
             <div class="col-lg-6">
                 <h1 class="text-white mb-3">Book A Tour Deals</h1>
