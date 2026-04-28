@@ -1,0 +1,41 @@
+{% extends "Home/base.html" %}
+
+{% load static %}
+
+{% block title %}Payment Successful!{% endblock title %}
+
+{% block body %}
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-6 mx-auto text-center">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <i class="fas fa-check-circle text-success" style="font-size: 64px;"></i>
+                        </div>
+                        <h2 class="mb-3">Payment Successful! 🎉</h2>
+                        <p class="text-muted mb-4">Thank you for your payment. Your booking is now confirmed.</p>
+                        
+                        <div class="bg-light rounded-3 p-4 mb-4 text-start">
+                            <h6>Booking Details:</h6>
+                            <hr>
+                            <p><strong>Package:</strong> {{ purchase.package.name }}</p>
+                            <p><strong>Travel Date:</strong> {{ purchase.travel_date|date:"F j, Y" }}</p>
+                            <p><strong>Number of Persons:</strong> {{ purchase.number_of_persons }}</p>
+                            <p><strong>Booking Reference:</strong> #{{ purchase.id }}</p>
+                        </div>
+                        
+                        <p>Confirmation has been sent to your email: <strong>{{ purchase.email }}</strong></p>
+                        
+                        <div class="mt-4">
+                            <a href="{% url 'home' %}" class="btn btn-primary">Return Home</a>
+                            <a href="{% url 'my_bookings' %}" class="btn btn-outline-primary ms-2">My Bookings</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

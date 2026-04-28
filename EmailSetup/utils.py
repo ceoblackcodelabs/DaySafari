@@ -133,7 +133,8 @@ def send_package_payment_email(package_purchase):
         total_amount = package_price * package_purchase.number_of_persons
         
         # Generate payment link (adjust URL as needed)
-        payment_link = f"https://daysafarisadventures.co.ke/payment/{package_purchase.id}/"
+        # payment_link = f"https://daysafarisadventures.co.ke/payment/{package_purchase.id}/"
+        payment_link = f"http://127.0.0.1:8000/payment/{package_purchase.id}/"
         
         context = {
             'purchase': package_purchase,

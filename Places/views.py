@@ -172,7 +172,7 @@ class PackagesDetailView(DetailView):
                 messages.warning(request, f'Booking saved! However, we could not send the email. Please contact us to complete payment.')
             
             # Redirect to payment page or home
-            return redirect(reverse('payment_page', kwargs={'purchase_id': purchase.id}))
+            return redirect(reverse('payment_dashboard', kwargs={'purchase_id': purchase.id}))
         else:
             # Form has errors
             for field, errors in form.errors.items():
@@ -181,3 +181,5 @@ class PackagesDetailView(DetailView):
         
         # Render the page with form errors
         return self.render_to_response(self.get_context_data(form=form))
+    
+# 
