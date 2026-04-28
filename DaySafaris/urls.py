@@ -29,7 +29,7 @@ urlpatterns = [
     path('', include("Accomodations.urls")),
     path('', include('ChatBot.urls')),
     # path('', include('FinanceManagement.urls')),
-    # path('', include('Payments.urls')),
+    path('', include('Payments.urls')),
     path('Mpesa/', include('MpesaPayment.urls')),
     path('Stripe/', include('StripePayment.urls')),
     path('Crypto/', include('CryptoTransfer.urls')),
