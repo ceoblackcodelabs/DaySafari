@@ -3,6 +3,10 @@ from django.views.generic import ListView, DetailView, TemplateView
 from .models import (
     Destinations, AwesomePackages, DestinationsCategory
 )
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.urls import reverse
+from EmailSetup.utils import send_package_payment_email
 
 # Create your views here.
 class DestinationDetailView(DetailView):
@@ -111,6 +115,8 @@ class InternationalAfricaTourView(ListView):
         return context
 
 #  packages
+from .forms import PackagePurchaseForm
+from datetime import date
 class PackagesDetailView(DetailView):
     model = AwesomePackages
     context_object_name = 'package'
@@ -128,4 +134,50 @@ class PackagesDetailView(DetailView):
         ).exclude(id=self.object.id)[:3]
         context['similar_packages'] = similar_packages
         
+        # Initialize form with user data if logged in
+        initial_data = {}
+        if self.request.user.is_authenticated:
+            initial_data = {
+                'full_name': f"{self.request.user.first_name} {self.request.user.last_name}".strip() or self.request.user.username,
+                'email': self.request.user.email,
+            }
+        
+        # Check if form was submitted with errors
+        if 'form' not in context:
+            context['form'] = PackagePurchaseForm(initial=initial_data, package=self.object)
+        
         return context
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = PackagePurchaseForm(request.POST, package=self.object)
+        
+        if form.is_valid():
+            # Save the purchase
+            purchase = form.save(commit=False)
+            purchase.package = self.object
+            purchase.amount_spent = self.object.price * form.cleaned_data['number_of_persons']
+            
+            if request.user.is_authenticated:
+                purchase.user = request.user
+            
+            purchase.save()
+            
+            # Send payment email to customer
+            email_sent = send_package_payment_email(purchase)
+            
+            if email_sent:
+                messages.success(request, f'Successfully booked {self.object.name}! A payment link has been sent to your email.')
+            else:
+                messages.warning(request, f'Booking saved! However, we could not send the email. Please contact us to complete payment.')
+            
+            # Redirect to payment page or home
+            return redirect(reverse('payment_page', kwargs={'purchase_id': purchase.id}))
+        else:
+            # Form has errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+        
+        # Render the page with form errors
+        return self.render_to_response(self.get_context_data(form=form))
