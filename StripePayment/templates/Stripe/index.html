@@ -1,0 +1,156 @@
+{% extends "Payments/base.html" %}
+
+{% load static %}
+
+{% block title %}Card Payment - Day Safaris Adventures{% endblock title %}
+
+{% block injectcss %}<link rel="stylesheet" href="{% static 'Stripe/css/stripe.css' %}">{% endblock injectcss %}
+
+{% block content %}
+
+<div class="main-content">
+    <div class="payment-form">
+        <div class="form-header">
+            <h2>Pay with Card</h2>
+            <p>Secure payment powered by Stripe</p>
+        </div>
+
+        <div class="amount-box">
+            <div class="label">Total Amount to Pay</div>
+            <div class="amount">
+                <span class="currency">Ksh</span> 12,990.00
+            </div>
+        </div>
+
+        <form id="paymentForm">
+            <div class="card-icons">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-discover"></i>
+            </div>
+
+            <div class="form-group">
+                <label>Card Number</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-credit-card"></i>
+                    <input type="text" placeholder="1234 5678 9012 3456" id="card_number">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Cardholder Name</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="John Doe" id="card_name">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-calendar"></i>
+                        <input type="text" placeholder="MM/YY" id="expiry">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>CVV/CVC</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="text" placeholder="123" id="cvv">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="you@example.com" id="email">
+                </div>
+            </div>
+
+            <button type="button" class="pay-btn" onclick="processPayment()">
+                <i class="fab fa-stripe"></i>
+                Pay Ksh 12,990.00
+            </button>
+        </form>
+    </div>
+
+    <div class="side-panel">
+        <div class="package-card">
+            <div class="package-badge">🌟 Premium Package</div>
+            <div class="package-title">Serengeti Migration Safari</div>
+            <div class="package-desc">5-day wildlife photography safari in Serengeti National Park.</div>
+            
+            <ul class="package-features">
+                <li><i class="fas fa-check-circle"></i> Luxury tented camp accommodation</li>
+                <li><i class="fas fa-check-circle"></i> Expert photography guide</li>
+                <li><i class="fas fa-check-circle"></i> Hot air balloon safari option</li>
+                <li><i class="fas fa-check-circle"></i> Night game drives</li>
+                <li><i class="fas fa-check-circle"></i> Photography workshop</li>
+                <li><i class="fas fa-check-circle"></i> Full board meals</li>
+            </ul>
+            
+            <div style="margin-top: 15px;">
+                <span style="font-size: 12px; color: #999;">Bonus:</span>
+                <div><strong style="color: #28a745;">✓ Free Photography E-Book</strong></div>
+                <div><strong style="color: #28a745;">✓ 10% off next booking</strong></div>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <h4><i class="fas fa-chart-line"></i> Payment Insights</h4>
+            <div class="insight-value">89%</div>
+            <div style="margin-bottom: 15px;">Customers prefer card payments</div>
+            <div class="insight-value">100%</div>
+            <div>Money-back guarantee</div>
+        </div>
+
+        <div class="security-badge">
+            <i class="fas fa-shield-alt"></i>
+            <p>Your card details are encrypted using AES-256. Stripe handles all payment processing securely.</p>
+            <div style="margin-top: 15px;">
+                <i class="fas fa-lock" style="color: #28a745;"></i>
+                <span style="font-size: 11px;"> PCI DSS Level 1 Certified</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block injectjs %}
+
+function processPayment() {
+    const cardNumber = document.getElementById('card_number').value;
+    const cardName = document.getElementById('card_name').value;
+    const expiry = document.getElementById('expiry').value;
+    const cvv = document.getElementById('cvv').value;
+    const email = document.getElementById('email').value;
+    
+    if (!cardNumber || !cardName || !expiry || !cvv || !email) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
+    if (cardNumber.replace(/\s/g, '').length < 16) {
+        alert('Please enter a valid card number');
+        return;
+    }
+    
+    if (cvv.length < 3) {
+        alert('Please enter a valid CVV');
+        return;
+    }
+    
+    alert(`🔒 Processing Payment...\n\nAmount: Ksh 12,990.00\nCard: •••• •••• •••• ${cardNumber.slice(-4)}\n\nYour payment is being processed securely. Please wait...`);
+    
+    // In production, this would integrate with Stripe.js
+    // stripe.redirectToCheckout({ sessionId: sessionId });
+}
+
+{% endblock injectjs %}
