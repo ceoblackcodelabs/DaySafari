@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
-    Accomodations, AccomodationsImage, AirBNBImage, AirBNB
+    Accomodations, AccomodationsImage, AirBNBImage, AirBNB,
+    AirBNBBooking
 )
 
 # Register your models here.
@@ -41,3 +42,10 @@ class AirBNBAdmin(admin.ModelAdmin):
 class AirBNBImageAdmin(admin.ModelAdmin):
     list_display = ['airbnb', 'is_featured', 'order', 'uploaded_at']
     list_filter = ['is_featured', 'airbnb']
+
+
+@admin.register(AirBNBBooking)
+class AirBNBBookingAdmin(admin.ModelAdmin):
+    list_display = ['airbnb', 'guest_name', 'guest_email', 'check_in', 'check_out', 'amount_paid', 'created_at']
+    list_filter = ['check_in', 'check_out']
+    search_fields = ['guest_name', 'guest_email', 'airbnb__location']
