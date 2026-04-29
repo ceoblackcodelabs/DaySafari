@@ -18,19 +18,23 @@ from OurClients.models import UserMessage
 class BookingCreateView(CreateView):
     model = Bookings
     form_class = BookingsForm
-    template_name = 'bookings/booking_form.html'  # Update to your template path
-    success_url = reverse_lazy('home')  # Create a success URL or use redirect
+    template_name = 'Requests/booking.html'
+    success_url = reverse_lazy('profile')
     
     def form_valid(self, form):
-        # You can add additional logic here before saving
+        # Set the client if user is logged in
+        if self.request.user.is_authenticated:
+            form.instance.client = self.request.user
+        
         response = super().form_valid(form)
         
         # Add success message
         messages.success(self.request, 
             f"Thank you {form.cleaned_data['name']}! Your booking request has been submitted successfully. "
-            f"We will contact you within 24 hours to confirm your {form.cleaned_data['destination']} safari."
+            f"We will contact you within 24 hours to confirm your safari."
         )
         
+        # Send email confirmation
         send_booking_confirmation(self.object)
         
         return response
@@ -44,10 +48,18 @@ class BookingCreateView(CreateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Add any additional context data needed for the template
         context['title'] = 'Book Your Safari Adventure'
-        context['destinations'] = Destinations.objects.all()[:5]  # Featured destinations
-        context['packages'] = AwesomePackages.objects.all()[:3]  # Featured packages
+        context['destinations'] = Destinations.objects.all()[:5]
+        context['packages'] = AwesomePackages.objects.all()[:3]
+        
+        # Pre-fill form for logged-in users
+        if self.request.user.is_authenticated:
+            initial = {
+                'name': f"{self.request.user.first_name} {self.request.user.last_name}".strip() or self.request.user.username,
+                'email': self.request.user.email,
+            }
+            context['form'] = BookingsForm(initial=initial)
+        
         return context
     
 class BookingDetailView(DetailView):
