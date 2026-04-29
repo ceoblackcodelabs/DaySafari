@@ -5,7 +5,7 @@
 {% block content %}
 <h2>Dear {{ booking.name }},</h2>
 
-<p>Your safari booking is confirmed!</p>
+<p>Your safari booking is confirmed and is waiting for approval. Once approved, you will receive a confirmation email with your itinerary. Use the link below to make payment.</p>
 
 <div class="box">
     <p><strong>Booking ID:</strong> #{{ booking.id }}</p>
@@ -15,21 +15,50 @@
 </div>
 
 <div class="box">
-    <p><strong>📌 Next steps:</strong></p>
+    <p><strong>💰 Payment Details:</strong></p>
+    <p><strong>Total Amount:</strong> ${{ total_amount|default:"0.00" }}</p>
+    <p><strong>Deposit Required (30%):</strong> ${{ deposit_amount|default:"0.00" }}</p>
+</div>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ payment_link|default:'#' }}" class="button" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+        <i class="fas fa-lock"></i> Make a Payment
+    </a>
+</div>
+
+<div class="box">
+    <p><strong>📌 Next Steps:</strong></p>
     <p>1. Our travel expert will contact you within 24 hours<br>
     2. Pay 30% deposit to confirm your spot<br>
     3. Receive your detailed itinerary</p>
 </div>
 
-<p style="text-align: center;">
-    <a href="https://daysafarisadventures.co.ke" class="button">View Booking</a>
-</p>
+<div class="box" style="background: #fff3cd; border-left-color: #ffc107;">
+    <p><strong>💳 Payment Options:</strong></p>
+    <p>• <strong>M-Pesa:</strong> Paybill: 123456 | Account: {{ booking.id }}</p>
+    <p>• <strong>Bank Transfer:</strong> Equity Bank | Account: 0123456789</p>
+    <p>• <strong>Credit/Debit Card:</strong> Click the button above</p>
+</div>
+
+<div style="text-align: center; margin: 20px 0;">
+    <a href="{{ invoice_link|default:'#' }}" class="button" style="background: #6c757d; display: inline-block; margin-right: 10px;">Download Invoice</a>
+    <a href="{{ tracking_link|default:'#' }}" class="button" style="background: #17a2b8; display: inline-block;">Track Booking</a>
+</div>
 
 <div class="box">
     <p><strong>❓ Questions?</strong> Call: +254 734 962 965</p>
+    <p><strong>📧 Email:</strong> bookings@daysafarisadventures.co.ke</p>
+    <p><strong>💬 WhatsApp:</strong> +254 783 457 058</p>
 </div>
 
 <p>We look forward to hosting you in East Africa! 🦁</p>
 
-<p>The Day Safaris Team</p>
+<p><strong>The Day Safaris Team</strong></p>
+
+<hr style="margin: 20px 0;">
+
+<p style="font-size: 11px; color: #999; text-align: center;">
+    <i class="fas fa-clock"></i> Payment link expires in 48 hours.<br>
+    If you did not make this booking, please ignore this email.
+</p>
 {% endblock %}
