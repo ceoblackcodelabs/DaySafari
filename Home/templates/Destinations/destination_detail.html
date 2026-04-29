@@ -60,9 +60,9 @@
                         </div>
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
-                                <i class="fa fa-camera fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">{{ destination.category.image_orientation|title }}</h6>
-                                <small class="text-muted">Orientation</small>
+                                <i class="fa fa-dollar-sign fa-2x text-primary mb-2"></i>
+                                <h6 class="mb-0">${{ destination.price|floatformat:2 }}</h6>
+                                <small class="text-muted">Price</small>
                             </div>
                         </div>
                     </div>

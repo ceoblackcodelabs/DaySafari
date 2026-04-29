@@ -146,7 +146,7 @@ class DestinationsAdmin(admin.ModelAdmin):
     # Add fieldsets for better organization
     fieldsets = (
         ('Basic Information', {
-            'fields': ('category', 'name')
+            'fields': ('category', 'name', 'price')
         }),
         ('Content', {
             'fields': ('description',),
