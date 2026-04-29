@@ -1,0 +1,964 @@
+{% extends "Payments/base.html" %}
+
+{% load static %}
+
+{% block title %}Payment Dashboard - {{ package.name }}{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <!-- Order Summary Section -->
+    <div class="order-summary">
+        <div class="summary-header">
+            <h2>Order Summary</h2>
+            <p>Review your booking details before payment</p>
+        </div>
+        
+        <div class="package-details">
+            <div class="package-icon">
+                <i class="fas fa-safari"></i>
+            </div>
+            <div class="package-info">
+                <h3>{{ booking_purchase.destination.name }}</h3>
+                <p>{{ package.days }} days adventure • {{ package.location }}</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span>({{ package.starRating }}.5)</span>
+                </div>
+            </div>
+            <div class="package-price">
+                ${{ booking_purchase.destination.price|floatformat:2 }}
+            </div>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="customer-details">
+            <h4>Traveler Information</h4>
+            <div class="info-row">
+                <span>Full Name:</span>
+                <strong>{{ booking_purchase.name }}</strong>
+            </div>
+            <div class="info-row">
+                <span>Email:</span>
+                <strong>{{ booking_purchase.email }}</strong>
+            </div>
+            <div class="info-row">
+                <span>Phone:</span>
+                <strong>{{ booking_purchase.phone }}</strong>
+            </div>
+            <div class="info-row">
+                <span>Travel Date:</span>
+                <strong>{{ booking_purchase.date|date:"F j, Y" }}</strong>
+            </div>
+            <div class="info-row">
+                <span>Number of Persons:</span>
+                <strong>{{ booking_purchase.persons }}</strong>
+            </div>
+            {% if booking_purchase.message %}
+            <div class="info-row">
+                <span>Message:</span>
+                <strong>{{ booking_purchase.message|truncatechars:50 }}</strong>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="price-breakdown">
+            <div class="price-row">
+                <span>Package Price (per person)</span>
+                <span>${{ booking_purchase.destination.price|floatformat:2 }}</span>
+            </div>
+            <div class="price-row">
+                <span>Number of Persons</span>
+                <span>x {{ booking_purchase.persons }}</span>
+            </div>
+            <div class="price-row">
+                <span>Subtotal</span>
+                <span>${{ sub_total|floatformat:2 }}</span>
+            </div>
+            <div class="price-row">
+                <span>Tax (16% VAT)</span>
+                <span>${{ tax_amount|floatformat:2 }}</span>
+            </div>
+            <div class="price-row total">
+                <span>Total Amount</span>
+                <span>${{ total_amount|floatformat:2 }}</span>
+            </div>
+        </div>
+        
+        <div class="booking-ref">
+            <small>Booking Reference: #{{ purchase.id }}</small>
+        </div>
+    </div>
+    
+    <!-- Payment Methods Section -->
+    <div class="payment-methods">
+        <div class="payment-header">
+            <h2>Select Payment Method</h2>
+            <p>Choose your preferred payment option</p>
+        </div>
+        
+        <div class="methods-grid">
+            <div class="method-card" data-method="mpesa">
+                <div class="method-icon" style="border-color: #28a745;">
+                    <i class="fab fa-empire" style="color: #28a745;"></i>
+                </div>
+                <div class="method-info">
+                    <h4>M-Pesa</h4>
+                    <p>Pay via M-Pesa - Instant confirmation</p>
+                </div>
+                <div class="method-select">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            
+            <div class="method-card" data-method="stripe">
+                <div class="method-icon" style="border-color: #6772e5;">
+                    <i class="fab fa-cc-visa" style="color: #6772e5;"></i>
+                </div>
+                <div class="method-info">
+                    <h4>Credit/Debit Card</h4>
+                    <p>Visa, Mastercard, Amex accepted</p>
+                </div>
+                <div class="method-select">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            
+            <div class="method-card" data-method="bank">
+                <div class="method-icon" style="border-color: #fd7e14;">
+                    <i class="fas fa-university" style="color: #fd7e14;"></i>
+                </div>
+                <div class="method-info">
+                    <h4>Bank Transfer</h4>
+                    <p>Direct bank transfer</p>
+                </div>
+                <div class="method-select">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            
+            <div class="method-card" data-method="crypto">
+                <div class="method-icon" style="border-color: #f7931a;">
+                    <i class="fab fa-bitcoin" style="color: #f7931a;"></i>
+                </div>
+                <div class="method-info">
+                    <h4>Cryptocurrency</h4>
+                    <p>Bitcoin, Ethereum, USDT & More</p>
+                </div>
+                <div class="method-select">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="security-note">
+            <i class="fas fa-shield-alt"></i>
+            <p>Your payment is secure and encrypted. We never store your payment information.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">Payment Details</h3>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; flex-direction: column;">
+    <div class="spinner" style="width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #28a745; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+    <p style="color: white; font-size: 16px;">Processing payment...</p>
+    <p style="color: #ccc; font-size: 12px; margin-top: 10px;">Please check your phone for M-Pesa prompt</p>
+</div>
+
+<style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 30px;
+    }
+    
+    .order-summary {
+        background: white;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .summary-header {
+        margin-bottom: 25px;
+    }
+    
+    .summary-header h2 {
+        font-size: 24px;
+        color: #1a1a2e;
+        margin-bottom: 5px;
+    }
+    
+    .summary-header p {
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .package-details {
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+    
+    .package-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #420d24 0%, #5a1233 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .package-icon i {
+        font-size: 28px;
+        color: white;
+    }
+    
+    .package-info {
+        flex: 1;
+    }
+    
+    .package-info h3 {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    
+    .package-info p {
+        color: #666;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+    
+    .rating {
+        font-size: 12px;
+        color: #ffc107;
+    }
+    
+    .rating span {
+        color: #666;
+        margin-left: 5px;
+    }
+    
+    .package-price {
+        font-weight: 700;
+        font-size: 18px;
+        color: #1a1a2e;
+    }
+    
+    .divider {
+        height: 1px;
+        background: #e0e0e0;
+        margin: 20px 0;
+    }
+    
+    .customer-details h4, .price-breakdown h4 {
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: #1a1a2e;
+    }
+    
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 14px;
+    }
+    
+    .info-row span:first-child {
+        color: #666;
+    }
+    
+    .price-breakdown {
+        margin-top: 10px;
+    }
+    
+    .price-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        font-size: 14px;
+    }
+    
+    .price-row.total {
+        font-weight: 700;
+        font-size: 18px;
+        border-top: 2px solid #e0e0e0;
+        margin-top: 10px;
+        padding-top: 15px;
+        color: #1a1a2e;
+    }
+    
+    .booking-ref {
+        text-align: center;
+        margin-top: 20px;
+        color: #999;
+        font-size: 12px;
+    }
+    
+    .payment-methods {
+        background: white;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .payment-header {
+        margin-bottom: 25px;
+    }
+    
+    .payment-header h2 {
+        font-size: 24px;
+        color: #1a1a2e;
+        margin-bottom: 5px;
+    }
+    
+    .payment-header p {
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .methods-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .method-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .method-card:hover {
+        border-color: #420d24;
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .method-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid;
+    }
+    
+    .method-icon i {
+        font-size: 24px;
+    }
+    
+    .method-info {
+        flex: 1;
+    }
+    
+    .method-info h4 {
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    
+    .method-info p {
+        font-size: 12px;
+        color: #666;
+    }
+    
+    .method-select i {
+        font-size: 20px;
+        color: #999;
+    }
+    
+    .security-note {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .security-note i {
+        font-size: 20px;
+        color: #28a745;
+    }
+    
+    .security-note p {
+        font-size: 12px;
+        color: #666;
+        margin: 0;
+    }
+    
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.6);
+        backdrop-filter: blur(3px);
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .modal-content {
+        background: white;
+        border-radius: 24px;
+        max-width: 550px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: modalSlideIn 0.3s ease;
+    }
+    
+    @keyframes modalSlideIn {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    .modal-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #420d24 0%, #5a1233 100%);
+        color: white;
+        border-radius: 24px 24px 0 0;
+    }
+    
+    .modal-header h3 {
+        margin: 0;
+        font-size: 20px;
+    }
+    
+    .modal-header i {
+        margin-right: 10px;
+    }
+    
+    .close {
+        cursor: pointer;
+        font-size: 28px;
+        color: rgba(255,255,255,0.7);
+        transition: color 0.3s ease;
+    }
+    
+    .close:hover {
+        color: white;
+    }
+    
+    .modal-body {
+        padding: 25px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 13px;
+        color: #333;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: #5a1233;
+        box-shadow: 0 0 0 3px rgba(90, 18, 51, 0.1);
+    }
+    
+    .btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+        width: 100%;
+    }
+    
+    .btn-mpesa {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+    }
+    
+    .btn-mpesa:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+    
+    .btn-stripe {
+        background: linear-gradient(135deg, #6772e5 0%, #5469d4 100%);
+        color: white;
+    }
+    
+    .btn-bank {
+        background: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+        color: white;
+    }
+    
+    .btn-crypto {
+        background: linear-gradient(135deg, #f7931a 0%, #ffd93d 100%);
+        color: #1a1a2e;
+    }
+    
+    .status-message {
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 14px;
+    }
+    
+    .status-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #28a745;
+    }
+    
+    .status-error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #dc3545;
+    }
+    
+    .status-info {
+        background: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #17a2b8;
+    }
+    
+    .bank-details {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+    
+    @media (max-width: 1024px) {
+        .main-content {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .order-summary, .payment-methods {
+            padding: 20px;
+        }
+        .package-details {
+            flex-wrap: wrap;
+        }
+        .info-row {
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+</style>
+
+<script>
+    const totalAmount = {{ total_amount|default:0 }};
+    const bookingPurchaseId = {{ booking_purchase.id }};
+    
+    // Show modal function
+    function showModal(title, bodyHtml) {
+        document.getElementById('modalTitle').innerHTML = title;
+        document.getElementById('modalBody').innerHTML = bodyHtml;
+        document.getElementById('paymentModal').style.display = 'flex';
+    }
+    
+    function hideModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+    }
+    
+    // Poll for transaction status
+    function pollTransactionStatus(transactionId, checkoutRequestId) {
+        let attempts = 0;
+        const maxAttempts = 30;
+        
+        const interval = setInterval(() => {
+            attempts++;
+            
+            fetch(`/Mpesa/transaction/${transactionId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'successful') {
+                        clearInterval(interval);
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                        alert('Payment successful! Redirecting...');
+                        setTimeout(() => {
+                            window.location.href = `/payment/${bookingPurchaseId}/success/`;
+                        }, 2000);
+                    } else if (data.status === 'failed') {
+                        clearInterval(interval);
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                        alert('Payment failed. Please try again.');
+                        hideModal();
+                        showMPesaModal();
+                    } else if (attempts >= maxAttempts) {
+                        clearInterval(interval);
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                        alert('Payment still processing. You will receive confirmation via SMS.');
+                        setTimeout(() => {
+                            window.location.href = `/payment/${bookingPurchaseId}/success/`;
+                        }, 5000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error polling status:', error);
+                });
+        }, 3000);
+    }
+    
+    // M-Pesa Modal
+    function showMPesaModal() {
+        const modalBody = `
+            <div class="form-group">
+                <label>M-Pesa Phone Number</label>
+                <input type="tel" id="phone_number" class="form-control" placeholder="0712 345 678" value="{{ booking_purchase.phone }}">
+                <small style="color: #666; font-size: 11px; margin-top: 5px; display: block;">Enter the M-Pesa number you want to pay from</small>
+            </div>
+            <button onclick="initiateMPesaPayment()" class="btn btn-mpesa">
+                <i class="fab fa-empire"></i> Pay KES {{ total_amount|default:total_amount }}
+            </button>
+            <p style="font-size: 12px; color: #666; text-align: center; margin-top: 15px;">
+                <i class="fas fa-mobile-alt"></i> You will receive an STK push on your phone
+            </p>
+            <div id="mpesaStatus"></div>
+        `;
+        showModal('<i class="fab fa-empire"></i> M-Pesa Payment', modalBody);
+    }
+    
+    function initiateMPesaPayment() {
+        const phoneNumber = document.getElementById('phone_number').value;
+        const amount = totalAmount;
+        const reference = `PKG-${bookingPurchaseId}`;
+        const description = `Payment for Package #${bookingPurchaseId}`;
+        
+        if (!phoneNumber) {
+            alert('Please enter your M-Pesa phone number');
+            return;
+        }
+        
+        // Show loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        hideModal();
+        
+        // Create form data
+        const formData = new FormData();
+        formData.append('phone_number', phoneNumber);
+        formData.append('amount', amount);
+        formData.append('reference', reference);
+        formData.append('description', description);
+        
+        // Send STK push request
+        fetch('/Mpesa/stk-push/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Start polling for transaction status
+                pollTransactionStatus(data.transaction_id, data.checkout_request_id);
+            } else {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                alert('Failed to initiate payment: ' + (data.error || 'Unknown error'));
+                showMPesaModal();
+            }
+        })
+        .catch(error => {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            console.error('Error:', error);
+            alert('Network error. Please try again.');
+            showMPesaModal();
+        });
+    }
+    
+    // Stripe Modal
+    function showStripeModal() {
+        const modalBody = `
+            <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="text" class="form-control" placeholder="MM/YY">
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" class="form-control" placeholder="123">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Cardholder Name</label>
+                <input type="text" class="form-control" placeholder="John Doe">
+            </div>
+            <button onclick="processStripe()" class="btn btn-stripe">Pay with Card</button>
+        `;
+        showModal('<i class="fab fa-cc-visa"></i> Card Payment', modalBody);
+    }
+    
+    // Bank Transfer Modal
+    function showBankModal() {
+        const modalBody = `
+            <div class="bank-details">
+                <h4 style="margin-bottom: 15px;">Bank Account Details</h4>
+                <div class="detail-row">
+                    <span style="color: #666;">Bank Name:</span>
+                    <strong>Equity Bank Kenya</strong>
+                </div>
+                <div class="detail-row">
+                    <span style="color: #666;">Account Name:</span>
+                    <strong>Day Safaris Adventures Ltd</strong>
+                </div>
+                <div class="detail-row">
+                    <span style="color: #666;">Account Number:</span>
+                    <strong>0123456789</strong>
+                </div>
+                <div class="detail-row">
+                    <span style="color: #666;">Branch Code:</span>
+                    <strong>001</strong>
+                </div>
+                <div class="detail-row">
+                    <span style="color: #666;">SWIFT Code:</span>
+                    <strong>EQBLKENA</strong>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Transaction Reference</label>
+                <input type="text" id="bank_ref" class="form-control" placeholder="Enter transaction reference">
+            </div>
+            <button onclick="processBank()" class="btn btn-bank">Confirm Bank Transfer</button>
+            <p style="font-size: 12px; color: #666; text-align: center; margin-top: 15px;">
+                <i class="fas fa-clock"></i> Payment confirmation may take 1-2 business days
+            </p>
+        `;
+        showModal('<i class="fas fa-university"></i> Bank Transfer', modalBody);
+    }
+    
+    // Cryptocurrency Modal
+    function showCryptoModal() {
+        const modalBody = `
+            <div class="form-group">
+                <label>Select Cryptocurrency</label>
+                <select id="crypto_currency" class="form-control">
+                    <option value="BTC">Bitcoin (BTC)</option>
+                    <option value="ETH">Ethereum (ETH)</option>
+                    <option value="USDT">Tether (USDT)</option>
+                    <option value="LTC">Litecoin (LTC)</option>
+                </select>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+                <div style="width: 120px; height: 120px; background: white; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+                    <i class="fas fa-qrcode" style="font-size: 60px; color: #1a1a2e;"></i>
+                </div>
+                <p style="font-size: 12px; color: #666; margin-bottom: 10px;">Send exact amount to:</p>
+                <div style="background: white; padding: 12px; border-radius: 8px; word-break: break-all; margin-bottom: 10px;">
+                    <code id="crypto_address" style="font-size: 12px;">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</code>
+                </div>
+                <button onclick="copyAddress()" style="padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px;">
+                    <i class="fas fa-copy"></i> Copy Address
+                </button>
+            </div>
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+                <p style="margin-bottom: 5px;">Amount to send:</p>
+                <h3 id="crypto_amount" style="color: #28a745;">0.001234 BTC</h3>
+                <p style="font-size: 11px; color: #666;">≈ $${totalAmount.toFixed(2)} USD</p>
+            </div>
+            <div class="form-group">
+                <label>Transaction Hash</label>
+                <input type="text" id="crypto_hash" class="form-control" placeholder="Enter transaction hash">
+            </div>
+            <button onclick="processCrypto()" class="btn btn-crypto">Confirm Crypto Payment</button>
+            <p style="font-size: 12px; color: #666; text-align: center; margin-top: 15px;">
+                <i class="fas fa-clock"></i> Payment confirmation may take 15-30 minutes
+            </p>
+        `;
+        showModal('<i class="fab fa-bitcoin"></i> Cryptocurrency Payment', modalBody);
+        
+        const cryptoSelect = document.getElementById('crypto_currency');
+        if (cryptoSelect) {
+            cryptoSelect.addEventListener('change', updateCryptoAmount);
+        }
+        updateCryptoAmount();
+    }
+    
+    function updateCryptoAmount() {
+        const cryptoSelect = document.getElementById('crypto_currency');
+        const cryptoAmountSpan = document.getElementById('crypto_amount');
+        const cryptoAddressSpan = document.getElementById('crypto_address');
+        
+        if (cryptoSelect && cryptoAmountSpan) {
+            const currency = cryptoSelect.value;
+            let amount = 0;
+            let address = '';
+            
+            switch(currency) {
+                case 'BTC':
+                    amount = totalAmount / 45000;
+                    address = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+                    break;
+                case 'ETH':
+                    amount = totalAmount / 2800;
+                    address = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
+                    break;
+                case 'USDT':
+                    amount = totalAmount;
+                    address = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
+                    break;
+                case 'LTC':
+                    amount = totalAmount / 85;
+                    address = 'ltc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+                    break;
+                default:
+                    amount = totalAmount / 45000;
+                    address = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+            }
+            
+            cryptoAmountSpan.innerHTML = `${amount.toFixed(8)} ${currency}`;
+            if (cryptoAddressSpan) {
+                cryptoAddressSpan.innerHTML = address;
+            }
+        }
+    }
+    
+    function copyAddress() {
+        const address = document.getElementById('crypto_address').innerText;
+        navigator.clipboard.writeText(address);
+        alert('Address copied to clipboard!');
+    }
+    
+    function processStripe() {
+        alert("Stripe integration coming soon! For now, please use M-Pesa.");
+    }
+    
+    function processBank() {
+        const ref = document.getElementById('bank_ref').value;
+        if (!ref) {
+            alert('Please enter transaction reference');
+            return;
+        }
+        alert(`Bank transfer submitted!\nReference: ${ref}\nWe will verify within 24 hours.`);
+        window.location.href = `/payment/${bookingPurchaseId}/success/`;
+    }
+    
+    function processCrypto() {
+        const hash = document.getElementById('crypto_hash').value;
+        if (!hash) {
+            alert('Please enter transaction hash');
+            return;
+        }
+        alert(`Crypto payment submitted!\nTransaction Hash: ${hash}\nPayment will be confirmed within 30 minutes.`);
+        window.location.href = `/payment/${bookingPurchaseId}/success/`;
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Event listeners
+    document.querySelectorAll('.method-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const method = this.dataset.method;
+            if (method === 'mpesa') showMPesaModal();
+            else if (method === 'stripe') showStripeModal();
+            else if (method === 'bank') showBankModal();
+            else if (method === 'crypto') showCryptoModal();
+        });
+    });
+    
+    // Close modal when clicking on close button or outside
+    document.querySelector('.close').addEventListener('click', hideModal);
+    
+    window.onclick = function(event) {
+        const modal = document.getElementById('paymentModal');
+        if (event.target === modal) {
+            hideModal();
+        }
+    }
+</script>
+{% endblock %}

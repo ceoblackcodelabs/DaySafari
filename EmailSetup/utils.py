@@ -50,7 +50,17 @@ def send_booking_confirmation(booking):
     """Send booking confirmation using template"""
     try:
         print(f"Preparing to send booking confirmation email to {booking.email} for booking ID {booking.id}...")
-        html_content = render_to_string('Emails/booking_confirmation.html', {'booking': booking})
+        payment_link = f"http://127.0.0.1:8000/payment/from-bookings/{booking.id}/"
+        context = {
+            'payment_link': payment_link,
+            'booking': booking,
+            'company_phone': '+254 734 962 965',
+            'company_whatsapp': '+254 783 457 058',
+            'company_email': 'info@daysafarisadventures.co.ke',
+            'current_year': 2026
+        }
+        html_content = render_to_string('Emails/booking_confirmation.html', context)
+
         return send_transactional_email(
             booking.email, 
             booking.name, 

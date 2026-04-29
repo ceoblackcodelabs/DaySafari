@@ -6,7 +6,7 @@ from .models import (
 # contact
 @admin.register(Bookings)
 class BookingsAdmin(admin.ModelAdmin):
-    list_display = ('client', 'name', 'email', 'phone', 'destination', 'persons', 'date')
+    list_display = ('client', 'pk', 'name', 'email', 'phone', 'destination', 'persons', 'date')
     search_fields = ('client', 'name', 'email', 'destination')
     list_filter = ('date', 'destination')
     readonly_fields = ('name', 'email', 'phone', 'destination', 'persons', 'date', 'message')
