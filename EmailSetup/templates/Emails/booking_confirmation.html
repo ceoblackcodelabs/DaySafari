@@ -12,11 +12,12 @@
     <p><strong>Destination:</strong> {{ booking.destination.name|default:"TBD" }}</p>
     <p><strong>Travel Date:</strong> {{ booking.date }}</p>
     <p><strong>Persons:</strong> {{ booking.persons }}</p>
+    <p><strong>Price Per Person:</strong> ${{ booking.destination.price|default:"0.00" }}</p>
 </div>
 
 <div class="box">
     <p><strong>💰 Payment Details:</strong></p>
-    <p><strong>Total Amount:</strong> ${{ total_amount|default:"0.00" }}</p>
+    <p><strong>Total Amount:</strong> ${{ booking.destination.price|default:"0.00" }}</p>
     <p><strong>Deposit Required (30%):</strong> ${{ deposit_amount|default:"0.00" }}</p>
 </div>
 
