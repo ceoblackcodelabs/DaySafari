@@ -14,7 +14,7 @@
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Accommodation</a></li>
             <li class="breadcrumb-item active text-white">Airbnb</li>
-        </ol>    
+        </ol>
     </div>
 </div>
 <!-- Header End -->
@@ -54,7 +54,7 @@
                                 <i class="fa fa-bed text-primary me-2"></i>{{ bnb.get_specification_display }}
                             </small>
                             <small class="flex-fill text-center py-2">
-                                <i class="fa fa-dollar-sign text-primary me-2"></i>{{ bnb.price_per_night }}/night
+                                <i class="fa fa-dollar-sign text-primary me-2"></i>book
                             </small>
                         </div>
                     </div>
@@ -156,15 +156,15 @@
     .feature-icon {
         transition: transform 0.3s ease;
     }
-    
+
     .feature-icon:hover {
         transform: translateY(-5px);
     }
-    
+
     .bnb-rating {
         font-size: 12px;
     }
-    
+
     .destination-overlay {
         background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7), transparent);
     }
