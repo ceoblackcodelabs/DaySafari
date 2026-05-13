@@ -17,5 +17,5 @@ urlpatterns = [
     path('east-africa-tours/', EastAfricaTourView.as_view(), name='east_africa_tours'),
     path('south-africa-tours/', SouthAfricaTourView.as_view(), name='south_africa_tours'),
     path('west-africa-tours/', WestAfricaTourView.as_view(), name='west_africa_tours'),
-    path('international-africa-tours/', InternationalAfricaTourView.as_view(), name='international_africa_tours'),
+    path('international-africa-tours/', InternationalAfricaTourView.as_view(), name='international_tours'),
 ]

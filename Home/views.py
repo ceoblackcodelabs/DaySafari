@@ -79,7 +79,7 @@ class HomeView(ListView):
                 subject=f"Booking Confirmation - #{booking.id} - {booking.name}",
                 priority='high',
                 email_sent=True,
-                message=f"Dear {booking.name},\n\nYour safari booking is confirmed!\n\nBooking ID: #{booking.id}\nDestination: {booking.destination.name if booking.destination else 'TBD'}\nTravel Date: {booking.date}\nPersons: {booking.persons}\n\n📌 Next steps:\n1. Our travel expert will contact you within 24 hours\n2. Pay 30% deposit to confirm your spot\n3. Receive your detailed itinerary\n\n❓ Questions? Call: +254 734 962 965\n\nWe look forward to hosting you in East Africa! 🦁\n\nThe Day Safaris Team"
+                message=f"Dear {booking.name},\n\nYour safari booking is confirmed!\n\nBooking ID: #{booking.id}\nDestination: {booking.destination.name if booking.destination else 'TBD'}\nTravel Date: {booking.date}\nPersons: {booking.persons}\n\n📌 Next steps:\n1. Our travel expert will contact you within 24 hours\n2. Pay 30% deposit to confirm your spot\n3. Receive your detailed itinerary\n\n❓ Questions? Call: +254759379600\n\nWe look forward to hosting you in East Africa! 🦁\n\nThe Day Safaris Team"
             )
 
             # Add success message
@@ -208,7 +208,7 @@ class AboutView(ListView):
         services1 = []
         services2 = []
         for i, service in enumerate(Services.objects.all()):
-            if i <= 1:
+            if i <= 2:
                 services1.append(service)
             else:
                 services2.append(service)

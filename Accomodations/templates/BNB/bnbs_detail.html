@@ -14,7 +14,7 @@
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
             <li class="breadcrumb-item"><a href="{% url 'airbnb' %}">Airbnb</a></li>
             <li class="breadcrumb-item active text-white">{{ bnb.title|default:bnb.location }}</li>
-        </ol>    
+        </ol>
     </div>
 </div>
 <!-- Header End -->
@@ -55,7 +55,7 @@
                 </div>
                 <div class="mb-3">
                     <i class="fa fa-dollar-sign text-primary me-1"></i>
-                    <span class="h4">${{ bnb.price_per_night }}</span>
+                    <span class="h4">Book Today</span>
                     <span class="text-muted">/ night</span>
                     <div class="d-inline-block ms-3">
                         <i class="fa fa-star text-warning"></i>
@@ -108,7 +108,7 @@
             <div class="col-lg-6">
                 <h1 class="text-white mb-3">Book This Property</h1>
                 <p class="text-white mb-4">Get <span class="text-warning">10% Off</span> On Your First Booking With Day Safaris Adventures.</p>
-                
+
                 <!-- Display messages -->
                 {% if messages %}
                     {% for message in messages %}
@@ -118,7 +118,7 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                
+
                 <!-- Booking Form -->
                 <form method="post">
                     {% csrf_token %}
@@ -261,7 +261,7 @@
             <p class="mt-2">Take a visual tour of this beautiful accommodation</p>
         </div>
         <div class="tab-class text-center">
-            
+
             <div class="tab-content">
                 <!-- All Photos Tab -->
                 <div id="tab-all" class="tab-pane fade show p-0 active">
@@ -453,11 +453,11 @@
     .feature-icon {
         transition: transform 0.3s ease;
     }
-    
+
     .feature-icon:hover {
         transform: translateY(-5px);
     }
-    
+
     .destination-overlay {
         background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7), transparent);
     }

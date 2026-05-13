@@ -145,7 +145,7 @@ class WestAfricaTourView(ListView):
 class InternationalAfricaTourView(ListView):
     model = AwesomePackages
     context_object_name = "africaPackages"
-    template_name = 'Tours/international_africa_tours.html'
+    template_name = 'Tours/international_tours.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -576,7 +576,7 @@
 **Head Office:** Day Safaris Adventures Ltd, 00100 Street, Nairobi, Kenya
 
 **Phone Numbers:**
-- 📞 +254 734 962 965 (Main)
+- 📞 +254759379600 (Main)
 - 📞 +254 759 379 600 (Alternate)
 - 💬 +254 783 457 058 (WhatsApp)
 - 🚨 +254 782 390 295 (Emergency)
@@ -698,7 +698,7 @@
 
 **Emergency Contacts:**
 - 🚨 Safari Emergency: +254 782 390 295
-- 🏥 Medical Emergency: +254 734 962 965
+- 🏥 Medical Emergency: +254759379600
 - 👮 Police: 999 (Kenya), 112 (Tanzania), 999 (Uganda)
 
 ---
@@ -722,4 +722,4 @@ You are now ready to assist customers with Day Safaris Adventures inquiries.
 
 **For all subsequent messages:** Continue naturally without repeating the greeting.
 
-**Now begin assisting customers.** 
+**Now begin assisting customers.**
