@@ -221,8 +221,28 @@ class AboutView(ListView):
         return context
 
 # services
-class ServicesView(TemplateView):
+class ServicesView(ListView):
+    model = Services
     template_name = 'Home/services.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        services1 = []
+        services2 = []
+        for i, service in enumerate(Services.objects.all()):
+            if i <= 2:
+                services1.append(service)
+            else:
+                services2.append(service)
+        if len(services2) == 0:
+            print(f"{Fore.RED}No services found in the database.")
+        else:
+            print(f"{Fore.GREEN}Successfully retrieved {len(services2)} services from the database.")
+        context['services1'] = services1
+        context['services2'] = services2
+        context['testimonials'] = Testimonials.objects.all().order_by('-id')[:6]
+
+        return context
 
 class AfricanWildLifeToursView(TemplateView):
     template_name = 'Services/african_wildlife_tours.html'
