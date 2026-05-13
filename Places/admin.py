@@ -37,7 +37,7 @@ class DestinationsCategoryAdmin(admin.ModelAdmin):
     list_filter = ('image_orientation',)
     ordering = ('category',)
     list_per_page = 20
-    
+
     # Add fieldsets for better organization
     fieldsets = (
         ('Basic Information', {
@@ -58,7 +58,7 @@ class PackagePurchaseAdmin(admin.ModelAdmin):
     list_per_page = 20
     date_hierarchy = 'travel_date'
     list_editable = ['status']
-    
+
     fieldsets = (
         ('Customer Information', {
             'fields': ('full_name', 'email', 'phone_number')
@@ -75,12 +75,12 @@ class PackagePurchaseAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     def amount_spent_formatted(self, obj):
         return f"${obj.amount_spent:,.2f}"
     amount_spent_formatted.short_description = 'Amount Spent'
     amount_spent_formatted.admin_order_field = 'amount_spent'
-    
+
     def amount_spent_calculated(self, obj):
         """Show calculated amount based on package price and persons"""
         if obj.package:
@@ -88,7 +88,7 @@ class PackagePurchaseAdmin(admin.ModelAdmin):
             return f"${calculated:,.2f}"
         return "N/A"
     amount_spent_calculated.short_description = 'Calculated Amount'
-    
+
     def status_badge(self, obj):
         colors = {
             'Pending': 'orange',
@@ -101,19 +101,19 @@ class PackagePurchaseAdmin(admin.ModelAdmin):
             color, obj.status
         )
     status_badge.short_description = 'Status'
-    
+
     actions = ['mark_as_confirmed', 'mark_as_cancelled', 'mark_as_pending']
-    
+
     def mark_as_confirmed(self, request, queryset):
         updated = queryset.update(status='Confirmed')
         self.message_user(request, f"{updated} booking(s) marked as confirmed.")
     mark_as_confirmed.short_description = "Mark selected as Confirmed"
-    
+
     def mark_as_cancelled(self, request, queryset):
         updated = queryset.update(status='Cancelled')
         self.message_user(request, f"{updated} booking(s) marked as cancelled.")
     mark_as_cancelled.short_description = "Mark selected as Cancelled"
-    
+
     def mark_as_pending(self, request, queryset):
         updated = queryset.update(status='Pending')
         self.message_user(request, f"{updated} booking(s) marked as pending.")
@@ -126,7 +126,7 @@ class PackagePurchaseAdmin(admin.ModelAdmin):
                 sent_count += 1
         self.message_user(request, f"Payment email resent to {sent_count} customer(s).")
     resend_payment_email.short_description = "Resend payment email to selected customers"
-    
+
     def save_model(self, request, obj, form, change):
         # Auto-calculate amount_spent if not set
         if not obj.amount_spent and obj.package:
@@ -141,8 +141,8 @@ class DestinationsAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     ordering = ('category', 'name')
     list_per_page = 20
-    autocomplete_fields = ['category'] 
-    
+    autocomplete_fields = ['category']
+
     # Add fieldsets for better organization
     fieldsets = (
         ('Basic Information', {
@@ -157,7 +157,7 @@ class DestinationsAdmin(admin.ModelAdmin):
             'description': 'Upload a destination image'
         }),
     )
-    
+
     def display_image(self, obj):
         """Display a thumbnail of the image in admin list view"""
         if obj.image:
@@ -165,21 +165,21 @@ class DestinationsAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', obj.image.url)
         return "No Image"
     display_image.short_description = 'Image Preview'
-    
+
     # Override save method if needed
     def save_model(self, request, obj, form, change):
         """Add custom save behavior if needed"""
         super().save_model(request, obj, form, change)
-    
+
     # Add actions for bulk operations
     actions = ['make_landscape', 'make_portrait']
-    
+
     def make_landscape(self, request, queryset):
         """Bulk action to set category orientation to landscape"""
         updated = queryset.update(category__image_orientation='landscape')
         self.message_user(request, f'{updated} destinations set to landscape orientation.')
     make_landscape.short_description = "Set selected destinations' categories to landscape"
-    
+
     def make_portrait(self, request, queryset):
         """Bulk action to set category orientation to portrait"""
         updated = queryset.update(category__image_orientation='portrait')

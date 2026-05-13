@@ -56,3 +56,17 @@ class Blogs(models.Model):
 
     def __str__(self):
         return self.title
+
+class Brochure(models.Model):  # Note: Should be "Brochure" not "Bronchure"
+    title = models.CharField(max_length=200)
+    pdf_file = models.FileField(upload_to='brochures/')
+    image = models.ImageField(upload_to='brochure_images/', blank=True, null=True)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Brochure"
+        verbose_name_plural = "Brochures"

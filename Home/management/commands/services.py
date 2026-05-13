@@ -26,6 +26,16 @@ class Command(BaseCommand):
                 "name": "Custom Tailor-Made Tours",
                 "description": "Design your dream African adventure with our personalized tour planning service. Whether it's a romantic honeymoon safari, a family vacation, or a solo expedition, we craft itineraries that match your preferences, budget, and travel style perfectly.",
                 "icon": "fa fa-globe"
+            },
+            {
+                "name": "Visa Processing Services",
+                "description": "Simplify your travel planning with our hassle-free visa processing assistance. We guide you through the entire visa application process, document preparation, submission, and tracking. Our team ensures you have all the required documentation for entry into Kenya, Tanzania, Uganda, Rwanda, and other African destinations. Save time and avoid common mistakes with our expert support.",
+                "icon": "fa fa-passport"
+            },
+            {
+                "name": "Hotel Accommodation",
+                "description": "Experience comfort and luxury with our carefully selected hotel accommodations across Africa. From budget-friendly lodges to 5-star luxury resorts, beachfront villas, and safari camps, we offer a wide range of options to suit every traveler's needs. Enjoy discounted rates, seamless booking, and 24/7 support for all your accommodation requirements.",
+                "icon": "fa fa-hotel"
             }
         ]
 
