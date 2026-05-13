@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, FormView
-from .models import (Services, GalleryCategory, Gallery,
+from .models import (Brochure, Services, GalleryCategory, Gallery,
                      Testimonials, Blogs
                      )
 from OurClients.models import UserMessage
@@ -298,3 +298,8 @@ class GalleryView(ListView):
 
         return context
 
+
+class BrochureView(ListView):
+    model = Brochure
+    context_object_name = 'brochures'
+    template_name = 'Home/brochures.html'

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (HomeView, AboutView, ServicesView,
+from .views import (BrochureView, HomeView, AboutView, ServicesView,
                     CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
                     BlogDetailView
@@ -23,4 +23,6 @@ urlpatterns = [
     # blogs
     path('blog/', BlogsView.as_view(), name='blog'),
     path('blog/<int:pk>/', BlogDetailView.as_view(), name='blog_detail'),
+
+    path('brochures/', BrochureView.as_view(), name='brochures'),
 ]

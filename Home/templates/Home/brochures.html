@@ -1,0 +1,82 @@
+{% extends "Home/base.html" %}
+
+{% load static %}
+
+{% block title %}Brochures - Day Safari Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">Download Our Brochures</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">About</li>
+        </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Brochures Start -->
+<div class="container-fluid blog py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">Our Brochures</h5>
+            <h1 class="mb-4">Download Safari Brochures & Travel Guides</h1>
+            <p class="mb-0">Explore our collection of detailed brochures featuring safari packages, tour itineraries, accommodation options, and travel tips for East Africa. Download PDF guides to plan your perfect African adventure.</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            {% for brochure in brochures %}
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item">
+                    <div class="blog-img">
+                        <div class="blog-img-inner">
+                            {% if brochure.image %}
+                            <img class="img-fluid w-100 rounded-top" src="{{ brochure.image.url }}" alt="{{ brochure.title }}">
+                            {% else %}
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/brochure-placeholder.jpg' %}" alt="{{ brochure.title }}">
+                            {% endif %}
+                            <div class="blog-icon">
+                                <a href="{{ brochure.pdf_file.url }}" target="_blank" class="my-auto"><i class="fas fa-download fa-2x text-white"></i></a>
+                            </div>
+                        </div>
+                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ brochure.created_at|date:"d M Y" }}</small>
+                            <a href="{{ brochure.pdf_file.url }}" target="_blank" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-download text-primary me-2"></i>Download PDF</a>
+                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-eye text-primary me-2"></i>Preview</a>
+                        </div>
+                    </div>
+                    <div class="blog-content border border-top-0 rounded-bottom p-4">
+                        <p class="mb-3"><i class="fa fa-file-pdf text-primary me-2"></i>PDF Brochure</p>
+                        <a href="{{ brochure.pdf_file.url }}" target="_blank" class="h4">{{ brochure.title }}</a>
+                        <p class="my-3">{{ brochure.description|truncatewords:30 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ brochure.pdf_file.url }}" target="_blank" class="btn btn-primary rounded-pill py-2 px-4">
+                                <i class="fa fa-download me-2"></i>Download Now
+                            </a>
+                            <small class="text-muted">
+                                <i class="fa fa-file-pdf"></i> PDF
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <h3>No brochures available yet</h3>
+                <p>Check back soon for downloadable safari brochures and travel guides!</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url "about" %}" class="btn btn-primary rounded-pill py-3 px-5">
+                <i class="fa fa-download me-2"></i>Destinations
+            </a>
+        </div>
+    </div>
+</div>
+<!-- Brochures End -->
+
+{% endblock body %}
