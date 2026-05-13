@@ -8,6 +8,7 @@ from django.utils import timezone
 from .models import (
     Bookings, Contact
 )
+from Home.models import Brochure
 from .forms import (
     BookingsForm, ContactForm
 )
@@ -150,6 +151,7 @@ class ContactView(FormView):
             }
             context['form'] = self.form_class(initial=initial_data)
 
+        context['brochures'] = Brochure.objects.all()[:3]
         context['title'] = 'Contact Us - Day Safaris Adventures'
         context['user'] = self.request.user
 
