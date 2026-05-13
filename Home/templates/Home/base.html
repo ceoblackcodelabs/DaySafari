@@ -98,9 +98,10 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tours</a>
                             <div class="dropdown-menu m-0">
-                                <a href="{% url "africa_tours" %}" class="dropdown-item">Africa Tours</a>
                                 <a href="{% url "east_africa_tours" %}" class="dropdown-item">East Africa Tours</a>
-                                <a href="{% url "international_africa_tours" %}" class="dropdown-item">International Africa Tours</a>
+                                <a href="{% url "south_africa_tours" %}" class="dropdown-item">South Africa Tours</a>
+                                <a href="{% url "west_africa_tours" %}" class="dropdown-item">West Africa Tours</a>
+                                <a href="{% url "international_africa_tours" %}" class="dropdown-item">International Tours</a>
                             </div>
                         </div>
                         <a href="{% url "cruises" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "cruises" %}active{% endif %}">Cruises</a>
@@ -156,7 +157,9 @@
                             <h4 class="mb-4 text-white">Get In Touch</h4>
                             <a href=""><i class="fas fa-home me-2"></i> 00100 Street Nairobi Kenya</a>
                             <a href=""><i class="fas fa-envelope me-2"></i>info@daysafarisadventures.co.ke</a>
-                            <a href=""><i class="fas fa-phone me-2"></i> +254759379600 </a>
+                            <a href="https://wa.me/254759379600?text=Hello%20I%20need%20an%20inquiry" target="_blank">
+                            <i class="fab fa-whatsapp me-2"></i> +254759379600
+                            </a>
                             <a href=""><i class="fas fa-phone me-2"></i> +254140919894 </a>
                             <a href=""><i class="fas fa-phone me-2"></i> +254140936286 </a>
                             <a href=""><i class="fas fa-phone me-2"></i> +254782390295 </a>

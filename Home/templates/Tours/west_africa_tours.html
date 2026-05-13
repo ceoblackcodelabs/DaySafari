@@ -1,0 +1,184 @@
+{% extends "Home/base.html" %}
+
+{% load static custom_filters %}
+
+{% block title %}West African Tours - Days Safaris Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">West African Tours</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Category</li>
+        </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Destination Start -->
+<div class="container-fluid destination py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">West African Tour Gallery</h5>
+            <h1 class="mb-0">Discover the Vibrant Spirit of West Africa</h1>
+        </div>
+        <div class="tab-class text-center">
+            <ul class="nav nav-pills d-inline-flex justify-content-center mb-5 flex-wrap">
+                <li class="nav-item">
+                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-all">
+                        <span class="text-dark" style="width: 150px;">All Destinations</span>
+                    </a>
+                </li>
+                {% for category in categories %}
+                <li class="nav-item">
+                    <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-{{ category.id }}">
+                        <span class="text-dark" style="width: 150px;">{{ category.category }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                <!-- All Destinations Tab -->
+                <div id="tab-all" class="tab-pane fade show p-0 active">
+                    <div class="row g-4">
+                        {% for destination in all_destinations %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                {% if destination.image %}
+                                <img class="img-fluid rounded w-100" src="{{ destination.image.url }}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;">
+                                {% else %}
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-destination.jpg' %}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;">
+                                {% endif %}
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ destination.category.category }}</a>
+                                    <h4 class="text-white mb-2 mt-3">{{ destination.name }}</h4>
+                                    <p class="text-white small mb-2">{{ destination.location }}</p>
+                                    <a href="{% url 'destination_detail' destination.id %}" class="btn-hover text-white">View Details <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    {% if destination.image %}
+                                    <a href="{{ destination.image.url }}" data-lightbox="destination-{{ destination.id }}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    {% else %}
+                                    <a href="{% static 'img/placeholder-destination.jpg' %}" data-lightbox="destination-{{ destination.id }}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12 text-center py-5">
+                            <h3>No destinations available</h3>
+                            <p>Check back soon for amazing West African destinations!</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Dynamic Category Tabs -->
+                {% for category in categories %}
+                <div id="tab-{{ category.id }}" class="tab-pane fade show p-0">
+                    <div class="row g-4">
+                        {% with destinations=destinations_by_category|get_item:category.id %}
+                        {% for destination in destinations %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="destination-img">
+                                {% if destination.image %}
+                                <img class="img-fluid rounded w-100" src="{{ destination.image.url }}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;">
+                                {% else %}
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-destination.jpg' %}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;">
+                                {% endif %}
+                                <div class="destination-overlay p-4">
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ destination.category.category }}</a>
+                                    <h4 class="text-white mb-2 mt-3">{{ destination.name }}</h4>
+                                    <p class="text-white small mb-2">{{ destination.location|default:"West Africa" }}</p>
+                                    <a href="{% url 'destination_detail' destination.id %}" class="btn-hover text-white">View Details <i class="fa fa-arrow-right ms-2"></i></a>
+                                </div>
+                                <div class="search-icon">
+                                    {% if destination.image %}
+                                    <a href="{{ destination.image.url }}" data-lightbox="dest-{{ category.id }}-{{ destination.id }}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    {% else %}
+                                    <a href="{% static 'img/placeholder-destination.jpg' %}" data-lightbox="dest-{{ category.id }}-{{ destination.id }}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12 text-center py-5">
+                            <h3>No destinations in this category</h3>
+                            <p>Check back soon for exciting West African highlights!</p>
+                        </div>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Destination End -->
+
+<!-- Packages Start -->
+<div class="container-fluid packages py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">West African Packages</h5>
+            <h1 class="mb-0">Unforgettable West Africa Tour Experiences</h1>
+        </div>
+        <div class="packages-carousel owl-carousel">
+            {% for package in africaPackages %}
+            <div class="packages-item">
+                <div class="packages-img">
+                    {% if package.image %}
+                    <img src="{{ package.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    {% else %}
+                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    {% endif %}
+                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ package.days }} days</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ package.persons }} Persons</small>
+                    </div>
+                    <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div>
+                </div>
+                <div class="packages-content bg-light">
+                    <div class="p-4 pb-0">
+                        <h5 class="mb-0">{{ package.name }}</h5>
+                        <small class="text-uppercase">{{ package.package_type|default:"West Africa Safari" }}</small>
+                        <div class="mb-3">
+                            {% for i in ""|ljust:package.starRating %}
+                            <small class="fa fa-star text-primary"></small>
+                            {% endfor %}
+                            {% for i in ""|ljust:5 %}
+                            {% if forloop.counter > package.starRating %}
+                            <small class="fa fa-star text-muted"></small>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="mb-4">{{ package.description|truncatewords:30 }}</p>
+                    </div>
+                    <div class="row bg-primary rounded-bottom mx-0">
+                        <div class="col-6 text-start px-0">
+                            <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                        </div>
+                        <div class="col-6 text-end px-0">
+                            <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <h3>No packages available at the moment</h3>
+                <p>Please check back later for incredible West Africa tour deals!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Packages End -->
+
+{% endblock body %}
