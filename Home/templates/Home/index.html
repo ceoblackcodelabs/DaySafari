@@ -669,7 +669,7 @@
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ package.days }} days</small>
                         <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ package.persons }} Persons</small>
                     </div>
-                    <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div>
+                    {% comment %} <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div> {% endcomment %}
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
@@ -722,7 +722,7 @@
             <div class="col-lg-6">
                 <h1 class="text-white mb-3">Book A Tour Deals</h1>
                 <p class="text-white mb-4">Get <span class="text-warning">50% Off</span> On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here.</p>
-                
+
                 <!-- Display messages -->
                 {% if messages %}
                     {% for message in messages %}
@@ -732,7 +732,7 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                
+
                 <!-- Booking Form -->
                 <form method="post" action="{% url 'home' %}">
                     {% csrf_token %}

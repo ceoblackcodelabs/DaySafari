@@ -18,14 +18,14 @@ class InitiateSTKPush(View):
     def post(self, request):
         phone_number = request.POST.get('phone_number')
         amount = request.POST.get('amount')
-        
+
         # Convert amount to integer (M-Pesa requires whole number)
         try:
             amount = float(amount) if amount else 0
             amount = int(amount)  # Convert to integer (remove decimal)
         except (ValueError, TypeError):
             amount = 0
-            
+
         reference = request.POST.get('reference')
         description = request.POST.get('description', 'Payment')
 
@@ -45,7 +45,7 @@ class InitiateSTKPush(View):
         try:
             # Use ngrok URL for callback in development
             if settings.DEBUG:
-                callback_url = 'https://a50c-154-159-252-109.ngrok-free.app/Mpesa/callback/'
+                callback_url = 'https://6457-105-161-237-37.ngrok-free.app/Mpesa/callback/'
             else:
                 callback_url = request.build_absolute_uri('/Mpesa/callback/')
             print(f"Using callback URL: {callback_url}")

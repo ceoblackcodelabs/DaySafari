@@ -18,7 +18,7 @@ def send_transactional_email(to_email, to_name, subject, html_content):
         api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
             sib_api_v3_sdk.ApiClient(configuration)
         )
-        
+
         send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
             to=[{'email': to_email, 'name': to_name}],
             sender={'email': 'daysafarisadventures103@gmail.com', 'name': 'Day Safaris Adventures'},
@@ -26,11 +26,11 @@ def send_transactional_email(to_email, to_name, subject, html_content):
             html_content=html_content,
             reply_to={'email': 'bookings@daysafarisadventures.co.ke', 'name': 'Day Safaris Support'}
         )
-        
+
         api_response = api_instance.send_transac_email(send_smtp_email)
         print(f"Email sent successfully! Message ID: {api_response.message_id}")
         return True
-        
+
     except ApiException as e:
         print(f"Exception when sending email: {e}")
         return False
@@ -50,21 +50,21 @@ def send_booking_confirmation(booking):
     """Send booking confirmation using template"""
     try:
         print(f"Preparing to send booking confirmation email to {booking.email} for booking ID {booking.id}...")
-        payment_link = f"http://127.0.0.1:8000/payment/from-bookings/{booking.id}/"
+        payment_link = f"http://192.168.8.179:8001/payment/from-bookings/{booking.id}/"
         context = {
             'payment_link': payment_link,
             'booking': booking,
-            'company_phone': '+254 734 962 965',
-            'company_whatsapp': '+254 783 457 058',
-            'company_email': 'info@daysafarisadventures.co.ke',
+            'company_phone': '+254 759 379 600',
+            'company_whatsapp': '+254 714 0919894',
+            'company_email': 'info@daysafarisadventures.com',
             'current_year': 2026
         }
         html_content = render_to_string('Emails/booking_confirmation.html', context)
 
         return send_transactional_email(
-            booking.email, 
-            booking.name, 
-            f"Booking Confirmation - #{booking.id}", 
+            booking.email,
+            booking.name,
+            f"Booking Confirmation - #{booking.id}",
             html_content
         )
     except Exception as e:
@@ -77,24 +77,24 @@ def send_contact_response(contact):
         print(f"Preparing to send contact response email to {contact.email}...")
         html_content = render_to_string('Emails/contact_response.html', {'contact': contact})
         return send_transactional_email(
-            contact.email, 
-            contact.name, 
-            "We've received your message - Day Safaris Adventures", 
+            contact.email,
+            contact.name,
+            "We've received your message - Day Safaris Adventures",
             html_content
         )
     except Exception as e:
         print(f"Error: {e}")
         return False
-    
+
 def reply_contact_via_email_at_admin(contact):
     '''from admin reply to client'''
     try:
         print(f"Preparing to send contact response email to {contact.email}...")
         html_content = render_to_string('Emails/contact_response_admin.html', {'contact': contact})
         return send_transactional_email(
-            contact.email, 
-            contact.name, 
-            f"Response to: {contact.subject} - Day Safaris Adventures", 
+            contact.email,
+            contact.name,
+            f"Response to: {contact.subject} - Day Safaris Adventures",
             html_content
         )
     except Exception as e:
@@ -123,29 +123,29 @@ def send_booking_reminder(booking):
             'days_left': days_left
         })
         return send_transactional_email(
-            booking.email, 
-            booking.name, 
-            f"Reminder: Your Safari Adventure is Coming Soon!", 
+            booking.email,
+            booking.name,
+            f"Reminder: Your Safari Adventure is Coming Soon!",
             html_content
         )
     except Exception as e:
         print(f"Error: {e}")
         return False
-    
+
 def send_package_payment_email(package_purchase):
     """Send payment notification email for package purchase"""
     try:
         print(f"Preparing to send payment email to {package_purchase.email} for package {package_purchase.package.name}...")
-        
+
         # Calculate amounts
         package = package_purchase.package
         package_price = package.price
         total_amount = package_price * package_purchase.number_of_persons
-        
+
         # Generate payment link (adjust URL as needed)
         # payment_link = f"https://daysafarisadventures.co.ke/payment/{package_purchase.id}/"
         payment_link = f"http://127.0.0.1:8000/payment/{package_purchase.id}/"
-        
+
         context = {
             'purchase': package_purchase,
             'package': package,
@@ -158,9 +158,9 @@ def send_package_payment_email(package_purchase):
             'company_email': 'info@daysafarisadventures.co.ke',
             'current_year': '2025'
         }
-        
+
         html_content = render_to_string('Emails/package_payment_email.html', context)
-        
+
         return send_transactional_email(
             package_purchase.email,
             package_purchase.full_name,
