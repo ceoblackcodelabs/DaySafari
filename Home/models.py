@@ -1,9 +1,10 @@
 from django.db import models
-from PIL import Image   
+from PIL import Image
 from django.utils import timezone
 from Places.models import Destinations
 
 class Services(models.Model):
+    # img = models.ImageField(upload_to='services_images/', default="services_images/default.jpg", null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.CharField(max_length=100, default='fa fa-globe')
@@ -24,7 +25,7 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.name
-       
+
 class Testimonials(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
@@ -34,13 +35,13 @@ class Testimonials(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 class BlogComments(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     comment = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f"Comment by {self.name} on {self.created_date}"
 
@@ -55,4 +56,3 @@ class Blogs(models.Model):
 
     def __str__(self):
         return self.title
-    

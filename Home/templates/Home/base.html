@@ -13,7 +13,7 @@
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Roboto&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Roboto&display=swap" rel="stylesheet">
 
         <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
@@ -107,6 +107,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
                             <div class="dropdown-menu m-0">
+                                <a href="{% url "services" %}" class="dropdown-item">All Services</a>
                                 <a href="{% url "african_wildlife_tours" %}" class="dropdown-item">African WildLife Tours</a>
                                 <a href="{% url "travel_partnerships" %}" class="dropdown-item">Travel Partnerships</a>
                                 <a href="{% url "holiday_tailor_made_tours" %}" class="dropdown-item">Holiday Tailor Made Tours</a>
@@ -127,7 +128,7 @@
             {% block carousel %}{% endblock carousel %}
             <!-- Carousel End -->
         </div>
-        
+
         {% block body %}{% endblock body %}
 
         <!-- Subscribe Start -->
@@ -155,9 +156,9 @@
                             <h4 class="mb-4 text-white">Get In Touch</h4>
                             <a href=""><i class="fas fa-home me-2"></i> 00100 Street Nairobi Kenya</a>
                             <a href=""><i class="fas fa-envelope me-2"></i>info@daysafarisadventures.co.ke</a>
-                            <a href=""><i class="fas fa-phone me-2"></i> +254734962965 </a>
-                            <a href="" class="mb-3"><i class="fas fa-phone me-2"></i> +254759379600</a>
-                            <a href=""><i class="fas fa-phone me-2"></i> +254783457058 </a>
+                            <a href=""><i class="fas fa-phone me-2"></i> +254759379600 </a>
+                            <a href=""><i class="fas fa-phone me-2"></i> +254140919894 </a>
+                            <a href=""><i class="fas fa-phone me-2"></i> +254140936286 </a>
                             <a href=""><i class="fas fa-phone me-2"></i> +254782390295 </a>
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-share fa-2x text-white me-2"></i>
@@ -228,15 +229,15 @@
                                 <a href="#" class="text-white me-2"><i class="fab fa-cc-mastercard fa-2x"></i></a>
                                 <a href="#" class="text-white me-2"><i class="fab fa-cc-paypal fa-2x"></i></a>
                                 <a href="#" class="text-white"><i class="fab fa-cc-discover fa-2x"></i></a>
-                            </div>    
-                            im                     
+                            </div>
+                            im
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Footer End -->
-        
+
         <!-- Copyright Start -->
         <div class="container-fluid copyright text-body py-4">
             <div class="container">
@@ -253,9 +254,9 @@
         <!-- Copyright End -->
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>   
+        <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
-        
+
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -263,16 +264,16 @@
         <script src="{% static "lib/waypoints/waypoints.min.js" %}"></script>
         <script src="{% static "lib/owlcarousel/owl.carousel.min.js" %}"></script>
         <script src="{% static "lib/lightbox/js/lightbox.min.js" %}"></script>
-        
+
         <!-- Toast Notification Script -->
         <script>
             function showToast(message, type = 'success') {
                 const container = document.getElementById('toast-container');
                 if (!container) return;
-                
+
                 // Create unique ID for this toast
                 const toastId = 'toast-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-                
+
                 // Define icon based on type
                 let icon = '';
                 let title = '';
@@ -297,7 +298,7 @@
                         icon = '<i class="fas fa-check-circle me-2"></i>';
                         title = 'Success!';
                 }
-                
+
                 // Create toast HTML
                 const toastHTML = `
                     <div id="${toastId}" class="toast toast-${type}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
@@ -310,28 +311,28 @@
                         </div>
                     </div>
                 `;
-                
+
                 // Add to container
                 container.insertAdjacentHTML('beforeend', toastHTML);
-                
+
                 // Get the toast element
                 const toastElement = document.getElementById(toastId);
-                
+
                 // Initialize Bootstrap toast
                 const toast = new bootstrap.Toast(toastElement, {
                     autohide: true,
                     delay: 5000
                 });
-                
+
                 // Show the toast
                 toast.show();
-                
+
                 // Remove toast from DOM after it's hidden
                 toastElement.addEventListener('hidden.bs.toast', function() {
                     toastElement.remove();
                 });
             }
-            
+
             // Process Django messages
             document.addEventListener('DOMContentLoaded', function() {
                 // Check if there are messages from Django
@@ -340,7 +341,7 @@
                         showToast("{{ message|escapejs }}", "{{ message.tags }}");
                     {% endfor %}
                 {% endif %}
-                
+
                 // Also check for messages in localStorage (for AJAX responses)
                 const storedMessage = localStorage.getItem('toastMessage');
                 if (storedMessage) {
@@ -349,12 +350,12 @@
                     localStorage.removeItem('toastMessage');
                 }
             });
-            
+
             // Function to manually show toast (can be called from any JavaScript)
             window.showNotification = function(message, type = 'success') {
                 showToast(message, type);
             };
-            
+
             // Alternative: Store toast in localStorage (useful for redirects)
             window.storeToastMessage = function(message, type = 'success') {
                 localStorage.setItem('toastMessage', JSON.stringify({
@@ -373,7 +374,7 @@
                 <i class="fas fa-comment-dots chat-icon"></i>
                 <i class="fas fa-times close-icon"></i>
             </label>
-            
+
             <div class="chat-window">
                 <div class="chat-header">
                     <div class="chat-header-content">
@@ -388,7 +389,7 @@
                         <span class="status-text">Online</span>
                     </div>
                 </div>
-                
+
                 <div class="chat-messages" id="chat-messages">
                     <div class="message received">
                         <div class="message-content">
@@ -398,7 +399,7 @@
                         <span class="message-time">Just now</span>
                     </div>
                 </div>
-                
+
                 <div class="chat-options">
                     <button class="chat-option-btn" data-message="I need help with booking a safari">
                         <i class="fas fa-calendar-check"></i> Book Safari
@@ -413,7 +414,7 @@
                         <i class="fas fa-credit-card"></i> Payment Help
                     </button>
                 </div>
-                
+
                 <div class="chat-input-area">
                     <div class="chat-input-wrapper">
                         <textarea class="chat-input" id="chat-input" placeholder="Type your message..." rows="1"></textarea>
