@@ -11,7 +11,7 @@ class Command(BaseCommand):
         # Create default images directory if it doesn't exist
         media_root = Path('media/AirBNB')
         media_root.mkdir(parents=True, exist_ok=True)
-        
+
         bnb_data = [
             {
                 'location': 'Diani Beach, Kenya',
@@ -95,9 +95,9 @@ class Command(BaseCommand):
                 'num_images': 3
             }
         ]
-        
+
         created_count = 0
-        
+
         for data in bnb_data:
             # Create BNB
             bnb, created = AirBNB.objects.get_or_create(
@@ -110,17 +110,17 @@ class Command(BaseCommand):
                     'max_guests': data['max_guests']
                 }
             )
-            
+
             if created:
                 created_count += 1
                 self.stdout.write(self.style.SUCCESS(f'✓ Created BNB: {bnb.title}'))
-                
+
                 # Create placeholder images
                 for i in range(data['num_images']):
                     # Create a simple colored placeholder image
                     from PIL import Image, ImageDraw
                     import random
-                    
+
                     # Generate random colors for variety
                     colors = [
                         ('#420d24', '#5a1233'),  # Brand colors
@@ -131,11 +131,11 @@ class Command(BaseCommand):
                         ('#e96443', '#904e95'),
                     ]
                     color1, color2 = random.choice(colors)
-                    
+
                     # Create image
                     img = Image.new('RGB', (800, 600), color=color1)
                     draw = ImageDraw.Draw(img)
-                    
+
                     # Add gradient effect (simple)
                     for y in range(600):
                         ratio = y / 600
@@ -143,23 +143,23 @@ class Command(BaseCommand):
                         g = int(int(color1[3:5], 16) * (1 - ratio) + int(color2[3:5], 16) * ratio)
                         b = int(int(color1[5:7], 16) * (1 - ratio) + int(color2[5:7], 16) * ratio)
                         draw.line([(0, y), (800, y)], fill=(r, g, b))
-                    
+
                     # Add text
                     from PIL import ImageFont
                     try:
                         font = ImageFont.truetype("arial.ttf", 40)
                     except:
                         font = ImageFont.load_default()
-                    
+
                     draw.text((400, 250), bnb.title, fill='white', anchor='mm', font=font)
                     draw.text((400, 320), f"Photo {i+1} of {data['num_images']}", fill='white', anchor='mm', font=font)
                     draw.text((400, 380), bnb.location, fill='white', anchor='mm', font=font)
-                    
+
                     # Save image
                     image_name = f"{bnb.id}_image_{i+1}.jpg"
                     image_path = media_root / image_name
                     img.save(image_path, 'JPEG', quality=85)
-                    
+
                     # Create AirBNBImage record
                     with open(image_path, 'rb') as f:
                         image_file = File(f)
@@ -170,11 +170,11 @@ class Command(BaseCommand):
                             is_featured=(i == 0),  # First image is featured
                             order=i
                         )
-                    
+
                     self.stdout.write(f'  └─ Added image {i+1}/{data["num_images"]}')
             else:
                 self.stdout.write(self.style.WARNING(f'○ BNB already exists: {bnb.title}'))
-        
+
         self.stdout.write(self.style.SUCCESS(
             f'\n✓ Seeding complete!\n'
             f'  BNBs created: {created_count}\n'
