@@ -32,12 +32,12 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-lg-6" style="background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .9)), url('{% static 'img/about-img-1.png' %}'); background-size: cover;">
+            <div class="col-lg-6" >
                 <div class="p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <h5 class="section-about-title pe-3">{{ package.package_type|default:"Safari Package" }}</h5>
                         <div class="packages-price bg-primary text-white rounded-pill py-2 px-4">
-                            ${{ package.price|floatformat:2 }}
+                            Days Offer
                         </div>
                     </div>
                     <h1 class="mb-4">{{ package.name }}</h1>
@@ -205,7 +205,7 @@
                 <h1 class="text-white mb-4"> {{ object.name }}</h1>
                 <p class="text-white mb-4">Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains.</p>
                 <p class="text-white mb-4">Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!</p>
-                <a href="#" class="btn btn-light text-primary rounded-pill py-3 px-5 mt-2">Learn More</a>
+                <a href="#" class="btn btn-primary rounded-pill py-3 px-5 mt-2">Learn More</a>
             </div>
             <div class="col-lg-6">
                 <h1 class="text-white mb-3">Book A Tour Deals</h1>
@@ -296,7 +296,7 @@
                                     <span id="totalAmount">${{ package.price|floatformat:2 }}</span>
                                 </div>
                             </div>
-                            <button class="btn btn-primary text-white w-100 py-3" type="submit">Proceed to Payment</button>
+                            <button class="btn btn-primary w-100 py-3" type="submit">Proceed to Payment</button>
                         </div>
                     </div>
                 </form>
