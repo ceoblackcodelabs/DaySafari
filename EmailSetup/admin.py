@@ -1,9 +1,14 @@
 from django.contrib import admin
-from .models import EmailLog  # Create this model if needed
+from .models import EmailLog, CompanyProfile
 
+@admin.register(EmailLog)
 class EmailLogAdmin(admin.ModelAdmin):
     list_display = ['recipient', 'subject', 'status', 'sent_at']
     list_filter = ['status', 'sent_at']
     search_fields = ['recipient', 'subject']
 
-# admin.site.register(EmailLog, EmailLogAdmin)
+@admin.register(CompanyProfile)
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = [
+        'name', 'booking_confirmation_email'
+    ]
