@@ -93,8 +93,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="{% url "home" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "home" %}active{% endif %}">Home</a>
-                        <a href="{% url "about" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "about" %}active{% endif %}">About</a>
+                        <a href="{% url 'home' %}"class="nav-item nav-link {% if request.resolver_match.url_name == 'home' %}active bg-warning{% endif %}">Home</a>
+                        <a href="{% url "about" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "about" %}active bg-warning{% endif %}">About</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tours</a>
                             <div class="dropdown-menu m-0">
@@ -104,7 +104,7 @@
                                 <a href="{% url "international_tours" %}" class="dropdown-item">International Tours</a>
                             </div>
                         </div>
-                        <a href="{% url "cruises" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "cruises" %}active{% endif %}">Cruises</a>
+                        <a href="{% url "cruises" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "cruises" %}active bg-warning{% endif %}">Cruises</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
                             <div class="dropdown-menu m-0">
@@ -115,11 +115,11 @@
                                 <a href="{% url "airport_transfers" %}" class="dropdown-item">AirPort Transfers</a>
                             </div>
                         </div>
-                        <a href="{% url "airline" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airline" %}active{% endif %}">AirLine</a>
-                        <a href="{% url "blog" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "blog" %}active{% endif %}">Blogs</a>
-                        <a href="{% url "gallary" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "gallary" %}active{% endif %}">Gallery</a>
-                        <a href="{% url "airbnb" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airbnb" %}active{% endif %}">AirBNB</a>
-                        <a href="{% url "contact" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "contact" %}active{% endif %}">Contact</a>
+                        <a href="{% url "airline" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airline" %}active bg-warning{% endif %}">AirLine</a>
+                        <a href="{% url "blog" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "blog" %}active bg-warning{% endif %}">Blogs</a>
+                        <a href="{% url "gallary" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "gallary" %}active bg-warning{% endif %}">Gallery</a>
+                        <a href="{% url "airbnb" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airbnb" %}active bg-warning{% endif %}">AirBNB</a>
+                        <a href="{% url "contact" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "contact" %}active bg-warning{% endif %}">Contact</a>
                     </div>
                     <a href="{% url "booking_create" %}" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a>
                 </div>
