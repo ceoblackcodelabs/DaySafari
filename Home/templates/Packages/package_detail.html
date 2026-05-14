@@ -14,7 +14,7 @@
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
             <li class="breadcrumb-item"><a href="">Packages</a></li>
             <li class="breadcrumb-item active text-white">{{ package.name }}</li>
-        </ol>    
+        </ol>
     </div>
 </div>
 <!-- Header End -->
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <h1 class="mb-4">{{ package.name }}</h1>
-                    
+
                     <!-- Quick Info Cards -->
                     <div class="row g-3 mb-4">
                         <div class="col-4">
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Star Rating -->
                     <div class="mb-4">
                         <h6 class="d-inline-block me-2">Rating:</h6>
@@ -80,9 +80,9 @@
                         {% endfor %}
                         <span class="text-muted ms-2">({{ package.starRating }}/5)</span>
                     </div>
-                    
+
                     <p class="mb-4">{{ package.description }}</p>
-                    
+
                     <!-- Features List -->
                     <div class="row gy-2 gx-4 mb-4">
                         <div class="col-sm-6">
@@ -104,7 +104,7 @@
                             <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>24/7 Customer Support</p>
                         </div>
                     </div>
-                    
+
                     <div class="d-flex gap-3">
                         <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'booking_create' %}?package={{ package.id }}">Book Now</a>
                         <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="">View All Packages</a>
@@ -143,7 +143,7 @@
                                 </div>
                             </div>
                             <p class="mb-3">{{ itinerary.description }}</p>
-                            
+
                             {% if itinerary.activities %}
                             <div class="mt-3">
                                 <strong><i class="fa fa-list-check me-2"></i>Activities:</strong>
@@ -154,7 +154,7 @@
                                 </ul>
                             </div>
                             {% endif %}
-                            
+
                             {% if itinerary.image %}
                             <div class="mt-3">
                                 <img src="{{ itinerary.image.url }}" alt="{{ itinerary.title }}" class="img-fluid rounded" style="max-height: 200px; width: 100%; object-fit: cover;">
@@ -174,13 +174,13 @@
                             <h4>Day {{ forloop.counter }}: {% if forloop.counter == 1 %}Arrival & Welcome{% elif forloop.counter == package.days %}Departure{% else %}Safari Experience{% endif %}</h4>
                             <p>
                                 {% if forloop.counter == 1 %}
-                                Arrive at {{ package.location }}, meet your safari guide, and transfer to your accommodation. 
+                                Arrive at {{ package.location }}, meet your safari guide, and transfer to your accommodation.
                                 Evening briefing about your {{ package.days }}-day adventure.
                                 {% elif forloop.counter == package.days %}
-                                Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the airport 
+                                Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the airport
                                 for your departure flight.
                                 {% else %}
-                                Early morning game drive to spot wildlife in their natural habitat. Return to lodge for breakfast. 
+                                Early morning game drive to spot wildlife in their natural habitat. Return to lodge for breakfast.
                                 Afternoon relaxation or optional activities. Evening game drive with sundowners.
                                 {% endif %}
                             </p>
@@ -210,7 +210,7 @@
             <div class="col-lg-6">
                 <h1 class="text-white mb-3">Book A Tour Deals</h1>
                 <p class="text-white mb-4">Get <span class="text-warning">50% Off</span> On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here.</p>
-                
+
                 <!-- Display messages -->
                 {% if messages %}
                     {% for message in messages %}
@@ -220,7 +220,7 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                
+
                 <!-- Booking Form -->
                 <form method="post">
                     {% csrf_token %}
@@ -418,7 +418,7 @@
     .timeline-item {
         position: relative;
     }
-    
+
     .timeline-badge {
         display: flex;
         align-items: center;
@@ -426,24 +426,24 @@
         font-weight: bold;
         flex-shrink: 0;
     }
-    
+
     .timeline-content {
         transition: transform 0.3s ease;
     }
-    
+
     .timeline-content:hover {
         transform: translateX(10px);
     }
-    
+
     .service-item {
         transition: all 0.3s ease;
     }
-    
+
     .service-item:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
     }
-    
+
     @media (max-width: 768px) {
         .timeline-badge {
             min-width: 40px;
@@ -451,7 +451,7 @@
             line-height: 40px;
             font-size: 14px;
         }
-        
+
         .timeline-content h5 {
             font-size: 16px;
         }

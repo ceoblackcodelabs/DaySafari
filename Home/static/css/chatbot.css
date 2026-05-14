@@ -434,52 +434,52 @@
         bottom: 20px;
         left: 20px;
     }
-    
+
     .chat-window {
         width: calc(100vw - 40px);
         height: calc(100vh - 100px);
         left: 0;
         bottom: 75px;
     }
-    
+
     .chat-button {
         width: 55px;
         height: 55px;
     }
-    
+
     .chat-button i {
         font-size: 24px;
     }
-    
+
     .chat-options {
         overflow-x: auto;
         flex-wrap: nowrap;
         gap: 8px;
     }
-    
+
     .chat-option-btn {
         white-space: nowrap;
         font-size: 11px;
         padding: 6px 12px;
     }
-    
+
     .message {
         max-width: 90%;
     }
-    
+
     .message-content p {
         font-size: 13px;
     }
-    
+
     .chat-header {
         padding: 15px;
     }
-    
+
     .chat-header-content i {
         font-size: 24px;
         padding: 8px;
     }
-    
+
     .chat-header-text h4 {
         font-size: 16px;
     }
@@ -608,63 +608,63 @@
     .chat-window {
         background: #1a1a1a;
     }
-    
+
     .chat-messages {
         background: #2d2d2d;
     }
-    
+
     .message.received .message-content {
         background: #3d3d3d;
         border-color: #4d4d4d;
         color: #e0e0e0;
     }
-    
+
     .message.received .message-content i {
         color: #5a1233;
     }
-    
+
     .chat-options {
         background: #1a1a1a;
         border-top-color: #3d3d3d;
     }
-    
+
     .chat-option-btn {
         background: #2d2d2d;
         border-color: #4d4d4d;
         color: #e0e0e0;
     }
-    
+
     .chat-option-btn:hover {
         background: #420d24;
         color: white;
     }
-    
+
     .chat-input-area {
         background: #1a1a1a;
         border-top-color: #3d3d3d;
     }
-    
+
     .chat-input-wrapper {
         background: #2d2d2d;
         border-color: #4d4d4d;
     }
-    
+
     .chat-input {
         color: #e0e0e0;
     }
-    
+
     .chat-input::placeholder {
         color: #999;
     }
-    
+
     .typing-indicator {
         background: #3d3d3d;
     }
-    
+
     .typing-indicator span {
         background: #5a1233;
     }
-    
+
     .chat-footer-note small {
         color: #999;
     }
