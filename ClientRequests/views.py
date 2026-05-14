@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
-from EmailSetup.utils import send_contact_response, send_booking_confirmation
+from EmailSetup.utils import send_contact_response, send_booking_confirmation, send_booking_verification
 from Places.models import AwesomePackages, Destinations
 from django.utils import timezone
+from time import sleep
 from .models import (
     Bookings, Contact
 )
@@ -14,6 +15,13 @@ from .forms import (
 )
 
 from OurClients.models import UserMessage
+import threading
+
+def send_emails_async(booking):
+    """Send emails in background thread"""
+    send_booking_confirmation(booking)
+    sleep(10)
+    send_booking_verification(booking)
 
 # Create your views here.
 class BookingCreateView(CreateView):
@@ -35,8 +43,10 @@ class BookingCreateView(CreateView):
             f"We will contact you within 24 hours to confirm your safari."
         )
 
-        # Send email confirmation
-        send_booking_confirmation(self.object)
+        # Send emails in background thread (non-blocking)
+        thread = threading.Thread(target=send_emails_async, args=(self.object,))
+        thread.daemon = True
+        thread.start()
 
         return response
 

@@ -3,8 +3,12 @@ import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
 from django.template.loader import render_to_string
 import logging
+from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMultiAlternatives
 from decouple import config
+from .models import CompanyProfile
+
+company = get_object_or_404(CompanyProfile, pk=1)
 
 logger = logging.getLogger(__name__)
 
@@ -46,17 +50,18 @@ def send_welcome_email(name="", email=""):
         print(f"Error: {e}")
         return False
 
+# confirmation sent to client
 def send_booking_confirmation(booking):
     """Send booking confirmation using template"""
     try:
         print(f"Preparing to send booking confirmation email to {booking.email} for booking ID {booking.id}...")
-        payment_link = f"http://192.168.8.179:8001/payment/from-bookings/{booking.id}/"
+        payment_link = f"{company.mpesa_payment_link}/payment/from-bookings/{booking.id}/"
         context = {
             'payment_link': payment_link,
             'booking': booking,
-            'company_phone': '+254 759 379 600',
-            'company_whatsapp': '+254 714 0919894',
-            'company_email': 'info@daysafarisadventures.com',
+            'company_phone': company.company_phone,
+            'company_whatsapp': company.company_whatsapp,
+            'company_email': company.booking_confirmation_email,
             'current_year': 2026
         }
         html_content = render_to_string('Emails/booking_confirmation.html', context)
@@ -65,6 +70,41 @@ def send_booking_confirmation(booking):
             booking.email,
             booking.name,
             f"Booking Confirmation - #{booking.id}",
+            html_content
+        )
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+
+# booking confirmation sent to Days
+def send_booking_verification(booking):
+    """Send booking confirmation using template"""
+    try:
+        print(f"Preparing to send booking Verification email to {company.booking_confirmation_email} for booking ID {booking.id}...")
+        mpesa_payment_link = f"{company.mpesa_payment_link}/payment/from-bookings/{booking.id}/"
+        context = {
+            'payment_link': mpesa_payment_link,
+            'booking': booking,
+            'company_phone': company.company_phone,
+            'company_whatsapp': company.company_whatsapp,
+            'company_email': company.booking_confirmation_email,
+            'current_year': 2026,
+
+            # more
+            'booking': booking,
+            'total_price': booking.persons * booking.destination.price,
+            'deposit_amount': (booking.persons * booking.destination.price) * int(0.3),
+            'balance_amount': (booking.persons * booking.destination.price) * int(0.3),
+            'tax_amount': 0.00,
+            'discount_amount': 0.00,
+            'grand_total': booking.persons * booking.destination.price,
+        }
+        html_content = render_to_string('Emails/bookings_verification.html', context)
+
+        return send_transactional_email(
+            company.booking_confirmation_email,
+            booking.name,
+            f"Booking Verification - #{booking.id}",
             html_content
         )
     except Exception as e:
