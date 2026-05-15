@@ -1,0 +1,74 @@
+# =============================================
+# Django Static Files - MUST COME FIRST
+# =============================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Serve Django static files directly - NO WordPress interference
+    RewriteRule ^static/ - [L,NC]
+    RewriteRule ^media/ - [L,NC]
+    RewriteRule ^productionfiles/ - [L,NC]
+</IfModule>
+
+# =============================================
+# CloudLinux Passenger Configuration (Django App)
+# =============================================
+PassengerAppRoot "/home/daysafaris/DaySafaris"
+PassengerBaseURI "/"
+PassengerPython "/home/daysafaris/virtualenv/DaySafaris/3.12/bin/python"
+
+# =============================================
+# CRITICAL: Tell Passenger to handle Django URLs
+# =============================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # If it's NOT a WordPress file and NOT a static file, let Passenger handle it
+    RewriteCond %{REQUEST_URI} !^/(wp-admin|wp-content|wp-includes|xmlrpc.php|wp-login.php|wp-json) [NC]
+    RewriteCond %{REQUEST_URI} !^/(static|media|productionfiles)/ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule .* - [L]
+</IfModule>
+
+# =============================================
+# PHP Configuration for WordPress
+# =============================================
+<IfModule mime_module>
+    AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+
+# =============================================
+# WordPress Configuration (ONLY for WordPress paths)
+# =============================================
+#Begin Really Simple Security
+Options -Indexes
+#End Really Simple Security
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Only apply WordPress rules to WordPress-specific paths
+    RewriteCond %{REQUEST_URI} ^/(wp-admin|wp-content|wp-includes|xmlrpc.php|wp-login.php|wp-json) [NC]
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteBase /
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+</IfModule>
+
+# BEGIN FRedirect_ErrorDocument
+ErrorDocument 404 /index.php?error=404
+# END FRedirect_ErrorDocument
+
+# BEGIN LiteSpeed
+<IfModule Litespeed>
+    SetEnv noabort 1
+</IfModule>
+# END LiteSpeed
+
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
