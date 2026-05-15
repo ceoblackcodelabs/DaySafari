@@ -158,7 +158,7 @@ def generate_mock_response(user_message):
         return "Hello! Welcome to Day Safaris Adventures! 🦁 How can I help you plan your East African safari today? I can assist with destinations, packages, bookings, or any questions about our services!"
 
     elif any(word in user_message_lower for word in ['book', 'booking', 'safari']):
-        return "Great! I can help you book a safari. 🦁 Please visit our booking form or provide me with your preferred destination, travel dates, and number of people. You can also email us at bookings@daysafarisadventures.co.ke for immediate assistance."
+        return "Great! I can help you book a safari. 🦁 Please visit our booking form or provide me with your preferred destination, travel dates, and number of people. You can also email us at sales@daysafarisadventures.co.ke for immediate assistance."
 
     elif any(word in user_message_lower for word in ['destination', 'place', 'where', 'location']):
         return "We offer amazing destinations including: Masai Mara (Kenya), Serengeti (Tanzania), Zanzibar Beach, Mount Kilimanjaro, Amboseli National Park, Lake Nakuru, Tsavo National Park, and many more! Which destination interests you? 🗺️"

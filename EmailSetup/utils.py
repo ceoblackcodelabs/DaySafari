@@ -28,7 +28,7 @@ def send_transactional_email(to_email, to_name, subject, html_content):
             sender={'email': 'daysafarisadventures103@gmail.com', 'name': 'Day Safaris Adventures'},
             subject=subject,
             html_content=html_content,
-            reply_to={'email': 'bookings@daysafarisadventures.co.ke', 'name': 'Day Safaris Support'}
+            reply_to={'email': 'sales@daysafarisadventures.co.ke', 'name': 'Day Safaris Support'}
         )
 
         api_response = api_instance.send_transac_email(send_smtp_email)
