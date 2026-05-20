@@ -1,19 +1,18 @@
 {% extends "Home/base.html" %}
+{% load static i18n %}
 
-{% load static %}
-
-{% block title %}{{ object.title }} - Days Safaris Adventures{% endblock title %}
+{% block title %}{{ object.title }} - {% trans "Days Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{{ object.title }}</h1>
+        <h3 class="text-white display-3 mb-4">{{ object.title }}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">About</li>
+            <li class="breadcrumb-item"><a href="{% url "home" %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'blog' %}">{% trans "Blog" %}</a></li>
+            <li class="breadcrumb-item active text-white">{{ object.title|truncatechars:30 }}</li>
         </ol>
     </div>
 </div>
@@ -25,17 +24,41 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/about-img.jpg' %}" class="img-fluid w-100 h-100" alt="About Day Safaris">
+                    {% if object.image %}
+                    <img src="{{ object.image.url }}" class="img-fluid w-100 h-100" alt="{{ object.title }}">
+                    {% else %}
+                    <img src="{% static 'img/about-img.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'About Day Safaris' %}">
+                    {% endif %}
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">Welcome To Day Safaris Adventures</h5>
+                <h5 class="section-about-title pe-3">{% trans "Welcome To Day Safaris Adventures" %}</h5>
                 <h1 class="mb-4">{{ object.title }}</h1>
-                <p class="mb-4">{{ object.content }}</p>
-                <div class="row gy-2 gx-4 mb-4">
 
+                <!-- Blog Meta Info -->
+                <div class="d-flex gap-3 mb-4 text-muted">
+                    <small><i class="fa fa-calendar-alt me-1"></i> {{ object.published_date|date:"F d, Y" }}</small>
+                    <small><i class="fa fa-user me-1"></i> {{ object.author }}</small>
+                    {% if object.category %}
+                    <small><i class="fa fa-folder me-1"></i> {{ object.category.name }}</small>
+                    {% endif %}
                 </div>
-                {% comment %} <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'about' %}">Read More</a> {% endcomment %}
+
+                <p class="mb-4">{{ object.content|linebreaks }}</p>
+
+                {% if object.tags %}
+                <div class="mb-4">
+                    <strong>{% trans "Tags:" %}</strong>
+                    {% for tag in object.tags.split %}
+                    <span class="badge bg-light text-dark me-1">#{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="d-flex gap-3">
+                    <a href="{% url 'blog' %}" class="btn btn-outline-primary rounded-pill py-2 px-4">{% trans "Back to Blog" %}</a>
+                    <a href="{% url 'home' %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Book a Safari" %}</a>
+                </div>
             </div>
         </div>
     </div>

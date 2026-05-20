@@ -1,10 +1,9 @@
 {% extends "Home/base.html" %}
-
 {% load static %}
-
+{% load i18n %}
 {% load custom_filters %}
 
-{% block title %}Home - Days Safaris Adventures{% endblock title %}
+{% block title %}{% trans "Services - Days Safaris Adventures" %}{% endblock title %}
 
 {% block carousel %}
 
@@ -23,11 +22,11 @@
                 <img src="{% static "img/Aeroplane.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Explore The World" %}</h4>
                         <h1 class="display-2 text-capitalize text-white mb-4">
-                            Aeroplane Transfers
+                            {% trans "Aeroplane Transfers" %}
                         </h1>
-                        <p class="mb-5 fs-5"> Adventure Awaits – Let’s Go</p>
+                        <p class="mb-5 fs-5">{% trans "Adventure Awaits – Let's Go" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
                             {% comment %} <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">Discover Now</a> {% endcomment %}
                         </div>
@@ -38,9 +37,9 @@
                 <img src="{% static "img/elephant.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Visit Africa Today</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">Africa Tours</h1>
-                        <p class="mb-5 fs-5">And Let Us Give You The Experience Of The World</p>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Visit Africa Today" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Africa Tours" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "And Let Us Give You The Experience Of The World" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
                             {% comment %} <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="#">Book Now</a> {% endcomment %}
                         </div>
@@ -51,11 +50,11 @@
                 <img src="{% static "img/hotel.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Accomodation</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">Hotel Accomodation</h1>
-                        <p class="mb-5 fs-5">Enjoy comfortable and carefully selected hotels</p>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Accomodation" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Hotel Accomodation" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "Enjoy comfortable and carefully selected hotels" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">Discover Now</a>
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
                         </div>
                     </div>
                 </div>
@@ -64,11 +63,11 @@
                 <img src="{% static "img/passport.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Get Visa processed</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">Visa Processing</h1>
-                        <p class="mb-5 fs-5">Our visa processing and transfer services are designed to make international travel simple and hassle-free</p>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Get Visa processed" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Visa Processing" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "Our visa processing and transfer services are designed to make international travel simple and hassle-free" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">Discover Now</a>
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
                         </div>
                     </div>
                 </div>
@@ -77,9 +76,9 @@
                 <img src="{% static "img/tailor.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Get Visa processed</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">Tailour Made Tours</h1>
-                        <p class="mb-5 fs-5">Design your dream African adventure with our personalized tour planning service</p>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Tailor Made Tours" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Tailour Made Tours" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "Design your dream African adventure with our personalized tour planning service" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
                             {% comment %} <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">Discover Now</a> {% endcomment %}
                         </div>
@@ -90,9 +89,9 @@
                 <img src="{% static "img/partn.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">partner program</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">Travel Partnership Programs</h1>
-                        <p class="mb-5 fs-5">Enjoy hassle-free airport transfers from Jomo Kenyatta International Airport, Moi International Airport, Kilimanjaro International Airport, and Entebbe Airport</p>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "partner program" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Travel Partnership Programs" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "Enjoy hassle-free airport transfers from Jomo Kenyatta International Airport, Moi International Airport, Kilimanjaro International Airport, and Entebbe Airport" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
                             {% comment %} <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">Discover Now</a> {% endcomment %}
                         </div>
@@ -102,25 +101,24 @@
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
             <span class="carousel-control-prev-icon btn bg-primary" aria-hidden="false"></span>
-            <span class="visually-hidden">Previous</span>
+            <span class="visually-hidden">{% trans "Previous" %}</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
             <span class="carousel-control-next-icon btn bg-primary" aria-hidden="false"></span>
-            <span class="visually-hidden">Next</span>
+            <span class="visually-hidden">{% trans "Next" %}</span>
         </button>
     </div>
 </div>
 
 {% endblock carousel %}
 
-{% load static %}
 {% block body %}
 
 <div class="container-fluid search-bar position-relative" style="top: -50%; transform: translateY(-50%);">
     <div class="container">
         <div class="position-relative rounded-pill w-100 mx-auto p-5" style="background: rgb(58 20 20 / 65%);">
-            <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Masai Mara, Diani, Amboseli">
-            <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute me-2" style="top: 50%; right: 46px; transform: translateY(-50%);">Search</button>
+            <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="{% trans 'Eg: Masai Mara, Diani, Amboseli' %}">
+            <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute me-2" style="top: 50%; right: 46px; transform: translateY(-50%);">{% trans "Search" %}</button>
         </div>
     </div>
 </div>
@@ -131,8 +129,8 @@
 <div class="container-fluid bg-light service py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Services</h5>
-            <h1 class="mb-0">Our Services</h1>
+            <h5 class="section-title px-3">{% trans "Services" %}</h5>
+            <h1 class="mb-0">{% trans "Our Services" %}</h1>
         </div>
         <div class="row g-4">
             <div class="col-lg-6">
@@ -171,7 +169,7 @@
             </div>
             <div class="col-12">
                 <div class="text-center">
-                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'services' %}">View All Services</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'services' %}">{% trans "View All Services" %}</a>
                 </div>
             </div>
         </div>
@@ -184,8 +182,8 @@
 <div class="container-fluid testimonial py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Testimonial</h5>
-            <h1 class="mb-0">What Our Clients Say About Us</h1>
+            <h5 class="section-title px-3">{% trans "Testimonial" %}</h5>
+            <h1 class="mb-0">{% trans "What Our Clients Say About Us" %}</h1>
         </div>
         <div class="testimonial-carousel owl-carousel">
             {% for testimonial in testimonials %}
@@ -217,8 +215,8 @@
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <h3>No testimonials yet</h3>
-                <p>Be the first to share your experience with us!</p>
+                <h3>{% trans "No testimonials yet" %}</h3>
+                <p>{% trans "Be the first to share your experience with us!" %}</p>
             </div>
             {% endfor %}
         </div>

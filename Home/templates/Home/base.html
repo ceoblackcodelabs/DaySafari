@@ -1,11 +1,12 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
 
     <head>
         <meta charset="utf-8">
-        <title>{% block title %}{% endblock title %}</title>
+        <title>{% block title %}{% trans "Day Safaris Adventures" %}{% endblock title %}</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -23,6 +24,7 @@
         <link href="{% static "lib/owlcarousel/assets/owl.carousel.min.css" %}" rel="stylesheet">
         <link href="{% static "lib/lightbox/css/lightbox.min.css" %}" rel="stylesheet">
 
+        <link rel="icon" type="image/x-icon" href="{% static "img/favicon.ico" %}">
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
@@ -39,14 +41,6 @@
         <!-- Toast Notification Container -->
         <div id="toast-container" class="toast-notification"></div>
 
-        <!-- Spinner Start --
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
-
         <!-- Topbar Start -->
         <div class="container-fluid bg-primary px-5 d-none d-lg-block">
             <div class="row gx-0">
@@ -61,18 +55,34 @@
                 </div>
                 <div class="col-lg-4 text-center text-lg-end">
                     <div class="d-inline-flex align-items-center" style="height: 45px;">
+                        <!-- Language Switcher -->
+                        <form action="{% url 'set_language' %}" method="post" class="me-3">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+                            <select name="language" onchange="this.form.submit()" class="form-select form-select-sm bg-primary text-light border-light" style="width: auto;">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages %}
+                                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                        {{ language.name_local|title }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+
                         {% if request.user.is_authenticated %}
                         {% else %}
-                        <a href="{% url "register" %}"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>Register</small></a>
-                        <a href="{% url "login" %}"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>Login</small></a>
+                        <a href="{% url "register" %}"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>{% trans "Register" %}</small></a>
+                        <a href="{% url "login" %}"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>{% trans "Login" %}</small></a>
                         {% endif %}
                         <div class="dropdown">
-                            <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i> My Dashboard</small></a>
+                            <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i> {% trans "My Dashboard" %}</small></a>
                             <div class="dropdown-menu rounded">
-                                <a href="{% url "profile" %}" class="dropdown-item"><i class="fas fa-user-alt me-2"></i> My Profile</a>
-                                <a href="{% url "message_inbox" %}" class="dropdown-item"><i class="fas fa-comment-alt me-2"></i> Inbox</a>
-                                <a href="{% url "account_settings" %}" class="dropdown-item"><i class="fas fa-cog me-2"></i> Account Settings</a>
-                                <a href="{% url "logout" %}" class="dropdown-item"><i class="fas fa-power-off me-2"></i> Log Out</a>
+                                <a href="{% url "profile" %}" class="dropdown-item"><i class="fas fa-user-alt me-2"></i> {% trans "My Profile" %}</a>
+                                <a href="{% url "message_inbox" %}" class="dropdown-item"><i class="fas fa-comment-alt me-2"></i> {% trans "Inbox" %}</a>
+                                <a href="{% url "account_settings" %}" class="dropdown-item"><i class="fas fa-cog me-2"></i> {% trans "Account Settings" %}</a>
+                                <a href="{% url "logout" %}" class="dropdown-item"><i class="fas fa-power-off me-2"></i> {% trans "Log Out" %}</a>
                             </div>
                         </div>
                     </div>
@@ -84,8 +94,7 @@
         <!-- Navbar & Hero Start -->
         <div class="container-fluid position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                <a href="" class="navbar-brand p-0">
-                    {% comment %} <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>Days Safaris</h1> {% endcomment %}
+                <a href="{% url 'home' %}" class="navbar-brand p-0">
                     <img src="{% static "img/logo2.jpg" %}" alt="Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -93,35 +102,35 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="{% url 'home' %}"class="nav-item nav-link {% if request.resolver_match.url_name == 'home' %}active bg-warning{% endif %}">Home</a>
-                        <a href="{% url "about" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "about" %}active bg-warning{% endif %}">About</a>
+                        <a href="{% url 'home' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'home' %}active bg-warning{% endif %}">{% trans "Home" %}</a>
+                        <a href="{% url "about" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "about" %}active bg-warning{% endif %}">{% trans "About" %}</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tours</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Tours" %}</a>
                             <div class="dropdown-menu m-0">
-                                <a href="{% url "east_africa_tours" %}" class="dropdown-item">East Africa Tours</a>
-                                <a href="{% url "south_africa_tours" %}" class="dropdown-item">South Africa Tours</a>
-                                <a href="{% url "west_africa_tours" %}" class="dropdown-item">West Africa Tours</a>
-                                <a href="{% url "international_tours" %}" class="dropdown-item">International Tours</a>
+                                <a href="{% url "east_africa_tours" %}" class="dropdown-item">{% trans "East Africa Tours" %}</a>
+                                <a href="{% url "south_africa_tours" %}" class="dropdown-item">{% trans "South Africa Tours" %}</a>
+                                <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "West Africa Tours" %}</a>
+                                <a href="{% url "international_tours" %}" class="dropdown-item">{% trans "International Tours" %}</a>
                             </div>
                         </div>
-                        <a href="{% url "cruises" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "cruises" %}active bg-warning{% endif %}">Cruises</a>
+                        <a href="{% url "cruises" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "cruises" %}active bg-warning{% endif %}">{% trans "Cruises" %}</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Services" %}</a>
                             <div class="dropdown-menu m-0">
-                                <a href="{% url "services" %}" class="dropdown-item">All Services</a>
-                                <a href="{% url "african_wildlife_tours" %}" class="dropdown-item">African WildLife Tours</a>
-                                <a href="{% url "travel_partnerships" %}" class="dropdown-item">Travel Partnerships</a>
-                                <a href="{% url "holiday_tailor_made_tours" %}" class="dropdown-item">Holiday Tailor Made Tours</a>
-                                <a href="{% url "airport_transfers" %}" class="dropdown-item">AirPort Transfers</a>
+                                <a href="{% url "services" %}" class="dropdown-item">{% trans "All Services" %}</a>
+                                <a href="{% url "african_wildlife_tours" %}" class="dropdown-item">{% trans "African WildLife Tours" %}</a>
+                                <a href="{% url "travel_partnerships" %}" class="dropdown-item">{% trans "Travel Partnerships" %}</a>
+                                <a href="{% url "holiday_tailor_made_tours" %}" class="dropdown-item">{% trans "Holiday Tailor Made Tours" %}</a>
+                                <a href="{% url "airport_transfers" %}" class="dropdown-item">{% trans "AirPort Transfers" %}</a>
                             </div>
                         </div>
-                        <a href="{% url "airline" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airline" %}active bg-warning{% endif %}">AirLine</a>
-                        <a href="{% url "blog" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "blog" %}active bg-warning{% endif %}">Blogs</a>
-                        <a href="{% url "gallary" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "gallary" %}active bg-warning{% endif %}">Gallery</a>
-                        <a href="{% url "airbnb" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airbnb" %}active bg-warning{% endif %}">AirBNB</a>
-                        <a href="{% url "contact" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "contact" %}active bg-warning{% endif %}">Contact</a>
+                        <a href="{% url "airline" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airline" %}active bg-warning{% endif %}">{% trans "AirLine" %}</a>
+                        <a href="{% url "blog" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "blog" %}active bg-warning{% endif %}">{% trans "Blogs" %}</a>
+                        <a href="{% url "gallary" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "gallary" %}active bg-warning{% endif %}">{% trans "Gallery" %}</a>
+                        <a href="{% url "airbnb" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airbnb" %}active bg-warning{% endif %}">{% trans "AirBNB" %}</a>
+                        <a href="{% url "contact" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "contact" %}active bg-warning{% endif %}">{% trans "Contact" %}</a>
                     </div>
-                    <a href="{% url "booking_create" %}" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a>
+                    <a href="{% url "booking_create" %}" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">{% trans "Book Now" %}</a>
                 </div>
             </nav>
 
@@ -136,12 +145,12 @@
         <div class="container-fluid subscribe py-5">
             <div class="container text-center py-5">
                 <div class="mx-auto text-center" style="max-width: 900px;">
-                    <h5 class="subscribe-title px-3">Newsletter</h5>
-                    <h1 class="text-white mb-4">Subscribe for Safari Updates & Special Offers</h1>
-                    <p class="text-white mb-5">Join our newsletter to receive exclusive travel deals, safari tips, and inspiring stories from East Africa. Get 10% off your first booking when you subscribe today!</p>
+                    <h5 class="subscribe-title px-3">{% trans "Newsletter" %}</h5>
+                    <h1 class="text-white mb-4">{% trans "Subscribe for Safari Updates & Special Offers" %}</h1>
+                    <p class="text-white mb-5">{% trans "Join our newsletter to receive exclusive travel deals, safari tips, and inspiring stories from East Africa. Get 10% off your first booking when you subscribe today!" %}</p>
                     <div class="position-relative mx-auto">
-                        <input class="form-control border-primary rounded-pill w-100 py-3 ps-4 pe-5" type="email" placeholder="Enter your email address">
-                        <button type="button" class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 px-4 mt-2 me-2">Subscribe Now</button>
+                        <input class="form-control border-primary rounded-pill w-100 py-3 ps-4 pe-5" type="email" placeholder="{% trans 'Enter your email address' %}">
+                        <button type="button" class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 px-4 mt-2 me-2">{% trans "Subscribe Now" %}</button>
                     </div>
                 </div>
             </div>
@@ -154,7 +163,7 @@
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item d-flex flex-column">
-                            <h4 class="mb-4 text-white">Get In Touch</h4>
+                            <h4 class="mb-4 text-white">{% trans "Get In Touch" %}</h4>
                             <a href=""><i class="fas fa-home me-2"></i>00200 Nairobi Railways Museum</a>
                             <a href=""><i class="fas fa-envelope me-2"></i>info@daysafarisadventures.co.ke</a>
                             <a href="https://wa.me/254759379600?text=Hello%20I%20need%20an%20inquiry" target="_blank">
@@ -174,24 +183,24 @@
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item d-flex flex-column">
-                            <h4 class="mb-4 text-white">Company</h4>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> About</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Careers</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Blog</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Press</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Gift Cards</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Magazine</a>
+                            <h4 class="mb-4 text-white">{% trans "Company" %}</h4>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "About" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Careers" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Blog" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Press" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Gift Cards" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Magazine" %}</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item d-flex flex-column">
-                            <h4 class="mb-4 text-white">Support</h4>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Contact</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Legal Notice</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Privacy Policy</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Terms and Conditions</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Sitemap</a>
-                            <a href=""><i class="fas fa-angle-right me-2"></i> Cookie policy</a>
+                            <h4 class="mb-4 text-white">{% trans "Support" %}</h4>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Contact" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Legal Notice" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Privacy Policy" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Terms and Conditions" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Sitemap" %}</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> {% trans "Cookie policy" %}</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3">
@@ -201,30 +210,29 @@
                                     <form>
                                         <div class="form-floating">
                                             <select class="form-select bg-dark border" id="select1">
-                                                <option value="1">Arabic</option>
-                                                <option value="2">German</option>
-                                                <option value="3">Greek</option>
-                                                <option value="3">New York</option>
+                                                <option value="1">{% trans "Arabic" %}</option>
+                                                <option value="2">{% trans "German" %}</option>
+                                                <option value="3">{% trans "Greek" %}</option>
                                             </select>
-                                            <label for="select1">English</label>
+                                            <label for="select1">{% trans "English" %}</label>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="col-xl-6">
                                     <form>
                                         <div class="form-floating">
-                                            <select class="form-select bg-dark border" id="select1">
+                                            <select class="form-select bg-dark border" id="select2">
                                                 <option value="1">USD</option>
                                                 <option value="2">EUR</option>
                                                 <option value="3">INR</option>
                                                 <option value="3">GBP</option>
                                             </select>
-                                            <label for="select1">$</label>
+                                            <label for="select2">$</label>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <h4 class="text-white mb-3">Payments</h4>
+                            <h4 class="text-white mb-3">{% trans "Payments" %}</h4>
                             <div class="footer-bank-card">
                                 <a href="#" class="text-white me-2"><i class="fab fa-cc-amex fa-2x"></i></a>
                                 <a href="#" class="text-white me-2"><i class="fab fa-cc-visa fa-2x"></i></a>
@@ -233,7 +241,6 @@
                                 <a href="#" class="text-white me-2"><i class="fab fa-cc-paypal fa-2x"></i></a>
                                 <a href="#" class="text-white"><i class="fab fa-cc-discover fa-2x"></i></a>
                             </div>
-                            im
                         </div>
                     </div>
                 </div>
@@ -246,10 +253,10 @@
             <div class="container">
                 <div class="row g-4 align-items-center">
                     <div class="col-md-6 text-center text-md-end mb-md-0">
-                        <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">Days Safaris Adventures</a>, All right reserved.
+                        <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">{% trans "Days Safaris Adventures" %}</a>, {% trans "All right reserved" %}.
                     </div>
                     <div class="col-md-6 text-center text-md-start">
-                        Designed By <a class="text-white" href="https://blackcodelab.com">BlackCodeLabs</a>
+                        {% trans "Designed By" %} <a class="text-white" href="https://blackcodelab.com">BlackCodeLabs</a>
                     </div>
                 </div>
             </div>
@@ -283,23 +290,23 @@
                 switch(type) {
                     case 'success':
                         icon = '<i class="fas fa-check-circle me-2"></i>';
-                        title = 'Success!';
+                        title = '{% trans "Success!" %}';
                         break;
                     case 'error':
                         icon = '<i class="fas fa-times-circle me-2"></i>';
-                        title = 'Error!';
+                        title = '{% trans "Error!" %}';
                         break;
                     case 'warning':
                         icon = '<i class="fas fa-exclamation-triangle me-2"></i>';
-                        title = 'Warning!';
+                        title = '{% trans "Warning!" %}';
                         break;
                     case 'info':
                         icon = '<i class="fas fa-info-circle me-2"></i>';
-                        title = 'Info!';
+                        title = '{% trans "Info!" %}';
                         break;
                     default:
                         icon = '<i class="fas fa-check-circle me-2"></i>';
-                        title = 'Success!';
+                        title = '{% trans "Success!" %}';
                 }
 
                 // Create toast HTML
@@ -383,13 +390,13 @@
                     <div class="chat-header-content">
                         <i class="fas fa-headset"></i>
                         <div class="chat-header-text">
-                            <h4>Customer Support</h4>
-                            <p>Usually replies in under 5 mins</p>
+                            <h4>{% trans "Customer Support" %}</h4>
+                            <p>{% trans "Usually replies in under 5 mins" %}</p>
                         </div>
                     </div>
                     <div class="chat-status">
                         <span class="status-dot"></span>
-                        <span class="status-text">Online</span>
+                        <span class="status-text">{% trans "Online" %}</span>
                     </div>
                 </div>
 
@@ -397,36 +404,36 @@
                     <div class="message received">
                         <div class="message-content">
                             <i class="fas fa-robot"></i>
-                            <p>Hello! 👋 Welcome to Day Safaris Adventures! How can I help you today?</p>
+                            <p>{% trans "Hello! 👋 Welcome to Day Safaris Adventures! How can I help you today?" %}</p>
                         </div>
-                        <span class="message-time">Just now</span>
+                        <span class="message-time">{% trans "Just now" %}</span>
                     </div>
                 </div>
 
                 <div class="chat-options">
-                    <button class="chat-option-btn" data-message="I need help with booking a safari">
-                        <i class="fas fa-calendar-check"></i> Book Safari
+                    <button class="chat-option-btn" data-message="{% trans 'I need help with booking a safari' %}">
+                        <i class="fas fa-calendar-check"></i> {% trans "Book Safari" %}
                     </button>
-                    <button class="chat-option-btn" data-message="Tell me about available destinations">
-                        <i class="fas fa-map-marker-alt"></i> Destinations
+                    <button class="chat-option-btn" data-message="{% trans 'Tell me about available destinations' %}">
+                        <i class="fas fa-map-marker-alt"></i> {% trans "Destinations" %}
                     </button>
-                    <button class="chat-option-btn" data-message="What are your current packages and prices?">
-                        <i class="fas fa-tag"></i> Packages & Prices
+                    <button class="chat-option-btn" data-message="{% trans 'What are your current packages and prices?' %}">
+                        <i class="fas fa-tag"></i> {% trans "Packages & Prices" %}
                     </button>
-                    <button class="chat-option-btn" data-message="I need help with payment options">
-                        <i class="fas fa-credit-card"></i> Payment Help
+                    <button class="chat-option-btn" data-message="{% trans 'I need help with payment options' %}">
+                        <i class="fas fa-credit-card"></i> {% trans "Payment Help" %}
                     </button>
                 </div>
 
                 <div class="chat-input-area">
                     <div class="chat-input-wrapper">
-                        <textarea class="chat-input" id="chat-input" placeholder="Type your message..." rows="1"></textarea>
+                        <textarea class="chat-input" id="chat-input" placeholder="{% trans 'Type your message...' %}" rows="1"></textarea>
                         <button class="chat-send-btn" id="chat-send-btn">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
                     <div class="chat-footer-note">
-                        <small>Powered by Day Safaris Support Team</small>
+                        <small>{% trans "Powered by Day Safaris Support Team" %}</small>
                     </div>
                 </div>
             </div>

@@ -1,19 +1,18 @@
 {% extends "Home/base.html" %}
+{% load static i18n %}
 
-{% load static %}
-
-{% block title %}AirBNB - Day Safaris Adventures{% endblock title %}
+{% block title %}{% trans "AirBNB - Days Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Airbnb Accommodations</h3>
+        <h3 class="text-white display-3 mb-4">{% trans "Airbnb Accommodations" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Accommodation</a></li>
-            <li class="breadcrumb-item active text-white">Airbnb</li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Accommodation" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Airbnb" %}</li>
         </ol>
     </div>
 </div>
@@ -23,9 +22,9 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Premium Stays</h5>
-            <h1 class="mb-4">Experience Luxury Accommodations Across Africa</h1>
-            <p class="mb-0">Handpicked Airbnb properties for your perfect African getaway</p>
+            <h5 class="section-title px-3">{% trans "Premium Stays" %}</h5>
+            <h1 class="mb-4">{% trans "Experience Luxury Accommodations Across Africa" %}</h1>
+            <p class="mb-0">{% trans "Handpicked Airbnb properties for your perfect African getaway" %}</p>
         </div>
         <div class="row g-4 justify-content-center">
             {% for bnb in bnbs %}
@@ -54,14 +53,14 @@
                                 <i class="fa fa-bed text-primary me-2"></i>{{ bnb.get_specification_display }}
                             </small>
                             <small class="flex-fill text-center py-2">
-                                <i class="fa fa-dollar-sign text-primary me-2"></i>book
+                                <i class="fa fa-dollar-sign text-primary me-2"></i>{% trans "book" %}
                             </small>
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <p class="mb-0 text-muted small">
-                                <i class="fa fa-users me-1"></i> {{ bnb.max_guests }} guests
+                                <i class="fa fa-users me-1"></i> {{ bnb.max_guests }} {% trans "guests" %}
                             </p>
                             <div class="bnb-rating">
                                 <i class="fa fa-star text-warning"></i>
@@ -77,23 +76,23 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="bnb-amenities">
                                 {% if bnb.specification == 'Studio' %}
-                                <small class="text-muted"><i class="fa fa-wifi me-1"></i> WiFi</small>
-                                <small class="text-muted ms-2"><i class="fa fa-snowflake me-1"></i> AC</small>
+                                <small class="text-muted"><i class="fa fa-wifi me-1"></i> {% trans "WiFi" %}</small>
+                                <small class="text-muted ms-2"><i class="fa fa-snowflake me-1"></i> {% trans "AC" %}</small>
                                 {% else %}
-                                <small class="text-muted"><i class="fa fa-wifi me-1"></i> WiFi</small>
-                                <small class="text-muted ms-2"><i class="fa fa-snowflake me-1"></i> AC</small>
-                                <small class="text-muted ms-2"><i class="fa fa-utensils me-1"></i> Kitchen</small>
+                                <small class="text-muted"><i class="fa fa-wifi me-1"></i> {% trans "WiFi" %}</small>
+                                <small class="text-muted ms-2"><i class="fa fa-snowflake me-1"></i> {% trans "AC" %}</small>
+                                <small class="text-muted ms-2"><i class="fa fa-utensils me-1"></i> {% trans "Kitchen" %}</small>
                                 {% endif %}
                             </div>
-                            <a href="{% url 'bnb_detail' bnb.id %}" class="btn btn-primary rounded-pill py-2 px-4">View Details</a>
+                            <a href="{% url 'bnb_detail' bnb.id %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "View Details" %}</a>
                         </div>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <h3>No properties available</h3>
-                <p>Check back soon for amazing accommodations!</p>
+                <h3>{% trans "No properties available" %}</h3>
+                <p>{% trans "Check back soon for amazing accommodations!" %}</p>
             </div>
             {% endfor %}
         </div>
@@ -109,29 +108,29 @@
                 <div class="feature-icon mb-3">
                     <i class="fa fa-shield-alt fa-3x text-primary"></i>
                 </div>
-                <h5>Verified Properties</h5>
-                <p class="small">All properties are handpicked and verified</p>
+                <h5>{% trans "Verified Properties" %}</h5>
+                <p class="small">{% trans "All properties are handpicked and verified" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-headset fa-3x text-primary"></i>
                 </div>
-                <h5>24/7 Support</h5>
-                <p class="small">Round-the-clock customer assistance</p>
+                <h5>{% trans "24/7 Support" %}</h5>
+                <p class="small">{% trans "Round-the-clock customer assistance" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-credit-card fa-3x text-primary"></i>
                 </div>
-                <h5>Secure Payments</h5>
-                <p class="small">Safe and encrypted transactions</p>
+                <h5>{% trans "Secure Payments" %}</h5>
+                <p class="small">{% trans "Safe and encrypted transactions" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-map-marked-alt fa-3x text-primary"></i>
                 </div>
-                <h5>Best Locations</h5>
-                <p class="small">Prime locations across East Africa</p>
+                <h5>{% trans "Best Locations" %}</h5>
+                <p class="small">{% trans "Prime locations across East Africa" %}</p>
             </div>
         </div>
     </div>
@@ -142,11 +141,11 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center bg-primary rounded-4 p-5">
             <div class="col-lg-8">
-                <h2 class="text-white mb-3">Looking for a specific property?</h2>
-                <p class="text-white mb-0">Contact us for custom accommodation arrangements or long-term stays.</p>
+                <h2 class="text-white mb-3">{% trans "Looking for a specific property?" %}</h2>
+                <p class="text-white mb-0">{% trans "Contact us for custom accommodation arrangements or long-term stays." %}</p>
             </div>
             <div class="col-lg-4 text-lg-end">
-                <a class="btn btn-light text-primary rounded-pill py-3 px-5" href="{% url 'contact' %}">Contact Us</a>
+                <a class="btn btn-light text-primary rounded-pill py-3 px-5" href="{% url 'contact' %}">{% trans "Contact Us" %}</a>
             </div>
         </div>
     </div>

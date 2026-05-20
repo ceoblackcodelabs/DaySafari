@@ -1,8 +1,7 @@
 {% extends "Home/base.html" %}
+{% load static i18n %}
 
-{% load static %}
-
-{% block title %}{{ package.name }} - Day Safaris Adventures{% endblock title %}
+{% block title %}{{ package.name }} - {% trans "Day Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
@@ -11,8 +10,8 @@
     <div class="container text-center py-5" style="max-width: 900px;">
         <h3 class="text-white display-3 mb-4">{{ package.name }}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="">Packages</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'packages' %}">{% trans "Packages" %}</a></li>
             <li class="breadcrumb-item active text-white">{{ package.name }}</li>
         </ol>
     </div>
@@ -35,9 +34,9 @@
             <div class="col-lg-6" >
                 <div class="p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h5 class="section-about-title pe-3">{{ package.package_type|default:"Safari Package" }}</h5>
+                        <h5 class="section-about-title pe-3">{{ package.package_type|default:_("Safari Package") }}</h5>
                         <div class="packages-price bg-primary text-white rounded-pill py-2 px-4">
-                            Days Offer
+                            {% trans "Days Offer" %}
                         </div>
                     </div>
                     <h1 class="mb-4">{{ package.name }}</h1>
@@ -47,29 +46,29 @@
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-calendar-alt fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">{{ package.days }} Days</h6>
-                                <small class="text-muted">Duration</small>
+                                <h6 class="mb-0">{{ package.days }} {% trans "Days" %}</h6>
+                                <small class="text-muted">{% trans "Duration" %}</small>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-map-marker-alt fa-2x text-primary mb-2"></i>
                                 <h6 class="mb-0">{{ package.location|truncatechars:15 }}</h6>
-                                <small class="text-muted">Location</small>
+                                <small class="text-muted">{% trans "Location" %}</small>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-user fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">{{ package.persons }} Persons</h6>
-                                <small class="text-muted">Max Group</small>
+                                <h6 class="mb-0">{{ package.persons }} {% trans "Persons" %}</h6>
+                                <small class="text-muted">{% trans "Max Group" %}</small>
                             </div>
                         </div>
                     </div>
 
                     <!-- Star Rating -->
                     <div class="mb-4">
-                        <h6 class="d-inline-block me-2">Rating:</h6>
+                        <h6 class="d-inline-block me-2">{% trans "Rating:" %}</h6>
                         {% for i in ""|ljust:package.starRating %}
                         <small class="fa fa-star text-primary"></small>
                         {% endfor %}
@@ -86,28 +85,28 @@
                     <!-- Features List -->
                     <div class="row gy-2 gx-4 mb-4">
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Professional Safari Guide</p>
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Professional Safari Guide" %}</p>
                         </div>
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Park Entry Fees Included</p>
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Park Entry Fees Included" %}</p>
                         </div>
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Game Drives in 4x4 Vehicles</p>
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Game Drives in 4x4 Vehicles" %}</p>
                         </div>
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Accommodation & Meals</p>
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Accommodation & Meals" %}</p>
                         </div>
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>Airport Transfers</p>
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Airport Transfers" %}</p>
                         </div>
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>24/7 Customer Support</p>
+                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "24/7 Customer Support" %}</p>
                         </div>
                     </div>
 
                     <div class="d-flex gap-3">
-                        <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'booking_create' %}?package={{ package.id }}">Book Now</a>
-                        <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="">View All Packages</a>
+                        <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'booking_create' %}?package={{ package.id }}">{% trans "Book Now" %}</a>
+                        <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="{% url 'packages' %}">{% trans "View All Packages" %}</a>
                     </div>
                 </div>
             </div>
@@ -120,9 +119,9 @@
 <div class="container-fluid bg-light py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">Your Journey</h5>
-            <h1 class="mb-4">{{ package.days }}-Day Safari Itinerary</h1>
-            <p class="mb-0">Day-by-day breakdown of your {{ package.name }} adventure.</p>
+            <h5 class="section-title px-3">{% trans "Your Journey" %}</h5>
+            <h1 class="mb-4">{{ package.days }}-{% trans "Day Safari Itinerary" %}</h1>
+            <p class="mb-0">{% trans "Day-by-day breakdown of your" %} {{ package.name }} {% trans "adventure." %}</p>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -130,7 +129,7 @@
                     {% for itinerary in itineraries %}
                     <div class="timeline-item d-flex mb-4">
                         <div class="timeline-badge bg-primary rounded-circle text-white text-center" style="min-width: 60px; height: 60px; line-height: 60px;">
-                            Day {{ itinerary.day_number }}
+                            {% trans "Day" %} {{ itinerary.day_number }}
                         </div>
                         <div class="timeline-content bg-white rounded p-4 ms-3 flex-grow-1 shadow-sm">
                             <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
@@ -146,7 +145,7 @@
 
                             {% if itinerary.activities %}
                             <div class="mt-3">
-                                <strong><i class="fa fa-list-check me-2"></i>Activities:</strong>
+                                <strong><i class="fa fa-list-check me-2"></i>{% trans "Activities:" %}</strong>
                                 <ul class="mt-2">
                                     {% for activity in itinerary.activities.split|slice:":5" %}
                                     <li>{{ activity|capfirst }}</li>
@@ -168,24 +167,21 @@
                     {% for day in ""|ljust:package.days %}
                     <div class="timeline-item d-flex mb-4">
                         <div class="timeline-badge bg-primary rounded-circle text-white text-center" style="min-width: 60px; height: 60px; line-height: 60px;">
-                            Day {{ forloop.counter }}
+                            {% trans "Day" %} {{ forloop.counter }}
                         </div>
                         <div class="timeline-content bg-white rounded p-4 ms-3 flex-grow-1 shadow-sm">
-                            <h4>Day {{ forloop.counter }}: {% if forloop.counter == 1 %}Arrival & Welcome{% elif forloop.counter == package.days %}Departure{% else %}Safari Experience{% endif %}</h4>
+                            <h4>{% trans "Day" %} {{ forloop.counter }}: {% if forloop.counter == 1 %}{% trans "Arrival & Welcome" %}{% elif forloop.counter == package.days %}{% trans "Departure" %}{% else %}{% trans "Safari Experience" %}{% endif %}</h4>
                             <p>
                                 {% if forloop.counter == 1 %}
-                                Arrive at {{ package.location }}, meet your safari guide, and transfer to your accommodation.
-                                Evening briefing about your {{ package.days }}-day adventure.
+                                {% trans "Arrive at" %} {{ package.location }}, {% trans "meet your safari guide, and transfer to your accommodation. Evening briefing about your" %} {{ package.days }}-{% trans "day adventure." %}
                                 {% elif forloop.counter == package.days %}
-                                Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the airport
-                                for your departure flight.
+                                {% trans "Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the airport for your departure flight." %}
                                 {% else %}
-                                Early morning game drive to spot wildlife in their natural habitat. Return to lodge for breakfast.
-                                Afternoon relaxation or optional activities. Evening game drive with sundowners.
+                                {% trans "Early morning game drive to spot wildlife in their natural habitat. Return to lodge for breakfast. Afternoon relaxation or optional activities. Evening game drive with sundowners." %}
                                 {% endif %}
                             </p>
                             <div class="mt-3">
-                                <strong>Meals:</strong> Full Board (Breakfast, Lunch & Dinner)
+                                <strong>{% trans "Meals:" %}</strong> {% trans "Full Board (Breakfast, Lunch & Dinner)" %}
                             </div>
                         </div>
                     </div>
@@ -201,15 +197,15 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <h5 class="section-booking-title pe-3">Booking</h5>
-                <h1 class="text-white mb-4"> {{ object.name }}</h1>
-                <p class="text-white mb-4">Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains.</p>
-                <p class="text-white mb-4">Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!</p>
-                <a href="#" class="btn btn-primary rounded-pill py-3 px-5 mt-2">Learn More</a>
+                <h5 class="section-booking-title pe-3">{% trans "Booking" %}</h5>
+                <h1 class="text-white mb-4">{{ object.name }}</h1>
+                <p class="text-white mb-4">{% trans "Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains." %}</p>
+                <p class="text-white mb-4">{% trans "Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!" %}</p>
+                <a href="#" class="btn btn-primary rounded-pill py-3 px-5 mt-2">{% trans "Learn More" %}</a>
             </div>
             <div class="col-lg-6">
-                <h1 class="text-white mb-3">Book A Tour Deals</h1>
-                <p class="text-white mb-4">Get <span class="text-warning">50% Off</span> On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here.</p>
+                <h1 class="text-white mb-3">{% trans "Book A Tour Deals" %}</h1>
+                <p class="text-white mb-4">{% trans "Get" %} <span class="text-warning">{% trans "50% Off" %}</span> {% trans "On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here." %}</p>
 
                 <!-- Display messages -->
                 {% if messages %}
@@ -228,7 +224,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ form.full_name }}
-                                <label>Full Name</label>
+                                <label>{% trans "Full Name" %}</label>
                                 {% if form.full_name.errors %}
                                     <div class="text-danger small mt-1">{{ form.full_name.errors.0 }}</div>
                                 {% endif %}
@@ -237,7 +233,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ form.email }}
-                                <label>Email Address</label>
+                                <label>{% trans "Email Address" %}</label>
                                 {% if form.email.errors %}
                                     <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
                                 {% endif %}
@@ -246,7 +242,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ form.phone_number }}
-                                <label>Phone Number</label>
+                                <label>{% trans "Phone Number" %}</label>
                                 {% if form.phone_number.errors %}
                                     <div class="text-danger small mt-1">{{ form.phone_number.errors.0 }}</div>
                                 {% endif %}
@@ -255,7 +251,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ form.number_of_persons }}
-                                <label>Number of Persons</label>
+                                <label>{% trans "Number of Persons" %}</label>
                                 {% if form.number_of_persons.errors %}
                                     <div class="text-danger small mt-1">{{ form.number_of_persons.errors.0 }}</div>
                                 {% endif %}
@@ -264,7 +260,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ form.travel_date }}
-                                <label>Travel Date</label>
+                                <label>{% trans "Travel Date" %}</label>
                                 {% if form.travel_date.errors %}
                                     <div class="text-danger small mt-1">{{ form.travel_date.errors.0 }}</div>
                                 {% endif %}
@@ -273,13 +269,13 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" class="form-control bg-white border-0" value="{{ package.name }}" disabled>
-                                <label>Package</label>
+                                <label>{% trans "Package" %}</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
                                 {{ form.special_requests }}
-                                <label>Special Requests</label>
+                                <label>{% trans "Special Requests" %}</label>
                                 {% if form.special_requests.errors %}
                                     <div class="text-danger small mt-1">{{ form.special_requests.errors.0 }}</div>
                                 {% endif %}
@@ -288,15 +284,15 @@
                         <div class="col-12">
                             <div class="bg-light rounded p-3 mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <span>Package Price:</span>
-                                    <span>${{ package.price|floatformat:2 }} per person</span>
+                                    <span>{% trans "Package Price:" %}</span>
+                                    <span>${{ package.price|floatformat:2 }} {% trans "per person" %}</span>
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
-                                    <span>Total:</span>
+                                    <span>{% trans "Total:" %}</span>
                                     <span id="totalAmount">${{ package.price|floatformat:2 }}</span>
                                 </div>
                             </div>
-                            <button class="btn btn-primary w-100 py-3" type="submit">Proceed to Payment</button>
+                            <button class="btn btn-primary w-100 py-3" type="submit">{% trans "Proceed to Payment" %}</button>
                         </div>
                     </div>
                 </form>
@@ -310,9 +306,9 @@
 <div class="container-fluid py-5 bg-light">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">You May Also Like</h5>
-            <h1 class="mb-4">Similar Safari Packages</h1>
-            <p class="mb-0">Explore other amazing safari experiences we offer.</p>
+            <h5 class="section-title px-3">{% trans "You May Also Like" %}</h5>
+            <h1 class="mb-4">{% trans "Similar Safari Packages" %}</h1>
+            <p class="mb-0">{% trans "Explore other amazing safari experiences we offer." %}</p>
         </div>
         <div class="row g-4">
             {% for similar in similar_packages %}
@@ -331,16 +327,16 @@
                         <div class="mb-3">
                             <small class="fa fa-map-marker-alt me-1 text-primary"></small>
                             <small>{{ similar.location }}</small>
-                            <small class="ms-3"><i class="fa fa-calendar-alt me-1 text-primary"></i>{{ similar.days }} days</small>
+                            <small class="ms-3"><i class="fa fa-calendar-alt me-1 text-primary"></i>{{ similar.days }} {% trans "days" %}</small>
                         </div>
                         <p class="mb-3">{{ similar.description|truncatewords:15 }}</p>
-                        <a href="{% url 'package_detail' similar.id %}" class="btn btn-primary rounded-pill py-2 px-4">View Details</a>
+                        <a href="{% url 'package_detail' similar.id %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "View Details" %}</a>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="col-12 text-center">
-                <p>No similar packages found.</p>
+                <p>{% trans "No similar packages found." %}</p>
             </div>
             {% endfor %}
         </div>
@@ -351,9 +347,9 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">Package Highlights</h5>
-            <h1 class="mb-4">What's Included in Your Safari</h1>
-            <p class="mb-0">Everything you need for an unforgettable African adventure is included in your package.</p>
+            <h5 class="section-title px-3">{% trans "Package Highlights" %}</h5>
+            <h1 class="mb-4">{% trans "What's Included in Your Safari" %}</h1>
+            <p class="mb-0">{% trans "Everything you need for an unforgettable African adventure is included in your package." %}</p>
         </div>
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
@@ -361,8 +357,8 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-car fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Comfortable Transport</h5>
-                    <p class="mb-0">Travel in style in our modern 4x4 safari vehicles with pop-up roofs for optimal wildlife viewing and photography.</p>
+                    <h5 class="mb-3">{% trans "Comfortable Transport" %}</h5>
+                    <p class="mb-0">{% trans "Travel in style in our modern 4x4 safari vehicles with pop-up roofs for optimal wildlife viewing and photography." %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -370,8 +366,8 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-bed fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Premium Accommodation</h5>
-                    <p class="mb-0">Stay in carefully selected lodges and tented camps that offer comfort, safety, and authentic African experiences.</p>
+                    <h5 class="mb-3">{% trans "Premium Accommodation" %}</h5>
+                    <p class="mb-0">{% trans "Stay in carefully selected lodges and tented camps that offer comfort, safety, and authentic African experiences." %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -379,8 +375,8 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-utensils fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Delicious Meals</h5>
-                    <p class="mb-0">Enjoy a variety of local and international cuisine prepared by expert chefs, including special dietary requirements.</p>
+                    <h5 class="mb-3">{% trans "Delicious Meals" %}</h5>
+                    <p class="mb-0">{% trans "Enjoy a variety of local and international cuisine prepared by expert chefs, including special dietary requirements." %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -388,8 +384,8 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-binoculars fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Expert Safari Guides</h5>
-                    <p class="mb-0">Our knowledgeable guides have years of experience and will ensure you don't miss any wildlife sightings.</p>
+                    <h5 class="mb-3">{% trans "Expert Safari Guides" %}</h5>
+                    <p class="mb-0">{% trans "Our knowledgeable guides have years of experience and will ensure you don't miss any wildlife sightings." %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -397,8 +393,8 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-camera fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Photography Tips</h5>
-                    <p class="mb-0">Get professional photography guidance to capture stunning wildlife moments during your safari.</p>
+                    <h5 class="mb-3">{% trans "Photography Tips" %}</h5>
+                    <p class="mb-0">{% trans "Get professional photography guidance to capture stunning wildlife moments during your safari." %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -406,8 +402,8 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-headset fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">24/7 Support</h5>
-                    <p class="mb-0">Our dedicated support team is available around the clock to assist you before and during your safari.</p>
+                    <h5 class="mb-3">{% trans "24/7 Support" %}</h5>
+                    <p class="mb-0">{% trans "Our dedicated support team is available around the clock to assist you before and during your safari." %}</p>
                 </div>
             </div>
         </div>

@@ -1,20 +1,19 @@
 {% extends "Home/base.html" %}
+{% load static i18n custom_filters %}
 
-{% load static custom_filters %}
-
-{% block title %}Gallery - Day Safaris Adventures{% endblock title %}
+{% block title %}{% trans "Gallery - Days Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Our Gallery</h3>
+        <h3 class="text-white display-3 mb-4">{% trans "Our Gallery" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Gallery</li>
-        </ol>    
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Gallery" %}</li>
+        </ol>
     </div>
 </div>
 <!-- Header End -->
@@ -22,15 +21,15 @@
 <!-- Gallery Start -->
 <div class="container-fluid gallery py-5 my-5">
     <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-        <h5 class="section-title px-3">Our Gallery</h5>
-        <h1 class="mb-4">Unforgettable Safari Moments Captured</h1>
-        <p class="mb-0">Explore stunning images from our recent safaris across East Africa. From breathtaking wildlife encounters to beautiful landscapes and cultural experiences, our gallery showcases the magic of African adventures.</p>
+        <h5 class="section-title px-3">{% trans "Our Gallery" %}</h5>
+        <h1 class="mb-4">{% trans "Unforgettable Safari Moments Captured" %}</h1>
+        <p class="mb-0">{% trans "Explore stunning images from our recent safaris across East Africa. From breathtaking wildlife encounters to beautiful landscapes and cultural experiences, our gallery showcases the magic of African adventures." %}</p>
     </div>
     <div class="tab-class text-center">
         <ul class="nav nav-pills d-inline-flex justify-content-center mb-5 flex-wrap">
             <li class="nav-item">
                 <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-all">
-                    <span class="text-dark" style="width: 150px;">All Photos</span>
+                    <span class="text-dark" style="width: 150px;">{% trans "All Photos" %}</span>
                 </a>
             </li>
             {% for category in categories %}
@@ -52,7 +51,7 @@
                             <div class="gallery-content">
                                 <div class="gallery-info">
                                     <h5 class="text-white text-uppercase mb-2">{{ gallery.name }}</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="#" class="btn-hover text-white">{% trans "View Gallery" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                             </div>
                             <div class="gallery-plus-icon">
@@ -62,8 +61,8 @@
                     </div>
                     {% empty %}
                     <div class="col-12 text-center py-5">
-                        <h3>No images available</h3>
-                        <p>Check back soon for amazing gallery photos!</p>
+                        <h3>{% trans "No images available" %}</h3>
+                        <p>{% trans "Check back soon for amazing gallery photos!" %}</p>
                     </div>
                     {% endfor %}
                 </div>
@@ -81,7 +80,7 @@
                             <div class="gallery-content">
                                 <div class="gallery-info">
                                     <h5 class="text-white text-uppercase mb-2">{{ gallery.name }}</h5>
-                                    <a href="#" class="btn-hover text-white">View Gallery <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="#" class="btn-hover text-white">{% trans "View Gallery" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                             </div>
                             <div class="gallery-plus-icon">
@@ -91,8 +90,8 @@
                     </div>
                     {% empty %}
                     <div class="col-12 text-center py-5">
-                        <h3>No images in this category</h3>
-                        <p>Check back soon for amazing photos!</p>
+                        <h3>{% trans "No images in this category" %}</h3>
+                        <p>{% trans "Check back soon for amazing photos!" %}</p>
                     </div>
                     {% endfor %}
                     {% endwith %}
