@@ -1,0 +1,307 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-20 10:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: Home/templates/Home/base.html:72
+msgid "Register"
+msgstr "Registrieren"
+
+#: Home/templates/Home/base.html:73
+msgid "Login"
+msgstr "Anmelden"
+
+#: Home/templates/Home/base.html:75
+msgid "My Dashboard"
+msgstr "Mein Dashboard"
+
+#: Home/templates/Home/base.html:77
+msgid "My Profile"
+msgstr "Mein Profil"
+
+#: Home/templates/Home/base.html:78
+msgid "Inbox"
+msgstr "Posteingang"
+
+#: Home/templates/Home/base.html:79
+msgid "Account Settings"
+msgstr "Kontoeinstellungen"
+
+#: Home/templates/Home/base.html:80
+msgid "Log Out"
+msgstr "Abmelden"
+
+#: Home/templates/Home/base.html:101
+msgid "Home"
+msgstr "Startseite"
+
+#: Home/templates/Home/base.html:102 Home/templates/Home/base.html:178
+msgid "About"
+msgstr "Über uns"
+
+#: Home/templates/Home/base.html:104
+msgid "Tours"
+msgstr "Touren"
+
+#: Home/templates/Home/base.html:106
+msgid "East Africa Tours"
+msgstr "Ostafrika Touren"
+
+#: Home/templates/Home/base.html:107
+msgid "South Africa Tours"
+msgstr "Südafrika Touren"
+
+#: Home/templates/Home/base.html:108
+msgid "West Africa Tours"
+msgstr "Westafrika Touren"
+
+#: Home/templates/Home/base.html:109
+msgid "International Tours"
+msgstr "Internationale Touren"
+
+#: Home/templates/Home/base.html:111
+msgid "Cruises"
+msgstr "Kreuzfahrten"
+
+#: Home/templates/Home/base.html:113
+msgid "Services"
+msgstr "Dienstleistungen"
+
+#: Home/templates/Home/base.html:115
+msgid "All Services"
+msgstr "Alle Dienstleistungen"
+
+#: Home/templates/Home/base.html:116
+msgid "African WildLife Tours"
+msgstr "Afrikanische Wildtier-Touren"
+
+#: Home/templates/Home/base.html:117
+msgid "Travel Partnerships"
+msgstr "Reisepartnerschaften"
+
+#: Home/templates/Home/base.html:118
+msgid "Holiday Tailor Made Tours"
+msgstr "Maßgeschneiderte Urlaubstouren"
+
+#: Home/templates/Home/base.html:119
+msgid "AirPort Transfers"
+msgstr "Flughafentransfers"
+
+#: Home/templates/Home/base.html:121
+msgid "AirLine"
+msgstr "Fluggesellschaft"
+
+#: Home/templates/Home/base.html:122
+msgid "Blogs"
+msgstr "Blogs"
+
+#: Home/templates/Home/base.html:123
+msgid "Gallery"
+msgstr "Galerie"
+
+#: Home/templates/Home/base.html:124
+msgid "AirBNB"
+msgstr "AirBNB"
+
+#: Home/templates/Home/base.html:125 Home/templates/Home/base.html:189
+msgid "Contact"
+msgstr "Kontakt"
+
+#: Home/templates/Home/base.html:127
+msgid "Book Now"
+msgstr "Jetzt Buchen"
+
+#: Home/templates/Home/base.html:146
+msgid "Newsletter"
+msgstr "Newsletter"
+
+#: Home/templates/Home/base.html:147
+msgid "Subscribe for Safari Updates & Special Offers"
+msgstr "Abonnieren Sie Safari-Updates und Sonderangebote"
+
+#: Home/templates/Home/base.html:148
+msgid "Join our newsletter to receive exclusive travel deals, safari tips, and inspiring stories from East Africa. Get 10% off your first booking when you subscribe today!"
+msgstr "Abonnieren Sie unseren Newsletter, um exklusive Reiseangebote, Safari-Tipps und inspirierende Geschichten aus Ostafrika zu erhalten. Sichern Sie sich 10% Rabatt auf Ihre erste Buchung, wenn Sie noch heute abonnieren!"
+
+#: Home/templates/Home/base.html:150
+msgid "Enter your email address"
+msgstr "Geben Sie Ihre E-Mail-Adresse ein"
+
+#: Home/templates/Home/base.html:151
+msgid "Subscribe Now"
+msgstr "Jetzt Abonnieren"
+
+#: Home/templates/Home/base.html:163
+msgid "Get In Touch"
+msgstr "Kontaktieren Sie uns"
+
+#: Home/templates/Home/base.html:176
+msgid "Company"
+msgstr "Unternehmen"
+
+#: Home/templates/Home/base.html:179
+msgid "Careers"
+msgstr "Karriere"
+
+#: Home/templates/Home/base.html:180
+msgid "Blog"
+msgstr "Blog"
+
+#: Home/templates/Home/base.html:181
+msgid "Press"
+msgstr "Presse"
+
+#: Home/templates/Home/base.html:182
+msgid "Gift Cards"
+msgstr "Geschenkkarten"
+
+#: Home/templates/Home/base.html:183
+msgid "Magazine"
+msgstr "Magazin"
+
+#: Home/templates/Home/base.html:187
+msgid "Support"
+msgstr "Support"
+
+#: Home/templates/Home/base.html:190
+msgid "Legal Notice"
+msgstr "Impressum"
+
+#: Home/templates/Home/base.html:191
+msgid "Privacy Policy"
+msgstr "Datenschutzerklärung"
+
+#: Home/templates/Home/base.html:192
+msgid "Terms and Conditions"
+msgstr "Allgemeine Geschäftsbedingungen"
+
+#: Home/templates/Home/base.html:193
+msgid "Sitemap"
+msgstr "Sitemap"
+
+#: Home/templates/Home/base.html:194
+msgid "Cookie policy"
+msgstr "Cookie-Richtlinie"
+
+#: Home/templates/Home/base.html:202
+msgid "Arabic"
+msgstr "Arabisch"
+
+#: Home/templates/Home/base.html:203
+msgid "German"
+msgstr "Deutsch"
+
+#: Home/templates/Home/base.html:204
+msgid "Greek"
+msgstr "Griechisch"
+
+#: Home/templates/Home/base.html:205
+msgid "English"
+msgstr "Englisch"
+
+#: Home/templates/Home/base.html:217
+msgid "Payments"
+msgstr "Zahlungen"
+
+#: Home/templates/Home/base.html:228
+msgid "Days Safaris Adventures"
+msgstr "Days Safaris Adventures"
+
+#: Home/templates/Home/base.html:228
+msgid "All right reserved"
+msgstr "Alle Rechte vorbehalten"
+
+#: Home/templates/Home/base.html:230
+msgid "Designed By"
+msgstr "Entworfen von"
+
+#: Home/templates/Home/base.html:281 Home/templates/Home/base.html:293
+msgid "Success!"
+msgstr "Erfolg!"
+
+#: Home/templates/Home/base.html:284
+msgid "Error!"
+msgstr "Fehler!"
+
+#: Home/templates/Home/base.html:287
+msgid "Warning!"
+msgstr "Warnung!"
+
+#: Home/templates/Home/base.html:290
+msgid "Info!"
+msgstr "Info!"
+
+#: Home/templates/Home/base.html:410
+msgid "Customer Support"
+msgstr "Kundensupport"
+
+#: Home/templates/Home/base.html:411
+msgid "Usually replies in under 5 mins"
+msgstr "Antwortet normalerweise innerhalb von 5 Minuten"
+
+#: Home/templates/Home/base.html:415
+msgid "Online"
+msgstr "Online"
+
+#: Home/templates/Home/base.html:421
+msgid "Hello! 👋 Welcome to Day Safaris Adventures! How can I help you today?"
+msgstr "Hallo! 👋 Willkommen bei Day Safaris Adventures! Wie kann ich Ihnen heute helfen?"
+
+#: Home/templates/Home/base.html:422
+msgid "Just now"
+msgstr "Gerade eben"
+
+#: Home/templates/Home/base.html:428
+msgid "I need help with booking a safari"
+msgstr "Ich brauche Hilfe bei der Buchung einer Safari"
+
+#: Home/templates/Home/base.html:429
+msgid "Book Safari"
+msgstr "Safari Buchen"
+
+#: Home/templates/Home/base.html:430
+msgid "Tell me about available destinations"
+msgstr "Informieren Sie mich über verfügbare Reiseziele"
+
+#: Home/templates/Home/base.html:431
+msgid "Destinations"
+msgstr "Reiseziele"
+
+#: Home/templates/Home/base.html:432
+msgid "What are your current packages and prices?"
+msgstr "Was sind Ihre aktuellen Pakete und Preise?"
+
+#: Home/templates/Home/base.html:433
+msgid "Packages & Prices"
+msgstr "Pakete & Preise"
+
+#: Home/templates/Home/base.html:434
+msgid "I need help with payment options"
+msgstr "Ich brauche Hilfe bei den Zahlungsmöglichkeiten"
+
+#: Home/templates/Home/base.html:435
+msgid "Payment Help"
+msgstr "Zahlungshilfe"
+
+#: Home/templates/Home/base.html:441
+msgid "Type your message..."
+msgstr "Geben Sie Ihre Nachricht ein..."
+
+#: Home/templates/Home/base.html:447
+msgid "Powered by Day Safaris Support Team"
+msgstr "Unterstützt durch das Day Safaris Support-Team"
