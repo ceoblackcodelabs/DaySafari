@@ -1,10 +1,10 @@
 {% extends "Home/base.html" %}
 
 {% load static %}
-
+{% load i18n %}
 {% load custom_filters %}
 
-{% block title %}Home - Days Safaris Adventures{% endblock title %}
+{% block title %}{% trans "Home - Days Safaris Adventures" %}{% endblock title %}
 
 {% block carousel %}
 
@@ -20,13 +20,13 @@
                 <img src="{% static "img/carousel-2.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Explore The World" %}</h4>
                         <h1 class="display-2 text-capitalize text-white mb-4">
-                            EXPERIENCE THE WORLD
+                            {% trans "EXPERIENCE THE WORLD" %}
                         </h1>
-                        <p class="mb-5 fs-5"> Adventure Awaits – Let’s Go</p>
+                        <p class="mb-5 fs-5">{% trans "Adventure Awaits – Let's Go" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">Discover Now</a>
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
                         </div>
                     </div>
                 </div>
@@ -35,11 +35,11 @@
                 <img src="{% static "img/carousel-1.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Days Safaris Adventures</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">Travel With Us Today</h1>
-                        <p class="mb-5 fs-5">And Let Us Give You The Experience Of The World</p>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Days Safaris Adventures" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Travel With Us Today" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "And Let Us Give You The Experience Of The World" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">Discover Now</a>
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
                         </div>
                     </div>
                 </div>
@@ -48,11 +48,11 @@
                 <img src="{% static "img/carousel-3.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Sail Into Serenity</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">At Days Safaris Adventures</h1>
-                        <p class="mb-5 fs-5">We Are YTour Ultimate Cruise Escape</p>
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Sail Into Serenity" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "At Days Safaris Adventures" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "We Are Your Ultimate Cruise Escape" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">Discover Now</a>
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
                         </div>
                     </div>
                 </div>
@@ -60,11 +60,11 @@
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
             <span class="carousel-control-prev-icon btn bg-primary" aria-hidden="false"></span>
-            <span class="visually-hidden">Previous</span>
+            <span class="visually-hidden">{% trans "Previous" %}</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
             <span class="carousel-control-next-icon btn bg-primary" aria-hidden="false"></span>
-            <span class="visually-hidden">Next</span>
+            <span class="visually-hidden">{% trans "Next" %}</span>
         </button>
     </div>
 </div>
@@ -77,8 +77,8 @@
 <div class="container-fluid search-bar position-relative" style="top: -50%; transform: translateY(-50%);">
     <div class="container">
         <div class="position-relative rounded-pill w-100 mx-auto p-5" style="background: rgb(58 20 20 / 65%);">
-            <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Masai Mara, Diani, Amboseli">
-            <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute me-2" style="top: 50%; right: 46px; transform: translateY(-50%);">Search</button>
+            <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="{% trans 'Eg: Masai Mara, Diani, Amboseli' %}">
+            <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute me-2" style="top: 50%; right: 46px; transform: translateY(-50%);">{% trans "Search" %}</button>
         </div>
     </div>
 </div>
@@ -90,35 +90,35 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/about-img.jpg' %}" class="img-fluid w-100 h-100" alt="About Day Safaris">
+                    <img src="{% static 'img/about-img.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'About Day Safaris' %}">
                 </div>
             </div>
             <div class="col-lg-7">
-                <h5 class="section-about-title pe-3">Welcome To Day Safaris Adventures</h5>
-                <h1 class="mb-4">Explore East Africa with Day Safaris – Become a Story Teller</h1>
-                <p class="mb-4">Day Safaris Adventures is Kenya's leading and fastest-growing tour company, renowned for delivering exceptional safari experiences across East Africa. As a premier destination management company, we specialize in creating unforgettable wildlife adventures, cultural immersions, and luxury getaways throughout Kenya, Tanzania, Uganda, and Rwanda.</p>
-                <p class="mb-4">With our headquarters in Nairobi, Kenya, and strategic partner offices in South Africa and Tanzania, we offer tailor-made safari packages that include private game drives, hot air balloon safaris, mountain climbing expeditions, and beach holidays at the Kenyan coast. Our commitment to sustainable tourism and exceptional service ensures every journey with us becomes a lifetime memory.</p>
+                <h5 class="section-about-title pe-3">{% trans "Welcome To Day Safaris Adventures" %}</h5>
+                <h1 class="mb-4">{% trans "Explore East Africa with Day Safaris – Become a Story Teller" %}</h1>
+                <p class="mb-4">{% trans "Day Safaris Adventures is Kenya's leading and fastest-growing tour company, renowned for delivering exceptional safari experiences across East Africa. As a premier destination management company, we specialize in creating unforgettable wildlife adventures, cultural immersions, and luxury getaways throughout Kenya, Tanzania, Uganda, and Rwanda." %}</p>
+                <p class="mb-4">{% trans "With our headquarters in Nairobi, Kenya, and strategic partner offices in South Africa and Tanzania, we offer tailor-made safari packages that include private game drives, hot air balloon safaris, mountain climbing expeditions, and beach holidays at the Kenyan coast. Our commitment to sustainable tourism and exceptional service ensures every journey with us becomes a lifetime memory." %}</p>
                 <div class="row gy-2 gx-4 mb-4">
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>First Class Flights</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "First Class Flights" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Handpicked Safari Lodges</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Handpicked Safari Lodges" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>5 Star Accommodations</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "5 Star Accommodations" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Latest Model Safari Vehicles</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Latest Model Safari Vehicles" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>150+ Premium Safari Tours</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "150+ Premium Safari Tours" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>24/7 Customer Support</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "24/7 Customer Support" %}</p>
                     </div>
                 </div>
-                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'about' %}">Read More</a>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'about' %}">{% trans "Read More" %}</a>
             </div>
         </div>
     </div>
@@ -130,8 +130,8 @@
 <div class="container-fluid bg-light service py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Services</h5>
-            <h1 class="mb-0">Our Services</h1>
+            <h5 class="section-title px-3">{% trans "Services" %}</h5>
+            <h1 class="mb-0">{% trans "Our Services" %}</h1>
         </div>
         <div class="row g-4">
             <div class="col-lg-6">
@@ -170,7 +170,7 @@
             </div>
             <div class="col-12">
                 <div class="text-center">
-                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'services' %}">View All Services</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'services' %}">{% trans "View All Services" %}</a>
                 </div>
             </div>
         </div>
@@ -182,14 +182,14 @@
 <div class="container-fluid destination py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Destination</h5>
-            <h1 class="mb-0">The 'Must Visit' Destinations in East Africa</h1>
+            <h5 class="section-title px-3">{% trans "Destination" %}</h5>
+            <h1 class="mb-0">{% trans "The 'Must Visit' Destinations in East Africa" %}</h1>
         </div>
         <div class="tab-class text-center">
             <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
                 <li class="nav-item">
                     <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-all">
-                        <span class="text-dark" style="width: 150px;">All Destinations</span>
+                        <span class="text-dark" style="width: 150px;">{% trans "All Destinations" %}</span>
                     </a>
                 </li>
                 {% for category in categories %}
@@ -214,12 +214,12 @@
                                         {% if dest.image %}
                                         <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                         {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                         {% endif %}
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                             <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
                                             {% if dest.image %}
@@ -240,12 +240,12 @@
                                         {% if dest.image %}
                                         <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                         {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                         {% endif %}
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                             <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
                                             {% if dest.image %}
@@ -266,12 +266,12 @@
                                         {% if dest.image %}
                                         <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                         {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                         {% endif %}
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                             <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
                                             {% if dest.image %}
@@ -292,12 +292,12 @@
                                         {% if dest.image %}
                                         <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                         {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                         {% endif %}
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                             <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
                                             {% if dest.image %}
@@ -320,12 +320,12 @@
                                 {% if dest.image %}
                                 <img class="img-fluid rounded w-100 h-100" src="{{ dest.image.url }}" style="object-fit: cover; min-height: 300px;" alt="{{ dest.name }}">
                                 {% else %}
-                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/placeholder-portrait.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="Placeholder Image">
+                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/placeholder-portrait.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="{% trans 'Placeholder Image' %}">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                     <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if dest.image %}
@@ -338,11 +338,11 @@
                             {% else %}
                             <!-- Fallback if no portrait destination exists -->
                             <div class="destination-img h-100">
-                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/destination-9.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="Placeholder">
+                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/destination-9.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="{% trans 'Placeholder' %}">
                                 <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">Coming Soon</a>
-                                    <h4 class="text-white mb-2 mt-3">New Destination</h4>
-                                    <a href="#" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Coming Soon" %}</a>
+                                    <h4 class="text-white mb-2 mt-3">{% trans "New Destination" %}</h4>
+                                    <a href="#" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     <a href="{% static 'img/placeholder-portrait.jpg' %}" data-lightbox="destination-portrait"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
@@ -359,12 +359,12 @@
                                 {% if dest.image %}
                                 <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                 {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                     <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if dest.image %}
@@ -385,12 +385,12 @@
                                 {% if dest.image %}
                                 <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                 {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                     <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if dest.image %}
@@ -411,12 +411,12 @@
                                 {% if dest.image %}
                                 <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                 {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                     <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if dest.image %}
@@ -445,12 +445,12 @@
                                         {% if dest.image %}
                                         <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                         {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                         {% endif %}
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                             <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
                                             {% if dest.image %}
@@ -470,12 +470,12 @@
                                         {% if dest.image %}
                                         <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                         {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                         {% endif %}
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                             <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
                                             {% if dest.image %}
@@ -495,12 +495,12 @@
                                         {% if dest.image %}
                                         <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                         {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                         {% endif %}
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                             <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
                                             {% if dest.image %}
@@ -520,12 +520,12 @@
                                         {% if dest.image %}
                                         <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                         {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                         {% endif %}
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                             <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
                                             {% if dest.image %}
@@ -547,12 +547,12 @@
                                 {% if dest.image %}
                                 <img class="img-fluid rounded w-100 h-100" src="{{ dest.image.url }}" style="object-fit: cover; min-height: 300px;" alt="{{ dest.name }}">
                                 {% else %}
-                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/placeholder-portrait.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="Placeholder Image">
+                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/placeholder-portrait.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="{% trans 'Placeholder Image' %}">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                     <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if dest.image %}
@@ -572,12 +572,12 @@
                                 {% if dest.image %}
                                 <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                 {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                     <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if dest.image %}
@@ -597,12 +597,12 @@
                                 {% if dest.image %}
                                 <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                 {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                     <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if dest.image %}
@@ -622,12 +622,12 @@
                                 {% if dest.image %}
                                 <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
                                 {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="Placeholder Image">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
                                     <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">View All Places <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if dest.image %}
@@ -653,8 +653,8 @@
 <div class="container-fluid bg-light packages py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Packages</h5>
-            <h1 class="mb-0">Awesome Safari Packages</h1>
+            <h5 class="section-title px-3">{% trans "Packages" %}</h5>
+            <h1 class="mb-0">{% trans "Awesome Safari Packages" %}</h1>
         </div>
         <div class="packages-carousel owl-carousel">
             {% for package in awesome_packages %}
@@ -667,15 +667,14 @@
                     {% endif %}
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ package.days }} days</small>
-                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ package.persons }} Persons</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ package.days }} {% trans "days" %}</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ package.persons }} {% trans "Persons" %}</small>
                     </div>
-                    {% comment %} <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div> {% endcomment %}
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
                         <h5 class="mb-0">{{ package.name }}</h5>
-                        <small class="text-uppercase">{{ package.package_type|default:"Safari Package" }}</small>
+                        <small class="text-uppercase">{{ package.package_type|default:_("Safari Package") }}</small>
                         <div class="mb-3">
                             {% for i in ""|ljust:package.starRating %}
                             <small class="fa fa-star text-primary"></small>
@@ -690,18 +689,18 @@
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">
-                            <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                            <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">{% trans "Read More" %}</a>
                         </div>
                         <div class="col-6 text-end px-0">
-                            <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                            <a href="{% url 'package_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">{% trans "Book Now" %}</a>
                         </div>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <h3>No packages available at the moment</h3>
-                <p>Please check back later for exciting safari packages!</p>
+                <h3>{% trans "No packages available at the moment" %}</h3>
+                <p>{% trans "Please check back later for exciting safari packages!" %}</p>
             </div>
             {% endfor %}
         </div>
@@ -714,15 +713,15 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <h5 class="section-booking-title pe-3">Booking</h5>
-                <h1 class="text-white mb-4">Book Your Safari Adventure</h1>
-                <p class="text-white mb-4">Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains.</p>
-                <p class="text-white mb-4">Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!</p>
-                <a href="{% url "brochures" %}" class="btn btn-light text-primary rounded-pill py-3 px-5 mt-2">Brochures</a>
+                <h5 class="section-booking-title pe-3">{% trans "Booking" %}</h5>
+                <h1 class="text-white mb-4">{% trans "Book Your Safari Adventure" %}</h1>
+                <p class="text-white mb-4">{% trans "Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains." %}</p>
+                <p class="text-white mb-4">{% trans "Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!" %}</p>
+                <a href="{% url "brochures" %}" class="btn btn-light text-primary rounded-pill py-3 px-5 mt-2">{% trans "Brochures" %}</a>
             </div>
             <div class="col-lg-6">
-                <h1 class="text-white mb-3">Book A Tour Deals</h1>
-                <p class="text-white mb-4">Get <span class="text-warning">50% Off</span> On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here.</p>
+                <h1 class="text-white mb-3">{% trans "Book A Tour Deals" %}</h1>
+                <p class="text-white mb-4">{% trans "Get" %} <span class="text-warning">{% trans "50% Off" %}</span> {% trans "On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here." %}</p>
 
                 <!-- Display messages -->
                 {% if messages %}
@@ -741,7 +740,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ booking_form.name }}
-                                <label for="{{ booking_form.name.id_for_label }}">Your Name</label>
+                                <label for="{{ booking_form.name.id_for_label }}">{% trans "Your Name" %}</label>
                                 {% if booking_form.name.errors %}
                                     <div class="text-danger small mt-1">{{ booking_form.name.errors }}</div>
                                 {% endif %}
@@ -750,7 +749,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ booking_form.email }}
-                                <label for="{{ booking_form.email.id_for_label }}">Your Email</label>
+                                <label for="{{ booking_form.email.id_for_label }}">{% trans "Your Email" %}</label>
                                 {% if booking_form.email.errors %}
                                     <div class="text-danger small mt-1">{{ booking_form.email.errors }}</div>
                                 {% endif %}
@@ -759,7 +758,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ booking_form.phone }}
-                                <label for="{{ booking_form.phone.id_for_label }}">Phone Number</label>
+                                <label for="{{ booking_form.phone.id_for_label }}">{% trans "Phone Number" %}</label>
                                 {% if booking_form.phone.errors %}
                                     <div class="text-danger small mt-1">{{ booking_form.phone.errors }}</div>
                                 {% endif %}
@@ -768,7 +767,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ booking_form.destination }}
-                                <label for="{{ booking_form.destination.id_for_label }}">Destination</label>
+                                <label for="{{ booking_form.destination.id_for_label }}">{% trans "Destination" %}</label>
                                 {% if booking_form.destination.errors %}
                                     <div class="text-danger small mt-1">{{ booking_form.destination.errors }}</div>
                                 {% endif %}
@@ -777,7 +776,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ booking_form.persons }}
-                                <label for="{{ booking_form.persons.id_for_label }}">Number of Persons</label>
+                                <label for="{{ booking_form.persons.id_for_label }}">{% trans "Number of Persons" %}</label>
                                 {% if booking_form.persons.errors %}
                                     <div class="text-danger small mt-1">{{ booking_form.persons.errors }}</div>
                                 {% endif %}
@@ -786,7 +785,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ booking_form.date }}
-                                <label for="{{ booking_form.date.id_for_label }}">Travel Date</label>
+                                <label for="{{ booking_form.date.id_for_label }}">{% trans "Travel Date" %}</label>
                                 {% if booking_form.date.errors %}
                                     <div class="text-danger small mt-1">{{ booking_form.date.errors }}</div>
                                 {% endif %}
@@ -795,14 +794,14 @@
                         <div class="col-12">
                             <div class="form-floating">
                                 {{ booking_form.message }}
-                                <label for="{{ booking_form.message.id_for_label }}">Special Requests (Dietary, Accessibility, etc.)</label>
+                                <label for="{{ booking_form.message.id_for_label }}">{% trans "Special Requests (Dietary, Accessibility, etc.)" %}</label>
                                 {% if booking_form.message.errors %}
                                     <div class="text-danger small mt-1">{{ booking_form.message.errors }}</div>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary text-white w-100 py-3" type="submit">Book Now</button>
+                            <button class="btn btn-primary text-white w-100 py-3" type="submit">{% trans "Book Now" %}</button>
                         </div>
                     </div>
                 </form>
@@ -816,9 +815,9 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Our Blog</h5>
-            <h1 class="mb-4">Popular Travel Blogs & Safari Tips</h1>
-            <p class="mb-0">Discover expert travel advice, safari planning guides, and inspiring stories from our adventures across East Africa. Learn about the best times to visit, wildlife photography tips, and hidden gems off the beaten path.</p>
+            <h5 class="section-title px-3">{% trans "Our Blog" %}</h5>
+            <h1 class="mb-4">{% trans "Popular Travel Blogs & Safari Tips" %}</h1>
+            <p class="mb-0">{% trans "Discover expert travel advice, safari planning guides, and inspiring stories from our adventures across East Africa. Learn about the best times to visit, wildlife photography tips, and hidden gems off the beaten path." %}</p>
         </div>
         <div class="row g-4 justify-content-center">
             {% for blog in blogs %}
@@ -842,17 +841,17 @@
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Posted By: {{ blog.author }}</p>
+                        <p class="mb-3">{% trans "Posted By:" %} {{ blog.author }}</p>
                         <a href="{% url 'blog_detail' blog.id %}" class="h4">{{ blog.title }}</a>
                         <p class="my-3">{{ blog.content|truncatewords:30 }}</p>
-                        <a href="{% url 'blog_detail' blog.id %}" class="btn btn-primary rounded-pill py-2 px-4">Read More</a>
+                        <a href="{% url 'blog_detail' blog.id %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Read More" %}</a>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <h3>No blog posts yet</h3>
-                <p>Check back soon for exciting travel stories and tips!</p>
+                <h3>{% trans "No blog posts yet" %}</h3>
+                <p>{% trans "Check back soon for exciting travel stories and tips!" %}</p>
             </div>
             {% endfor %}
         </div>
@@ -864,8 +863,8 @@
 <div class="container-fluid bg-light testimonial py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Testimonial</h5>
-            <h1 class="mb-0">What Our Clients Say About Us</h1>
+            <h5 class="section-title px-3">{% trans "Testimonial" %}</h5>
+            <h1 class="mb-0">{% trans "What Our Clients Say About Us" %}</h1>
         </div>
         <div class="testimonial-carousel owl-carousel">
             {% for testimonial in testimonials %}
@@ -897,8 +896,8 @@
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <h3>No testimonials yet</h3>
-                <p>Be the first to share your experience with us!</p>
+                <h3>{% trans "No testimonials yet" %}</h3>
+                <p>{% trans "Be the first to share your experience with us!" %}</p>
             </div>
             {% endfor %}
         </div>

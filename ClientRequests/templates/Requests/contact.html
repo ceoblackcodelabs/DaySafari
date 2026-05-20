@@ -1,19 +1,18 @@
 {% extends "Home/base.html" %}
+{% load static i18n %}
 
-{% load static %}
-
-{% block title %}Contact - Day Safaris Adventures{% endblock title %}
+{% block title %}{% trans "Contact - Day Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Contact Us</h3>
+        <h3 class="text-white display-3 mb-4">{% trans "Contact Us" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Contact</li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Contact" %}</li>
         </ol>
     </div>
 </div>
@@ -23,8 +22,8 @@
 <div class="container-fluid contact bg-light py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Contact Us</h5>
-            <h1 class="mb-0">Get In Touch With Us</h1>
+            <h5 class="section-title px-3">{% trans "Contact Us" %}</h5>
+            <h1 class="mb-0">{% trans "Get In Touch With Us" %}</h1>
         </div>
 
         <div class="row g-5 align-items-center">
@@ -32,20 +31,20 @@
                 <div class="bg-white rounded p-4">
                     <div class="text-center mb-4">
                         <i class="fa fa-map-marker-alt fa-3x text-primary"></i>
-                        <h4 class="text-primary mt-2">Our Office</h4>
-                        <p class="mb-0">Day Safaris Adventures Ltd<br>00200 Street RailWays, Nairobi, Kenya</p>
+                        <h4 class="text-primary mt-2">{% trans "Our Office" %}</h4>
+                        <p class="mb-0">{% trans "Day Safaris Adventures Ltd<br>00200 Street RailWays, Nairobi, Kenya" %}</p>
                     </div>
                     <div class="text-center mb-4">
                         <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
-                        <h4 class="text-primary">Phone Numbers</h4>
-                        <p class="mb-0"> +254759379600 (WhatsApp)</p>
-                        <p class="mb-0">+254 782 390 295 (HotLine)</p>
-                        <p class="mb-0"> +254140936286 (Alternate)</p>
+                        <h4 class="text-primary">{% trans "Phone Numbers" %}</h4>
+                        <p class="mb-0">+254759379600 {% trans "(WhatsApp)" %}</p>
+                        <p class="mb-0">+254 782 390 295 {% trans "(HotLine)" %}</p>
+                        <p class="mb-0">+254140936286 {% trans "(Alternate)" %}</p>
                     </div>
 
                     <div class="text-center">
                         <i class="fa fa-envelope-open fa-3x text-primary mb-3"></i>
-                        <h4 class="text-primary">Email Addresses</h4>
+                        <h4 class="text-primary">{% trans "Email Addresses" %}</h4>
                         <p class="mb-0">info@daysafarisadventures.co.ke</p>
                         <p class="mb-0">sales@daysafarisadventures.co.ke</p>
                         <p class="mb-0">support@daysafarisadventures.co.ke</p>
@@ -53,15 +52,15 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <h3 class="mb-2">Send Us a Message</h3>
-                <p class="mb-4">Have questions about safaris, packages, or accommodations? Our travel experts are here to help you create the perfect East African experience. Fill out the form below and we'll get back to you within 24 hours.</p>
+                <h3 class="mb-2">{% trans "Send Us a Message" %}</h3>
+                <p class="mb-4">{% trans "Have questions about safaris, packages, or accommodations? Our travel experts are here to help you create the perfect East African experience. Fill out the form below and we'll get back to you within 24 hours." %}</p>
                 <form method="post" action="{% url 'contact' %}">
                     {% csrf_token %}
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ form.name }}
-                                <label for="{{ form.name.id_for_label }}">Your Name *</label>
+                                <label for="{{ form.name.id_for_label }}">{% trans "Your Name" %} *</label>
                                 {% if form.name.errors %}
                                     <div class="text-danger small">{{ form.name.errors }}</div>
                                 {% endif %}
@@ -70,7 +69,7 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 {{ form.email }}
-                                <label for="{{ form.email.id_for_label }}">Your Email *</label>
+                                <label for="{{ form.email.id_for_label }}">{% trans "Your Email" %} *</label>
                                 {% if form.email.errors %}
                                     <div class="text-danger small">{{ form.email.errors }}</div>
                                 {% endif %}
@@ -79,7 +78,7 @@
                         <div class="col-12">
                             <div class="form-floating">
                                 {{ form.subject }}
-                                <label for="{{ form.subject.id_for_label }}">Subject *</label>
+                                <label for="{{ form.subject.id_for_label }}">{% trans "Subject" %} *</label>
                                 {% if form.subject.errors %}
                                     <div class="text-danger small">{{ form.subject.errors }}</div>
                                 {% endif %}
@@ -88,14 +87,14 @@
                         <div class="col-12">
                             <div class="form-floating">
                                 {{ form.message }}
-                                <label for="{{ form.message.id_for_label }}">Your Message *</label>
+                                <label for="{{ form.message.id_for_label }}">{% trans "Your Message" %} *</label>
                                 {% if form.message.errors %}
                                     <div class="text-danger small">{{ form.message.errors }}</div>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Send Message <i class="fa fa-paper-plane ms-2"></i></button>
+                            <button class="btn btn-primary w-100 py-3" type="submit">{% trans "Send Message" %} <i class="fa fa-paper-plane ms-2"></i></button>
                         </div>
                     </div>
                 </form>
@@ -123,9 +122,9 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Our Brochures</h5>
-            <h1 class="mb-4">Download Safari Brochures & Travel Guides</h1>
-            <p class="mb-0">Explore our collection of detailed brochures featuring safari packages, tour itineraries, accommodation options, and travel tips for East Africa. Download PDF guides to plan your perfect African adventure.</p>
+            <h5 class="section-title px-3">{% trans "Our Brochures" %}</h5>
+            <h1 class="mb-4">{% trans "Download Safari Brochures & Travel Guides" %}</h1>
+            <p class="mb-0">{% trans "Explore our collection of detailed brochures featuring safari packages, tour itineraries, accommodation options, and travel tips for East Africa. Download PDF guides to plan your perfect African adventure." %}</p>
         </div>
         <div class="row g-4 justify-content-center">
             {% for brochure in brochures %}
@@ -144,17 +143,17 @@
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
                             <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ brochure.created_at|date:"d M Y" }}</small>
-                            <a href="{{ brochure.pdf_file.url }}" target="_blank" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-download text-primary me-2"></i>Download PDF</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-eye text-primary me-2"></i>Preview</a>
+                            <a href="{{ brochure.pdf_file.url }}" target="_blank" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-download text-primary me-2"></i>{% trans "Download PDF" %}</a>
+                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-eye text-primary me-2"></i>{% trans "Preview" %}</a>
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3"><i class="fa fa-file-pdf text-primary me-2"></i>PDF Brochure</p>
+                        <p class="mb-3"><i class="fa fa-file-pdf text-primary me-2"></i>{% trans "PDF Brochure" %}</p>
                         <a href="{{ brochure.pdf_file.url }}" target="_blank" class="h4">{{ brochure.title }}</a>
                         <p class="my-3">{{ brochure.description|truncatewords:30 }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{ brochure.pdf_file.url }}" target="_blank" class="btn btn-primary rounded-pill py-2 px-4">
-                                <i class="fa fa-download me-2"></i>Download Now
+                                <i class="fa fa-download me-2"></i>{% trans "Download Now" %}
                             </a>
                             <small class="text-muted">
                                 <i class="fa fa-file-pdf"></i> PDF
@@ -165,14 +164,14 @@
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <h3>No brochures available yet</h3>
-                <p>Check back soon for downloadable safari brochures and travel guides!</p>
+                <h3>{% trans "No brochures available yet" %}</h3>
+                <p>{% trans "Check back soon for downloadable safari brochures and travel guides!" %}</p>
             </div>
             {% endfor %}
         </div>
         <div class="text-center mt-5">
             <a href="{% url "about" %}" class="btn btn-primary rounded-pill py-3 px-5">
-                <i class="fa fa-download me-2"></i>Destinations
+                <i class="fa fa-download me-2"></i>{% trans "Destinations" %}
             </a>
         </div>
     </div>

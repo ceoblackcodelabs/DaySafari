@@ -1,19 +1,18 @@
 {% extends "Home/base.html" %}
+{% load static i18n %}
 
-{% load static %}
-
-{% block title %}Online Booking - Days Safaris{% endblock title %}
+{% block title %}{% trans "Online Booking - Days Safaris" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Online Booking</h3>
+        <h3 class="text-white display-3 mb-4">{% trans "Online Booking" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item active text-white">Online Booking</li>
-        </ol>    
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Online Booking" %}</li>
+        </ol>
     </div>
 </div>
 <!-- Header End -->
@@ -23,17 +22,17 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <h5 class="section-booking-title pe-3">Booking</h5>
-                <h1 class="text-white mb-4">Book Your Safari Adventure</h1>
-                <p class="text-white mb-4">Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains.</p>
-                <p class="text-white mb-4">Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!</p>
-                
+                <h5 class="section-booking-title pe-3">{% trans "Booking" %}</h5>
+                <h1 class="text-white mb-4">{% trans "Book Your Safari Adventure" %}</h1>
+                <p class="text-white mb-4">{% trans "Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains." %}</p>
+                <p class="text-white mb-4">{% trans "Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!" %}</p>
+
             </div>
             <div class="col-lg-6">
                 <div class="bg-dark rounded-4 p-4">
-                    <h1 class="text-white mb-3">Book A Tour</h1>
-                    <p class="text-white-50 mb-4">Get <span class="text-warning">50% Off</span> On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here.</p>
-                    
+                    <h1 class="text-white mb-3">{% trans "Book A Tour" %}</h1>
+                    <p class="text-white-50 mb-4">{% trans "Get" %} <span class="text-warning">{% trans "50% Off" %}</span> {% trans "On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here." %}</p>
+
                     <!-- Display messages -->
                     {% if messages %}
                         {% for message in messages %}
@@ -43,14 +42,14 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                    
+
                     <form method="post">
                         {% csrf_token %}
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     {{ form.name }}
-                                    <label for="{{ form.name.id_for_label }}">Your Name</label>
+                                    <label for="{{ form.name.id_for_label }}">{% trans "Your Name" %}</label>
                                     {% if form.name.errors %}
                                         <div class="text-danger small mt-1">{{ form.name.errors.0 }}</div>
                                     {% endif %}
@@ -59,7 +58,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     {{ form.email }}
-                                    <label for="{{ form.email.id_for_label }}">Your Email</label>
+                                    <label for="{{ form.email.id_for_label }}">{% trans "Your Email" %}</label>
                                     {% if form.email.errors %}
                                         <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
                                     {% endif %}
@@ -68,7 +67,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     {{ form.phone }}
-                                    <label for="{{ form.phone.id_for_label }}">Phone Number</label>
+                                    <label for="{{ form.phone.id_for_label }}">{% trans "Phone Number" %}</label>
                                     {% if form.phone.errors %}
                                         <div class="text-danger small mt-1">{{ form.phone.errors.0 }}</div>
                                     {% endif %}
@@ -77,7 +76,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     {{ form.destination }}
-                                    <label for="{{ form.destination.id_for_label }}">Destination</label>
+                                    <label for="{{ form.destination.id_for_label }}">{% trans "Destination" %}</label>
                                     {% if form.destination.errors %}
                                         <div class="text-danger small mt-1">{{ form.destination.errors.0 }}</div>
                                     {% endif %}
@@ -86,7 +85,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     {{ form.persons }}
-                                    <label for="{{ form.persons.id_for_label }}">Number of Persons</label>
+                                    <label for="{{ form.persons.id_for_label }}">{% trans "Number of Persons" %}</label>
                                     {% if form.persons.errors %}
                                         <div class="text-danger small mt-1">{{ form.persons.errors.0 }}</div>
                                     {% endif %}
@@ -95,7 +94,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     {{ form.date }}
-                                    <label for="{{ form.date.id_for_label }}">Travel Date</label>
+                                    <label for="{{ form.date.id_for_label }}">{% trans "Travel Date" %}</label>
                                     {% if form.date.errors %}
                                         <div class="text-danger small mt-1">{{ form.date.errors.0 }}</div>
                                     {% endif %}
@@ -104,7 +103,7 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                     {{ form.message }}
-                                    <label for="{{ form.message.id_for_label }}">Special Requests (Dietary, Accessibility, etc.)</label>
+                                    <label for="{{ form.message.id_for_label }}">{% trans "Special Requests (Dietary, Accessibility, etc.)" %}</label>
                                     {% if form.message.errors %}
                                         <div class="text-danger small mt-1">{{ form.message.errors.0 }}</div>
                                     {% endif %}
@@ -112,10 +111,10 @@
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary text-white w-100 py-3" type="submit">
-                                    <i class="fa fa-calendar-check me-2"></i> Book Now
+                                    <i class="fa fa-calendar-check me-2"></i> {% trans "Book Now" %}
                                 </button>
                                 <p class="text-center text-white-50 small mt-3">
-                                    <i class="fa fa-shield-alt me-1"></i> Your information is secure
+                                    <i class="fa fa-shield-alt me-1"></i> {% trans "Your information is secure" %}
                                 </p>
                             </div>
                         </div>
@@ -131,9 +130,9 @@
 <div class="container-fluid py-5 bg-light">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Popular Destinations</h5>
-            <h1 class="mb-4">Most Requested Safari Destinations</h1>
-            <p class="mb-0">Our customers love these incredible destinations for their safari adventures</p>
+            <h5 class="section-title px-3">{% trans "Popular Destinations" %}</h5>
+            <h1 class="mb-4">{% trans "Most Requested Safari Destinations" %}</h1>
+            <p class="mb-0">{% trans "Our customers love these incredible destinations for their safari adventures" %}</p>
         </div>
         <div class="row g-4">
             {% for destination in destinations %}
@@ -155,8 +154,8 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Featured Packages</h5>
-            <h1 class="mb-4">Popular Safari Packages</h1>
+            <h5 class="section-title px-3">{% trans "Featured Packages" %}</h5>
+            <h1 class="mb-4">{% trans "Popular Safari Packages" %}</h1>
         </div>
         <div class="row g-4">
             {% for package in packages %}
@@ -173,13 +172,13 @@
                         <h5>{{ package.name }}</h5>
                         <div class="d-flex justify-content-between mb-2">
                             <small><i class="fa fa-map-marker-alt text-primary me-1"></i> {{ package.location }}</small>
-                            <small><i class="fa fa-clock text-primary me-1"></i> {{ package.days }} days</small>
+                            <small><i class="fa fa-clock text-primary me-1"></i> {{ package.days }} {% trans "days" %}</small>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <span class="h5 text-primary mb-0">${{ package.price|floatformat:2 }}</span>
-                            <small class="text-muted">per person</small>
+                            <small class="text-muted">{% trans "per person" %}</small>
                         </div>
-                        <a href="{% url 'package_detail' package.id %}" class="btn btn-outline-primary w-100 mt-3 rounded-pill">View Details</a>
+                        <a href="{% url 'package_detail' package.id %}" class="btn btn-outline-primary w-100 mt-3 rounded-pill">{% trans "View Details" %}</a>
                     </div>
                 </div>
             </div>

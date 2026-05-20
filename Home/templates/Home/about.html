@@ -1,19 +1,19 @@
 {% extends "Home/base.html" %}
-
 {% load static %}
+{% load i18n %}
 
-{% block title %}About Us - Days Safaris Adventures{% endblock title %}
+{% block title %}{% trans "About Us - Days Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">About Our Destinations</h1>
+        <h3 class="text-white display-3 mb-4">{% trans "About Our Destinations" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">About</li>
+            <li class="breadcrumb-item"><a href="{% url "home" %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "About" %}</li>
         </ol>
     </div>
 </div>
@@ -25,41 +25,41 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/SA.jpg' %}" class="img-fluid w-100 h-100" alt="South Africa Tours">
+                    <img src="{% static 'img/SA.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'South Africa Tours' %}">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">Discover South Africa</h5>
-                <h1 class="mb-4">Experience the Beauty & Luxury of South Africa</h1>
+                <h5 class="section-about-title pe-3">{% trans "Discover South Africa" %}</h5>
+                <h1 class="mb-4">{% trans "Experience the Beauty & Luxury of South Africa" %}</h1>
                 <p class="mb-4">
-                    Discover breathtaking landscapes, vibrant cities, and unforgettable wildlife adventures across South Africa. From the stunning coastlines of Cape Town to thrilling safaris in Kruger National Park, every journey is designed to create lasting memories.
+                    {% trans "Discover breathtaking landscapes, vibrant cities, and unforgettable wildlife adventures across South Africa. From the stunning coastlines of Cape Town to thrilling safaris in Kruger National Park, every journey is designed to create lasting memories." %}
                 </p>
                 <p class="mb-4">
-                    Enjoy luxury accommodations, guided wildlife tours, cultural experiences, wine tasting adventures, and scenic road trips with professionally curated travel packages tailored for every explorer.
+                    {% trans "Enjoy luxury accommodations, guided wildlife tours, cultural experiences, wine tasting adventures, and scenic road trips with professionally curated travel packages tailored for every explorer." %}
                 </p>
 
                 <div class="row gy-2 gx-4 mb-4">
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Luxury Safari Experiences</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Luxury Safari Experiences" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Cape Town City Tours</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Cape Town City Tours" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Beach & Coastal Escapes</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Beach & Coastal Escapes" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Adventure Activities</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Adventure Activities" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Wine & Cultural Tours</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Wine & Cultural Tours" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>24/7 Travel Assistance</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "24/7 Travel Assistance" %}</p>
                     </div>
                 </div>
 
-                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'south_africa_tours' %}">Explore South Africa Tours</a>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'south_africa_tours' %}">{% trans "Explore South Africa Tours" %}</a>
             </div>
         </div>
     </div>
@@ -72,41 +72,41 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/WA.jpg' %}" class="img-fluid w-100 h-100" alt="West Africa Tours">
+                    <img src="{% static 'img/WA.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'West Africa Tours' %}">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">Explore West Africa</h5>
-                <h1 class="mb-4">Discover Culture, History & Adventure</h1>
+                <h5 class="section-about-title pe-3">{% trans "Explore West Africa" %}</h5>
+                <h1 class="mb-4">{% trans "Discover Culture, History & Adventure" %}</h1>
                 <p class="mb-4">
-                    Experience the rich traditions, colorful cultures, and vibrant destinations of West Africa. From historical landmarks and bustling cities to tropical beaches and wildlife reserves, every destination offers something unique.
+                    {% trans "Experience the rich traditions, colorful cultures, and vibrant destinations of West Africa. From historical landmarks and bustling cities to tropical beaches and wildlife reserves, every destination offers something unique." %}
                 </p>
                 <p class="mb-4">
-                    Our West Africa tours combine authentic cultural encounters, comfortable travel experiences, local cuisine adventures, and guided excursions across some of Africa's most exciting destinations.
+                    {% trans "Our West Africa tours combine authentic cultural encounters, comfortable travel experiences, local cuisine adventures, and guided excursions across some of Africa's most exciting destinations." %}
                 </p>
 
                 <div class="row gy-2 gx-4 mb-4">
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Cultural Heritage Tours</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Cultural Heritage Tours" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Historical Site Visits</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Historical Site Visits" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Luxury Hotel Stays</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Luxury Hotel Stays" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Beach Getaways</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Beach Getaways" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Guided City Excursions</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Guided City Excursions" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Professional Tour Guides</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Professional Tour Guides" %}</p>
                     </div>
                 </div>
 
-                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'west_africa_tours' %}">Explore West Africa Tours</a>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'west_africa_tours' %}">{% trans "Explore West Africa Tours" %}</a>
             </div>
         </div>
     </div>
@@ -119,41 +119,41 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/Inter.jpg' %}" class="img-fluid w-100 h-100" alt="International Tours">
+                    <img src="{% static 'img/Inter.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'International Tours' %}">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">International Tours</h5>
-                <h1 class="mb-4">Travel Beyond Borders & Create Memories</h1>
+                <h5 class="section-about-title pe-3">{% trans "International Tours" %}</h5>
+                <h1 class="mb-4">{% trans "Travel Beyond Borders & Create Memories" %}</h1>
                 <p class="mb-4">
-                    Explore iconic destinations around the world with carefully planned international travel experiences. Whether you dream of luxury vacations, romantic escapes, or adventure-filled journeys, we make global travel seamless and exciting.
+                    {% trans "Explore iconic destinations around the world with carefully planned international travel experiences. Whether you dream of luxury vacations, romantic escapes, or adventure-filled journeys, we make global travel seamless and exciting." %}
                 </p>
                 <p class="mb-4">
-                    From flight bookings and hotel reservations to guided tours and visa assistance, our international travel packages are crafted to give you comfort, convenience, and unforgettable experiences.
+                    {% trans "From flight bookings and hotel reservations to guided tours and visa assistance, our international travel packages are crafted to give you comfort, convenience, and unforgettable experiences." %}
                 </p>
 
                 <div class="row gy-2 gx-4 mb-4">
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Worldwide Destinations</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Worldwide Destinations" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Flight & Hotel Booking</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Flight & Hotel Booking" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Visa Assistance</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Visa Assistance" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Luxury Vacation Packages</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Luxury Vacation Packages" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Family & Group Tours</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Family & Group Tours" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>24/7 Customer Support</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "24/7 Customer Support" %}</p>
                     </div>
                 </div>
 
-                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'international_tours' %}">Explore International Tours</a>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'international_tours' %}">{% trans "Explore International Tours" %}</a>
             </div>
         </div>
     </div>
@@ -166,41 +166,41 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/EA.jpg' %}" class="img-fluid w-100 h-100" alt="East Africa Tours">
+                    <img src="{% static 'img/EA.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'East Africa Tours' %}">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">Explore East Africa</h5>
-                <h1 class="mb-4">Witness Africa's Greatest Safari Adventures</h1>
+                <h5 class="section-about-title pe-3">{% trans "Explore East Africa" %}</h5>
+                <h1 class="mb-4">{% trans "Witness Africa's Greatest Safari Adventures" %}</h1>
                 <p class="mb-4">
-                    Discover the breathtaking beauty of East Africa through unforgettable safaris, wildlife encounters, mountain adventures, and relaxing beach holidays across Kenya, Tanzania, Uganda, and Rwanda.
+                    {% trans "Discover the breathtaking beauty of East Africa through unforgettable safaris, wildlife encounters, mountain adventures, and relaxing beach holidays across Kenya, Tanzania, Uganda, and Rwanda." %}
                 </p>
                 <p class="mb-4">
-                    From the Great Migration in Maasai Mara and Serengeti to gorilla trekking and coastal escapes, our expertly curated tours deliver authentic African experiences for solo travelers, couples, families, and groups.
+                    {% trans "From the Great Migration in Maasai Mara and Serengeti to gorilla trekking and coastal escapes, our expertly curated tours deliver authentic African experiences for solo travelers, couples, families, and groups." %}
                 </p>
 
                 <div class="row gy-2 gx-4 mb-4">
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Big Five Safari Tours</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Big Five Safari Tours" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Hot Air Balloon Safaris</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Hot Air Balloon Safaris" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Mountain Climbing Adventures</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Mountain Climbing Adventures" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Luxury Safari Lodges</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Luxury Safari Lodges" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Beach & Island Holidays</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Beach & Island Holidays" %}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Experienced Safari Guides</p>
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Experienced Safari Guides" %}</p>
                     </div>
                 </div>
 
-                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'east_africa_tours' %}">Explore East Africa Tours</a>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'east_africa_tours' %}">{% trans "Explore East Africa Tours" %}</a>
             </div>
         </div>
     </div>
@@ -211,8 +211,8 @@
 <div class="container-fluid service py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Services</h5>
-            <h1 class="mb-0">Our Services</h1>
+            <h5 class="section-title px-3">{% trans "Services" %}</h5>
+            <h1 class="mb-0">{% trans "Our Services" %}</h1>
         </div>
         <div class="row g-4">
             <div class="col-lg-6">
@@ -251,7 +251,7 @@
             </div>
             <div class="col-12">
                 <div class="text-center">
-                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'services' %}">View All Services</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'services' %}">{% trans "View All Services" %}</a>
                 </div>
             </div>
         </div>
@@ -263,27 +263,27 @@
 <div class="container-fluid bg-light guide py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Travel Guide</h5>
-            <h1 class="mb-0">Meet Our Guides</h1>
+            <h5 class="section-title px-3">{% trans "Travel Guide" %}</h5>
+            <h1 class="mb-0">{% trans "Meet Our Guides" %}</h1>
         </div>
         <div class="row g-4">
             <div class="col-md-6 col-lg-3">
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="img/guide-1.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+                            <img src="{% static 'img/guide-1.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="guide-title text-center rounded-bottom p-4">
                         <div class="guide-title-inner">
-                            <h4 class="mt-3">Full Name</h4>
-                            <p class="mb-0">Designation</p>
+                            <h4 class="mt-3">{% trans "Full Name" %}</h4>
+                            <p class="mb-0">{% trans "Designation" %}</p>
                         </div>
                     </div>
                 </div>
@@ -292,19 +292,19 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="img/guide-2.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+                            <img src="{% static 'img/guide-2.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="guide-title text-center rounded-bottom p-4">
                         <div class="guide-title-inner">
-                            <h4 class="mt-3">Full Name</h4>
-                            <p class="mb-0">Designation</p>
+                            <h4 class="mt-3">{% trans "Full Name" %}</h4>
+                            <p class="mb-0">{% trans "Designation" %}</p>
                         </div>
                     </div>
                 </div>
@@ -313,19 +313,19 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="img/guide-3.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+                            <img src="{% static 'img/guide-3.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="guide-title text-center rounded-bottom p-4">
                         <div class="guide-title-inner">
-                            <h4 class="mt-3">Full Name</h4>
-                            <p class="mb-0">Designation</p>
+                            <h4 class="mt-3">{% trans "Full Name" %}</h4>
+                            <p class="mb-0">{% trans "Designation" %}</p>
                         </div>
                     </div>
                 </div>
@@ -334,19 +334,19 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="img/guide-4.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+                            <img src="{% static 'img/guide-4.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="guide-title text-center rounded-bottom p-4">
                         <div class="guide-title-inner">
-                            <h4 class="mt-3">Full Name</h4>
-                            <p class="mb-0">Designation</p>
+                            <h4 class="mt-3">{% trans "Full Name" %}</h4>
+                            <p class="mb-0">{% trans "Designation" %}</p>
                         </div>
                     </div>
                 </div>
