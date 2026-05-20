@@ -1,0 +1,1282 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-20 10:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: sw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# ==================== BASE.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/base.html:72
+msgid "Register"
+msgstr "Jisajili"
+
+#: Home/templates/Home/base.html:73
+msgid "Login"
+msgstr "Ingia"
+
+#: Home/templates/Home/base.html:75
+msgid "My Dashboard"
+msgstr "Dashbodi Yangu"
+
+#: Home/templates/Home/base.html:77
+msgid "My Profile"
+msgstr "Profaili Yangu"
+
+#: Home/templates/Home/base.html:78
+msgid "Inbox"
+msgstr "Kikasha"
+
+#: Home/templates/Home/base.html:79
+msgid "Account Settings"
+msgstr "Mipangilio ya Akaunti"
+
+#: Home/templates/Home/base.html:80
+msgid "Log Out"
+msgstr "Toka"
+
+#: Home/templates/Home/base.html:101
+msgid "Home"
+msgstr "Nyumbani"
+
+#: Home/templates/Home/base.html:102 Home/templates/Home/base.html:178
+msgid "About"
+msgstr "Kuhusu"
+
+#: Home/templates/Home/base.html:104
+msgid "Tours"
+msgstr "Safari"
+
+#: Home/templates/Home/base.html:106
+msgid "East Africa Tours"
+msgstr "Safari za Afrika Mashariki"
+
+#: Home/templates/Home/base.html:107
+msgid "South Africa Tours"
+msgstr "Safari za Afrika Kusini"
+
+#: Home/templates/Home/base.html:108
+msgid "West Africa Tours"
+msgstr "Safari za Afrika Magharibi"
+
+#: Home/templates/Home/base.html:109
+msgid "International Tours"
+msgstr "Safari za Kimataifa"
+
+#: Home/templates/Home/base.html:111
+msgid "Cruises"
+msgstr "Safari za Baharini"
+
+#: Home/templates/Home/base.html:113
+msgid "Services"
+msgstr "Huduma"
+
+#: Home/templates/Home/base.html:115
+msgid "All Services"
+msgstr "Huduma Zote"
+
+#: Home/templates/Home/base.html:116
+msgid "African WildLife Tours"
+msgstr "Safari za Wanyamapori Afrika"
+
+#: Home/templates/Home/base.html:117
+msgid "Travel Partnerships"
+msgstr "Ushirikiano wa Kusafiri"
+
+#: Home/templates/Home/base.html:118
+msgid "Holiday Tailor Made Tours"
+msgstr "Safari za Likizo Maalum"
+
+#: Home/templates/Home/base.html:119
+msgid "AirPort Transfers"
+msgstr "Uhamisho wa Uwanja wa Ndege"
+
+#: Home/templates/Home/base.html:122
+msgid "Blogs"
+msgstr "Blogu"
+
+#: Home/templates/Home/base.html:123
+msgid "Gallery"
+msgstr "Nyumba ya sanaa"
+
+#: Home/templates/Home/base.html:124
+msgid "AirBNB"
+msgstr "AirBNB"
+
+#: Home/templates/Home/base.html:125 Home/templates/Home/base.html:189
+msgid "Contact"
+msgstr "Wasiliana"
+
+#: Home/templates/Home/base.html:127
+msgid "Book Now"
+msgstr "Weka Nafasi Sasa"
+
+#: Home/templates/Home/base.html:146
+msgid "Newsletter"
+msgstr "Jarida"
+
+#: Home/templates/Home/base.html:147
+msgid "Subscribe for Safari Updates & Special Offers"
+msgstr "Jisajili kwa Taarifa za Safari na Ofa Maalum"
+
+#: Home/templates/Home/base.html:148
+msgid "Join our newsletter to receive exclusive travel deals, safari tips, and inspiring stories from East Africa. Get 10% off your first booking when you subscribe today!"
+msgstr "Jiunge na jarida letu kupokea ofa za kipekee za usafiri, vidokezo vya safari, na hadithi za kutia moyo kutoka Afrika Mashariki. Pata punguzo la 10% kwa uwekaji nafasi yako ya kwanza unapojisajili leo!"
+
+#: Home/templates/Home/base.html:150
+msgid "Enter your email address"
+msgstr "Weka anwani yako ya barua pepe"
+
+#: Home/templates/Home/base.html:151
+msgid "Subscribe Now"
+msgstr "Jisajili Sasa"
+
+#: Home/templates/Home/base.html:163
+msgid "Get In Touch"
+msgstr "Wasiliana Nasi"
+
+#: Home/templates/Home/base.html:176
+msgid "Company"
+msgstr "Kampuni"
+
+#: Home/templates/Home/base.html:179
+msgid "Careers"
+msgstr "Kazi"
+
+#: Home/templates/Home/base.html:180
+msgid "Blog"
+msgstr "Blogu"
+
+#: Home/templates/Home/base.html:181
+msgid "Press"
+msgstr "Vyombo vya Habari"
+
+#: Home/templates/Home/base.html:182
+msgid "Gift Cards"
+msgstr "Kadi za Zawadi"
+
+#: Home/templates/Home/base.html:183
+msgid "Magazine"
+msgstr "Jarida"
+
+#: Home/templates/Home/base.html:187
+msgid "Support"
+msgstr "Msaada"
+
+#: Home/templates/Home/base.html:190
+msgid "Legal Notice"
+msgstr "Taarifa ya Kisheria"
+
+#: Home/templates/Home/base.html:191
+msgid "Privacy Policy"
+msgstr "Sera ya Faragha"
+
+#: Home/templates/Home/base.html:192
+msgid "Terms and Conditions"
+msgstr "Sheria na Masharti"
+
+#: Home/templates/Home/base.html:193
+msgid "Sitemap"
+msgstr "Ramani ya Tovuti"
+
+#: Home/templates/Home/base.html:194
+msgid "Cookie policy"
+msgstr "Sera ya Vidakuzi"
+
+#: Home/templates/Home/base.html:202
+msgid "Arabic"
+msgstr "Kiarabu"
+
+#: Home/templates/Home/base.html:203
+msgid "German"
+msgstr "Kijerumani"
+
+#: Home/templates/Home/base.html:204
+msgid "Greek"
+msgstr "Kigiriki"
+
+#: Home/templates/Home/base.html:205
+msgid "English"
+msgstr "Kiingereza"
+
+#: Home/templates/Home/base.html:217
+msgid "Payments"
+msgstr "Malipo"
+
+#: Home/templates/Home/base.html:228
+msgid "Days Safaris Adventures"
+msgstr "Days Safaris Adventures"
+
+#: Home/templates/Home/base.html:228
+msgid "All right reserved"
+msgstr "Haki zote zimehifadhiwa"
+
+#: Home/templates/Home/base.html:230
+msgid "Designed By"
+msgstr "Imeundwa Na"
+
+#: Home/templates/Home/base.html:281 Home/templates/Home/base.html:293
+msgid "Success!"
+msgstr "Imefanikiwa!"
+
+#: Home/templates/Home/base.html:284
+msgid "Error!"
+msgstr "Hitilafu!"
+
+#: Home/templates/Home/base.html:287
+msgid "Warning!"
+msgstr "Onyo!"
+
+#: Home/templates/Home/base.html:290
+msgid "Info!"
+msgstr "Taarifa!"
+
+#: Home/templates/Home/base.html:410
+msgid "Customer Support"
+msgstr "Msaada kwa Wateja"
+
+#: Home/templates/Home/base.html:411
+msgid "Usually replies in under 5 mins"
+msgstr "Kwa kawaida hujibu ndani ya dakika 5"
+
+#: Home/templates/Home/base.html:415
+msgid "Online"
+msgstr "Mtandaoni"
+
+#: Home/templates/Home/base.html:421
+msgid "Hello! 👋 Welcome to Day Safaris Adventures! How can I help you today?"
+msgstr "Habari! 👋 Karibu Day Safaris Adventures! Naweza kukusaidiaje leo?"
+
+#: Home/templates/Home/base.html:422
+msgid "Just now"
+msgstr "Sasa hivi"
+
+#: Home/templates/Home/base.html:428
+msgid "I need help with booking a safari"
+msgstr "Nahitaji msaada wa kuweka nafasi ya safari"
+
+#: Home/templates/Home/base.html:429
+msgid "Book Safari"
+msgstr "Weka Safari"
+
+#: Home/templates/Home/base.html:430
+msgid "Tell me about available destinations"
+msgstr "Nielezee kuhusu maeneo yanayopatikana"
+
+#: Home/templates/Home/base.html:432
+msgid "What are your current packages and prices?"
+msgstr "Je, ni vifurushi na bei gani zilizopo sasa?"
+
+#: Home/templates/Home/base.html:433
+msgid "Packages & Prices"
+msgstr "Vifurushi na Bei"
+
+#: Home/templates/Home/base.html:434
+msgid "I need help with payment options"
+msgstr "Nahitaji msaada wa chaguzi za malipo"
+
+#: Home/templates/Home/base.html:435
+msgid "Payment Help"
+msgstr "Msaada wa Malipo"
+
+#: Home/templates/Home/base.html:441
+msgid "Type your message..."
+msgstr "Andika ujumbe wako..."
+
+#: Home/templates/Home/base.html:447
+msgid "Powered by Day Safaris Support Team"
+msgstr "Inaendeshwa na Timu ya Msaada ya Day Safaris"
+
+# ==================== INDEX.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/index.html:4
+msgid "Home - Days Safaris Adventures"
+msgstr "Nyumbani - Days Safaris Adventures"
+
+#: Home/templates/Home/index.html:14
+msgid "Explore The World"
+msgstr "Gundua Ulimwengu"
+
+#: Home/templates/Home/index.html:15
+msgid "EXPERIENCE THE WORLD"
+msgstr "PATA UZOEFU WA ULIMWENGU"
+
+#: Home/templates/Home/index.html:16
+msgid "Adventure Awaits – Let's Go"
+msgstr "Matukio Yanakungojea – Twende"
+
+#: Home/templates/Home/index.html:18 Home/templates/Home/index.html:29 Home/templates/Home/index.html:40
+msgid "Discover Now"
+msgstr "Gundua Sasa"
+
+#: Home/templates/Home/index.html:27
+msgid "Travel With Us Today"
+msgstr "Safiri Nasi Leo"
+
+#: Home/templates/Home/index.html:28
+msgid "And Let Us Give You The Experience Of The World"
+msgstr "Na Wacha Tukupa Uzoefu wa Ulimwengu"
+
+#: Home/templates/Home/index.html:38
+msgid "Sail Into Serenity"
+msgstr "Safiri Kwa Amani"
+
+#: Home/templates/Home/index.html:39
+msgid "At Days Safaris Adventures"
+msgstr "Katika Days Safaris Adventures"
+
+#: Home/templates/Home/index.html:40
+msgid "We Are Your Ultimate Cruise Escape"
+msgstr "Sisi Ndio Kutoroka Kwako Kwa Safari ya Baharini"
+
+#: Home/templates/Home/index.html:48
+msgid "Previous"
+msgstr "Iliyopita"
+
+#: Home/templates/Home/index.html:52
+msgid "Next"
+msgstr "Inayofuata"
+
+#: Home/templates/Home/index.html:60
+msgid "Eg: Masai Mara, Diani, Amboseli"
+msgstr "Mf: Masai Mara, Diani, Amboseli"
+
+#: Home/templates/Home/index.html:61
+msgid "Search"
+msgstr "Tafuta"
+
+#: Home/templates/Home/index.html:73
+msgid "About Day Safaris"
+msgstr "Kuhusu Day Safaris"
+
+
+#: Home/templates/Home/index.html:77
+msgid "Explore East Africa with Day Safaris – Become a Story Teller"
+msgstr "Gundua Afrika Mashariki na Day Safaris – Kuwa Msimuliaji Hadithi"
+
+#: Home/templates/Home/index.html:78
+msgid "Day Safaris Adventures is Kenya's leading and fastest-growing tour company, renowned for delivering exceptional safari experiences across East Africa. As a premier destination management company, we specialize in creating unforgettable wildlife adventures, cultural immersions, and luxury getaways throughout Kenya, Tanzania, Uganda, and Rwanda."
+msgstr "Day Safaris Adventures ni kampuni inayoongoza na inayokua kwa kasi zaidi ya utalii nchini Kenya, inayojulikana kwa kutoa uzoefu wa kipekee wa safari katika Afrika Mashariki. Kama kampuni bora ya usimamizi wa maeneo, tuna utaalam katika kuunda matukio ya kusisimua ya wanyamapori, ujuzi wa kitamaduni, na burudani za kifahari kote Kenya, Tanzania, Uganda, na Rwanda."
+
+#: Home/templates/Home/index.html:79
+msgid "With our headquarters in Nairobi, Kenya, and strategic partner offices in South Africa and Tanzania, we offer tailor-made safari packages that include private game drives, hot air balloon safaris, mountain climbing expeditions, and beach holidays at the Kenyan coast. Our commitment to sustainable tourism and exceptional service ensures every journey with us becomes a lifetime memory."
+msgstr "Kwa makao yetu makuu mjini Nairobi, Kenya, na ofisi za washirika wa kimkakati nchini Afrika Kusini na Tanzania, tunatoa vifurushi maalum vya safari vinavyojumuisha safari za kibinafsi za wanyamapori, safari za puto za hewa moto, msafara wa kupanda milima, na likizo za ufukweni katika pwani ya Kenya. Kujitolea kwetu kwa utalii endelevu na huduma bora kunahakikisha kila safari nasi inakuwa kumbukumbu ya maisha."
+
+#: Home/templates/Home/index.html:81
+msgid "First Class Flights"
+msgstr "Ndege za Daraja la Kwanza"
+
+#: Home/templates/Home/index.html:84
+msgid "Handpicked Safari Lodges"
+msgstr "Lodji Zilizochaguliwa za Safari"
+
+#: Home/templates/Home/index.html:87
+msgid "5 Star Accommodations"
+msgstr "Malazi ya Nyota 5"
+
+#: Home/templates/Home/index.html:90
+msgid "Latest Model Safari Vehicles"
+msgstr "Magari ya Safari ya Muundo Mpya"
+
+#: Home/templates/Home/index.html:93
+msgid "150+ Premium Safari Tours"
+msgstr "150+ Safari za Kifahari"
+
+#: Home/templates/Home/index.html:96
+msgid "24/7 Customer Support"
+msgstr "Msaada kwa Wateja Saa 24/7"
+
+#: Home/templates/Home/index.html:108
+msgid "Our Services"
+msgstr "Huduma Zetu"
+
+
+#: Home/templates/Home/index.html:157
+msgid "Destination"
+msgstr "Eneo"
+
+#: Home/templates/Home/index.html:158
+msgid "The 'Must Visit' Destinations in East Africa"
+msgstr "Maeneo ya 'Lazima Kutembelewa' Afrika Mashariki"
+
+#: Home/templates/Home/index.html:165
+msgid "All Destinations"
+msgstr "Maeneo Yote"
+
+#: Home/templates/Home/index.html:210 Home/templates/Home/index.html:317
+msgid "Placeholder Image"
+msgstr "Picha ya Mfano"
+
+#: Home/templates/Home/index.html:215 Home/templates/Home/index.html:253 Home/templates/Home/index.html:291
+msgid "View All Places"
+msgstr "Angalia Maeneo Yote"
+
+#: Home/templates/Home/index.html:334
+msgid "Placeholder"
+msgstr "Mfano"
+
+#: Home/templates/Home/index.html:336
+msgid "Coming Soon"
+msgstr "Inakuja Hivi Karibuni"
+
+#: Home/templates/Home/index.html:337
+msgid "New Destination"
+msgstr "Eneo Jipya"
+
+#: Home/templates/Home/index.html:499
+msgid "Packages"
+msgstr "Vifurushi"
+
+#: Home/templates/Home/index.html:500
+msgid "Awesome Safari Packages"
+msgstr "Vifurushi Bora vya Safari"
+
+#: Home/templates/Home/index.html:512
+msgid "days"
+msgstr "siku"
+
+#: Home/templates/Home/index.html:513
+msgid "Persons"
+msgstr "Watu"
+
+#: Home/templates/Home/index.html:520
+msgid "Safari Package"
+msgstr "Kifurushi cha Safari"
+
+#: Home/templates/Home/index.html:534
+msgid "No packages available at the moment"
+msgstr "Hakuna vifurushi vinavyopatikana kwa sasa"
+
+#: Home/templates/Home/index.html:535
+msgid "Please check back later for exciting safari packages!"
+msgstr "Tafadhali rudi baadaye kwa vifurushi vya kusisimua vya safari!"
+
+#: Home/templates/Home/index.html:545
+msgid "Booking"
+msgstr "Kuweka Nafasi"
+
+#: Home/templates/Home/index.html:546
+msgid "Book Your Safari Adventure"
+msgstr "Weka Nafasi ya Safari Yako"
+
+#: Home/templates/Home/index.html:547
+msgid "Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains."
+msgstr "Uko tayari kupata matukio ya maisha? Kuweka nafasi ya safari yako na Day Safaris ni haraka na rahisi. Timu yetu ya wataalam wa usafiri itakusaidia kubinafsisha likizo yako bora ya Kiafrika, iwe unaota kushuhudia Uhamaji Mkubwa, kupumzika kwenye fukwe za kitropiki, au kupanda milima mikuu."
+
+#: Home/templates/Home/index.html:548
+msgid "Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!"
+msgstr "Nufaika na punguzo letu la mapema na ofa za kuweka nafasi za kikundi. Vifurushi vyetu vyote vinajumuisha waongozi wataalamu, malazi starehe, ada za kuingia kwenye mbuga, na msaada wa saa 24/7 katika safari yako yote. Weka nafasi leo na ulipe baadaye kwa mipango yetu rahisi ya malipo!"
+
+#: Home/templates/Home/index.html:549
+msgid "Brochures"
+msgstr "Buroshua"
+
+#: Home/templates/Home/index.html:552
+msgid "Book A Tour Deals"
+msgstr "Weka Nafasi ya Ofa za Safari"
+
+#: Home/templates/Home/index.html:553
+msgid "Get"
+msgstr "Pata"
+
+#: Home/templates/Home/index.html:553
+msgid "50% Off"
+msgstr "Punguzo la 50%"
+
+#: Home/templates/Home/index.html:553
+msgid "On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here."
+msgstr "Kwa Safari Yako ya Kwanza na Day Safaris Adventures. Pata Ofa Zaidi Hapa."
+
+#: Home/templates/Home/index.html:569
+msgid "Your Name"
+msgstr "Jina Lako"
+
+#: Home/templates/Home/index.html:577
+msgid "Your Email"
+msgstr "Barua Pepe Yako"
+
+#: Home/templates/Home/index.html:585
+msgid "Phone Number"
+msgstr "Nambari ya Simu"
+
+#: Home/templates/Home/index.html:601
+msgid "Number of Persons"
+msgstr "Idadi ya Watu"
+
+#: Home/templates/Home/index.html:609
+msgid "Travel Date"
+msgstr "Tarehe ya Kusafiri"
+
+#: Home/templates/Home/index.html:617
+msgid "Special Requests (Dietary, Accessibility, etc.)"
+msgstr "Maombi Maalum (Chakula, Upatikanaji, n.k.)"
+
+
+#: Home/templates/Home/index.html:637
+msgid "Our Blog"
+msgstr "Blogu Yetu"
+
+#: Home/templates/Home/index.html:638
+msgid "Popular Travel Blogs & Safari Tips"
+msgstr "Blogu Maarufu za Kusafiri na Vidokezo vya Safari"
+
+#: Home/templates/Home/index.html:639
+msgid "Discover expert travel advice, safari planning guides, and inspiring stories from our adventures across East Africa. Learn about the best times to visit, wildlife photography tips, and hidden gems off the beaten path."
+msgstr "Gundua ushauri wa wataalam wa kusafiri, miongozo ya kupanga safari, na hadithi za kutia moyo kutoka kwa matukio yetu kote Afrika Mashariki. Jifunze kuhusu nyakati bora za kutembelea, vidokezo vya kupiga picha za wanyamapori, na alama zilizojificha zisizo njiani."
+
+#: Home/templates/Home/index.html:665
+msgid "Posted By:"
+msgstr "Iliyochapishwa Na:"
+
+#: Home/templates/Home/index.html:674
+msgid "No blog posts yet"
+msgstr "Hakuna machapisho ya blogu bado"
+
+#: Home/templates/Home/index.html:675
+msgid "Check back soon for exciting travel stories and tips!"
+msgstr "Angalia tena hivi karibuni kwa hadithi na vidokezo vya kusisimua vya kusafiri!"
+
+#: Home/templates/Home/index.html:685
+msgid "Testimonial"
+msgstr "Ushuhuda"
+
+#: Home/templates/Home/index.html:686
+msgid "What Our Clients Say About Us"
+msgstr "Wateja Wetu Wanasema Nini Kuhusu Sisi"
+
+#: Home/templates/Home/index.html:713
+msgid "No testimonials yet"
+msgstr "Hakuna ushuhuda bado"
+
+#: Home/templates/Home/index.html:714
+msgid "Be the first to share your experience with us!"
+msgstr "Kuwa wa kwanza kushiriki uzoefu wako nasi!"
+
+# ==================== ABOUT.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/about.html:4
+msgid "About Us - Days Safaris Adventures"
+msgstr "Kuhusu Sisi - Days Safaris Adventures"
+
+#: Home/templates/Home/about.html:11
+msgid "About Our Destinations"
+msgstr "Kuhusu Maeneo Yetu"
+
+#: Home/templates/Home/about.html:14
+msgid "Pages"
+msgstr "Kurasa"
+
+#: Home/templates/Home/about.html:36
+msgid "Discover South Africa"
+msgstr "Gundua Afrika Kusini"
+
+#: Home/templates/Home/about.html:37
+msgid "Experience the Beauty & Luxury of South Africa"
+msgstr "Pata Urembo na Anasa ya Afrika Kusini"
+
+#: Home/templates/Home/about.html:38
+msgid "Discover breathtaking landscapes, vibrant cities, and unforgettable wildlife adventures across South Africa. From the stunning coastlines of Cape Town to thrilling safaris in Kruger National Park, every journey is designed to create lasting memories."
+msgstr "Gundua mandhari ya kuvutia, miji hai, na matukio ya kusisimua ya wanyamapori kote Afrika Kusini. Kutoka ukanda wa pwani wa Cape Town hadi safari za kusisimua katika Hifadhi ya Taifa ya Kruger, kila safari imeundwa kuleta kumbukumbu za kudumu."
+
+#: Home/templates/Home/about.html:39
+msgid "Enjoy luxury accommodations, guided wildlife tours, cultural experiences, wine tasting adventures, and scenic road trips with professionally curated travel packages tailored for every explorer."
+msgstr "Furahia malazi ya kifahari, safari za wanyamapori zilizoongozwa, uzoefu wa kitamaduni, matukio ya kuonja divai, na safari za barabara za kupendeza na vifurushi vya usafiri vilivyotengenezwa kitaalamu kwa kila mgunduzi."
+
+#: Home/templates/Home/about.html:43
+msgid "Luxury Safari Experiences"
+msgstr "Uzoefu wa Safari za Kifahari"
+
+#: Home/templates/Home/about.html:45
+msgid "Cape Town City Tours"
+msgstr "Safari za Jiji la Cape Town"
+
+#: Home/templates/Home/about.html:47
+msgid "Beach & Coastal Escapes"
+msgstr "Mapumziko ya Pwani na Ukanda"
+
+#: Home/templates/Home/about.html:49
+msgid "Adventure Activities"
+msgstr "Shughuli za Matukio"
+
+#: Home/templates/Home/about.html:51
+msgid "Wine & Cultural Tours"
+msgstr "Safari za Divai na Utamaduni"
+
+#: Home/templates/Home/about.html:53
+msgid "24/7 Travel Assistance"
+msgstr "Usaidizi wa Kusafiri Saa 24/7"
+
+#: Home/templates/Home/about.html:56
+msgid "Explore South Africa Tours"
+msgstr "Gundua Safari za Afrika Kusini"
+
+
+#: Home/templates/Home/about.html:75
+msgid "Explore West Africa"
+msgstr "Gundua Afrika Magharibi"
+
+#: Home/templates/Home/about.html:76
+msgid "Discover Culture, History & Adventure"
+msgstr "Gundua Utamaduni, Historia na Matukio"
+
+#: Home/templates/Home/about.html:77
+msgid "Experience the rich traditions, colorful cultures, and vibrant destinations of West Africa. From historical landmarks and bustling cities to tropical beaches and wildlife reserves, every destination offers something unique."
+msgstr "Pata tajriba ya mila tajiri, tamaduni za rangi, na maeneo hai ya Afrika Magharibi. Kutoka alama za kihistoria na miji yenye shughuli nyingi hadi fukwe za kitropiki na hifadhi za wanyamapori, kila eneo linatoa kitu cha kipekee."
+
+#: Home/templates/Home/about.html:78
+msgid "Our West Africa tours combine authentic cultural encounters, comfortable travel experiences, local cuisine adventures, and guided excursions across some of Africa's most exciting destinations."
+msgstr "Safari zetu za Afrika Magharibu zinachanganya mikutano ya kitamaduni halisi, uzoefu wa kusafiri kwa starehe, matukio ya vyakula vya kienyeji, na matembezi yaliyoongozwa katika baadhi ya maeneo ya kusisimua zaidi barani Afrika."
+
+#: Home/templates/Home/about.html:82
+msgid "Cultural Heritage Tours"
+msgstr "Safari za Urithi wa Utamaduni"
+
+#: Home/templates/Home/about.html:84
+msgid "Historical Site Visits"
+msgstr "Ziara za Maeneo ya Kihistoria"
+
+#: Home/templates/Home/about.html:86
+msgid "Luxury Hotel Stays"
+msgstr "Makazi ya Hoteli za Kifahari"
+
+#: Home/templates/Home/about.html:88
+msgid "Beach Getaways"
+msgstr "Mapumziko ya Pwani"
+
+#: Home/templates/Home/about.html:90
+msgid "Guided City Excursions"
+msgstr "Safari za Jiji Zilizoongozwa"
+
+#: Home/templates/Home/about.html:92
+msgid "Professional Tour Guides"
+msgstr "Waongozi wa Utalii wa Kitaalamu"
+
+#: Home/templates/Home/about.html:95
+msgid "Explore West Africa Tours"
+msgstr "Gundua Safari za Afrika Magharibi"
+
+
+#: Home/templates/Home/about.html:114
+msgid "Travel Beyond Borders & Create Memories"
+msgstr "Safiri Zaidi ya Mipaka na Unda Kumbukumbu"
+
+#: Home/templates/Home/about.html:115
+msgid "Explore iconic destinations around the world with carefully planned international travel experiences. Whether you dream of luxury vacations, romantic escapes, or adventure-filled journeys, we make global travel seamless and exciting."
+msgstr "Gundua maeneo maarufu duniani kote kwa uzoefu wa kusafiri wa kimataifa uliopangwa kwa uangalifu. Iwe unaota likizo za kifahari, kutoroka kwa kimapenzi, au safari zilizojaa matukio, tunafanya usafiri wa kimataifa kuwa mzuri na wa kusisimua."
+
+#: Home/templates/Home/about.html:116
+msgid "From flight bookings and hotel reservations to guided tours and visa assistance, our international travel packages are crafted to give you comfort, convenience, and unforgettable experiences."
+msgstr "Kuanzia uhifadhi wa ndege na uhifadhi wa hoteli hadi safari zilizoongozwa na usaidizi wa visa, vifurushi vyetu vya usafiri wa kimataifa vimeundwa kukupa starehe, urahisi, na uzoefu usiosahaulika."
+
+#: Home/templates/Home/about.html:120
+msgid "Worldwide Destinations"
+msgstr "Maeneo ya Ulimwenguni"
+
+#: Home/templates/Home/about.html:122
+msgid "Flight & Hotel Booking"
+msgstr "Uhifadhi wa Ndege na Hoteli"
+
+#: Home/templates/Home/about.html:124
+msgid "Visa Assistance"
+msgstr "Usaidizi wa Visa"
+
+#: Home/templates/Home/about.html:126
+msgid "Luxury Vacation Packages"
+msgstr "Vifurushi vya Likizo za Kifahari"
+
+#: Home/templates/Home/about.html:128
+msgid "Family & Group Tours"
+msgstr "Safari za Familia na Kikundi"
+
+#: Home/templates/Home/about.html:132
+msgid "Explore International Tours"
+msgstr "Gundua Safari za Kimataifa"
+
+#: Home/templates/Home/about.html:152
+msgid "Explore East Africa"
+msgstr "Gundua Afrika Mashariki"
+
+#: Home/templates/Home/about.html:153
+msgid "Witness Africa's Greatest Safari Adventures"
+msgstr "Shuhudia Matukio Bora ya Safari za Afrika"
+
+#: Home/templates/Home/about.html:154
+msgid "Discover the breathtaking beauty of East Africa through unforgettable safaris, wildlife encounters, mountain adventures, and relaxing beach holidays across Kenya, Tanzania, Uganda, and Rwanda."
+msgstr "Gundua urembo wa kuvutia wa Afrika Mashariki kupitia safari za kusisimua, kukutana na wanyamapori, matukio ya milimani, na likizo za kupumzika za pwani kote Kenya, Tanzania, Uganda, na Rwanda."
+
+#: Home/templates/Home/about.html:155
+msgid "From the Great Migration in Maasai Mara and Serengeti to gorilla trekking and coastal escapes, our expertly curated tours deliver authentic African experiences for solo travelers, couples, families, and groups."
+msgstr "Kutoka Uhamaji Mkubwa katika Maasai Mara na Serengeti hadi matembezi ya sokwe na mapumziko ya pwani, safari zetu zilizotengenezwa kwa utaalamu zinaleta uzoefu halisi wa Kiafrika kwa wasafiri wa peke yao, wapenzi, familia, na vikundi."
+
+#: Home/templates/Home/about.html:159
+msgid "Big Five Safari Tours"
+msgstr "Safari za Wanyama Watano Wakubwa"
+
+#: Home/templates/Home/about.html:161
+msgid "Hot Air Balloon Safaris"
+msgstr "Safari za Puto za Hewa Moto"
+
+#: Home/templates/Home/about.html:163
+msgid "Mountain Climbing Adventures"
+msgstr "Matukio ya Kupanda Milima"
+
+#: Home/templates/Home/about.html:165
+msgid "Luxury Safari Lodges"
+msgstr "Lodji za Kifahari za Safari"
+
+#: Home/templates/Home/about.html:167
+msgid "Beach & Island Holidays"
+msgstr "Likizo za Pwani na Kisiwa"
+
+#: Home/templates/Home/about.html:169
+msgid "Experienced Safari Guides"
+msgstr "Waongozi wa Safari wenye Uzoefu"
+
+#: Home/templates/Home/about.html:172
+msgid "Explore East Africa Tours"
+msgstr "Gundua Safari za Afrika Mashariki"
+
+#: Home/templates/Home/about.html:196
+msgid "Travel Guide"
+msgstr "Mwongozo wa Kusafiri"
+
+#: Home/templates/Home/about.html:197
+msgid "Meet Our Guides"
+msgstr "Kutana na Waongozi Wetu"
+
+#: Home/templates/Home/about.html:222 Home/templates/Home/about.html:244 Home/templates/Home/about.html:266 Home/templates/Home/about.html:288
+msgid "Designation"
+msgstr "Wadhifa"
+
+# ==================== SERVICES ====================
+
+#: Home/templates/Home/index.html:24
+msgid "Aeroplane Transfers"
+msgstr "Uhamisho wa Ndege"
+
+#: Home/templates/Home/index.html:40
+msgid "Visit Africa Today"
+msgstr "Tembelea Afrika Leo"
+
+#: Home/templates/Home/index.html:41
+msgid "Africa Tours"
+msgstr "Safari za Afrika"
+
+#: Home/templates/Home/index.html:55
+msgid "Accomodation"
+msgstr "Malazi"
+
+#: Home/templates/Home/index.html:56
+msgid "Hotel Accomodation"
+msgstr "Malazi ya Hoteli"
+
+#: Home/templates/Home/index.html:57
+msgid "Enjoy comfortable and carefully selected hotels"
+msgstr "Furahia hoteli starehe na zilizochaguliwa kwa uangalifu"
+
+#: Home/templates/Home/index.html:71
+msgid "Get Visa processed"
+msgstr "Pata Visa Kusindikizwa"
+
+#: Home/templates/Home/index.html:72
+msgid "Visa Processing"
+msgstr "Usindikaji wa Visa"
+
+#: Home/templates/Home/index.html:73
+msgid "Our visa processing and transfer services are designed to make international travel simple and hassle-free"
+msgstr "Huduma zetu za usindikaji wa visa na uhamisho zimeundwa kurahisisha usafiri wa kimataifa na kukufanya usiwe na shida"
+
+#: Home/templates/Home/index.html:87
+msgid "Tailor Made Tours"
+msgstr "Safari Maalum"
+
+#: Home/templates/Home/index.html:88
+msgid "Tailour Made Tours"
+msgstr "Safari Maalum Zilizotengenezwa"
+
+#: Home/templates/Home/index.html:89
+msgid "Design your dream African adventure with our personalized tour planning service"
+msgstr "Sanifu ndoto yako ya safari ya Kiafrika kwa huduma yetu ya kupanga safari za kibinafsi"
+
+#: Home/templates/Home/index.html:103
+msgid "partner program"
+msgstr "mpango wa washirika"
+
+#: Home/templates/Home/index.html:105
+msgid "Enjoy hassle-free airport transfers from Jomo Kenyatta International Airport, Moi International Airport, Kilimanjaro International Airport, and Entebbe Airport"
+msgstr "Furahia uhamisho wa uwanja wa ndege bila shida kutoka Uwanja wa Ndege wa Kimataifa wa Jomo Kenyatta, Uwanja wa Ndege wa Kimataifa wa Moi, Uwanja wa Ndege wa Kimataifa wa Kilimanjaro, na Uwanja wa Ndege wa Entebbe"
+
+
+# ==================== AIRLINE.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/airline.html:4
+msgid "Airline - Days Safaris Adventures"
+msgstr "Shirika la Ndege - Days Safaris Adventures"
+
+#: Home/templates/Home/airline.html:14
+msgid "Airline"
+msgstr "Shirika la Ndege"
+
+#: Home/templates/Home/airline.html:32
+msgid "Welcome To Day Safaris Adventures"
+msgstr "Karibu Day Safaris Adventures"
+
+#: Home/templates/Home/airline.html:33
+msgid "We will help you plan for travel, a very daunting task if you try to do it yourself and especially when it comes to booking cheap flights."
+msgstr "Tutakusaidia kupanga safari, kazi ngumu sana ukijaribu kuifanya mwenyewe na hasa linapokuja suala la kuhifadhi ndege za bei nafuu."
+
+#: Home/templates/Home/airline.html:34
+msgid "Day Safaris Adventures simplifies this task by enabling you to search domestic and international flights offered by major airlines in the world such as Egypt Air, Kenya Airways, South African Airways, Ethiopian Airlines, Air France, KLM, Emirates, Lufthansa, Swiss Airways among others at the cheapest price. Find and compare flights, book/buy flights, and buy air tickets online with ease using Day Safaris Adventures bookings website here."
+msgstr "Day Safaris Adventures hurahisisha kazi hii kwa kukuwezesha kutafuta ndege za ndani na za kimataifa zinazotolewa na mashirika makubwa ya ndege duniani kama vile Egypt Air, Kenya Airways, South African Airways, Ethiopian Airlines, Air France, KLM, Emirates, Lufthansa, Swiss Airways miongoni mwa mengine kwa bei nafuu zaidi. Tafuta na linganisha ndege, hifadhi/nunua ndege, na nunua tiketi za ndege mtandaoni kwa urahisi kwa kutumia tovuti ya uhifadhi wa Day Safaris Adventures hapa."
+
+#: Home/templates/Home/airline.html:35
+msgid "Read More"
+msgstr "Soma Zaidi"
+
+#: Home/templates/Home/airline.html:46
+msgid "African Wildlife Safaris"
+msgstr "Safari za Wanyamapori Afrika"
+
+#: Home/templates/Home/airline.html:47
+msgid "Experience the magic of the African wilderness with our expert guides. Track the Big Five in Masai Mara, witness the Great Wildebeest Migration, and capture breathtaking moments of lions, elephants, rhinos, leopards, and buffalos in their natural habitat."
+msgstr "Pata uchawi wa pori la Afrika kwa waongozi wetu wataalamu. Fuatilia Wanyama Watano Wakubwa huko Masai Mara, shuhudia Uhamaji Mkubwa wa Nyumbu, na nukuu wakati wa kusisimua wa simba, tembo, faru, chui, na nyati katika makazi yao ya asili."
+
+#: Home/templates/Home/airline.html:56
+msgid "Travel Partnership Programs"
+msgstr "Mipango ya Ushirikiano wa Kusafiri"
+
+#: Home/templates/Home/airline.html:57
+msgid "Join our exclusive travel partnership network and unlock special rates for group bookings, corporate retreats, and family vacations. We work with hotels, airlines, and local guides to provide seamless travel experiences across East Africa."
+msgstr "Jiunge na mtandao wetu wa kipekee wa ushirikiano wa kusafiri na ufungue viwango maalum vya uhifadhi wa vikundi, mafungo ya mashirika, na likizo za familia. Tunafanya kazi na hoteli, mashirika ya ndege, na waongozi wa ndani kutoa uzoefu mzuri wa kusafiri kote Afrika Mashariki."
+
+#: Home/templates/Home/airline.html:69
+msgid "Airport Transfers & Shuttles"
+msgstr "Uhamisho wa Uwanja wa Ndege na Shuttles"
+
+#: Home/templates/Home/airline.html:70
+msgid "Enjoy hassle-free airport transfers from Jomo Kenyatta International Airport, Moi International Airport, Kilimanjaro International Airport, and Entebbe Airport. Our professional drivers and comfortable vehicles ensure you start and end your journey stress-free."
+msgstr "Furahia uhamisho wa uwanja wa ndege bila shida kutoka Uwanja wa Ndege wa Kimataifa wa Jomo Kenyatta, Uwanja wa Ndege wa Kimataifa wa Moi, Uwanja wa Ndege wa Kimataifa wa Kilimanjaro, na Uwanja wa Ndege wa Entebbe. Madereva wetu wa kitaalamu na magari yetu starehe huhakikisha unaanza na kumaliza safari yako bila mafadhaiko."
+
+#: Home/templates/Home/airline.html:79
+msgid "Custom Tailor-Made Tours"
+msgstr "Safari Maalum Zilizotengenezwa"
+
+#: Home/templates/Home/airline.html:80
+msgid "Design your dream African adventure with our personalized tour planning service. Whether it's a romantic honeymoon safari, a family vacation, or a solo expedition, we craft itineraries that match your preferences, budget, and travel style perfectly."
+msgstr "Sanifu safari yako ya ndoto ya Kiafrika kwa huduma yetu ya kibinafsi ya kupanga safari. Iwe ni safari ya kimapenzi ya fungate, likizo ya familia, au msafara wa peke yako, tunaunda ratiba za safari zinazolingana na mapendeleo yako, bajeti, na mtindo wako wa kusafiri kikamilifu."
+
+#: Home/templates/Home/airline.html:88
+msgid "View All Services"
+msgstr "Angalia Huduma Zote"
+
+# ==================== GALLERY.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/gallery.html:4
+msgid "Gallery - Days Safaris Adventures"
+msgstr "Nyumba ya Sanaa - Days Safaris Adventures"
+
+
+#: Home/templates/Home/gallery.html:24
+msgid "Our Gallery"
+msgstr "Nyumba yetu ya Sanaa"
+
+#: Home/templates/Home/gallery.html:25
+msgid "Unforgettable Safari Moments Captured"
+msgstr "Nyakati za Safari Zisizosahaulika Zilizonaswa"
+
+#: Home/templates/Home/gallery.html:26
+msgid "Explore stunning images from our recent safaris across East Africa. From breathtaking wildlife encounters to beautiful landscapes and cultural experiences, our gallery showcases the magic of African adventures."
+msgstr "Gundua picha za kuvutia kutoka kwa safari zetu za hivi karibuni kote Afrika Mashariki. Kutoka kwa kukutana na wanyamapori wa kusisimua hadi mandhari nzuri na uzoefu wa kitamaduni, nyumba yetu ya sanaa inaonyesha uchawi wa matukio ya Kiafrika."
+
+#: Home/templates/Home/gallery.html:33
+msgid "All Photos"
+msgstr "Picha Zote"
+
+#: Home/templates/Home/gallery.html:56 Home/templates/Home/gallery.html:86
+msgid "View Gallery"
+msgstr "Angalia Nyumba ya Sanaa"
+
+#: Home/templates/Home/gallery.html:68
+msgid "No images available"
+msgstr "Hakuna picha zinazopatikana"
+
+#: Home/templates/Home/gallery.html:69
+msgid "Check back soon for amazing gallery photos!"
+msgstr "Angalia tena hivi karibuni kwa picha za kuvutia za nyumba ya sanaa!"
+
+#: Home/templates/Home/gallery.html:93
+msgid "No images in this category"
+msgstr "Hakuna picha katika kitengo hiki"
+
+#: Home/templates/Home/gallery.html:94
+msgid "Check back soon for amazing photos!"
+msgstr "Angalia tena hivi karibuni kwa picha za kuvutia!"
+
+# ==================== PACKAGE_DETAIL.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/package_detail.html:4
+msgid "Day Safaris Adventures"
+msgstr "Days Safaris Adventures"
+
+#: Home/templates/Home/package_detail.html:38
+msgid "Days Offer"
+msgstr "Ofa ya Siku"
+
+#: Home/templates/Home/package_detail.html:47
+msgid "Days"
+msgstr "Siku"
+
+#: Home/templates/Home/package_detail.html:48
+msgid "Duration"
+msgstr "Muda"
+
+#: Home/templates/Home/package_detail.html:54
+msgid "Location"
+msgstr "Eneo"
+
+#: Home/templates/Home/package_detail.html:60
+msgid "Max Group"
+msgstr "Kikundi cha Juu"
+
+#: Home/templates/Home/package_detail.html:67
+msgid "Rating:"
+msgstr "Ukadiriaji:"
+
+#: Home/templates/Home/package_detail.html:82
+msgid "Professional Safari Guide"
+msgstr "Mwongozo wa Kitaalamu wa Safari"
+
+#: Home/templates/Home/package_detail.html:85
+msgid "Park Entry Fees Included"
+msgstr "Ada za Kuingia Hifadhi Zimejumuishwa"
+
+#: Home/templates/Home/package_detail.html:88
+msgid "Game Drives in 4x4 Vehicles"
+msgstr "Safari za Wanyama kwa Magari 4x4"
+
+#: Home/templates/Home/package_detail.html:91
+msgid "Accommodation & Meals"
+msgstr "Malazi na Chakula"
+
+#: Home/templates/Home/package_detail.html:94
+msgid "Airport Transfers"
+msgstr "Uhamisho wa Uwanja wa Ndege"
+
+#: Home/templates/Home/package_detail.html:102
+msgid "View All Packages"
+msgstr "Angalia Vifurushi Vyote"
+
+#: Home/templates/Home/package_detail.html:114
+msgid "Your Journey"
+msgstr "Safari Yako"
+
+#: Home/templates/Home/package_detail.html:115
+msgid "Day Safari Itinerary"
+msgstr "Ratiba ya Safari ya Siku"
+
+#: Home/templates/Home/package_detail.html:116
+msgid "Day-by-day breakdown of your"
+msgstr "Uchanganuzi wa siku kwa siku wa"
+
+#: Home/templates/Home/package_detail.html:116
+msgid "adventure."
+msgstr "safari yako."
+
+#: Home/templates/Home/package_detail.html:125
+msgid "Day"
+msgstr "Siku"
+
+#: Home/templates/Home/package_detail.html:143
+msgid "Activities:"
+msgstr "Shughuli:"
+
+#: Home/templates/Home/package_detail.html:166
+msgid "Arrival & Welcome"
+msgstr "Kuwasili na Karibu"
+
+#: Home/templates/Home/package_detail.html:166
+msgid "Departure"
+msgstr "Kuondoka"
+
+#: Home/templates/Home/package_detail.html:166
+msgid "Safari Experience"
+msgstr "Uzoefu wa Safari"
+
+#: Home/templates/Home/package_detail.html:169
+msgid "Arrive at"
+msgstr "Fika"
+
+#: Home/templates/Home/package_detail.html:169
+msgid "meet your safari guide, and transfer to your accommodation. Evening briefing about your"
+msgstr "kutana na mwongozo wako wa safari, na uhamisho kwa malazi yako. Mkutano wa jioni kuhusu"
+
+#: Home/templates/Home/package_detail.html:169
+msgid "day adventure."
+msgstr "safari yako ya siku."
+
+#: Home/templates/Home/package_detail.html:171
+msgid "Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the airport for your departure flight."
+msgstr "Furahia kiamsha kinywa cha mwisho, ununuzi wa zawadi za dakika za mwisho, na uhamisho kwa uwanja wa ndege kwa safari yako ya kuondoka."
+
+#: Home/templates/Home/package_detail.html:173
+msgid "Early morning game drive to spot wildlife in their natural habitat. Return to lodge for breakfast. Afternoon relaxation or optional activities. Evening game drive with sundowners."
+msgstr "Safari ya asubuhi na mapema ya wanyamapori katika makazi yao ya asili. Rudi kwenye lodge kwa kiamsha kinywa. Pumziko la mchana au shughuli za hiari. Safari ya jioni ya wanyamapori na vinywaji vya jioni."
+
+#: Home/templates/Home/package_detail.html:177
+msgid "Meals:"
+msgstr "Chakula:"
+
+#: Home/templates/Home/package_detail.html:177
+msgid "Full Board (Breakfast, Lunch & Dinner)"
+msgstr "Chakula Kamili (Kiamsha kinywa, Chakula cha mchana na Chakula cha jioni)"
+
+#: Home/templates/Home/package_detail.html:194
+msgid "Learn More"
+msgstr "Jifunze Zaidi"
+
+#: Home/templates/Home/package_detail.html:218
+msgid "Full Name"
+msgstr "Jina Kamili"
+
+#: Home/templates/Home/package_detail.html:226
+msgid "Email Address"
+msgstr "Barua Pepe"
+
+#: Home/templates/Home/package_detail.html:259
+msgid "Package"
+msgstr "Kifurushi"
+
+#: Home/templates/Home/package_detail.html:266
+msgid "Special Requests"
+msgstr "Maombi Maalum"
+
+#: Home/templates/Home/package_detail.html:273
+msgid "Package Price:"
+msgstr "Bei ya Kifurushi:"
+
+#: Home/templates/Home/package_detail.html:273
+msgid "per person"
+msgstr "kwa kila mtu"
+
+#: Home/templates/Home/package_detail.html:276
+msgid "Total:"
+msgstr "Jumla:"
+
+#: Home/templates/Home/package_detail.html:279
+msgid "Proceed to Payment"
+msgstr "Endelea kwa Malipo"
+
+#: Home/templates/Home/package_detail.html:294
+msgid "You May Also Like"
+msgstr "Unaweza Penda Pia"
+
+#: Home/templates/Home/package_detail.html:295
+msgid "Similar Safari Packages"
+msgstr "Vifurushi Sawa vya Safari"
+
+#: Home/templates/Home/package_detail.html:296
+msgid "Explore other amazing safari experiences we offer."
+msgstr "Gundua uzoefu mwingine mzuri wa safari tunazotoa."
+
+#: Home/templates/Home/package_detail.html:320
+msgid "View Details"
+msgstr "Angalia Maelezo"
+
+#: Home/templates/Home/package_detail.html:324
+msgid "No similar packages found."
+msgstr "Hakuna vifurushi sawa vilivyopatikana."
+
+#: Home/templates/Home/package_detail.html:336
+msgid "Package Highlights"
+msgstr "Vivutio vya Kifurushi"
+
+#: Home/templates/Home/package_detail.html:337
+msgid "What's Included in Your Safari"
+msgstr "Kinachojumuishwa katika Safari Yako"
+
+#: Home/templates/Home/package_detail.html:338
+msgid "Everything you need for an unforgettable African adventure is included in your package."
+msgstr "Kila kitu unachohitaji kwa safari ya Kiafrika isiyosahaulika kimejumuishwa katika kifurushi chako."
+
+#: Home/templates/Home/package_detail.html:346
+msgid "Comfortable Transport"
+msgstr "Usafiri Mzuri"
+
+#: Home/templates/Home/package_detail.html:347
+msgid "Travel in style in our modern 4x4 safari vehicles with pop-up roofs for optimal wildlife viewing and photography."
+msgstr "Safiri kwa mtindo katika magari yetu ya kisasa ya safari 4x4 yenye paa za kufunguka kwa uwezo bora wa kutazama wanyamapori na kupiga picha."
+
+#: Home/templates/Home/package_detail.html:355
+msgid "Premium Accommodation"
+msgstr "Malazi ya Kifahari"
+
+#: Home/templates/Home/package_detail.html:356
+msgid "Stay in carefully selected lodges and tented camps that offer comfort, safety, and authentic African experiences."
+msgstr "Kaa katika lodji zilizochaguliwa kwa uangalifu na kambi za hema zinazotoa starehe, usalama, na uzoefu halisi wa Kiafrika."
+
+#: Home/templates/Home/package_detail.html:364
+msgid "Delicious Meals"
+msgstr "Chakula Kitamu"
+
+#: Home/templates/Home/package_detail.html:365
+msgid "Enjoy a variety of local and international cuisine prepared by expert chefs, including special dietary requirements."
+msgstr "Furahia aina mbalimbali za vyakula vya kienyeji na vya kimataifa vilivyotayarishwa na wapishi wataalamu, ikiwa ni pamoja na mahitaji maalum ya lishe."
+
+#: Home/templates/Home/package_detail.html:373
+msgid "Expert Safari Guides"
+msgstr "Waongozi Wataalamu wa Safari"
+
+#: Home/templates/Home/package_detail.html:374
+msgid "Our knowledgeable guides have years of experience and will ensure you don't miss any wildlife sightings."
+msgstr "Waongozi wetu wenye ujuzi wana uzoefu wa miaka mingi na watahakikisha hukosi kuona wanyamapori."
+
+#: Home/templates/Home/package_detail.html:382
+msgid "Photography Tips"
+msgstr "Vidokezo vya Upigaji Picha"
+
+#: Home/templates/Home/package_detail.html:383
+msgid "Get professional photography guidance to capture stunning wildlife moments during your safari."
+msgstr "Pata mwongozo wa kitaalamu wa upigaji picha ili kunasa matukio mazuri ya wanyamapori wakati wa safari yako."
+
+#: Home/templates/Home/package_detail.html:391
+msgid "24/7 Support"
+msgstr "Msaada wa Saa 24/7"
+
+#: Home/templates/Home/package_detail.html:392
+msgid "Our dedicated support team is available around the clock to assist you before and during your safari."
+msgstr "Timu yetu ya usaidizi inapatikana kila saa kukusaidia kabla na wakati wa safari yako."
+
+# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/african_wildlife_tours.html:4
+msgid "African Wildlife Tours - Days Safaris Adventures"
+msgstr "Safari za Wanyamapori Afrika - Days Safaris Adventures"
+
+#: Home/templates/Home/african_wildlife_tours.html:11
+msgid "African Wildlife Tours"
+msgstr "Safari za Wanyamapori Afrika"
+
+#: Home/templates/Home/african_wildlife_tours.html:31
+msgid "Explore African Wildlife Tours"
+msgstr "Gundua Safari za Wanyamapori Afrika"
+
+#: Home/templates/Home/african_wildlife_tours.html:32
+msgid "Day Safaris Adventures offers a wide range of African Wildlife Safari packages, Kenya, one of them being the country where the word 'Safari' (Swahili for 'journey') actually comes from. Close encounters with a variety of wildlife in breath-taking landscapes, luxurious and unusual camps and lodges and the fascinating culture of Kenyan tribes bring the country top of many lists for the best wildlife safaris in Africa."
+msgstr "Day Safaris Adventures inatoa aina mbalimbali za vifurushi vya Safari za Wanyamapori Afrika, Kenya, ikiwa ni moja ya nchi ambapo neno 'Safari' (Kiswahili kwa 'safari') linatokana. Kukutana kwa karibu na aina mbalimbali za wanyamapori katika mandhari ya kupendeza, kambi na lodji za kifahari na zisizo za kawaida na utamaduni wa kuvutia wa makabila ya Kenya huifanya nchi hii kuwa ya juu katika orodha nyingi za safari bora za wanyamapori barani Afrika."
+
+#: Home/templates/Home/african_wildlife_tours.html:33
+msgid "A hunting ban over the last 35 years has also reduced animals' fear of humans making Kenya more approachable, allowing the best wildlife safaris in Kenya to be really close to wildlife."
+msgstr "Marufuku ya uwindaji kwa miaka 35 iliyopita pia imepunguza hofu ya wanyama kwa wanadamu na kufanya Kenya kukaribika zaidi, na kuruhusu safari bora za wanyamapori nchini Kenya kuwa karibu sana na wanyamapori."
+
+#: Home/templates/Home/african_wildlife_tours.html:34
+msgid "The various habitats, from grasslands, to riverine forests, to moorlands and semi-deserts, accounts for the variety of wildlife in Kenya. This also means that there is a huge range of choice for your wildlife safari trip. We won't deny that many of the best wildlife safari destinations in Kenya, like Maasai Mara National Reserve or Samburu, are very popular and thus busy. However, with our experience we can help you to avoid the crowds!"
+msgstr "Makazi mbalimbali, kutoka nyasi, hadi misitu ya mito, hadi nyika na nusu jangwa, huchangia aina mbalimbali za wanyamapori nchini Kenya. Hii pia inamaanisha kuwa kuna chaguo nyingi kwa safari yako ya wanyamapori. Hatutakanusha kwamba maeneo mengi bora ya safari za wanyamapori nchini Kenya, kama Hifadhi ya Taifa ya Maasai Mara au Samburu, ni maarufu sana na hivyo kuwa na watu wengi. Hata hivyo, kwa uzoefu wetu tunaweza kukusaidia kuepuka umati!"
+
+#: Home/templates/Home/african_wildlife_tours.html:35
+msgid "Others wildlife Safaris include those in Tanzania, a country that offers a winning combination: some of Africa's best wildlife safaris plus stunning tropical beaches. Besides the Serengeti's famous wildebeest migration, there are other world-class safari locations here. There is also Volcanoes National Park in Rwanda, and Addo Elephant Park and Samara Game Reserve in South Africa among others."
+msgstr "Safari nyingine za wanyamapori zinajumuisha zile za Tanzania, nchi inayotoa mchanganyiko mzuri: safari bora za wanyamapori barani Afrika pamoja na fukwe za kupendeza za kitropiki. Kando na uhamaji maarufu wa nyumbu wa Serengeti, kuna maeneo mengine ya safari ya kiwango cha kimataifa hapa. Pia kuna Hifadhi ya Taifa ya Volcanoes nchini Rwanda, na Hifadhi ya Tembo ya Addo na Hifadhi ya Wanyama ya Samara nchini Afrika Kusini miongoni mwa mengine."
+
+# ==================== AIRPORT TRANSFERS.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/airport_transfers.html:4
+msgid "Airport Transfers - Days Safaris Adventures"
+msgstr "Uhamisho wa Uwanja wa Ndege - Days Safaris Adventures"
+
+#: Home/templates/Home/airport_transfers.html:31
+msgid "Explore Our Airport Transfers"
+msgstr "Gundua Uhamisho Wetu wa Uwanja wa Ndege"
+
+#: Home/templates/Home/airport_transfers.html:32
+msgid "What's the best way to get from the airport to your destination? Let Day Safaris Adventures help solve this for you. We are one of Kenya's biggest tour company providing the best services, even airport transfers services."
+msgstr "Ni njia gani bora ya kutoka uwanja wa ndege hadi unakoenda? Acha Day Safaris Adventures ikusaidie kutatua hili kwako. Sisi ni moja ya kampuni kubwa za utalii nchini Kenya inayotoa huduma bora, hata huduma za uhamisho wa uwanja wa ndege."
+
+#: Home/templates/Home/airport_transfers.html:33
+msgid "We are currently working in partnership with over 50 companies in Kenya and outside the country. We can find the right car in the right place, at the right price. Enter your dates and airport and we'll find all the options, including private transfers, shared shuttles, minibuses or coaches. Compare prices, find the deal that suits you best, then book your airport transfer direct."
+msgstr "Kwa sasa tunafanya kazi kwa ushirikiano na zaidi ya kampuni 50 nchini Kenya na nje ya nchi. Tunaweza kupata gari sahihi mahali pazuri, kwa bei inayofaa. Weka tarehe zako na uwanja wa ndege na tutapata chaguo zote, ikiwa ni pamoja na uhamisho wa kibinafsi, shuttles za pamoja, minibasi au makochi. Linganisha bei, pata ofa inayokufaa zaidi, kisha hifadhi uhamisho wako wa uwanja wa ndege moja kwa moja."
+
+#: Home/templates/Home/airport_transfers.html:34
+msgid "NB:"
+msgstr "KUMBUKA:"
+
+#: Home/templates/Home/airport_transfers.html:34
+msgid "Don't wait until you get to your destination to find your airport transfer. Enter your details on our contacts page and Day Safaris Adventures will help you choose a reliable company and get a great deal from airports worldwide. Then you can relax knowing it's all taken care of."
+msgstr "Usisubiri hadi ufike unakoenda ili kupata uhamisho wako wa uwanja wa ndege. Weka maelezo yako kwenye ukurasa wetu wa mawasiliano na Day Safaris Adventures itakusaidia kuchagua kampuni ya kuaminika na kupata ofa nzuri kutoka kwa viwanja vya ndege duniani kote. Kisha unaweza kupumzika ukijua yote yameshughulikiwa."
+
+# ==================== HOLIDAY TAILOR MADE TOURS.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/holiday_tailor_made_tours.html:4
+msgid "Holiday Tailor Made Tours - Days Safaris Adventures"
+msgstr "Safari za Likizo Maalum - Days Safaris Adventures"
+
+#: Home/templates/Home/holiday_tailor_made_tours.html:31
+msgid "Explore Our Holiday Tailor Made Tours"
+msgstr "Gundua Safari zetu za Likizo Maalum"
+
+#: Home/templates/Home/holiday_tailor_made_tours.html:32
+msgid "Day Safaris Adventures is your authentic travel partner of integrity focussed on providing unequal travel experiences on the African Continent. We specialise in complete travel management with special focus on family travel, wildlife safaris, special interest tours and romantic honeymoons."
+msgstr "Day Safaris Adventures ni mwenzako halisi wa usafiri wa uadilifu unaolenga kutoa uzoefu wa kipekee wa usafiri katika Bara la Afrika. Tunataalamu katika usimamizi kamili wa usafiri kwa mwelekeo maalum kwa usafiri wa familia, safari za wanyamapori, safari za maslahi maalum na fungate za kimapenzi."
+
+#: Home/templates/Home/holiday_tailor_made_tours.html:33
+msgid "All our holidays are tailor-made and we pride ourselves in matching your holiday travel preparations arrangements to your exact needs and special interests. Our vacations are all carefully designed so that your holiday experience is one of a kind, leaving memories that are only yours to keep!"
+msgstr "Likizo zetu zote ni maalum na tunajivunia kulinganisha mipango yako ya maandalizi ya usafiri wa likizo na mahitaji yako halisi na maslahi maalum. Likizo zetu zote zimeundwa kwa uangalifu ili uzoefu wako wa likizo uwe wa kipekee, ukiacha kumbukumbu ambazo ni zako tu kuzihifadhi!"
+
+#: Home/templates/Home/holiday_tailor_made_tours.html:37
+msgid "Excellent value for money"
+msgstr "Thamani bora kwa pesa"
+
+#: Home/templates/Home/holiday_tailor_made_tours.html:39
+msgid "Personalized service"
+msgstr "Huduma ya kibinafsi"
+
+#: Home/templates/Home/holiday_tailor_made_tours.html:43
+msgid "Captivating destinations"
+msgstr "Maeneo ya kuvutia"
+
+#: Home/templates/Home/holiday_tailor_made_tours.html:45
+msgid "unforgettable holiday travel experience"
+msgstr "uzoefu wa usafiri wa likizo usiosahaulika"
+
+# ==================== TRAVEL PARTNERSHIPS.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/travel_partnerships.html:4
+msgid "Travel Partnerships - Days Safaris Adventures"
+msgstr "Ushirikiano wa Kusafiri - Days Safaris Adventures"
+
+#: Home/templates/Home/travel_partnerships.html:31
+msgid "Explore Our Travel Partnerships"
+msgstr "Gundua Ushirikiano Wetu wa Kusafiri"
+
+#: Home/templates/Home/travel_partnerships.html:32
+msgid "Day Safaris Adventures has partnered with award-winning tour operators to bring you the best Travel Tours and flight plans across the globe. Whether you are looking to explore Africa, Asia or the United States, temples, embark on an off-the-beaten-track adventure or discover the wonders of the world, we can help you plan your perfect trip."
+msgstr "Day Safaris Adventures imeshirikiana na waendeshaji watalii walioshinda tuzo kukuletea Safari bora za Kusafiri na mipango ya ndege kote ulimwenguni. Iwe unatafuta kuchunguza Afrika, Asia au Marekani, mahekalu, kuanza safari isiyo ya kawaida au kugundua maajabu ya ulimwengu, tunaweza kukusaidia kupanga safari yako bora."
+
+#: Home/templates/Home/travel_partnerships.html:33
+msgid "Enjoy the benefits of an African tour to West Africa, South Africa or Egypt among other countries and explore multiple fascinating cultures and countries in one go, whether you are looking to sight see in historic cities, and enjoy various cuisines and dine on the finest food in the world. Admire wildlife on African safari with our Africa tours, or take a trip to the United Arab Emirates and marvel at the modern architectural wonders of cities like Dubai, Abu Dhabi and Sharjah, or the amazing sites like the Palm Islands, Burj Khalifa and Sheikh Zayed."
+msgstr "Furahia manufaa ya safari ya Kiafrika hadi Afrika Magharibi, Afrika Kusini au Misri miongoni mwa nchi nyingine na uchunguze tamaduni na nchi nyingi za kuvutia kwa mkupuo mmoja, iwe unatafuta kutalii katika miji ya kihistoria, na kufurahia vyakula mbalimbali na kula chakula bora zaidi duniani. Pendeza wanyamapori kwenye safari za Kiafrika na safari zetu za Afrika, au fanya safari ya Falme za Kiarabu na ustaajabu maajabu ya kisasa ya usanifu wa miji kama Dubai, Abu Dhabi na Sharjah, au maeneo ya kustaajabisha kama Palm Islands, Burj Khalifa na Sheikh Zayed."
+
+# ==================== BLOG_DETAIL.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/blog_detail.html:36
+msgid "Tags:"
+msgstr "Vitambulisho:"
+
+#: Home/templates/Home/blog_detail.html:44
+msgid "Back to Blog"
+msgstr "Rudi kwenye Blogu"
+
+#: Home/templates/Home/blog_detail.html:45
+msgid "Book a Safari"
+msgstr "Weka Safari"
