@@ -1280,3 +1280,473 @@ msgstr "Rudi kwenye Blogu"
 #: Home/templates/Home/blog_detail.html:45
 msgid "Book a Safari"
 msgstr "Weka Safari"
+
+# ==================== AIRBNB.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/airbnb.html:4
+msgid "AirBNB - Days Safaris Adventures"
+msgstr "AirBNB - Days Safaris Adventures"
+
+#: Home/templates/Home/airbnb.html:11
+msgid "Airbnb Accommodations"
+msgstr "Malazi ya Airbnb"
+
+#: Home/templates/Home/airbnb.html:14
+msgid "Accommodation"
+msgstr "Malazi"
+
+#: Home/templates/Home/airbnb.html:26
+msgid "Premium Stays"
+msgstr "Makazi ya Kifahari"
+
+#: Home/templates/Home/airbnb.html:27
+msgid "Experience Luxury Accommodations Across Africa"
+msgstr "Pata Malazi ya Kifahari Kote Afrika"
+
+#: Home/templates/Home/airbnb.html:28
+msgid "Handpicked Airbnb properties for your perfect African getaway"
+msgstr "Mali za Airbnb zilizochaguliwa kwa ajili ya likizo yako bora ya Kiafrika"
+
+#: Home/templates/Home/airbnb.html:50
+msgid "book"
+msgstr "hifadhi"
+
+#: Home/templates/Home/airbnb.html:57
+msgid "guests"
+msgstr "wageni"
+
+#: Home/templates/Home/airbnb.html:70
+msgid "WiFi"
+msgstr "WiFi"
+
+#: Home/templates/Home/airbnb.html:71
+msgid "AC"
+msgstr "AC"
+
+#: Home/templates/Home/airbnb.html:73
+msgid "Kitchen"
+msgstr "Jikoni"
+
+#: Home/templates/Home/airbnb.html:82
+msgid "No properties available"
+msgstr "Hakuna mali zinazopatikana"
+
+#: Home/templates/Home/airbnb.html:83
+msgid "Check back soon for amazing accommodations!"
+msgstr "Angalia tena hivi karibuni kwa malazi mazuri!"
+
+#: Home/templates/Home/airbnb.html:97
+msgid "Verified Properties"
+msgstr "Mali Zilizothibitishwa"
+
+#: Home/templates/Home/airbnb.html:98
+msgid "All properties are handpicked and verified"
+msgstr "Mali zote zimechaguliwa na kuthibitishwa"
+
+#: Home/templates/Home/airbnb.html:105
+msgid "Round-the-clock customer assistance"
+msgstr "Usaidizi kwa wateja wa saa 24"
+
+#: Home/templates/Home/airbnb.html:111
+msgid "Secure Payments"
+msgstr "Malipo Salama"
+
+#: Home/templates/Home/airbnb.html:112
+msgid "Safe and encrypted transactions"
+msgstr "Miamala salama na iliyosimbwa"
+
+#: Home/templates/Home/airbnb.html:118
+msgid "Best Locations"
+msgstr "Maeneo Bora"
+
+#: Home/templates/Home/airbnb.html:119
+msgid "Prime locations across East Africa"
+msgstr "Maeneo bora kote Afrika Mashariki"
+
+#: Home/templates/Home/airbnb.html:130
+msgid "Looking for a specific property?"
+msgstr "Unatafuta mali maalum?"
+
+#: Home/templates/Home/airbnb.html:131
+msgid "Contact us for custom accommodation arrangements or long-term stays."
+msgstr "Wasiliana nasi kwa mipango maalum ya malazi au makazi ya muda mrefu."
+
+#: Home/templates/Home/airbnb.html:134
+msgid "Contact Us"
+msgstr "Wasiliana Nasi"
+
+# ==================== BNB_DETAIL.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/bnb_detail.html:14
+msgid "Airbnb"
+msgstr "Airbnb"
+
+#: Home/templates/Home/bnb_detail.html:55
+msgid "Guests"
+msgstr "Wageni"
+
+#: Home/templates/Home/bnb_detail.html:63
+msgid "Book Today"
+msgstr "Hifadhi Leo"
+
+#: Home/templates/Home/bnb_detail.html:64
+msgid "night"
+msgstr "usiku"
+
+#: Home/templates/Home/bnb_detail.html:82
+msgid "Free WiFi"
+msgstr "WiFi Bure"
+
+#: Home/templates/Home/bnb_detail.html:85
+msgid "Air Conditioning"
+msgstr "Kiyoyozi"
+
+#: Home/templates/Home/bnb_detail.html:88
+msgid "Fully Equipped Kitchen"
+msgstr "Jikoni Iliyo na Vifaa Kamili"
+
+#: Home/templates/Home/bnb_detail.html:91
+msgid "Private Bathroom"
+msgstr "Bafu ya Kibinafsi"
+
+#: Home/templates/Home/bnb_detail.html:94
+msgid "Parking Available"
+msgstr "Maegezo Yanapatikana"
+
+#: Home/templates/Home/bnb_detail.html:97
+msgid "24/7 Security"
+msgstr "Usalama wa Saa 24/7"
+
+#: Home/templates/Home/bnb_detail.html:112
+msgid "Book Your Stay Today"
+msgstr "Hifadhi Makazi Yako Leo"
+
+#: Home/templates/Home/bnb_detail.html:113
+msgid "Experience comfort and luxury at its finest. Book your stay with Day Safaris Adventures and enjoy a memorable African getaway."
+msgstr "Pata faraja na anasa ya hali ya juu. Hifadhi makazi yako na Day Safaris Adventures na ufurahie safari ya Kiafrika isiyosahaulika."
+
+#: Home/templates/Home/bnb_detail.html:114
+msgid "Take advantage of our early bird discounts and long-stay offers. All our properties are carefully selected to ensure you have the best experience."
+msgstr "Nufaika na punguzo letu la mapema na ofa za makazi ya muda mrefu. Mali zetu zote zimechaguliwa kwa uangalifu ili kuhakikisha una uzoefu bora."
+
+#: Home/templates/Home/bnb_detail.html:119
+msgid "Book This Property"
+msgstr "Hifadhi Mali Hii"
+
+#: Home/templates/Home/bnb_detail.html:120
+msgid "10% Off"
+msgstr "Punguzo la 10%"
+
+#: Home/templates/Home/bnb_detail.html:120
+msgid "On Your First Booking With Day Safaris Adventures."
+msgstr "Kwa Uhifadhi Wako wa Kwanza na Day Safaris Adventures."
+
+#: Home/templates/Home/bnb_detail.html:160
+msgid "Number of Guests"
+msgstr "Idadi ya Wageni"
+
+#: Home/templates/Home/bnb_detail.html:168
+msgid "Check-in Date"
+msgstr "Tarehe ya Kuingia"
+
+#: Home/templates/Home/bnb_detail.html:176
+msgid "Check-out Date"
+msgstr "Tarehe ya Kutoka"
+
+#: Home/templates/Home/bnb_detail.html:185
+msgid "Your information is secure"
+msgstr "Taarifa zako ni salama"
+
+#: Home/templates/Home/bnb_detail.html:199
+msgid "Amenities"
+msgstr "Vifaa"
+
+#: Home/templates/Home/bnb_detail.html:200
+msgid "What This Property Offers"
+msgstr "Kile Mali Hii Inatoa"
+
+#: Home/templates/Home/bnb_detail.html:208
+msgid "High-speed internet available throughout"
+msgstr "Intaneti ya kasi inapatikana kote"
+
+#: Home/templates/Home/bnb_detail.html:216
+msgid "Fully air-conditioned rooms"
+msgstr "Vyumba vyenye kiyoyozi kamili"
+
+#: Home/templates/Home/bnb_detail.html:224
+msgid "Fully equipped kitchen available"
+msgstr "Jikoni kamili inapatikana"
+
+#: Home/templates/Home/bnb_detail.html:232
+msgid "Smart TV"
+msgstr "Smart TV"
+
+#: Home/templates/Home/bnb_detail.html:233
+msgid "Flat-screen TV with streaming services"
+msgstr "TV ya skrini bapa na huduma za kutiririsha"
+
+#: Home/templates/Home/bnb_detail.html:240
+msgid "Free Parking"
+msgstr "Maegezo Bure"
+
+#: Home/templates/Home/bnb_detail.html:241
+msgid "On-site parking available"
+msgstr "Maegezo ya eneo yanapatikana"
+
+#: Home/templates/Home/bnb_detail.html:249
+msgid "Round-the-clock security service"
+msgstr "Huduma ya usalama ya saa 24"
+
+#: Home/templates/Home/bnb_detail.html:256
+msgid "Swimming Pool"
+msgstr "Dimbwi la Kuogelea"
+
+#: Home/templates/Home/bnb_detail.html:257
+msgid "Access to swimming pool"
+msgstr "Ufikiaji wa dimbwi la kuogelea"
+
+#: Home/templates/Home/bnb_detail.html:264
+msgid "Fitness Center"
+msgstr "Kituo cha Mazoezi"
+
+#: Home/templates/Home/bnb_detail.html:265
+msgid "Gym facilities available"
+msgstr "Vifaa vya mazoezi vinapatikana"
+
+#: Home/templates/Home/bnb_detail.html:277
+msgid "Property Gallery"
+msgstr "Nyumba ya Sanaa ya Mali"
+
+#: Home/templates/Home/bnb_detail.html:278
+msgid "Explore"
+msgstr "Gundua"
+
+#: Home/templates/Home/bnb_detail.html:279
+msgid "Take a visual tour of this beautiful accommodation"
+msgstr "Chukua ziara ya kuona ya malazi haya mazuri"
+
+#: Home/templates/Home/bnb_detail.html:292
+msgid "Photo"
+msgstr "Picha"
+
+#: Home/templates/Home/bnb_detail.html:295
+msgid "Beautiful view of the property"
+msgstr "Mandhari mazuri ya mali"
+
+#: Home/templates/Home/bnb_detail.html:296
+msgid "View Full Size"
+msgstr "Angalia Ukubwa Kamili"
+
+#: Home/templates/Home/bnb_detail.html:305
+msgid "Check back soon for photos of this property!"
+msgstr "Angalia tena hivi karibuni kwa picha za mali hii!"
+
+#: Home/templates/Home/bnb_detail.html:321
+msgid "Exterior"
+msgstr "Nje"
+
+#: Home/templates/Home/bnb_detail.html:324
+msgid "Property exterior view"
+msgstr "Mwonekano wa nje wa mali"
+
+#: Home/templates/Home/bnb_detail.html:343
+msgid "Interior"
+msgstr "Ndani"
+
+#: Home/templates/Home/bnb_detail.html:346
+msgid "Beautiful interior design"
+msgstr "Ubunifu mzuri wa ndani"
+
+#: Home/templates/Home/bnb_detail.html:365
+msgid "Amenity"
+msgstr "Kifaa"
+
+#: Home/templates/Home/bnb_detail.html:368
+msgid "Relax and unwind"
+msgstr "Pumzika na burudika"
+
+#: Home/templates/Home/bnb_detail.html:384
+msgid "Stay fit while traveling"
+msgstr "Kaa na afya wakati wa kusafiri"
+
+#: Home/templates/Home/bnb_detail.html:398
+msgid "Modern Kitchen"
+msgstr "Jikoni la Kisasa"
+
+#: Home/templates/Home/bnb_detail.html:399
+msgid "Fully equipped"
+msgstr "Kamilifu"
+
+#: Home/templates/Home/bnb_detail.html:420
+msgid "Beautiful surroundings"
+msgstr "Mazingira mazuri"
+
+#: Home/templates/Home/bnb_detail.html:441
+msgid "Perfectly Situated in"
+msgstr "Iliyopo Vizuri Katika"
+
+#: Home/templates/Home/bnb_detail.html:442
+msgid "This property is ideally located in the heart of"
+msgstr "Mali hii iko katika eneo bora katikati mwa"
+
+#: Home/templates/Home/bnb_detail.html:442
+msgid "offering easy access to local attractions, restaurants, and shopping areas. Whether you're here for business or leisure, you'll find everything you need within close proximity."
+msgstr "ikitoa ufikiaji rahisi kwa vivutio vya ndani, migahawa, na maeneo ya ununuzi. Iwe uko hapa kwa biashara au burudani, utapata kila kitu unachohitaji karibu."
+
+#: Home/templates/Home/bnb_detail.html:445
+msgid "Near City Center"
+msgstr "Karibu na Kituo cha Jiji"
+
+#: Home/templates/Home/bnb_detail.html:447
+msgid "Close to Restaurants"
+msgstr "Karibu na Migahawa"
+
+#: Home/templates/Home/bnb_detail.html:449
+msgid "Shopping Nearby"
+msgstr "Ununuzi Karibu"
+
+#: Home/templates/Home/bnb_detail.html:451
+msgid "Public Transport Access"
+msgstr "Ufikiaji wa Usafiri wa Umma"
+
+#: Home/templates/Home/bnb_detail.html:453
+msgid "View on Map"
+msgstr "Angalia kwenye Ramani"
+
+#: Home/templates/Home/bnb_detail.html:459
+msgid "Exact location details provided upon booking confirmation"
+msgstr "Maelezo kamili ya eneo hutolewa baada ya uthibitisho wa uhifadhi"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/contact.html:4
+msgid "Contact - Day Safaris Adventures"
+msgstr "Wasiliana - Days Safaris Adventures"
+
+#: Home/templates/Home/contact.html:24
+msgid "Get In Touch With Us"
+msgstr "Wasiliana Nasi"
+
+#: Home/templates/Home/contact.html:33
+msgid "Our Office"
+msgstr "Ofisi Yetu"
+
+#: Home/templates/Home/contact.html:34
+msgid "Day Safaris Adventures Ltd<br>00200 Street RailWays, Nairobi, Kenya"
+msgstr "Day Safaris Adventures Ltd<br>00200 Barabara ya RailWays, Nairobi, Kenya"
+
+#: Home/templates/Home/contact.html:39
+msgid "Phone Numbers"
+msgstr "Nambari za Simu"
+
+#: Home/templates/Home/contact.html:40
+msgid "(WhatsApp)"
+msgstr "(WhatsApp)"
+
+#: Home/templates/Home/contact.html:41
+msgid "(HotLine)"
+msgstr "(HotLine)"
+
+#: Home/templates/Home/contact.html:42
+msgid "(Alternate)"
+msgstr "(Mbadala)"
+
+#: Home/templates/Home/contact.html:47
+msgid "Email Addresses"
+msgstr "Barua Pepe"
+
+#: Home/templates/Home/contact.html:55
+msgid "Send Us a Message"
+msgstr "Tutumie Ujumbe"
+
+#: Home/templates/Home/contact.html:56
+msgid "Have questions about safaris, packages, or accommodations? Our travel experts are here to help you create the perfect East African experience. Fill out the form below and we'll get back to you within 24 hours."
+msgstr "Una maswali kuhusu safari, vifurushi, au malazi? Wataalam wetu wa usafiri wako hapa kukusaidia kuunda uzoefu bora wa Afrika Mashariki. Jaza fomu hapa chini na tutakujibu ndani ya saa 24."
+
+
+#: Home/templates/Home/contact.html:82
+msgid "Subject"
+msgstr "Mada"
+
+#: Home/templates/Home/contact.html:90
+msgid "Your Message"
+msgstr "Ujumbe Wako"
+
+#: Home/templates/Home/contact.html:95
+msgid "Send Message"
+msgstr "Tuma Ujumbe"
+
+#: Home/templates/Home/contact.html:119
+msgid "Our Brochures"
+msgstr "Buroshua Zetu"
+
+#: Home/templates/Home/contact.html:120
+msgid "Download Safari Brochures & Travel Guides"
+msgstr "Pakua Buroshua za Safari na Miongozo ya Kusafiri"
+
+#: Home/templates/Home/contact.html:121
+msgid "Explore our collection of detailed brochures featuring safari packages, tour itineraries, accommodation options, and travel tips for East Africa. Download PDF guides to plan your perfect African adventure."
+msgstr "Gundua mkusanyiko wetu wa buroshua za kina zinazoangazia vifurushi vya safari, ratiba za utalii, chaguzi za malazi, na vidokezo vya kusafiri kwa Afrika Mashariki. Pakua miongozo ya PDF kupanga safari yako bora ya Kiafrika."
+
+#: Home/templates/Home/contact.html:144
+msgid "Download PDF"
+msgstr "Pakua PDF"
+
+#: Home/templates/Home/contact.html:145
+msgid "Preview"
+msgstr "Hakiki"
+
+#: Home/templates/Home/contact.html:150
+msgid "PDF Brochure"
+msgstr "Buroshua ya PDF"
+
+#: Home/templates/Home/contact.html:154
+msgid "Download Now"
+msgstr "Pakua Sasa"
+
+#: Home/templates/Home/contact.html:163
+msgid "No brochures available yet"
+msgstr "Hakuna buroshua bado"
+
+#: Home/templates/Home/contact.html:164
+msgid "Check back soon for downloadable safari brochures and travel guides!"
+msgstr "Angalia tena hivi karibuni kwa buroshua za safari na miongozo ya kusafiri!"
+
+#: Home/templates/Home/contact.html:171
+msgid "Destinations"
+msgstr "Maeneo"
+
+# ==================== BOOKING.HTML TRANSLATIONS ====================
+
+#: Home/templates/Home/booking.html:4
+msgid "Online Booking - Days Safaris"
+msgstr "Uhifadhi wa Mtandaoni - Days Safaris"
+
+#: Home/templates/Home/booking.html:11
+msgid "Online Booking"
+msgstr "Uhifadhi wa Mtandaoni"
+
+#: Home/templates/Home/booking.html:26
+msgid "Book A Tour"
+msgstr "Hifadhi Safari"
+
+#: Home/templates/Home/booking.html:108
+msgid "Popular Destinations"
+msgstr "Maeneo Maarufu"
+
+#: Home/templates/Home/booking.html:109
+msgid "Most Requested Safari Destinations"
+msgstr "Maeneo ya Safari Yanayoombwa Zaidi"
+
+#: Home/templates/Home/booking.html:110
+msgid "Our customers love these incredible destinations for their safari adventures"
+msgstr "Wateja wetu wanapenda maeneo haya mazuri kwa safari zao"
+
+#: Home/templates/Home/booking.html:127
+msgid "Featured Packages"
+msgstr "Vifurushi Vilivyoangaziwa"
+
+#: Home/templates/Home/booking.html:128
+msgid "Popular Safari Packages"
+msgstr "Vifurushi Maarufu vya Safari"
+
