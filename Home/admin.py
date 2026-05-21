@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import (
     Services, GalleryCategory, Brochure,
     Gallery, Testimonials, BlogComments, Blogs,
+    Trekking, ItineraryTreking
 )
 
 admin.site.site_header = "DAY SAFARIS ADVENTURES"
@@ -67,3 +68,39 @@ class BrochureAdmin(admin.ModelAdmin):
         if not change:  # If creating new object
             obj.created_by = request.user if hasattr(request, 'user') else None
         super().save_model(request, obj, form, change)
+
+
+class ItineraryTrekingInline(admin.TabularInline):
+    model = ItineraryTreking
+    extra = 1
+    ordering = ['day_number']
+    fields = ['day_number', 'title', 'description', 'activities', 'accommodation', 'meals', 'image']
+
+@admin.register(Trekking)
+class TrekkingAdmin(admin.ModelAdmin):
+    list_display = ['name', 'location', 'starRating', 'days', 'price', 'persons', 'category']
+    list_filter = ['category', 'starRating', 'location']
+    search_fields = ['name', 'location', 'description']
+    list_editable = ['price', 'days', 'persons']
+    list_per_page = 20
+    inlines = [ItineraryTrekingInline]  # This will work now
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('name', 'location', 'category', 'description')
+        }),
+        ('Pricing & Details', {
+            'fields': ('days', 'price', 'persons', 'starRating')
+        }),
+        ('Media', {
+            'fields': ('image',),
+            'classes': ('collapse',)
+        }),
+    )
+
+@admin.register(ItineraryTreking)
+class ItineraryTrekingAdmin(admin.ModelAdmin):
+    list_display = ['package', 'day_number', 'title', 'accommodation', 'meals']
+    list_filter = ['meals', 'package__category', 'package__name']
+    search_fields = ['title', 'description', 'activities', 'package__name']
+    ordering = ['package__name', 'day_number']
+    list_editable = ['day_number', 'title']

@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (BrochureView, HomeView, AboutView, ServicesView,
                     CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
-                    BlogDetailView
+                    BlogDetailView, TanzaniaTrekking, KenyaTrekking, KilimanjaroTrekking, SuswaTrekking, LongonotTrekking
                     )
 
 urlpatterns = [
@@ -25,4 +25,9 @@ urlpatterns = [
     path('blog/<int:pk>/', BlogDetailView.as_view(), name='blog_detail'),
 
     path('brochures/', BrochureView.as_view(), name='brochures'),
+
+    path("trekking/Mt-Kenya", KenyaTrekking.as_view(), name="trekking_kenya"),
+    path("trekking/Mt-Longonot", LongonotTrekking.as_view(), name="trekking_longonot"),
+    path("trekking/Mt-Suswa", SuswaTrekking.as_view(), name="trekking_suswa"),
+    path("trekking/Mt-Kilimanjaro", KilimanjaroTrekking.as_view(), name="trekking_kilimanjaro"),
 ]

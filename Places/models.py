@@ -11,7 +11,7 @@ class DestinationsCategory(models.Model):
 
     def __str__(self):
         return self.category
-    
+
 class Destinations(models.Model):
     category = models.ForeignKey(DestinationsCategory, on_delete=models.CASCADE )
     name = models.CharField(max_length=100)
@@ -20,7 +20,7 @@ class Destinations(models.Model):
     price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     def __str__(self):
         return self.name
-    
+
 class MustVisit(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='must_visit_images/')
@@ -28,7 +28,7 @@ class MustVisit(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 class AwesomePackages(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
@@ -38,15 +38,16 @@ class AwesomePackages(models.Model):
     persons = models.IntegerField()
     description = models.TextField()
     category = models.CharField(default="East Africa Tours", max_length=50, choices=(
-        ("East Africa Tours", "EA-T"), 
+        ("East Africa Tours", "EA-T"),
         ("Africa Tours", "A-T"),
         ("International Tours", "I-T"),
+        ("Cruises",  "cruises")
     ))
     image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
 
     def __str__(self):
         return self.name
-    
+
 class PackagePurchase(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases')
     package = models.ForeignKey(AwesomePackages, on_delete=models.CASCADE, related_name='purchases')
@@ -62,13 +63,13 @@ class PackagePurchase(models.Model):
 
     def __str__(self):
         return f"{self.full_name} - {self.package.name}"
-    
+
     def save(self, *args, **kwargs):
         # Auto-calculate amount_spent based on package price and persons
         if self.package and not self.amount_spent:
             self.amount_spent = self.package.price * self.number_of_persons
         super().save(*args, **kwargs)
-    
+
 class Itinerary(models.Model):
     package = models.ForeignKey(AwesomePackages, on_delete=models.CASCADE, related_name='itineraries')
     day_number = models.IntegerField()
@@ -83,10 +84,10 @@ class Itinerary(models.Model):
         ('All Inclusive', 'All Meals & Drinks'),
     ], default='Full Board')
     image = models.ImageField(upload_to='itinerary_images/', blank=True, null=True)
-    
+
     class Meta:
         ordering = ['day_number']
         unique_together = ['package', 'day_number']
-    
+
     def __str__(self):
         return f"Day {self.day_number}: {self.title} - {self.package.name}"
