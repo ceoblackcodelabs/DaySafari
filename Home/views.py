@@ -256,8 +256,27 @@ class HolidayTailorMadeToursView(TemplateView):
 class AirportTransfersView(TemplateView):
     template_name = 'Services/airport_transfers.html'
 
-class CruisesView(TemplateView):
+class CruisesView(ListView):
+    model = Services
     template_name = 'Home/cruises.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        services1 = []
+        services2 = []
+        for i, service in enumerate(Services.objects.all()):
+            if i <= 2:
+                services1.append(service)
+            else:
+                services2.append(service)
+        if len(services2) == 0:
+            print(f"{Fore.RED}No services found in the database.")
+        else:
+            print(f"{Fore.GREEN}Successfully retrieved {len(services2)} services from the database.")
+        context['services1'] = services1
+        context['services2'] = services2
+        context['awesome_packages'] = AwesomePackages.objects.filter(category="Cruises")
+        return context
 
 class AirLineView(TemplateView):
     template_name = 'Home/airline.html'
@@ -303,3 +322,18 @@ class BrochureView(ListView):
     model = Brochure
     context_object_name = 'brochures'
     template_name = 'Home/brochures.html'
+
+class KenyaTrekking(TemplateView):
+    template_name = "Trekking/kenya.html"
+
+class TanzaniaTrekking(TemplateView):
+    template_name = "Trekking/tanzania.html"
+
+class KilimanjaroTrekking(TemplateView):
+    template_name = "Trekking/kilimanjaro.html"
+
+class SuswaTrekking(TemplateView):
+    template_name = "Trekking/suswa.html"
+
+class LongonotTrekking(TemplateView):
+    template_name = "Trekking/longonot.html"
