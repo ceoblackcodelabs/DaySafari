@@ -165,3 +165,106 @@ class TrekkingBooking(models.Model):
 
     def __str__(self):
         return f"{self.booking_reference} - {self.full_name} - {self.package.name}"
+
+# models.py
+
+class Ad(models.Model):
+    """Popup advertisement model"""
+    title = models.CharField(max_length=200)
+    package = models.ForeignKey('Places.AwesomePackages', on_delete=models.CASCADE, related_name='ads', null=True, blank=True)
+    trekking_package = models.ForeignKey('Home.Trekking', on_delete=models.CASCADE, related_name='ads', null=True, blank=True)
+
+    image = models.ImageField(upload_to='ads/', help_text="Main advertisement image")
+    description = models.TextField(blank=True, help_text="Short description for the ad")
+
+    discount_percentage = models.IntegerField(default=0, help_text="Discount percentage (0-100)")
+    show_book_now = models.BooleanField(default=True, help_text="Show Book Now button")
+
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    is_active = models.BooleanField(default=True)
+    show_on_pages = models.CharField(max_length=200, blank=True, help_text="Comma separated URLs or leave blank for all pages")
+
+    button_text = models.CharField(max_length=50, default="View Package", help_text="Text for the CTA button")
+    button_color = models.CharField(max_length=20, default="btn-primary", help_text="Bootstrap button color class")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Advertisement"
+        verbose_name_plural = "Advertisements"
+
+    def __str__(self):
+        return f"{self.title} ({self.start_date} to {self.end_date})"
+
+    def get_package_url(self):
+        """Get the URL for the associated package"""
+        if self.package:
+            return self.package.get_absolute_url()
+        elif self.trekking_package:
+            return f"/trekking/{self.trekking_package.category.lower()}/{self.trekking_package.id}/"
+        elif self.cruise_package:
+            return f"/cruises/{self.cruise_package.id}/"
+        return "#"
+
+    def get_package_name(self):
+        """Get the name of the associated package"""
+        if self.package:
+            return self.package.name
+        elif self.trekking_package:
+            return self.trekking_package.name
+        elif self.cruise_package:
+            return self.cruise_package.name
+        return self.title
+
+    def get_package_price(self):
+        """Get the price of the associated package"""
+        if self.package:
+            return self.package.price
+        elif self.trekking_package:
+            return self.trekking_package.price
+        elif self.cruise_package:
+            return self.cruise_package.price
+        return None
+
+    def get_discounted_price(self):
+        """Calculate discounted price"""
+        original_price = self.get_package_price()
+        if original_price and self.discount_percentage > 0:
+            discount_amount = (original_price * self.discount_percentage) / 100
+            return original_price - discount_amount
+        return original_price
+
+    def get_booking_url(self):
+        """Get the booking URL for the associated package"""
+        if self.package:
+            return f'/places/package/{self.package.id}/book/'
+        elif self.trekking_package:
+            return f'/trekking/{self.trekking_package.category.lower()}/{self.trekking_package.id}/book/'
+        elif self.cruise_package:
+            return f'/cruises/{self.cruise_package.id}/book/'
+        return "#"
+
+    def get_whatsapp_message(self):
+        """Generate a WhatsApp message for this ad"""
+        package_name = self.get_package_name()
+        discount_text = f" with {self.discount_percentage}% discount" if self.discount_percentage > 0 else ""
+
+        message = f"""Hello Day Safaris Adventures,
+
+        I'm interested in booking the following package:
+        📦 Package: {package_name}{discount_text}
+        🔗 Ad: {self.title}
+
+        Please send me more information about:
+        - Availability
+        - Total cost
+        - Payment options
+        - Itinerary details
+
+        Thank you!"""
+
+        return message
