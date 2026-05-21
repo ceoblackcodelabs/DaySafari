@@ -418,7 +418,7 @@ class OffersView(LoginRequiredMixin, TemplateView):
 
 class PackagesView(ListView):
     model = AwesomePackages
-    template_name = 'tours/packages.html'
+    template_name = 'Packages/packages.html'
     context_object_name = 'packages'
     paginate_by = 9
 

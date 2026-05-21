@@ -42,6 +42,19 @@ class Command(BaseCommand):
             f"Cleared existing data: {trekking_count} packages, {itinerary_count} itinerary days"
         ))
 
+    def create_itinerary(self, package, days_data):
+        """Helper method to create itineraries for a package"""
+        for day in days_data:
+            ItineraryTreking.objects.create(
+                package=package,
+                day_number=day["day"],
+                title=day["title"],
+                description=day["description"],
+                activities=day["activities"],
+                accommodation=day["accommodation"],
+                meals=day["meals"]
+            )
+
     def seed_trekking_packages(self, clear_existing=True):
         """Main seeding function"""
         if clear_existing:
@@ -49,258 +62,375 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("🌄 Seeding trekking packages..."))
 
-        # ==================== MOUNT KILIMANJARO - 7 DAYS MACHAME ROUTE ====================
-        kilimanjaro, created = Trekking.objects.get_or_create(
+        # ==================== KILIMANJARO CATEGORY (3 PACKAGES) ====================
+
+        # Package 1: Machame Route (7 days)
+        kilimanjaro1, created = Trekking.objects.get_or_create(
             name="Mount Kilimanjaro Climb - Machame Route (7 Days)",
             defaults={
                 "location": "Kilimanjaro National Park, Tanzania",
                 "starRating": 5,
                 "days": 7,
                 "price": Decimal("1850.00"),
-                "persons": 1,
-                "description": "Experience the ultimate challenge of climbing Mount Kilimanjaro via the scenic Machame Route. This 7-day adventure takes you through five distinct climate zones, from lush rainforest to arctic summit. Known as the 'Whiskey Route', Machame offers breathtaking views and higher acclimatization success rates. You'll traverse stunning landscapes including the Shira Plateau, Barranco Wall, and the majestic glaciers of Uhuru Peak, the highest point in Africa at 5,895 meters. Our experienced guides, porters, and cooks ensure your safety and comfort throughout this life-changing journey. All camping equipment, meals, and park fees included.",
+                "persons": 8,
+                "description": "Experience the ultimate challenge of climbing Mount Kilimanjaro via the scenic Machame Route. Known as the 'Whiskey Route', this 7-day adventure offers breathtaking views and higher acclimatization success rates. You'll traverse stunning landscapes including the Shira Plateau, Barranco Wall, and the majestic glaciers of Uhuru Peak, the highest point in Africa at 5,895 meters.",
                 "category": "Kilimanjaro",
                 "image": "awesome_packages/kilimanjaro_machame.jpg"
             }
         )
 
         if created:
-            # Kilimanjaro Itinerary Days
-            itinerary_kili = [
-                {
-                    "day": 1,
-                    "title": "Machame Gate to Machame Camp",
-                    "description": """Your Kilimanjaro adventure begins with a morning drive from Moshi/Arusha to Machame Gate (1,640 meters). After completing park registration formalities, your trek commences through the magnificent montane rainforest. The trail is often muddy and slippery, but the path winds through ancient trees draped with moss and lichen. Keep an eye out for colobus monkeys and various bird species. After approximately 5-6 hours of trekking covering 11 km, you'll reach Machame Camp at 2,835 meters. This evening, your first night on the mountain offers spectacular views of the surrounding valleys and the opportunity to hear the sounds of the rainforest. Your guides will conduct health checks and provide orientation for the days ahead.""",
-                    "activities": "Park registration, Rainforest trekking, Wildlife spotting, Photography, Camp setup orientation, Evening health briefing",
-                    "accommodation": "Machame Camp (2,835m) - Mountain tents with sleeping mats",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 2,
-                    "title": "Machame Camp to Shira Camp",
-                    "description": """Today's trek takes you out of the rainforest and into heath and moorland zones. The morning begins with a steep climb through the forest edge, emerging onto a heath-covered ridge. The trail ascends steadily, offering spectacular views of Mount Meru floating on the clouds. After approximately 5 hours of trekking covering 5 km, you'll reach Shira Camp at 3,840 meters, situated on the Shira Plateau - a high-altitude desert formed by a collapsed volcanic crater. The afternoon is spent acclimatizing with a short exploration walk to Shira Cathedral (3,950m) before returning to camp. The panoramic views of Kibo Peak and the expansive plateau are breathtaking. Your crew will serve hot lunch and dinner while you adjust to the increasing altitude.""",
-                    "activities": "Moorland trekking, Acclimatization walk to Shira Cathedral, Photography of Kibo Peak, Health monitoring, Plateau exploration",
-                    "accommodation": "Shira Camp (3,840m) - Mountain tents with full camping amenities",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 3,
-                    "title": "Shira Camp to Barranco Camp via Lava Tower",
-                    "description": """This is a crucial acclimatization day using the 'climb high, sleep low' principle. You'll trek east toward Kibo's jagged peak, ascending to Lava Tower at 4,630 meters. The landscape transforms into alpine desert with strange Senecio and Lobelia plants dotting the terrain. After reaching Lava Tower (approximately 4-5 hours, 7 km), you'll have lunch and rest, experiencing high altitude before descending to Barranco Camp. The afternoon descent takes you down the rocky trail to Barranco Camp at 3,960 meters, nestled in a valley beneath the imposing Barranco Wall. This descent helps your body acclimatize while the vegetation returns to lush heather. The views of the evening sunset on Kibo's glaciers from camp are absolutely spectacular.""",
-                    "activities": "Alpine desert trekking, Lava Tower exploration (4,630m), Photography of Kibo glaciers, Afternoon descent for acclimatization, Campfire evening briefing",
-                    "accommodation": "Barranco Camp (3,960m) - Scenic valley camp with tent accommodation",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 4,
-                    "title": "Barranco Camp to Karanga Camp",
-                    "description": """The day starts with the famous Barranco Wall, a seemingly intimidating but non-technical scramble up a 300-meter cliff face. This exciting climb offers fantastic views and a sense of adventure. Your guides will assist you on the steeper sections. Once at the top, the trail undulates across the Karanga Valley with stunning views of the Southern Glaciers of Kibo. The trek today is shorter but involves steep ascents and descents, taking approximately 4-5 hours covering 6 km. You'll arrive at Karanga Camp (4,035 meters), strategically located for the final ascent preparation. The afternoon is reserved for rest and acclimatization, with optional short walks to explore the surrounding ridges. Your guides will conduct thorough health checks and provide detailed briefing for the summit night.""",
-                    "activities": "Barranco Wall scrambling, Valley traversing, Glacier photography, Summit preparation briefing, Health and equipment checks",
-                    "accommodation": "Karanga Camp (4,035m) - Strategic base camp with mountain views",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 5,
-                    "title": "Karanga Camp to Barafu Summit Camp",
-                    "description": """Today you trek to Barafu Camp, the final camp before summit night. The trail climbs steadily out of Karanga Valley, traversing rocky terrain with sparse vegetation. The air becomes noticeably thinner as you approach the high camp. After approximately 4-5 hours covering 4 km, you'll reach Barafu Camp at 4,640 meters, perched on a rocky ridge with panoramic views of Mawenzi Peak and the vast plains below. Upon arrival, you'll rest and prepare for the midnight summit attempt. Your guides provide a thorough briefing about the summit night strategy, what to expect, and how to pace yourself. Organize your gear, eat an early dinner, and attempt to sleep by 7 PM. The camp is exposed and cold, so proper layering is essential.""",
-                    "activities": "High altitude trekking, Final camp preparation, Summit strategy briefing, Gear organization, Early dinner and rest",
-                    "accommodation": "Barafu Camp (4,640m) - High camp with extreme mountain exposure",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 6,
-                    "title": "Summit Day! Barafu Camp to Uhuru Peak to Mweka Camp",
-                    "description": """THE SUMMIT! Wake at midnight for a light snack and warm-up before beginning the most challenging but rewarding day. The trail ascends steeply over loose scree to Stella Point (5,756 meters) on the crater rim, taking approximately 6-7 hours. The climb is mentally and physically demanding in the dark, cold, and thin air. From Stella Point, you'll follow the crater rim for another hour to Uhuru Peak (5,895 meters) - the Roof of Africa! Celebrate your incredible achievement with photos and tears of joy. After a short stay (no more than 15 minutes due to altitude), you'll descend back to Barafu Camp for brunch and rest. The afternoon continues the descent to Mweka Camp (3,100 meters) through moorland and forest, taking another 3-4 hours. This is the longest day (12-15 hours of walking) but the most triumphant!""",
-                    "activities": "Midnight summit attempt, Uhuru Peak achievement (5,895m), Crater rim walking, Sunrise photography, Certificate collection, Celebration at summit",
-                    "accommodation": "Mweka Camp (3,100m) - Forest camp with celebratory atmosphere",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 7,
-                    "title": "Mweka Camp to Mweka Gate - Return to Moshi/Arusha",
-                    "description": """Your final morning on Kilimanjaro includes a hearty breakfast before descending through lush tropical rainforest to Mweka Gate. The 3-4 hour trek covers 10 km through beautifully restored forest, where you might spot colobus monkeys and tropical birds. At Mweka Gate, you'll sign out and receive your official summit certificate (green for Stella Point or gold for Uhuru Peak). Successful climbers celebrate with high-fives and photos with their incredible mountain crew. Your vehicle awaits to transfer you back to your hotel in Moshi or Arusha for a well-deserved hot shower, celebration dinner, and rest after conquering Africa's highest peak. Congratulations, you are now a Kilimanjaro summiteer!""",
-                    "activities": "Rainforest descent, Wildlife spotting, Certificate ceremony, Crew tipping and farewell, Celebration transfer to hotel",
-                    "accommodation": "Hotel in Moshi/Arusha (own arrangement - ask for recommendations)",
-                    "meals": "Breakfast"
-                }
+            itinerary = [
+                {"day": 1, "title": "Machame Gate to Machame Camp", "description": "Your Kilimanjaro adventure begins with a morning drive to Machame Gate (1,640m). Trek through magnificent montane rainforest for 5-6 hours covering 11km to Machame Camp at 2,835m.", "activities": "Rainforest trekking, Wildlife spotting, Photography", "accommodation": "Machame Camp (2,835m) - Mountain tents", "meals": "Full Board"},
+                {"day": 2, "title": "Machame Camp to Shira Camp", "description": "Trek out of the rainforest into heath and moorland zones. After 5 hours covering 5km, reach Shira Camp at 3,840m on the Shira Plateau.", "activities": "Moorland trekking, Acclimatization walk", "accommodation": "Shira Camp (3,840m) - Mountain tents", "meals": "Full Board"},
+                {"day": 3, "title": "Shira Camp to Barranco Camp via Lava Tower", "description": "Crucial acclimatization day. Trek to Lava Tower at 4,630m before descending to Barranco Camp at 3,960m.", "activities": "Alpine desert trekking, Lava Tower exploration", "accommodation": "Barranco Camp (3,960m)", "meals": "Full Board"},
+                {"day": 4, "title": "Barranco Camp to Karanga Camp", "description": "Tackle the famous Barranco Wall, a 300-meter scramble, then traverse to Karanga Camp at 4,035m.", "activities": "Barranco Wall scrambling, Glacier photography", "accommodation": "Karanga Camp (4,035m)", "meals": "Full Board"},
+                {"day": 5, "title": "Karanga Camp to Barafu Summit Camp", "description": "Trek to Barafu Camp at 4,640m, the final camp before summit night.", "activities": "High altitude trekking, Summit briefing", "accommodation": "Barafu Camp (4,640m)", "meals": "Full Board"},
+                {"day": 6, "title": "Summit Day! Barafu Camp to Uhuru Peak", "description": "Midnight ascent to Uhuru Peak (5,895m) - the Roof of Africa! Descend to Mweka Camp at 3,100m.", "activities": "Summit attempt, Sunrise photography", "accommodation": "Mweka Camp (3,100m)", "meals": "Full Board"},
+                {"day": 7, "title": "Mweka Camp to Mweka Gate", "description": "Final descent through rainforest to Mweka Gate. Receive certificate and transfer to hotel.", "activities": "Rainforest descent, Certificate ceremony", "accommodation": "Hotel in Moshi/Arusha", "meals": "Breakfast"},
             ]
+            self.create_itinerary(kilimanjaro1, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {kilimanjaro1.name}"))
 
-            for day in itinerary_kili:
-                ItineraryTreking.objects.create(
-                    package=kilimanjaro,
-                    day_number=day["day"],
-                    title=day["title"],
-                    description=day["description"],
-                    activities=day["activities"],
-                    accommodation=day["accommodation"],
-                    meals=day["meals"]
-                )
-            self.stdout.write(self.style.SUCCESS(f"✓ Created {kilimanjaro.name} with {len(itinerary_kili)} days"))
-        else:
-            self.stdout.write(self.style.WARNING(f"⚠ {kilimanjaro.name} already exists, skipping..."))
+        # Package 2: Lemosho Route (8 days)
+        kilimanjaro2, created = Trekking.objects.get_or_create(
+            name="Mount Kilimanjaro Climb - Lemosho Route (8 Days)",
+            location="Kilimanjaro National Park, Tanzania",
+            starRating=5,
+            days=8,
+            price=Decimal("2100.00"),
+            persons=8,
+            description="The Lemosho Route is considered the most scenic path to Uhuru Peak. This 8-day trek offers excellent acclimatization and stunning views from the western side of the mountain, with higher success rates due to the longer duration.",
+            category="Kilimanjaro",
+            image="awesome_packages/kilimanjaro_lemosho.jpg"
+        )
 
-        # ==================== MOUNT KENYA - 5 DAYS SIRIMON ROUTE ====================
-        mount_kenya, created = Trekking.objects.get_or_create(
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Londorossi Gate to Mti Mkubwa Camp", "description": "Drive to Londorossi Gate (2,100m). Trek through pristine rainforest to Mti Mkubwa Camp at 2,750m.", "activities": "Forest trekking, Wildlife viewing", "accommodation": "Mti Mkubwa Camp (2,750m)", "meals": "Full Board"},
+                {"day": 2, "title": "Mti Mkubwa Camp to Shira 1 Camp", "description": "Trek out of the forest into heathland with views of Kibo. Reach Shira 1 Camp at 3,500m.", "activities": "Heathland trekking, Photography", "accommodation": "Shira 1 Camp (3,500m)", "meals": "Full Board"},
+                {"day": 3, "title": "Shira 1 Camp to Shira 2 Camp", "description": "Trek across the Shira Plateau to Shira 2 Camp at 3,850m for acclimatization.", "activities": "Plateau trekking, Acclimatization", "accommodation": "Shira 2 Camp (3,850m)", "meals": "Full Board"},
+                {"day": 4, "title": "Shira 2 Camp to Barranco Camp via Lava Tower", "description": "Climb to Lava Tower (4,630m) then descend to Barranco Camp (3,960m).", "activities": "High altitude trekking, Lava Tower", "accommodation": "Barranco Camp (3,960m)", "meals": "Full Board"},
+                {"day": 5, "title": "Barranco Camp to Karanga Camp", "description": "Scramble up Barranco Wall and traverse to Karanga Camp at 4,035m.", "activities": "Wall scrambling, Valley views", "accommodation": "Karanga Camp (4,035m)", "meals": "Full Board"},
+                {"day": 6, "title": "Karanga Camp to Barafu Camp", "description": "Trek to Barafu Camp at 4,640m for final summit preparation.", "activities": "Summit preparation, Rest", "accommodation": "Barafu Camp (4,640m)", "meals": "Full Board"},
+                {"day": 7, "title": "Summit Day! Barafu to Uhuru Peak to Mweka Camp", "description": "Midnight summit attempt to Uhuru Peak (5,895m). Descend to Mweka Camp at 3,100m.", "activities": "Summit success, Celebration", "accommodation": "Mweka Camp (3,100m)", "meals": "Full Board"},
+                {"day": 8, "title": "Mweka Camp to Mweka Gate", "description": "Final descent through forest. Receive summit certificates and transfer to hotel.", "activities": "Certificate ceremony, Transfer", "accommodation": "Hotel in Moshi", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(kilimanjaro2, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {kilimanjaro2.name}"))
+
+        # Package 3: Rongai Route (6 days)
+        kilimanjaro3, created = Trekking.objects.get_or_create(
+            name="Mount Kilimanjaro Climb - Rongai Route (6 Days)",
+            location="Kilimanjaro National Park, Tanzania",
+            starRating=4,
+            days=6,
+            price=Decimal("1650.00"),
+            persons=8,
+            description="The Rongai Route approaches Kilimanjaro from the north, near the Kenyan border. This less-crowded route offers a unique perspective of the mountain and is considered easier than other routes.",
+            category="Kilimanjaro",
+            image="awesome_packages/kilimanjaro_rongai.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Rongai Gate to Simba Camp", "description": "Drive to Rongai Gate (1,950m). Trek through pine forest to Simba Camp at 2,600m.", "activities": "Forest trekking, Bird watching", "accommodation": "Simba Camp (2,600m)", "meals": "Full Board"},
+                {"day": 2, "title": "Simba Camp to Kikelewa Camp", "description": "Trek through heath and moorland to Kikelewa Camp at 3,600m.", "activities": "Moorland trekking, Views of Kibo", "accommodation": "Kikelewa Camp (3,600m)", "meals": "Full Board"},
+                {"day": 3, "title": "Kikelewa Camp to Mawenzi Tarn Camp", "description": "Steep ascent to Mawenzi Tarn Camp at 4,300m with views of Mawenzi Peak.", "activities": "Alpine trekking, Photography", "accommodation": "Mawenzi Tarn Camp (4,300m)", "meals": "Full Board"},
+                {"day": 4, "title": "Mawenzi Tarn Camp to Kibo Camp", "description": "Trek across the lunar landscape to Kibo Camp at 4,700m, the final camp.", "activities": "High desert trekking, Summit prep", "accommodation": "Kibo Camp (4,700m)", "meals": "Full Board"},
+                {"day": 5, "title": "Summit Day! Kibo Camp to Uhuru Peak to Horombo Camp", "description": "Midnight ascent to Uhuru Peak (5,895m). Descend to Horombo Camp at 3,700m.", "activities": "Summit success, Celebration", "accommodation": "Horombo Camp (3,700m)", "meals": "Full Board"},
+                {"day": 6, "title": "Horombo Camp to Marangu Gate", "description": "Final descent through rainforest to Marangu Gate. Receive certificates and transfer.", "activities": "Forest descent, Certificate ceremony", "accommodation": "Hotel in Moshi", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(kilimanjaro3, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {kilimanjaro3.name}"))
+
+        # ==================== KENYA CATEGORY (3 PACKAGES) ====================
+
+        # Package 1: Sirimon Route (5 days)
+        kenya1, created = Trekking.objects.get_or_create(
             name="Mount Kenya Climb - Sirimon Route (5 Days)",
-            defaults={
-                "location": "Mount Kenya National Park, Kenya",
-                "starRating": 5,
-                "days": 5,
-                "price": Decimal("950.00"),
-                "persons": 1,
-                "description": "Conquer Mount Kenya, Africa's second-highest peak at 4,985 meters, via the scenic Sirimon Route. This 5-day adventure offers the best acclimatization profile and highest success rate for reaching Point Lenana, the trekking summit. The route traverses through unique Afro-alpine vegetation, giant lobelias, and spectacular valleys. You'll experience breathtaking views of Batian and Nelion peaks, the true technical summits. Our experienced mountain guides, trained in altitude safety and first aid, ensure your comfort and success. This expedition combines physical challenge with the discovery of Kenya's glacial heritage and unique mountain ecology.",
-                "category": "Kenya",
-                "image": "awesome_packages/mount_kenya_sirimon.jpg"
-            }
+            location="Mount Kenya National Park, Kenya",
+            starRating=5,
+            days=5,
+            price=Decimal("950.00"),
+            persons=8,
+            description="Conquer Mount Kenya via the scenic Sirimon Route. This 5-day adventure offers the best acclimatization profile for reaching Point Lenana, the trekking summit at 4,985 meters.",
+            category="Kenya",
+            image="awesome_packages/mount_kenya_sirimon.jpg"
         )
 
         if created:
-            itinerary_kenya = [
-                {
-                    "day": 1,
-                    "title": "Nanyuki to Sirimon Gate to Old Moses Camp",
-                    "description": """Your Mount Kenya adventure begins with a morning drive from Nanyuki to Sirimon Gate (2,650 meters). After park registration and briefing, your trek commences through magnificent mountain forest and heathland. The trail follows the Sirimon Track, gently ascending through stands of giant heather and unique Senecio forests. This 3-4 hour trek covering 9 km offers spectacular views of the surrounding valleys and Mount Kenya's peaks emerging in the distance. You'll reach Old Moses Camp (3,300 meters), also known as Likii North Camp, situated on a grassy ridge with panoramic mountain views. The afternoon includes an acclimatization walk to nearby viewpoints and orientation about the mountain's ecology and geology. Your first evening at altitude includes health monitoring and preparation for the days ahead.""",
-                    "activities": "Forest trekking, Giant heather exploration, Wildlife spotting (colobus monkeys, hyrax), Acclimatization walk, Mountain ecology briefing",
-                    "accommodation": "Old Moses Camp (3,300m) - Mountain hut with bunk beds and dining area",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 2,
-                    "title": "Old Moses Camp to Shipton Camp",
-                    "description": """Today involves a significant altitude gain as you trek from Old Moses Camp to Shipton Camp. The trail ascends through the Mackinder Valley, named after the first European to map the mountain. You'll pass through unique Afro-alpine vegetation zones featuring giant lobelias (Lobelia telekii) and groundsels (Senecio keniodendron), which can grow up to 6 meters tall. The landscape transforms into high-altitude desert with spectacular views of the main peaks. The trek takes approximately 6-7 hours covering 14 km, with a steady climb to Shipton Camp at 4,200 meters, nestled in a wide valley beneath the imposing peaks of Batian and Nelion. Upon arrival, rest and hydrate while your body adjusts to the altitude. The afternoon includes an acclimatization walk to nearby viewpoints with stunning glacier views.""",
-                    "activities": "Afro-alpine trekking, Giant lobelia photography, Mackinder Valley exploration, Acclimatization walks, Peak identification lesson",
-                    "accommodation": "Shipton Camp (4,200m) - Basic mountain huts with sleeping platforms",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 3,
-                    "title": "Acclimatization Day - Shipton Camp to Kami Hut and Return",
-                    "description": """This crucial acclimatization day follows the 'climb high, sleep low' principle. After breakfast, you'll trek toward Kami Hut (4,500 meters) on the approach to Point Lenana. The morning ascent takes approximately 2-3 hours, offering increasingly spectacular views of the Lewis Glacier and the jagged peaks of Batian (5,199m) and Nelion (5,188m). The route traverses rocky moraines and passes by small tarns (alpine lakes). Your guides will teach you about glacial geology and mountain ecology during the ascent. After reaching Kami Hut and enjoying the panoramic views, you'll descend back to Shipton Camp for lunch and afternoon rest. The descent helps your body acclimatize more effectively while the afternoon allows for rest, hydration, and final preparation for the summit attempt. Your guides conduct thorough health checks and summit briefing before an early dinner.""",
-                    "activities": "High-altitude acclimatization hike, Glacial geology lesson, Lake tarns exploration, Summit preparation briefing, Health and equipment checks",
-                    "accommodation": "Shipton Camp (4,200m) - Rest day with multiple short hikes",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 4,
-                    "title": "Summit Day! Shipton Camp to Point Lenana to Old Moses Camp",
-                    "description": """SUMMIT DAY! Wake at 2:00 AM for tea and biscuits before beginning the challenging ascent to Point Lenana (4,985 meters), the trekking summit of Mount Kenya. The initial climb follows a rocky ridge in darkness, requiring warm clothing and headlamps. After approximately 3-4 hours of careful scrambling over scree and rock, you'll reach Point Lenana just as dawn breaks over the African plains - a magical moment as the sun illuminates the glaciers and surrounding peaks. Celebrate your achievement with photos at the summit, taking in the 360-degree views of Mount Kilimanjaro to the south and the Aberdare Range to the west. After a short stay, descend via the same route back to Shipton Camp for breakfast and short rest. The descent continues to Old Moses Camp (3,300 meters), taking approximately 5-6 hours through the scenic Mackinder Valley. This long but triumphant day concludes with well-deserved rest and celebrations.""",
-                    "activities": "Early morning summit attempt (2 AM start), Sunrise at Point Lenana (4,985m), Glacier photography, Celebration at summit, Long descent through Mackinder Valley",
-                    "accommodation": "Old Moses Camp (3,300m) - Returning to lower altitude for better sleep",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 5,
-                    "title": "Old Moses Camp to Sirimon Gate - Return to Nanyuki",
-                    "description": """Your final morning on Mount Kenya includes a leisurely breakfast before the descent through the lush mountain forest to Sirimon Gate. The 3-4 hour trek covering 9 km offers final opportunities to spot wildlife including colobus monkeys, Sykes monkeys, and various bird species. The trail winds through giant heather zones and pristine forest, providing a gentle conclusion to your mountain adventure. At Sirimon Gate, you'll complete park exit formalities and receive your summit certificate from the Kenya Wildlife Service. Successful climbers celebrate with their mountain crew and guides, exchanging farewells and gratitude. Your vehicle transfers you back to Nanyuki for a hot shower, celebration lunch, and rest after conquering Africa's second-highest peak. Many climbers describe this as a more scenic and ecologically diverse experience than Kilimanjaro!""",
-                    "activities": "Forest descent trekking, Wildlife spotting (colobus monkeys, birds), Certificate ceremony, Crew farewell and tipping, Transfer to Nanyuki",
-                    "accommodation": "Hotel in Nanyuki (own arrangement - recommendations provided)",
-                    "meals": "Breakfast"
-                }
+            itinerary = [
+                {"day": 1, "title": "Nanyuki to Sirimon Gate to Old Moses Camp", "description": "Drive to Sirimon Gate (2,650m). Trek 9km to Old Moses Camp at 3,300m.", "activities": "Forest trekking, Wildlife spotting", "accommodation": "Old Moses Camp (3,300m)", "meals": "Full Board"},
+                {"day": 2, "title": "Old Moses Camp to Shipton Camp", "description": "Trek 14km through Afro-alpine vegetation to Shipton Camp at 4,200m.", "activities": "Alpine trekking, Giant lobelia photography", "accommodation": "Shipton Camp (4,200m)", "meals": "Full Board"},
+                {"day": 3, "title": "Acclimatization Day - Shipton Camp to Kami Hut", "description": "Climb high to Kami Hut (4,500m) and return for acclimatization.", "activities": "Acclimatization hike, Glacier views", "accommodation": "Shipton Camp (4,200m)", "meals": "Full Board"},
+                {"day": 4, "title": "Summit Day! Shipton Camp to Point Lenana to Old Moses Camp", "description": "Early ascent to Point Lenana (4,985m) for sunrise. Descend to Old Moses Camp.", "activities": "Summit sunrise, Glacier photography", "accommodation": "Old Moses Camp (3,300m)", "meals": "Full Board"},
+                {"day": 5, "title": "Old Moses Camp to Sirimon Gate", "description": "Final descent through forest to Sirimon Gate. Receive certificates.", "activities": "Forest descent, Certificate ceremony", "accommodation": "Hotel in Nanyuki", "meals": "Breakfast"},
             ]
+            self.create_itinerary(kenya1, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {kenya1.name}"))
 
-            for day in itinerary_kenya:
-                ItineraryTreking.objects.create(
-                    package=mount_kenya,
-                    day_number=day["day"],
-                    title=day["title"],
-                    description=day["description"],
-                    activities=day["activities"],
-                    accommodation=day["accommodation"],
-                    meals=day["meals"]
-                )
-            self.stdout.write(self.style.SUCCESS(f"✓ Created {mount_kenya.name} with {len(itinerary_kenya)} days"))
-        else:
-            self.stdout.write(self.style.WARNING(f"⚠ {mount_kenya.name} already exists, skipping..."))
-
-        # ==================== MOUNT LONGONOT - 1 DAY HIKE ====================
-        longonot, created = Trekking.objects.get_or_create(
-            name="Mount Longonot Day Hike",
-            defaults={
-                "location": "Longonot National Park, Kenya",
-                "starRating": 4,
-                "days": 1,
-                "price": Decimal("85.00"),
-                "persons": 1,
-                "description": "Experience the thrill of hiking Mount Longonot, a dormant stratovolcano in the Great Rift Valley. This 1-day adventure takes you to the crater rim at 2,776 meters, offering spectacular views of Lake Naivasha, Lake Elementaita, and the surrounding Rift Valley floor. The 3.1 km trail to the rim is steep but rewarding, with the option to circle the entire crater rim (7.2 km) for more adventurous hikers. Mount Longonot last erupted in the 1860s and features a fascinating forest inside the crater. This is the perfect half-day or full-day excursion from Nairobi, combining physical activity with incredible geology and wildlife spotting opportunities (buffalo, antelope, giraffe, and various birds).",
-                "category": "Longonot",
-                "image": "awesome_packages/longonot_hike.jpg"
-            }
+        # Package 2: Chogoria Route (6 days)
+        kenya2, created = Trekking.objects.get_or_create(
+            name="Mount Kenya Climb - Chogoria Route (6 Days)",
+            location="Mount Kenya National Park, Kenya",
+            starRating=5,
+            days=6,
+            price=Decimal("1100.00"),
+            persons=8,
+            description="The Chogoria Route is considered the most scenic ascent of Mount Kenya, passing through dramatic gorges, waterfalls, and the stunning Lake Ellis before reaching Point Lenana.",
+            category="Kenya",
+            image="awesome_packages/mount_kenya_chogoria.jpg"
         )
 
         if created:
-            itinerary_longonot = [
-                {
-                    "day": 1,
-                    "title": "Mount Longonot Crater Rim Hike",
-                    "description": """Your Mount Longonot adventure begins with an early morning departure from Nairobi (approx 7 AM) for the 90-minute drive along the scenic Rift Valley escarpment. Upon arrival at Longonot National Park gate (2,200 meters), complete registration and briefing from park rangers about safety and the trail. The initial ascent follows a steep, well-maintained trail through savannah grassland, taking approximately 45-60 minutes to reach the crater rim at 2,776 meters. This challenging climb rewards you with breathtaking views of the 1.8 km wide crater below, featuring a unique forest ecosystem inside the volcanic cone. At the rim, you have options: relax and enjoy the views, or tackle the full crater rim circuit (approximately 3-4 hours, 7.2 km). The rim walk offers spectacular 360-degree views of Lake Naivasha, Hell's Gate National Park, Mount Suswa, and the sprawling Rift Valley floor. Keep an eye out for wildlife including buffalo, eland, grant's gazelle, and various bird species. After lunch at the rim viewpoint (packed lunch), begin your descent back to the park gate (45 minutes). The afternoon includes a post-hike rest and optional short visit to nearby Lake Naivasha or Hell's Gate for further exploration. Return to Nairobi by late afternoon (approx 5-6 PM), completing an exhilarating day at one of Kenya's most accessible volcanoes. Your guides provide interpretation of the volcanic geology, Rift Valley formation, and local ecology throughout the day.""",
-                    "activities": "Rift Valley scenic drive, Volcanic crater climbing, Crater rim circuit walk, Wildlife spotting (buffalo, antelope), Geology interpretation, Photography of crater floor forest, Optional Lake Naivasha visit",
-                    "accommodation": "No accommodation (day hike - return to Nairobi or Naivasha hotels)",
-                    "meals": "Breakfast"
-                }
+            itinerary = [
+                {"day": 1, "title": "Nairobi to Chogoria Town to Road Head", "description": "Drive to Chogoria Town. Transfer to Road Head at 2,950m.", "activities": "Scenic drive, Forest views", "accommodation": "Road Head Camp (2,950m)", "meals": "Full Board"},
+                {"day": 2, "title": "Road Head to Lake Ellis Camp", "description": "Trek through bamboo and montane forest to Lake Ellis at 3,500m.", "activities": "Forest trekking, Waterfall views", "accommodation": "Lake Ellis Camp (3,500m)", "meals": "Full Board"},
+                {"day": 3, "title": "Lake Ellis Camp to Mintosa Camp", "description": "Trek to Mintosa Camp at 4,100m with stunning views of the peaks.", "activities": "Alpine trekking, Photography", "accommodation": "Mintosa Camp (4,100m)", "meals": "Full Board"},
+                {"day": 4, "title": "Mintosa Camp to Austrian Hut", "description": "Trek across the Gorges Valley to Austrian Hut at 4,800m.", "activities": "Glacial valley trekking", "accommodation": "Austrian Hut (4,800m)", "meals": "Full Board"},
+                {"day": 5, "title": "Summit Day! Austrian Hut to Point Lenana to Mintosa Camp", "description": "Early ascent to Point Lenana (4,985m). Descend back to Mintosa Camp.", "activities": "Summit sunrise, Celebration", "accommodation": "Mintosa Camp (4,100m)", "meals": "Full Board"},
+                {"day": 6, "title": "Mintosa Camp to Chogoria Gate", "description": "Final descent through forest to Chogoria Gate. Transfer back to Nairobi.", "activities": "Forest descent, Certificate ceremony", "accommodation": "Hotel in Nairobi", "meals": "Breakfast"},
             ]
+            self.create_itinerary(kenya2, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {kenya2.name}"))
 
-            for day in itinerary_longonot:
-                ItineraryTreking.objects.create(
-                    package=longonot,
-                    day_number=day["day"],
-                    title=day["title"],
-                    description=day["description"],
-                    activities=day["activities"],
-                    accommodation=day["accommodation"],
-                    meals=day["meals"]
-                )
-            self.stdout.write(self.style.SUCCESS(f"✓ Created {longonot.name} with {len(itinerary_longonot)} days"))
-        else:
-            self.stdout.write(self.style.WARNING(f"⚠ {longonot.name} already exists, skipping..."))
+        # Package 3: Naro Moru Route (4 days)
+        kenya3, created = Trekking.objects.get_or_create(
+            name="Mount Kenya Climb - Naro Moru Route (4 Days)",
+            location="Mount Kenya National Park, Kenya",
+            starRating=4,
+            days=4,
+            price=Decimal("750.00"),
+            persons=10,
+            description="The Naro Moru Route is the quickest way to Point Lenana, but also the steepest. It's known for the infamous 'Vertical Bog' but offers a fast and challenging ascent.",
+            category="Kenya",
+            image="awesome_packages/mount_kenya_naro_moru.jpg"
+        )
 
-        # ==================== MOUNT SUSWA - 2 DAYS VOLCANIC ADVENTURE ====================
-        suswa, created = Trekking.objects.get_or_create(
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Nairobi to Naro Moru Gate to Met Station", "description": "Drive to Naro Moru Gate (2,400m). Trek to Met Station at 3,000m.", "activities": "Forest trekking, Bird watching", "accommodation": "Met Station (3,000m)", "meals": "Full Board"},
+                {"day": 2, "title": "Met Station to Mackinders Camp", "description": "Trek through the Vertical Bog to Mackinders Camp at 4,200m.", "activities": "Bog crossing, Alpine trekking", "accommodation": "Mackinders Camp (4,200m)", "meals": "Full Board"},
+                {"day": 3, "title": "Summit Day! Mackinders Camp to Point Lenana to Met Station", "description": "Early ascent to Point Lenana (4,985m). Descend to Met Station.", "activities": "Summit sunrise, Glacier views", "accommodation": "Met Station (3,000m)", "meals": "Full Board"},
+                {"day": 4, "title": "Met Station to Naro Moru Gate", "description": "Final descent through forest to Naro Moru Gate. Transfer to Nairobi.", "activities": "Forest descent, Certificate ceremony", "accommodation": "Hotel in Nairobi", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(kenya3, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {kenya3.name}"))
+
+        # ==================== LONGONOT CATEGORY (3 PACKAGES) ====================
+
+        # Package 1: Standard Crater Rim (1 day)
+        longonot1, created = Trekking.objects.get_or_create(
+            name="Mount Longonot Crater Rim Hike (1 Day)",
+            location="Longonot National Park, Kenya",
+            starRating=4,
+            days=1,
+            price=Decimal("85.00"),
+            persons=15,
+            description="Hike to the crater rim of Mount Longonot, a dormant stratovolcano at 2,776m with spectacular Rift Valley views.",
+            category="Longonot",
+            image="awesome_packages/longonot_hike.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Mount Longonot Crater Rim Hike", "description": "Early departure from Nairobi. Climb to crater rim (2,776m). Optional full rim circuit (7.2km). Return to Nairobi.", "activities": "Crater climbing, Rim walk, Wildlife spotting", "accommodation": "No accommodation (day hike)", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(longonot1, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {longonot1.name}"))
+
+        # Package 2: Longonot & Hell's Gate Combo (2 days)
+        longonot2, created = Trekking.objects.get_or_create(
+            name="Longonot & Hell's Gate Combo (2 Days)",
+            location="Longonot & Hell's Gate, Kenya",
+            starRating=4,
+            days=2,
+            price=Decimal("250.00"),
+            persons=12,
+            description="Combine the volcanic crater of Mount Longonot with cycling and hiking in Hell's Gate National Park for an action-packed weekend adventure.",
+            category="Longonot",
+            image="awesome_packages/longonot_hellsgate.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Nairobi to Mount Longonot - Crater Hike", "description": "Morning drive to Longonot. Climb to crater rim (2,776m). Afternoon optional rim circuit. Overnight in Naivasha.", "activities": "Crater climbing, Photography, Rest", "accommodation": "Hotel in Naivasha", "meals": "Full Board"},
+                {"day": 2, "title": "Hell's Gate National Park Adventure", "description": "Morning cycling through Hell's Gate, walk through Ol Njorowa Gorge. See geothermal features and wildlife. Return to Nairobi.", "activities": "Cycling, Gorge walking, Wildlife viewing", "accommodation": "No accommodation", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(longonot2, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {longonot2.name}"))
+
+        # Package 3: Longonot Summit & Lake Naivasha (2 days)
+        longonot3, created = Trekking.objects.get_or_create(
+            name="Longonot Summit & Lake Naivasha Boat Safari (2 Days)",
+            location="Longonot & Lake Naivasha, Kenya",
+            starRating=4,
+            days=2,
+            price=Decimal("220.00"),
+            persons=12,
+            description="Climb Mount Longonot and explore Lake Naivasha's hippos and birdlife on a boat safari. Perfect weekend getaway from Nairobi.",
+            category="Longonot",
+            image="awesome_packages/longonot_naivasha.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Nairobi to Mount Longonot - Crater Hike", "description": "Drive to Longonot. Hike to crater rim. Overnight at a lakeside resort in Naivasha.", "activities": "Crater climbing, Swimming, Relaxation", "accommodation": "Lake Naivasha Resort", "meals": "Full Board"},
+                {"day": 2, "title": "Lake Naivasha Boat Safari & Crescent Island", "description": "Morning boat safari to see hippos and birds. Visit Crescent Island for walking safari among animals. Return to Nairobi.", "activities": "Boat safari, Walking safari, Bird watching", "accommodation": "No accommodation", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(longonot3, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {longonot3.name}"))
+
+        # ==================== SUSWA CATEGORY (3 PACKAGES) ====================
+
+        # Package 1: Standard Expedition (2 days)
+        suswa1, created = Trekking.objects.get_or_create(
             name="Mount Suswa Expedition (2 Days)",
-            defaults={
-                "location": "Suswa National Park, Kenya",
-                "starRating": 4,
-                "days": 2,
-                "price": Decimal("350.00"),
-                "persons": 1,
-                "description": "Explore the unique volcanic wonderland of Mount Suswa, a massive shield volcano in the Rift Valley. This 2-day expedition takes you into an ancient caldera featuring the world's unique double-crater structure, lava tube caves inhabited by hyrax and owls, and spectacular views from the rim. Mount Suswa's last eruption was approximately 400 years ago, leaving behind a fascinating landscape of lava flows, volcanic plugs, and dramatic escarpments. This less-visited mountain offers true off-the-beaten-path adventure combined with Maasai cultural experiences. You'll explore lava tubes, descend into the inner crater, enjoy wildlife spotting (giraffe, zebra, buffalo, leopard), and camp under the stars in the remote caldera. Perfect for volcanology enthusiasts and adventure seekers looking beyond the typical tourist routes.",
-                "category": "Suswa",
-                "image": "awesome_packages/mount_suswa.jpg"
-            }
+            location="Suswa National Park, Kenya",
+            starRating=4,
+            days=2,
+            price=Decimal("350.00"),
+            persons=10,
+            description="Explore the unique volcanic wonderland of Mount Suswa with lava tubes, double crater, and Maasai cultural experiences.",
+            category="Suswa",
+            image="awesome_packages/mount_suswa.jpg"
         )
 
         if created:
-            itinerary_suswa = [
-                {
-                    "day": 1,
-                    "title": "Nairobi to Mount Suswa - Crater Exploration and Lava Tubes",
-                    "description": """Your Suswa expedition begins with an early 7 AM departure from Nairobi, driving through the scenic Rift Valley escarpment with stops at viewpoints overlooking Lake Naivasha and Mount Longonot. After approximately 2-3 hours, arrive at the Mount Suswa access point near the Maasai village of Ilngarua. After briefing by your guides and local Maasai elders, begin your exploration with a visit to the famous lava tube system (Olbaltata Caves). These massive tubes were formed by flowing lava and extend for kilometers underground, some large enough to drive a truck through! With headlamps, explore the main chamber where Maasai warriors historically sought refuge during tribal conflicts. Inside, you'll find unique soda pillars, stalactites formed by dripping minerals, and potential sightings of hyrax, owls, and bats. After the cave exploration, drive or hike toward the outer crater rim for lunch with spectacular views of the caldera below. The afternoon involves descending into the outer crater via 4x4 vehicle (or hiking for more adventurous groups) to reach the inner crater. Set up camp at a designated campsite near the base of the inner crater (1,800 meters). The late afternoon offers a guided walk along the inner crater rim, where you'll witness the sun setting over the Rift Valley with Mount Kilimanjaro visible on clear days. Evening includes a campfire briefing, Maasai cultural stories, and stargazing in the remote volcanic landscape, far from any light pollution.""",
-                    "activities": "Rift Valley scenic drive, Lava tube exploration (Olbaltata Caves), Soda pillar photography, Crater rim lunch with views, 4x4 crater descent, Inner crater rim sunset walk, Maasai cultural stories, Night sky stargazing",
-                    "accommodation": "Camping inside Suswa Caldera - Dome tents with sleeping mats, campfire area",
-                    "meals": "Full Board"
-                },
-                {
-                    "day": 2,
-                    "title": "Inner Crater Descent and Return to Nairobi",
-                    "description": """Wake early to the sounds of the African wilderness with sunrise over the ancient volcanic caldera. After a hearty breakfast, prepare for the highlight of the expedition - descending into the inner crater of Mount Suswa. This steep but manageable descent takes approximately 1-2 hours, requiring careful footing on volcanic scree. Your guide will point out unique geological features including fumaroles (steam vents), volcanic bombs, and different lava flow formations. At the floor of the inner crater (1,650 meters), you'll find a unique ecosystem featuring an enclosed forest, swampy areas fed by underground springs, and potential wildlife sightings including buffalo, bushbuck, and an incredible variety of birds. This isolated crater forest provides habitat for species rarely seen elsewhere. After exploring the crater floor and enjoying your packed lunch in this surreal environment, ascend back to the inner crater rim (1-1.5 hours). The afternoon involves driving (or hiking) out of the caldera, navigating the same dramatic escarpment. En route, stop at a traditional Maasai manyatta (village) for cultural interaction, learning about traditional medicine, beadwork, and cattle herding life. Your guides arrange a farewell ceremony with the local Maasai elders, complete with singing and dancing. Begin the return drive to Nairobi (2-3 hours), arriving by early evening (approx 6-7 PM). This expedition offers a rare combination of volcanic geology, cave exploration, wildlife, and authentic cultural experience unmatched by more commercialized destinations.""",
-                    "activities": "Sunrise over caldera, Inner crater descent on volcanic scree, Fumarole and volcanic bomb identification, Crater floor forest exploration, Wildlife tracking (buffalo, bushbuck), Bird watching (endemic species), Maasai village cultural visit, Traditional ceremony and farewell, Rift Valley photography",
-                    "accommodation": "No accommodation (return to Nairobi - hotel recommended)",
-                    "meals": "Full Board"
-                }
+            itinerary = [
+                {"day": 1, "title": "Nairobi to Mount Suswa - Lava Tubes", "description": "Drive to Suswa. Explore Olbaltata lava tubes. Descend into caldera. Camp overnight.", "activities": "Lava tube exploration, Crater descent", "accommodation": "Camping inside Caldera", "meals": "Full Board"},
+                {"day": 2, "title": "Inner Crater Descent and Return", "description": "Descend into inner crater (1,650m). Explore crater forest. Visit Maasai village. Return to Nairobi.", "activities": "Crater descent, Wildlife tracking, Maasai cultural visit", "accommodation": "No accommodation", "meals": "Full Board"},
             ]
+            self.create_itinerary(suswa1, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {suswa1.name}"))
 
-            for day in itinerary_suswa:
-                ItineraryTreking.objects.create(
-                    package=suswa,
-                    day_number=day["day"],
-                    title=day["title"],
-                    description=day["description"],
-                    activities=day["activities"],
-                    accommodation=day["accommodation"],
-                    meals=day["meals"]
-                )
-            self.stdout.write(self.style.SUCCESS(f"✓ Created {suswa.name} with {len(itinerary_suswa)} days"))
-        else:
-            self.stdout.write(self.style.WARNING(f"⚠ {suswa.name} already exists, skipping..."))
+        # Package 2: Extended Volcanic Adventure (3 days)
+        suswa2, created = Trekking.objects.get_or_create(
+            name="Mount Suswa Volcanic Adventure (3 Days)",
+            location="Suswa National Park, Kenya",
+            starRating=5,
+            days=3,
+            price=Decimal("550.00"),
+            persons=8,
+            description="Extended volcanic exploration with full crater exploration, lava tube mapping, and overnight Maasai cultural immersion.",
+            category="Suswa",
+            image="awesome_packages/suswa_volcanic.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Nairobi to Mount Suswa - Lava Tubes", "description": "Drive to Suswa. Explore main lava tube system. Camp near inner crater.", "activities": "Lava tube exploration, Sunset views", "accommodation": "Caldera Campsite", "meals": "Full Board"},
+                {"day": 2, "title": "Full Crater Exploration", "description": "Descend into inner crater. Explore crater floor forest. Wildlife tracking. Evening Maasai cultural stories.", "activities": "Crater descent, Forest walk, Cultural stories", "accommodation": "Caldera Campsite", "meals": "Full Board"},
+                {"day": 3, "title": "Second Lava Tube & Maasai Village", "description": "Explore secondary lava tube. Visit Maasai manyatta. Ceremony and farewell. Return to Nairobi.", "activities": "Cave exploration, Cultural ceremony", "accommodation": "No accommodation", "meals": "Full Board"},
+            ]
+            self.create_itinerary(suswa2, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {suswa2.name}"))
+
+        # Package 3: Suswa & Magadi Combo (4 days)
+        suswa3, created = Trekking.objects.get_or_create(
+            name="Suswa Volcano & Lake Magadi Expedition (4 Days)",
+            location="Suswa & Lake Magadi, Kenya",
+            starRating=5,
+            days=4,
+            price=Decimal("750.00"),
+            persons=8,
+            description="Combine the volcanic wonders of Mount Suswa with the unique soda lake ecosystem of Lake Magadi, famous for its flamingos and hot springs.",
+            category="Suswa",
+            image="awesome_packages/suswa_magadi.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Nairobi to Mount Suswa - Lava Tubes", "description": "Drive to Suswa. Explore lava tubes. Camp in caldera.", "activities": "Lava tube exploration, Camp setup", "accommodation": "Caldera Campsite", "meals": "Full Board"},
+                {"day": 2, "title": "Inner Crater Exploration", "description": "Descend into inner crater. Explore forest and wildlife. Evening Maasai cultural experience.", "activities": "Crater descent, Wildlife tracking, Cultural stories", "accommodation": "Caldera Campsite", "meals": "Full Board"},
+                {"day": 3, "title": "Lake Magadi - Hot Springs & Flamingos", "description": "Drive to Lake Magadi. Explore hot springs, watch flamingos. Overnight at Magadi Camp.", "activities": "Hot springs bathing, Bird watching", "accommodation": "Magadi Camp", "meals": "Full Board"},
+                {"day": 4, "title": "Lake Magadi Sunrise & Return to Nairobi", "description": "Sunrise at Lake Magadi. Visit salt pans. Drive back to Nairobi via scenic route.", "activities": "Sunrise photography, Salt pan visit", "accommodation": "No accommodation", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(suswa3, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {suswa3.name}"))
+
+        # ==================== MERU CATEGORY (3 PACKAGES) ====================
+
+        # Package 1: Standard Meru Climb (4 days)
+        meru1, created = Trekking.objects.get_or_create(
+            name="Mount Meru Climb - Momella Route (4 Days)",
+            location="Arusha National Park, Tanzania",
+            starRating=4,
+            days=4,
+            price=Decimal("850.00"),
+            persons=10,
+            description="Climb Mount Meru, Tanzania's second-highest peak at 4,565m. This challenging trek offers incredible views of Kilimanjaro and is excellent Kilimanjaro preparation.",
+            category="Meru",
+            image="awesome_packages/mount_meru_momella.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Arusha to Momella Gate to Miriakamba Hut", "description": "Drive to Momella Gate (1,500m). Trek through rainforest to Miriakamba Hut at 2,500m.", "activities": "Forest trekking, Wildlife viewing", "accommodation": "Miriakamba Hut (2,500m)", "meals": "Full Board"},
+                {"day": 2, "title": "Miriakamba Hut to Saddle Hut", "description": "Trek through heath and moorland to Saddle Hut at 3,500m.", "activities": "Alpine trekking, Views of Kilimanjaro", "accommodation": "Saddle Hut (3,500m)", "meals": "Full Board"},
+                {"day": 3, "title": "Summit Day! Saddle Hut to Socialist Peak to Miriakamba Hut", "description": "Early ascent to Socialist Peak (4,565m). Descend to Miriakamba Hut.", "activities": "Summit sunrise, Volcano crater views", "accommodation": "Miriakamba Hut (2,500m)", "meals": "Full Board"},
+                {"day": 4, "title": "Miriakamba Hut to Momella Gate", "description": "Final descent through rainforest. Receive certificates. Return to Arusha.", "activities": "Forest descent, Wildlife sightings", "accommodation": "Hotel in Arusha", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(meru1, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {meru1.name}"))
+
+        # Package 2: Extended Meru with Wildlife Safari (5 days)
+        meru2, created = Trekking.objects.get_or_create(
+            name="Mount Meru Climb & Arusha Safari (5 Days)",
+            location="Arusha National Park, Tanzania",
+            starRating=5,
+            days=5,
+            price=Decimal("1200.00"),
+            persons=8,
+            description="Climb Mount Meru followed by a wildlife safari in Arusha National Park. See giraffes, buffalos, and flamingos on the park's famous Momela Lakes.",
+            category="Meru",
+            image="awesome_packages/meru_safari.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Arusha to Momella Gate to Miriakamba Hut", "description": "Drive to Momella Gate. Trek to Miriakamba Hut at 2,500m.", "activities": "Forest trekking, Colobus monkeys", "accommodation": "Miriakamba Hut (2,500m)", "meals": "Full Board"},
+                {"day": 2, "title": "Miriakamba Hut to Saddle Hut", "description": "Trek to Saddle Hut at 3,500m with spectacular views.", "activities": "Alpine trekking, Photography", "accommodation": "Saddle Hut (3,500m)", "meals": "Full Board"},
+                {"day": 3, "title": "Summit Day! Socialist Peak", "description": "Ascent to Socialist Peak (4,565m). Descend to Miriakamba Hut.", "activities": "Summit success, Celebration", "accommodation": "Miriakamba Hut (2,500m)", "meals": "Full Board"},
+                {"day": 4, "title": "Descend to Momella Gate - Afternoon Safari", "description": "Morning descent. Afternoon game drive in Arusha National Park.", "activities": "Forest descent, Wildlife safari", "accommodation": "Hotel in Arusha", "meals": "Full Board"},
+                {"day": 5, "title": "Morning Safari & Return to Arusha", "description": "Morning walk to Momela Lakes for flamingos. Canoeing option. Return to Arusha.", "activities": "Bird watching, Canoeing", "accommodation": "No accommodation", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(meru2, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {meru2.name}"))
+
+        # Package 3: Meru Kilimanjaro Combo (14 days)
+        meru3, created = Trekking.objects.get_or_create(
+            name="Mount Meru & Kilimanjaro Combo (14 Days)",
+            location="Arusha & Kilimanjaro, Tanzania",
+            starRating=5,
+            days=14,
+            price=Decimal("2950.00"),
+            persons=7,
+            description="The ultimate Tanzanian mountain adventure! Climb Mount Meru for acclimatization, then tackle Kilimanjaro via the Machame Route with higher success rates.",
+            category="Meru",
+            image="awesome_packages/meru_kilimanjaro.jpg"
+        )
+
+        if created:
+            itinerary = [
+                {"day": 1, "title": "Arrival in Arusha", "description": "Arrive at Kilimanjaro Airport. Transfer to hotel. Gear check and briefing.", "activities": "Rest, Gear preparation, Orientation", "accommodation": "Hotel in Arusha", "meals": "Breakfast"},
+                {"day": 2, "title": "Arusha to Momella Gate to Miriakamba Hut", "description": "Start Mount Meru climb. Trek to Miriakamba Hut at 2,500m.", "activities": "Rainforest trekking", "accommodation": "Miriakamba Hut", "meals": "Full Board"},
+                {"day": 3, "title": "Miriakamba Hut to Saddle Hut", "description": "Trek to Saddle Hut at 3,500m.", "activities": "Alpine trekking", "accommodation": "Saddle Hut", "meals": "Full Board"},
+                {"day": 4, "title": "Summit Mount Meru - Socialist Peak", "description": "Ascent to Socialist Peak (4,565m). Descend to Miriakamba Hut.", "activities": "Summit success", "accommodation": "Miriakamba Hut", "meals": "Full Board"},
+                {"day": 5, "title": "Descend Mount Meru & Rest Day", "description": "Complete Meru descent. Rest and prepare for Kilimanjaro.", "activities": "Forest descent, Rest", "accommodation": "Hotel in Arusha", "meals": "Full Board"},
+                {"day": 6, "title": "Transfer to Kilimanjaro - Machame Gate to Machame Camp", "description": "Drive to Machame Gate. Start Kilimanjaro climb to Machame Camp.", "activities": "Rainforest trekking", "accommodation": "Machame Camp", "meals": "Full Board"},
+                {"day": 7, "title": "Machame Camp to Shira Camp", "description": "Trek to Shira Camp on the Shira Plateau.", "activities": "Moorland trekking", "accommodation": "Shira Camp", "meals": "Full Board"},
+                {"day": 8, "title": "Shira Camp to Barranco Camp via Lava Tower", "description": "Acclimatization day via Lava Tower.", "activities": "Alpine trekking", "accommodation": "Barranco Camp", "meals": "Full Board"},
+                {"day": 9, "title": "Barranco Camp to Karanga Camp", "description": "Scramble Barranco Wall to Karanga Camp.", "activities": "Wall scrambling", "accommodation": "Karanga Camp", "meals": "Full Board"},
+                {"day": 10, "title": "Karanga Camp to Barafu Camp", "description": "Trek to Barafu Camp, the final camp.", "activities": "Summit preparation", "accommodation": "Barafu Camp", "meals": "Full Board"},
+                {"day": 11, "title": "Summit Day! Uhuru Peak to Mweka Camp", "description": "Midnight ascent to Uhuru Peak (5,895m). Descend to Mweka Camp.", "activities": "Summit success!", "accommodation": "Mweka Camp", "meals": "Full Board"},
+                {"day": 12, "title": "Mweka Camp to Mweka Gate", "description": "Final descent. Receive certificates.", "activities": "Certificate ceremony", "accommodation": "Hotel in Moshi", "meals": "Breakfast"},
+                {"day": 13, "title": "Rest Day & Celebration", "description": "Free day for rest, shopping, or optional safari.", "activities": "Rest, Celebration dinner", "accommodation": "Hotel in Moshi", "meals": "Full Board"},
+                {"day": 14, "title": "Departure", "description": "Transfer to Kilimanjaro Airport for departure.", "activities": "Farewell", "accommodation": "No accommodation", "meals": "Breakfast"},
+            ]
+            self.create_itinerary(meru3, itinerary)
+            self.stdout.write(self.style.SUCCESS(f"✓ Created {meru3.name}"))
 
         # Summary
         self.stdout.write("\n" + "="*50)
@@ -308,7 +438,10 @@ class Command(BaseCommand):
         self.stdout.write("="*50)
         self.stdout.write(f"📊 Total Trekking Packages: {Trekking.objects.count()}")
         self.stdout.write(f"📋 Total Itinerary Days: {ItineraryTreking.objects.count()}")
-        self.stdout.write("\n📦 Packages created:")
-        for package in Trekking.objects.all():
-            self.stdout.write(f"  • {package.name} ({package.days} days)")
-            self.stdout.write(f"    Itinerary days: {package.itinerary_days.count()}")
+        self.stdout.write("\n📦 Packages created by category:")
+
+        for category in ["Kilimanjaro", "Kenya", "Longonot", "Suswa", "Meru"]:
+            packages = Trekking.objects.filter(category=category)
+            self.stdout.write(f"\n  🏔 {category}: {packages.count()} packages")
+            for package in packages:
+                self.stdout.write(f"    • {package.name} ({package.days} days, {package.itinerary_days.count()} itinerary days)")
