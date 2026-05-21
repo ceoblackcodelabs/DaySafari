@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, FormView
 from .models import (Brochure, Services, GalleryCategory, Gallery,
-                     Testimonials, Blogs
+                     Testimonials, Blogs, Trekking, ItineraryTreking
                      )
 from OurClients.models import UserMessage
 from Places.models import Destinations, DestinationsCategory, AwesomePackages
@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from ClientRequests.forms import BookingsForm
 from django.contrib import messages
+from .forms import TrekkingBookingForm
 from EmailSetup.utils import send_booking_confirmation
 
 
@@ -324,16 +325,72 @@ class BrochureView(ListView):
     template_name = 'Home/brochures.html'
 
 class KenyaTrekking(TemplateView):
+    model = Trekking
     template_name = "Trekking/kenya.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        packages = Trekking.objects.filter(category="Kenya")
+        context["packages"] = packages
+        return context
 
 class TanzaniaTrekking(TemplateView):
     template_name = "Trekking/tanzania.html"
 
-class KilimanjaroTrekking(TemplateView):
+class KilimanjaroTrekking(ListView):
+    model = Trekking
     template_name = "Trekking/kilimanjaro.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        packages = Trekking.objects.filter(category="Kilimanjaro")
+        context["packages"] = packages
+        return context
+
 class SuswaTrekking(TemplateView):
+    model = Trekking
     template_name = "Trekking/suswa.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        packages = Trekking.objects.filter(category="Suswa")
+        context["packages"] = packages
+        return context
+
 class LongonotTrekking(TemplateView):
+    model = Trekking
     template_name = "Trekking/longonot.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        packages = Trekking.objects.filter(category="Longonot")
+        context["packages"] = packages
+        return context
+
+class TrekkingDetailView(DetailView):
+    """Generic detail view for any trekking package"""
+    model = Trekking
+    context_object_name = "package"
+    template_name = "Trekking/trekking_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        package = self.get_object()
+        context["itineraries"] = ItineraryTreking.objects.filter(package=package).order_by('day_number')
+        context["title"] = package.name
+        # Get similar packages
+        similar_packages = AwesomePackages.objects.all()[:3]
+        context['similar_packages'] = similar_packages
+
+        # Initialize form with user data if logged in
+        initial_data = {}
+        if self.request.user.is_authenticated:
+            initial_data = {
+                'full_name': f"{self.request.user.first_name} {self.request.user.last_name}".strip() or self.request.user.username,
+                'email': self.request.user.email,
+            }
+
+        # Check if form was submitted with errors
+        if 'form' not in context:
+            context['form'] = TrekkingBookingForm(initial=initial_data, package=self.object)
+        return context

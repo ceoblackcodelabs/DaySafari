@@ -113,3 +113,55 @@ class Trekking(models.Model):
 
     def __str__(self):
         return self.name
+
+class TrekkingBooking(models.Model):
+    BOOKING_STATUS = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('cancelled', 'Cancelled'),
+        ('completed', 'Completed'),
+    ]
+
+    # Booking reference
+    booking_reference = models.CharField(max_length=20, unique=True, editable=False)
+
+    # Package details
+    package = models.ForeignKey('Trekking', on_delete=models.CASCADE, related_name='bookings')
+
+    # Customer details
+    full_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+
+    # Booking details
+    number_of_persons = models.IntegerField()
+    travel_date = models.DateField()
+    total_price = models.DecimalField(max_digits=12, decimal_places=2)
+
+    # Optional
+    special_requests = models.TextField(blank=True)
+
+    # Status
+    booking_status = models.CharField(max_length=20, choices=BOOKING_STATUS, default='pending')
+
+    # Timestamps
+    booking_date = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-booking_date']
+        verbose_name = "Trekking Booking"
+        verbose_name_plural = "Trekking Bookings"
+
+    def save(self, *args, **kwargs):
+        if not self.booking_reference:
+            import random
+            import string
+            from datetime import date
+            date_str = date.today().strftime('%Y%m%d')
+            random_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
+            self.booking_reference = f"TREK-{date_str}-{random_str}"
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.booking_reference} - {self.full_name} - {self.package.name}"
