@@ -3,6 +3,7 @@ import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
 from django.template.loader import render_to_string
 import logging
+from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMultiAlternatives
 from decouple import config
@@ -209,4 +210,40 @@ def send_package_payment_email(package_purchase):
         )
     except Exception as e:
         print(f"Error sending package payment email: {e}")
+        return False
+
+
+def send_new_user_alert_to_admin(user):
+    """Send alert email to admin when a new user registers"""
+    try:
+        print(f"Preparing to send new user alert to admin...")
+
+        # Get admin email from company profile or settings
+        # admin_email = company.booking_confirmation_email if company else 'info@daysafarisadventures.com'
+        admin_email = 'info@daysafarisadventures.com'
+
+        context = {
+            'user': user,
+            'user_full_name': user.get_full_name() or user.username,
+            'user_username': user.username,
+            'user_email': user.email,
+            'user_date_joined': user.date_joined,
+            'user_is_active': user.is_active,
+            'admin_panel_link': 'https://daysafarisadventures.co.ke/admin/auth/user/',
+            'company_phone': company.company_phone if company else '+254759379600',
+            'company_whatsapp': company.company_whatsapp if company else '+254140936286',
+            'company_email': company.booking_confirmation_email if company else 'info@daysafarisadventures.com',
+            'current_year': timezone.now().year
+        }
+
+        html_content = render_to_string('Emails/new_user_alert.html', context)
+
+        return send_transactional_email(
+            admin_email,
+            "Admin - Day Safaris Adventures",
+            f"🔔 New User Registration Alert - {user.username}",
+            html_content
+        )
+    except Exception as e:
+        print(f"Error sending new user alert email: {e}")
         return False

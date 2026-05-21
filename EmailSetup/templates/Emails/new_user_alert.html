@@ -1,0 +1,52 @@
+{% extends 'Emails/email_base.html' %}
+
+{% block title %}New User Registration Alert{% endblock %}
+
+{% block content %}
+<h2>🔔 New User Registration</h2>
+
+<p>A new user has just registered on the Day Safaris Adventures website!</p>
+
+<div class="box">
+    <p style="margin-bottom: 10px;"><strong>📝 User Details:</strong></p>
+    <p style="margin-bottom: 5px;">
+        <strong>Name:</strong> {{ user_full_name }}<br>
+        <strong>Username:</strong> {{ user_username }}<br>
+        <strong>Email:</strong> {{ user_email }}<br>
+        <strong>Registration Date:</strong> {{ user_date_joined|date:"F j, Y, g:i a" }}<br>
+        <strong>Status:</strong> {% if user_is_active %}✅ Active{% else %}⏸ Inactive{% endif %}
+    </p>
+</div>
+
+<div class="box">
+    <p style="margin-bottom: 10px;"><strong>⚡ Quick Actions:</strong></p>
+    <p style="margin-bottom: 5px;">
+        ✓ <a href="{{ admin_panel_link }}">View User in Admin Panel</a><br>
+        ✓ Review user profile for completeness<br>
+        ✓ Send welcome email if not sent automatically<br>
+        ✓ Track user activity and engagement
+    </p>
+</div>
+
+<p style="text-align: center;">
+    <a href="{{ admin_panel_link }}" class="button">Go to Admin Panel</a>
+</p>
+
+<div class="box">
+    <p style="margin-bottom: 5px;"><strong>📞 Need to contact the user?</strong></p>
+    <p style="margin-bottom: 5px;">
+        Email: {{ user_email }}<br>
+        Phone: {{ company_phone }}<br>
+        WhatsApp: {{ company_whatsapp }}
+    </p>
+</div>
+
+<hr>
+
+<p style="color: #666; font-size: 12px;">
+    This is an automated notification from Day Safaris Adventures.<br>
+    You are receiving this email because you are listed as an administrator.
+</p>
+
+<p>The Day Safaris Team 🦁</p>
+{% endblock %}

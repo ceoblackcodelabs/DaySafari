@@ -20,7 +20,26 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
-from EmailSetup.utils import send_welcome_email
+from EmailSetup.utils import send_welcome_email, send_new_user_alert_to_admin
+import threading
+from time import sleep
+
+def send_registration_emails_async(email, name, user):
+    """Send registration emails in background thread"""
+    def send():
+        try:
+            # Send welcome email to user
+            send_welcome_email(email=email, name=name)
+            sleep(10)
+            # Send alert email to admin
+            send_new_user_alert_to_admin(user)
+            print(f"Registration emails sent for: {name}")
+        except Exception as e:
+            print(f"Error sending registration emails: {e}")
+
+    thread = threading.Thread(target=send)
+    thread.daemon = True
+    thread.start()
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
@@ -87,7 +106,14 @@ class RegisterView(CreateView):
             f"Account created successfully! Welcome {form.cleaned_data.get('username')}! 🎉 "
             "Please log in to continue."
         )
-        send_welcome_email(email=form.cleaned_data.get('email'), name=form.cleaned_data.get('username'))
+        # Send emails in background thread (non-blocking)
+        send_registration_emails_async(
+            email=form.cleaned_data.get('email'),
+            name=form.cleaned_data.get('username'),
+            user=self.object
+        )
+
+
         # UserMessage.objects.create(
         #     user=self.object,
         #     sender_name='Day Safaris Team',
