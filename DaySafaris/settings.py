@@ -169,7 +169,16 @@ LOGOUT_REDIRECT_URL = 'home'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['https://a50c-154-159-252-109.ngrok-free.app', 'https://6457-105-161-237-37.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = ['https://a50c-154-159-252-109.ngrok-free.app',
+'https://6457-105-161-237-37.ngrok-free.app',
+'https://daysafarisadventures.co.ke/',
+'http://daysafarisadventures.co.ke/',
+'https://www.daysafarisadventures.co.ke/',
+'http://www.daysafarisadventures.co.ke/']
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'  
 
 from decouple import config
 

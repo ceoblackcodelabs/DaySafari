@@ -50,6 +50,8 @@
                 justify-content: center;
                 align-items: center;
                 animation: fadeIn 0.3s ease;
+                padding: 20px;
+                box-sizing: border-box;
             }
 
             .popup-overlay.active {
@@ -63,13 +65,32 @@
 
             .popup-container {
                 position: relative;
-                max-width: 800px;
-                width: 90%;
+                max-width: 90vw;
+                max-height: 90vh;
+                width: auto;
                 background: white;
                 border-radius: 20px;
-                overflow: hidden;
+                overflow-y: auto;
+                overflow-x: hidden;
                 box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
                 animation: slideUp 0.4s ease;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Hide scrollbar but keep functionality */
+            .popup-container::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .popup-container::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+
+            .popup-container::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 10px;
             }
 
             @keyframes slideUp {
@@ -89,17 +110,18 @@
                 right: 20px;
                 background: rgba(0, 0, 0, 0.7);
                 color: white;
-                width: 35px;
-                height: 35px;
+                width: 40px;
+                height: 40px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-                z-index: 10;
+                z-index: 20;
                 transition: all 0.3s ease;
                 border: none;
-                font-size: 20px;
+                font-size: 24px;
+                font-weight: bold;
             }
 
             .popup-close:hover {
@@ -107,18 +129,180 @@
                 transform: scale(1.1);
             }
 
-            .popup-image {
-                width: 100%;
-                height: 300px;
-                object-fit: cover;
+            /* Layout: Image on left, content on right for landscape */
+            .popup-layout {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .popup-image-side {
+                flex: 1;
+                min-width: 250px;
+                max-width: 40%;
                 position: relative;
             }
 
-            .popup-content {
-                padding: 30px;
-                background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            .popup-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
             }
 
+            .popup-content-side {
+                flex: 2;
+                padding: 25px;
+                background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+                overflow-y: auto;
+                max-height: 70vh;
+            }
+
+            /* Portrait mode: stack vertically */
+            @media (max-width: 768px) and (orientation: portrait) {
+                .popup-layout {
+                    flex-direction: column;
+                }
+
+                .popup-image-side {
+                    max-width: 100%;
+                    height: 200px;
+                }
+
+                .popup-image {
+                    height: 200px;
+                }
+
+                .popup-content-side {
+                    max-height: 60vh;
+                    padding: 20px;
+                }
+
+                .popup-container {
+                    max-width: 95vw;
+                    max-height: 85vh;
+                }
+
+                .popup-close {
+                    top: 10px;
+                    right: 10px;
+                    width: 35px;
+                    height: 35px;
+                    font-size: 20px;
+                }
+            }
+
+            /* Landscape mode specific */
+            @media (min-width: 769px) and (orientation: landscape) {
+                .popup-container {
+                    max-width: 85vw;
+                    max-height: 85vh;
+                }
+
+                .popup-image-side {
+                    max-width: 35%;
+                }
+
+                .popup-content-side {
+                    max-height: 85vh;
+                    padding: 25px;
+                }
+
+                .popup-close {
+                    top: 15px;
+                    right: 15px;
+                }
+            }
+
+            /* Small landscape phones */
+            @media (max-width: 768px) and (orientation: landscape) {
+                .popup-layout {
+                    flex-direction: row;
+                }
+
+                .popup-image-side {
+                    max-width: 40%;
+                    height: auto;
+                }
+
+                .popup-image {
+                    height: 100%;
+                    min-height: 250px;
+                }
+
+                .popup-content-side {
+                    max-height: 75vh;
+                    padding: 15px;
+                }
+
+                .popup-container {
+                    max-width: 95vw;
+                    max-height: 90vh;
+                }
+
+                .popup-title {
+                    font-size: 20px;
+                    margin-bottom: 10px;
+                }
+
+                .popup-description {
+                    font-size: 13px;
+                    margin-bottom: 12px;
+                }
+
+                .popup-details {
+                    gap: 10px;
+                    margin-bottom: 15px;
+                }
+
+                .popup-detail-item {
+                    font-size: 11px;
+                }
+
+                .popup-price-section {
+                    padding: 10px;
+                    margin: 10px 0;
+                }
+
+                .discounted-price {
+                    font-size: 22px;
+                }
+
+                .popup-buttons {
+                    gap: 10px;
+                }
+
+                .popup-button {
+                    padding: 8px 16px;
+                    font-size: 12px;
+                }
+
+                .popup-close {
+                    top: 8px;
+                    right: 8px;
+                    width: 30px;
+                    height: 30px;
+                    font-size: 18px;
+                }
+            }
+
+            /* Desktop large screens */
+            @media (min-width: 1200px) {
+                .popup-container {
+                    max-width: 70vw;
+                    max-height: 80vh;
+                }
+
+                .popup-image-side {
+                    max-width: 35%;
+                }
+
+                .popup-content-side {
+                    padding: 35px;
+                }
+            }
+
+            /* Content styles */
             .popup-title {
                 font-size: 28px;
                 font-weight: 700;
@@ -128,15 +312,15 @@
 
             .popup-description {
                 color: #666;
-                line-height: 1.6;
+                line-height: 1.5;
                 margin-bottom: 20px;
-                font-size: 16px;
+                font-size: 14px;
             }
 
             .popup-details {
                 display: flex;
-                gap: 20px;
-                margin-bottom: 25px;
+                gap: 15px;
+                margin-bottom: 20px;
                 flex-wrap: wrap;
             }
 
@@ -145,28 +329,12 @@
                 align-items: center;
                 gap: 8px;
                 color: #555;
-                font-size: 14px;
+                font-size: 13px;
             }
 
             .popup-detail-item i {
                 color: #f59e0b;
-                font-size: 16px;
-            }
-
-            .popup-button {
-                display: inline-flex;
-                align-items: center;
-                gap: 10px;
-                padding: 12px 30px;
-                font-weight: 600;
-                text-decoration: none;
-                border-radius: 50px;
-                transition: all 0.3s ease;
-            }
-
-            .popup-button:hover {
-                transform: translateX(5px);
-                gap: 15px;
+                font-size: 14px;
             }
 
             .popup-footer {
@@ -174,51 +342,31 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-top: 20px;
-                padding-top: 20px;
+                padding-top: 15px;
                 border-top: 1px solid #eee;
+                flex-wrap: wrap;
+                gap: 15px;
             }
 
             .popup-dont-show {
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 8px;
                 cursor: pointer;
                 color: #888;
-                font-size: 13px;
+                font-size: 12px;
             }
 
             .popup-dont-show input {
                 cursor: pointer;
-                width: 18px;
-                height: 18px;
+                width: 16px;
+                height: 16px;
             }
 
             .popup-dont-show:hover {
                 color: #333;
             }
 
-            @media (max-width: 768px) {
-                .popup-container {
-                    width: 95%;
-                    max-width: 95%;
-                }
-
-                .popup-image {
-                    height: 200px;
-                }
-
-                .popup-content {
-                    padding: 20px;
-                }
-
-                .popup-title {
-                    font-size: 22px;
-                }
-
-                .popup-details {
-                    gap: 10px;
-                }
-            }
             /* Discount Badge */
             .discount-badge {
                 position: absolute;
@@ -227,35 +375,29 @@
                 background: linear-gradient(135deg, #ff6b6b, #ee5a24);
                 color: white;
                 border-radius: 50px;
-                padding: 8px 16px;
+                padding: 6px 12px;
                 text-align: center;
-                z-index: 10;
+                z-index: 15;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                 animation: pulse 2s infinite;
             }
 
             @keyframes pulse {
-                0% {
-                    transform: scale(1);
-                }
-                50% {
-                    transform: scale(1.05);
-                }
-                100% {
-                    transform: scale(1);
-                }
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
             }
 
             .discount-percentage {
                 display: block;
-                font-size: 20px;
+                font-size: 18px;
                 font-weight: 800;
                 line-height: 1;
             }
 
             .discount-text {
                 display: block;
-                font-size: 10px;
+                font-size: 9px;
                 font-weight: 500;
                 letter-spacing: 1px;
             }
@@ -263,8 +405,8 @@
             /* Price Section */
             .popup-price-section {
                 background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-                border-radius: 15px;
-                padding: 15px;
+                border-radius: 12px;
+                padding: 12px;
                 margin: 15px 0;
                 text-align: center;
             }
@@ -273,18 +415,18 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 15px;
+                gap: 12px;
                 flex-wrap: wrap;
             }
 
             .original-price {
-                font-size: 18px;
+                font-size: 16px;
                 color: #999;
                 text-decoration: line-through;
             }
 
             .discounted-price {
-                font-size: 32px;
+                font-size: 28px;
                 font-weight: 800;
                 color: #ee5a24;
             }
@@ -292,14 +434,14 @@
             .save-amount {
                 background: #28a745;
                 color: white;
-                padding: 4px 10px;
+                padding: 3px 8px;
                 border-radius: 20px;
-                font-size: 12px;
+                font-size: 11px;
                 font-weight: 600;
             }
 
             .price-note {
-                font-size: 12px;
+                font-size: 11px;
                 color: #666;
                 margin-top: 5px;
             }
@@ -307,70 +449,47 @@
             /* Popup Buttons */
             .popup-buttons {
                 display: flex;
-                gap: 15px;
+                gap: 12px;
                 flex-wrap: wrap;
             }
 
             .popup-button {
                 display: inline-flex;
                 align-items: center;
-                gap: 10px;
-                padding: 12px 24px;
+                gap: 8px;
+                padding: 10px 20px;
                 font-weight: 600;
+                font-size: 14px;
                 text-decoration: none;
                 border-radius: 50px;
                 transition: all 0.3s ease;
             }
 
             .popup-button.btn-success {
-                background: linear-gradient(135deg, #28a745, #20c997);
+                background: linear-gradient(135deg, #25D366, #128C7E);
                 color: white;
             }
 
             .popup-button.btn-success:hover {
-                background: linear-gradient(135deg, #20c997, #28a745);
+                background: linear-gradient(135deg, #128C7E, #075E54);
                 transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+                box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
             }
 
             .popup-button:hover {
                 transform: translateY(-2px);
-                gap: 15px;
+                gap: 12px;
             }
 
             .discount-highlight {
                 background: linear-gradient(135deg, #ff6b6b, #ee5a24);
                 color: white;
-                padding: 5px 10px;
+                padding: 4px 8px;
                 border-radius: 20px;
             }
 
             .discount-highlight i {
                 color: white !important;
-            }
-
-            @media (max-width: 768px) {
-                .popup-buttons {
-                    flex-direction: column;
-                }
-
-                .popup-button {
-                    justify-content: center;
-                }
-
-                .discounted-price {
-                    font-size: 24px;
-                }
-
-                .discount-badge {
-                    top: 10px;
-                    left: 10px;
-                    padding: 5px 12px;
-                }
-
-                .discount-percentage {
-                    font-size: 16px;
-                }
             }
         </style>
     </head>
@@ -386,74 +505,77 @@
                     <i class="fas fa-times"></i>
                 </button>
 
-                {% if ad.image %}
-                <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="popup-image">
-                {% endif %}
+                <div class="popup-layout">
+                    <!-- Image Side -->
+                    <div class="popup-image-side">
+                        {% if ad.image %}
+                        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="popup-image">
+                        {% endif %}
 
-                <div class="popup-content">
-                    <!-- Discount Badge -->
-                    {% if ad.discount_percentage %}
-                    <div class="discount-badge">
-                        <span class="discount-percentage">{{ ad.discount_percentage }}% OFF</span>
-                        <span class="discount-text">Limited Time Offer</span>
-                    </div>
-                    {% endif %}
-
-                    <h2 class="popup-title">{{ ad.title }}</h2>
-                    <p class="popup-description">{{ ad.description }}</p>
-
-                    <!-- Price Section -->
-                    <div class="popup-price-section">
-                        <div class="price-container">
-                            {% if ad.discount_percentage %}
-                            <span class="original-price">${{ ad.get_package_price|floatformat:2 }}</span>
-                            <span class="discounted-price">${{ ad.get_discounted_price|floatformat:2 }}</span>
-                            <span class="save-amount">Save {{ ad.discount_percentage }}%</span>
-                            {% else %}
-                            <span class="discounted-price">Get 10% Discount</span>
-                            {% endif %}
-                        </div>
-                        <div class="price-note">Valid until December 31, 2026</div>
-                    </div>
-
-                    <div class="popup-details">
-                        <div class="popup-detail-item">
-                            <i class="fas fa-tag"></i>
-                            <span>Special Offer</span>
-                        </div>
-                        <div class="popup-detail-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Valid until {{ ad.end_date|date:"F d, Y" }}</span>
-                        </div>
                         {% if ad.discount_percentage %}
-                        <div class="popup-detail-item discount-highlight">
-                            <i class="fas fa-gift"></i>
-                            <span>{{ ad.discount_percentage }}% Discount Applied!</span>
+                        <div class="discount-badge">
+                            <span class="discount-percentage">{{ ad.discount_percentage }}% OFF</span>
+                            <span class="discount-text">Limited Time</span>
                         </div>
                         {% endif %}
                     </div>
 
-                    <div class="popup-footer">
-                        <div class="popup-buttons">
-                            <a href="{{ ad.get_package_url }}" class="popup-button {{ ad.button_color }}">
-                                <i class="fas fa-eye"></i>
-                                View Details
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                            <a href="https://wa.me/254140936286?text={{ ad.get_whatsapp_message|urlencode }}"
+                    <!-- Content Side -->
+                    <div class="popup-content-side">
+                        <h2 class="popup-title">{{ ad.title }}</h2>
+                        <p class="popup-description">{{ ad.description|truncatewords:30 }}</p>
+
+                        <!-- Price Section -->
+                        <div class="popup-price-section">
+                            <div class="price-container">
+                                {% if ad.discount_percentage %}
+                                <span class="original-price">${{ ad.get_package_price|floatformat:2 }}</span>
+                                <span class="discounted-price">${{ ad.get_discounted_price|floatformat:2 }}</span>
+                                <span class="save-amount">Save {{ ad.discount_percentage }}%</span>
+                                {% else %}
+                                <span class="discounted-price">Get $10% Discount</span>
+                                {% endif %}
+                            </div>
+                            <div class="price-note">Valid until {{ ad.end_date|date:"F d, Y" }}</div>
+                        </div>
+
+                        <div class="popup-details">
+                            <div class="popup-detail-item">
+                                <i class="fas fa-tag"></i>
+                                <span>Special Offer</span>
+                            </div>
+                            <div class="popup-detail-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Valid until {{ ad.end_date|date:"F d, Y" }}</span>
+                            </div>
+                            {% if ad.discount_percentage %}
+                            <div class="popup-detail-item discount-highlight">
+                                <i class="fas fa-gift"></i>
+                                <span>{{ ad.discount_percentage }}% OFF!</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="popup-footer">
+                            <div class="popup-buttons">
+                                <a href="{{ ad.get_package_url }}" class="popup-button {{ ad.button_color }}">
+                                    <i class="fas fa-eye"></i>
+                                    View Details
+                                </a>
+                                <a href="https://wa.me/254759379600?text={{ ad.get_whatsapp_message|urlencode }}"
                                 class="popup-button btn-success"
                                 target="_blank"
                                 rel="noopener noreferrer">
                                     <i class="fab fa-whatsapp"></i>
-                                    Book Now on WhatsApp
-                                    <i class="fab fa-whatsapp"></i>
+                                    Book Now
                                 </a>
-                        </div>
+                            </div>
 
-                        <label class="popup-dont-show">
-                            <input type="checkbox" id="dontShowAgain">
-                            <span>Don't show this again</span>
-                        </label>
+                            <label class="popup-dont-show">
+                                <input type="checkbox" id="dontShowAgain">
+                                <span>Don't show again</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -464,61 +586,38 @@
 
         <!-- Popup JavaScript -->
         <script>
-            // Popup functionality
             function closePopup() {
-                const overlay = document.getElementById('popupOverlay');
-                if (overlay) {
-                    overlay.classList.remove('active');
-                }
+                document.getElementById('popupOverlay').classList.remove('active');
             }
 
-            function showPopup() {
-                const overlay = document.getElementById('popupOverlay');
-                if (overlay) {
-                    // Always show the popup - removed localStorage check
-                    overlay.classList.add('active');
+            // Detect if page was refreshed
+            function wasPageRefreshed() {
+                if (performance.navigation.type === 1) {
+                    return true; // Page was refreshed/reloaded
                 }
+
+                // Alternative detection for modern browsers
+                if (performance.getEntriesByType('navigation')[0]?.type === 'reload') {
+                    return true;
+                }
+
+                return false;
             }
 
-            // Handle "Don't show again" checkbox (optional - comment out if you don't want this feature)
             document.addEventListener('DOMContentLoaded', function() {
-                const dontShowCheckbox = document.getElementById('dontShowAgain');
-                const overlay = document.getElementById('popupOverlay');
-
-                if (dontShowCheckbox) {
-                    dontShowCheckbox.addEventListener('change', function() {
-                        if (this.checked) {
-                            // If checked, don't show on this session only
-                            sessionStorage.setItem('popupClosedSession', 'true');
-                        } else {
-                            sessionStorage.removeItem('popupClosedSession');
-                        }
-                    });
+                // Only show popup if page was refreshed
+                if (wasPageRefreshed()) {
+                    document.getElementById('popupOverlay').classList.add('active');
                 }
+            });
 
-                // Check session storage (not localStorage) for this session only
-                const popupClosed = sessionStorage.getItem('popupClosedSession');
+            // Close popup
+            document.getElementById('popupOverlay').addEventListener('click', function(e) {
+                if (e.target === this) closePopup();
+            });
 
-                if (!popupClosed) {
-                    // Show popup immediately or after a short delay
-                    setTimeout(showPopup, 3000);
-                }
-
-                // Close popup when clicking outside
-                if (overlay) {
-                    overlay.addEventListener('click', function(e) {
-                        if (e.target === overlay) {
-                            closePopup();
-                        }
-                    });
-
-                    // Close with Escape key
-                    document.addEventListener('keydown', function(e) {
-                        if (e.key === 'Escape' && overlay.classList.contains('active')) {
-                            closePopup();
-                        }
-                    });
-                }
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closePopup();
             });
         </script>
         <!-- Toast Notification Container -->
@@ -530,10 +629,10 @@
                 <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                     <div class="d-inline-flex align-items-center" style="height: 45px;">
                         <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://x.com/dayssafaris" target="_blank"><i class="fab fa-twitter fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254782390295" target="_blank"><i class="fab fa-facebook-f fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254782390295" target="_blank"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254734962965" target="_blank"><i class="fab fa-facebook-f fw-normal"></i></a>
+                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254734962965" target="_blank"><i class="fab fa-linkedin-in fw-normal"></i></a>
                         <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.instagram.com/day_safaris?igsh=eWVybW1yYm1ycW0=" target="_blank"><i class="fab fa-instagram fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href="https://www.addtoany.com/add_to/youtube?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254782390295" target="_blank"><i class="fab fa-youtube fw-normal"></i></a>
+                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href="https://www.addtoany.com/add_to/youtube?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254734962965" target="_blank"><i class="fab fa-youtube fw-normal"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center text-lg-end">
@@ -596,7 +695,7 @@
                                 {% comment %} <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "Kenya" %}</a>
                                 <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "Rwanda" %}</a>
                                 <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "Tanzania" %}</a> {% endcomment %}
-                                {% comment %} <a href="{% url "international_tours" %}" class="dropdown-item">{% trans "International Tours" %}</a> {% endcomment %}
+                                <a href="{% url "international_tours" %}" class="dropdown-item">{% trans "International Tours" %}</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
@@ -660,13 +759,13 @@
                         <div class="footer-item d-flex flex-column">
                             <h4 class="mb-4 text-white">{% trans "Get In Touch" %}</h4>
                             <a href=""><i class="fas fa-home me-2"></i>00200 Nairobi Railways Museum</a>
-                            <a href=""><i class="fas fa-envelope me-2"></i>info@daysafarisadventures.co.ke</a>
+                            <a href=""><i class="fas fa-envelope me-2"></i>info@daysafarisadventures.com</a>
                             <a href="https://wa.me/254759379600?text=Hello%20I%20need%20an%20inquiry" target="_blank">
                             <i class="fab fa-whatsapp me-2"></i> +254759379600
                             </a>
                             <a href=""><i class="fas fa-phone me-2"></i> +254140919894 </a>
                             <a href=""><i class="fas fa-phone me-2"></i> +254140936286 </a>
-                            <a href=""><i class="fas fa-phone me-2"></i> +254782390295 </a>
+                            <a href=""><i class="fas fa-phone me-2"></i> +254734962965 </a>
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-share fa-2x text-white me-2"></i>
                                 <a class="btn-square btn btn-primary rounded-circle mx-1" href="https://www.facebook.com/profile.php?id=1481097984&ref=ig_profile_ac&target=1481097984" target="_blank"><i class="fab fa-facebook-f"></i></a>

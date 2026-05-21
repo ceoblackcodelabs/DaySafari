@@ -148,11 +148,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return data.response;
             } else {
                 console.error('API Error:', data.error);
-                return "I'm having trouble connecting to our support system. Please contact us directly at info@daysafarisadventures.co.ke or call +254759379600 for assistance. 🦁";
+                return "I'm having trouble connecting to our support system. Please contact us directly at info@daysafarisadventures.com or call +254759379600 for assistance. 🦁";
             }
         } catch (error) {
             console.error('Network Error:', error);
-            return "Network error. Please check your connection or contact us directly at info@daysafarisadventures.co.ke. We're here to help! 🦁";
+            return "Network error. Please check your connection or contact us directly at info@daysafarisadventures.com. We're here to help! 🦁";
         }
     }
 
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.handleQuickResponse = function(keyword) {
         const quickResponses = {
             'help': 'I can help you with:\n• Booking safaris\n• Destination information\n• Package prices\n• Payment options\n• Group discounts\n• Travel tips\n\nJust let me know what you need! 😊',
-            'contact': 'You can reach us at:\n📞 Phone: +254759379600\n📧 Email: info@daysafarisadventures.co.ke\n📍 Location: Nairobi, Kenya\n🌐 Website: daysafarisadventures.co.ke\n\nWe\'re available 24/7!',
+            'contact': 'You can reach us at:\n📞 Phone: +254759379600\n📧 Email: info@daysafarisadventures.com\n📍 Location: Nairobi, Kenya\n🌐 Website: daysafarisadventures.co.ke\n\nWe\'re available 24/7!',
             'hours': 'Our customer support is available:\nMonday - Friday: 8:00 AM - 8:00 PM (EAT)\nSaturday: 9:00 AM - 6:00 PM (EAT)\nSunday: 10:00 AM - 4:00 PM (EAT)\nEmergency support: 24/7 at +254 782 390 295',
             'packages': 'Our safari packages start from $649 for 3-day adventures to $1,899 for luxury experiences. Popular packages include:\n• Masai Mara Safari (4 days, $849)\n• Zanzibar Beach Holiday (6 days, $1,299)\n• Serengeti Migration (5 days, $1,499)\n• Amboseli Elephant Experience (3 days, $649)\n\nWould you like details on any specific package?',
             'destinations': 'We offer amazing destinations across East Africa:\n🇰🇪 Kenya: Masai Mara, Amboseli, Tsavo, Diani Beach\n🇹🇿 Tanzania: Serengeti, Zanzibar, Kilimanjaro, Ngorongoro\n🇺🇬 Uganda: Bwindi Gorillas, Queen Elizabeth Park\n🇷🇼 Rwanda: Kigali Cultural Tour, Lake Kivu\n\nWhich destination interests you? 🗺️'

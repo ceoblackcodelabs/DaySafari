@@ -31,7 +31,7 @@
             <div class="col-lg-6">
                 <div class="bg-dark rounded-4 p-4">
                     <h1 class="text-white mb-3">{% trans "Book A Tour" %}</h1>
-                    <p class="text-white-50 mb-4">{% trans "Get" %} <span class="text-warning">{% trans "50% Off" %}</span> {% trans "On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here." %}</p>
+                    <p class="text-white-50 mb-4">{% trans "On Your First Adventure Trip With Day Safaris Adventures. Get More Deal With Us Today." %}</p>
 
                     <!-- Display messages -->
                     {% if messages %}
@@ -175,7 +175,7 @@
                             <small><i class="fa fa-clock text-primary me-1"></i> {{ package.days }} {% trans "days" %}</small>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="h5 text-primary mb-0">${{ package.price|floatformat:2 }}</span>
+                            <span class="h5 text-primary mb-0">$$$$</span>
                             <small class="text-muted">{% trans "per person" %}</small>
                         </div>
                         <a href="{% url 'package_detail' package.id %}" class="btn btn-outline-primary w-100 mt-3 rounded-pill">{% trans "View Details" %}</a>

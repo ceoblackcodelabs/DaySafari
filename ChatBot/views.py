@@ -58,7 +58,7 @@ STRICT RULES:
 
 COMPANY INFO:
 - Name: Day Safaris Adventures
-- Contact: +254759379600, info@daysafarisadventures.co.ke
+- Contact: +254759379600, info@daysafarisadventures.com
 - Destinations: Masai Mara, Serengeti, Amboseli, Zanzibar, Mount Kilimanjaro
 
 Now assist the customer with their question."""
@@ -176,13 +176,13 @@ def generate_mock_response(user_message):
         return "We offer special group and family packages! Groups of 6+ get 15% discount, and children under 12 get 30% off. We can customize itineraries for families with activities suitable for all ages. Would you like a custom quote for your group? 👨‍👩‍👧‍👦"
 
     elif any(word in user_message_lower for word in ['contact', 'phone', 'email', 'reach']):
-        return "You can reach us at:\n📞 Phone: +254759379600 (Main)\n📞 Emergency: +254 782 390 295\n📧 Email: info@daysafarisadventures.co.ke\n📍 Location: Nairobi, Kenya\n🌐 Website: daysafarisadventures.co.ke\n\nWe're available 24/7 for your inquiries!"
+        return "You can reach us at:\n📞 Phone: +254759379600 (Main)\n📞 Emergency: +254 782 390 295\n📧 Email: info@daysafarisadventures.com\n📍 Location: Nairobi, Kenya\n🌐 Website: daysafarisadventures.co.ke\n\nWe're available 24/7 for your inquiries!"
 
     elif any(word in user_message_lower for word in ['thank', 'thanks']):
         return "You're very welcome! 🎉 Is there anything else I can help you with? Feel free to ask about our safari packages, destinations, or special offers! We look forward to hosting you in East Africa! 🌍"
 
     else:
-        return "Thank you for your message! 📧 I'd be happy to help you with:\n\n• Safari bookings and packages\n• Destination information\n• Pricing and availability\n• Payment options\n• Group and family discounts\n• Travel tips and requirements\n\nCould you please provide more details about what you're looking for? Or feel free to contact us directly at info@daysafarisadventures.co.ke or call +254759379600 for immediate assistance. 🦁"
+        return "Thank you for your message! 📧 I'd be happy to help you with:\n\n• Safari bookings and packages\n• Destination information\n• Pricing and availability\n• Payment options\n• Group and family discounts\n• Travel tips and requirements\n\nCould you please provide more details about what you're looking for? Or feel free to contact us directly at info@daysafarisadventures.com or call +254759379600 for immediate assistance. 🦁"
 
 
 @csrf_exempt
