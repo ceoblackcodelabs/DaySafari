@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from google.auth import default
+from django.urls import reverse
 
 # Create your models here.
 class DestinationsCategory(models.Model):
@@ -44,6 +45,10 @@ class AwesomePackages(models.Model):
         ("Cruises",  "cruises")
     ))
     image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
+
+    def get_absolute_url(self):
+        """Return the URL to view this package"""
+        return reverse('package_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.name

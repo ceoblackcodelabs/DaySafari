@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import (
     Services, GalleryCategory, Brochure,
     Gallery, Testimonials, BlogComments, Blogs,
-    Trekking, ItineraryTreking, TrekkingBooking
+    Trekking, ItineraryTreking, TrekkingBooking,
+    Ad
 )
 
 admin.site.site_header = "DAY SAFARIS ADVENTURES"
@@ -130,5 +131,32 @@ class TrekkingBookingAdmin(admin.ModelAdmin):
         ('Timestamps', {
             'fields': ('booking_date', 'updated_at'),
             'classes': ('collapse',)
+        }),
+    )
+
+@admin.register(Ad)
+class AdAdmin(admin.ModelAdmin):
+    list_display = ['title', 'discount_percentage', 'start_date', 'end_date', 'is_active', 'get_package_name']
+    list_filter = ['is_active', 'start_date', 'end_date', 'discount_percentage']
+    search_fields = ['title', 'description']
+    date_hierarchy = 'start_date'
+
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'image', 'description')
+        }),
+        ('Package Association', {
+            'fields': ('package', 'trekking_package'),
+            'description': 'Select one package type to link this ad to'
+        }),
+        ('Discount & Pricing', {
+            'fields': ('discount_percentage', 'show_book_now'),
+            'description': 'Set discount percentage (0-100) for limited time offers'
+        }),
+        ('Date Range', {
+            'fields': ('start_date', 'end_date', 'is_active')
+        }),
+        ('Appearance', {
+            'fields': ('show_on_pages', 'button_text', 'button_color')
         }),
     )
