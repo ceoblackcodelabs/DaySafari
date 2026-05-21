@@ -110,9 +110,9 @@
                                 <a href="{% url "east_africa_tours" %}" class="dropdown-item">{% trans "East Africa Tours" %}</a>
                                 <a href="{% url "south_africa_tours" %}" class="dropdown-item">{% trans "South Africa Tours" %}</a>
                                 <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "West Africa Tours" %}</a>
-                                <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "Kenya" %}</a>
+                                {% comment %} <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "Kenya" %}</a>
                                 <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "Rwanda" %}</a>
-                                <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "Tanzania" %}</a>
+                                <a href="{% url "west_africa_tours" %}" class="dropdown-item">{% trans "Tanzania" %}</a> {% endcomment %}
                                 {% comment %} <a href="{% url "international_tours" %}" class="dropdown-item">{% trans "International Tours" %}</a> {% endcomment %}
                             </div>
                         </div>

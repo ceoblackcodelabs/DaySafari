@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Services, GalleryCategory, Brochure,
     Gallery, Testimonials, BlogComments, Blogs,
-    Trekking, ItineraryTreking
+    Trekking, ItineraryTreking, TrekkingBooking
 )
 
 admin.site.site_header = "DAY SAFARIS ADVENTURES"
@@ -104,3 +104,31 @@ class ItineraryTrekingAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'activities', 'package__name']
     ordering = ['package__name', 'day_number']
     list_editable = ['day_number', 'title']
+
+
+@admin.register(TrekkingBooking)
+class TrekkingBookingAdmin(admin.ModelAdmin):
+    list_display = ['booking_reference', 'full_name', 'package', 'travel_date', 'number_of_persons', 'booking_status']
+    list_filter = ['booking_status', 'package', 'travel_date']
+    search_fields = ['booking_reference', 'full_name', 'email', 'phone_number']
+    readonly_fields = ['booking_reference', 'booking_date', 'updated_at']
+    list_editable = ['booking_status']
+
+    fieldsets = (
+        ('Booking Reference', {
+            'fields': ('booking_reference',)
+        }),
+        ('Package Details', {
+            'fields': ('package', 'travel_date', 'number_of_persons', 'total_price')
+        }),
+        ('Customer Information', {
+            'fields': ('full_name', 'email', 'phone_number')
+        }),
+        ('Additional Information', {
+            'fields': ('special_requests', 'booking_status')
+        }),
+        ('Timestamps', {
+            'fields': ('booking_date', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
