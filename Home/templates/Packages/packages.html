@@ -1,0 +1,226 @@
+{% extends "Home/base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}Our Safari Packages - Days Safaris Adventures{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">{% trans "Our Safari Packages" %}</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Packages" %}</li>
+        </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Filter Section Start -->
+<div class="container-fluid py-4 bg-light">
+    <div class="container">
+        <div class="row g-3 align-items-end">
+            <form method="GET" action="{% url 'packages' %}" class="w-100">
+                <div class="row g-3">
+                    <!-- Search -->
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">{% trans "Search" %}</label>
+                        <input type="text" name="search" class="form-control" placeholder="{% trans 'Search packages...' %}" value="{{ current_filters.search }}">
+                    </div>
+
+                    <!-- Category -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">{% trans "Category" %}</label>
+                        <select name="category" class="form-select">
+                            <option value="">{% trans "All Categories" %}</option>
+                            {% for category in categories %}
+                            <option value="{{ category }}" {% if current_filters.category == category %}selected{% endif %}>
+                                {{ category }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">{% trans "Location" %}</label>
+                        <select name="location" class="form-select">
+                            <option value="">{% trans "All Locations" %}</option>
+                            {% for location in locations %}
+                            <option value="{{ location }}" {% if current_filters.location == location %}selected{% endif %}>
+                                {{ location }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">{% trans "Min Price ($)" %}</label>
+                        <input type="number" name="min_price" class="form-control" placeholder="{% trans 'Min' %}" value="{{ current_filters.min_price }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">{% trans "Max Price ($)" %}</label>
+                        <input type="number" name="max_price" class="form-control" placeholder="{% trans 'Max' %}" value="{{ current_filters.max_price }}">
+                    </div>
+
+                    <!-- Days -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">{% trans "Max Days" %}</label>
+                        <input type="number" name="days" class="form-control" placeholder="{% trans 'Days' %}" value="{{ current_filters.days }}">
+                    </div>
+
+                    <!-- Sort -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">{% trans "Sort By" %}</label>
+                        <select name="sort" class="form-select">
+                            <option value="">{% trans "Default" %}</option>
+                            <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>{% trans "Price: Low to High" %}</option>
+                            <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>{% trans "Price: High to Low" %}</option>
+                            <option value="rating" {% if current_filters.sort == 'rating' %}selected{% endif %}>{% trans "Rating: High to Low" %}</option>
+                            <option value="days_asc" {% if current_filters.sort == 'days_asc' %}selected{% endif %}>{% trans "Duration: Short to Long" %}</option>
+                        </select>
+                    </div>
+
+                    <!-- Filter Buttons -->
+                    <div class="col-md-2 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary w-100 mt-auto">
+                            <i class="fas fa-filter me-2"></i>{% trans "Filter" %}
+                        </button>
+                        <a href="{% url 'packages' %}" class="btn btn-secondary w-100 mt-auto">
+                            <i class="fas fa-undo me-2"></i>{% trans "Reset" %}
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Filter Section End -->
+
+<!-- Packages Start -->
+<div class="container-fluid blog py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">{% trans "Our Packages" %}</h5>
+            <h1 class="mb-4">{% trans "Discover Amazing Safari Adventures" %}</h1>
+            <p class="mb-0">{% trans "Explore our curated selection of safari packages across East Africa. From luxury wildlife safaris to budget-friendly adventures, we have the perfect journey for you." %}</p>
+        </div>
+
+        <!-- Results Count -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <p class="text-muted">
+                    {% trans "Showing" %} {{ page_obj.start_index }} - {{ page_obj.end_index }}
+                    {% trans "of" %} {{ page_obj.paginator.count }} {% trans "packages" %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            {% for package in packages %}
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item">
+                    <div class="blog-img">
+                        <div class="blog-img-inner">
+                            {% if package.image %}
+                            <img class="img-fluid w-100 rounded-top" src="{{ package.image.url }}" alt="{{ package.name }}" style="height: 250px; object-fit: cover;">
+                            {% else %}
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/package-placeholder.jpg' %}" alt="{{ package.name }}" style="height: 250px; object-fit: cover;">
+                            {% endif %}
+                            <div class="blog-icon">
+                                <a href="{% url 'package_detail' package.id %}" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                            </div>
+                        </div>
+                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-map-marker-alt text-primary me-2"></i>{{ package.location|truncatechars:15 }}
+                            </small>
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-calendar-alt text-primary me-2"></i>{{ package.days }} {% trans "Days" %}
+                            </small>
+                            <small class="flex-fill text-center py-2">
+                                <i class="fa fa-star text-primary me-2"></i>{{ package.starRating }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="blog-content border border-top-0 rounded-bottom p-4">
+                        <p class="mb-2">
+                            <span class="badge bg-primary">{{ package.category }}</span>
+                        </p>
+                        <a href="{% url 'package_detail' package.id %}" class="h4">{{ package.name|truncatechars:60 }}</a>
+                        <p class="my-3">{{ package.description|truncatewords:20 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'package_detail' package.id %}" class="btn btn-primary rounded-pill py-2 px-4">
+                                {% trans "View Detail" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <i class="fas fa-search fa-4x text-muted mb-3"></i>
+                <h3>{% trans "No packages found" %}</h3>
+                <p>{% trans "Try adjusting your filters or search criteria." %}</p>
+                <a href="{% url 'packages' %}" class="btn btn-primary rounded-pill py-2 px-4">
+                    {% trans "Clear All Filters" %}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.paginator.num_pages > 1 %}
+        <div class="row mt-5">
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link rounded-circle" href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="First">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link rounded-circle" href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="Previous">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <li class="page-item active"><span class="page-link rounded-circle">{{ num }}</span></li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link rounded-circle" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link rounded-circle" href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="Next">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link rounded-circle" href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="Last">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!-- Packages End -->
+
+{% endblock body %}

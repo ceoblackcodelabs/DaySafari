@@ -107,7 +107,8 @@ class Trekking(models.Model):
         ("Kilimanjaro", "kilimanjaro"),
         ("Kenya", "kenya"),
         ("Longonot", "longonot"),
-        ("Suswa", "suswa")
+        ("Suswa", "suswa"),
+        ("Meru", "meru")
     ))
     image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
 

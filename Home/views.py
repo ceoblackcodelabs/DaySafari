@@ -367,6 +367,16 @@ class LongonotTrekking(TemplateView):
         context["packages"] = packages
         return context
 
+class MeruTrekking(TemplateView):
+    model = Trekking
+    template_name = "Trekking/meru.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        packages = Trekking.objects.filter(category="Meru")
+        context["packages"] = packages
+        return context
+
 class TrekkingDetailView(DetailView):
     """Generic detail view for any trekking package"""
     model = Trekking

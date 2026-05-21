@@ -3,7 +3,7 @@ from .views import (BrochureView, HomeView, AboutView, ServicesView,
                     CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
                     BlogDetailView, TanzaniaTrekking, KenyaTrekking, KilimanjaroTrekking, SuswaTrekking, LongonotTrekking,
-                    TrekkingDetailView
+                    TrekkingDetailView, MeruTrekking
                     )
 
 urlpatterns = [
@@ -31,5 +31,6 @@ urlpatterns = [
     path("trekking/Mt-Longonot/", LongonotTrekking.as_view(), name="trekking_longonot"),
     path("trekking/Mt-Suswa/", SuswaTrekking.as_view(), name="trekking_suswa"),
     path("trekking/Mt-Kilimanjaro/", KilimanjaroTrekking.as_view(), name="trekking_kilimanjaro"),
-    path("trekking/Mt-Kilimanjaro/<int:pk>/", TrekkingDetailView.as_view(), name="kili_detail"),
+    path("trekking/Mt-Meru/", MeruTrekking.as_view(), name="trekking_meru"),
+    path("trekking/Mt-Trekking/<int:pk>/", TrekkingDetailView.as_view(), name="kili_detail"),
 ]
