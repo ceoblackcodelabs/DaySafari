@@ -124,7 +124,7 @@ class ContactView(FormView):
         In the meantime, you can reach us at:
         📞 Call: +254759379600
         💬 WhatsApp: +254 783 457 058
-        📧 Email: info@daysafarisadventures.co.ke
+        📧 Email: info@daysafarisadventures.com
 
         Warm regards,
         The Day Safaris Team 🦁"""

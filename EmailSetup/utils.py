@@ -195,7 +195,7 @@ def send_package_payment_email(package_purchase):
             'payment_link': payment_link,
             'company_phone': '+254 734 962 965',
             'company_whatsapp': '+254 783 457 058',
-            'company_email': 'info@daysafarisadventures.co.ke',
+            'company_email': 'info@daysafarisadventures.com',
             'current_year': '2025'
         }
 

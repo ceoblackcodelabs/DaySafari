@@ -746,7 +746,7 @@ class ContactReplyView(View):
 
                 📞 Phone: +254759379600
                 💬 WhatsApp: +254 783 457 058
-                📧 Email: info@daysafarisadventures.co.ke
+                📧 Email: info@daysafarisadventures.com
 
                 We look forward to assisting you with your African adventure!
 
