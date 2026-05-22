@@ -529,8 +529,8 @@
                         <div class="popup-price-section">
                             <div class="price-container">
                                 {% if ad.discount_percentage %}
-                                <span class="original-price">${{ ad.get_package_price|floatformat:2 }}</span>
-                                <span class="discounted-price">${{ ad.get_discounted_price|floatformat:2 }}</span>
+                                {% comment %} <span class="original-price">${{ ad.get_package_price|floatformat:2 }}</span> {% endcomment %}
+                                <span class="discounted-price">Get $10% Discount</span>
                                 <span class="save-amount">Save {{ ad.discount_percentage }}%</span>
                                 {% else %}
                                 <span class="discounted-price">Get $10% Discount</span>

@@ -63,6 +63,10 @@ class EastAfricaTourView(ListView):
     context_object_name = "africaPackages"
     template_name = 'Tours/east_africa_tours.html'
 
+    def get_queryset(self):
+        """Filter packages to show only International Tours category"""
+        return AwesomePackages.objects.filter(category='East Africa Tours')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -90,6 +94,10 @@ class SouthAfricaTourView(ListView):
     model = AwesomePackages
     context_object_name = "africaPackages"
     template_name = 'Tours/south_africa_tours.html'
+
+    def get_queryset(self):
+        """Filter packages to show only International Tours category"""
+        return AwesomePackages.objects.filter(category='South Africa')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -119,6 +127,10 @@ class WestAfricaTourView(ListView):
     context_object_name = "africaPackages"
     template_name = 'Tours/west_africa_tours.html'
 
+    def get_queryset(self):
+        """Filter packages to show only International Tours category"""
+        return AwesomePackages.objects.filter(category='West Africa')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -146,6 +158,10 @@ class InternationalAfricaTourView(ListView):
     model = AwesomePackages
     context_object_name = "africaPackages"
     template_name = 'Tours/international_tours.html'
+
+    def get_queryset(self):
+        """Filter packages to show only International Tours category"""
+        return AwesomePackages.objects.filter(category='International Tours')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

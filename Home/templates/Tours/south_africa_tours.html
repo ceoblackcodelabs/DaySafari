@@ -142,7 +142,7 @@
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ package.days }} days</small>
                         <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ package.persons }} Persons</small>
                     </div>
-                    <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div>
+                    {% comment %} <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div> {% endcomment %}
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">

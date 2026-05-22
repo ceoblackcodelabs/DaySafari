@@ -95,9 +95,10 @@
             </div>
             <div class="col-lg-7">
                 <h5 class="section-about-title pe-3">{% trans "Welcome To Day Safaris Adventures" %}</h5>
-                <h1 class="mb-4">{% trans "Explore East Africa with Day Safaris – Become a Story Teller" %}</h1>
-                <p class="mb-4">{% trans "Day Safaris Adventures is Kenya's leading and fastest-growing tour company, renowned for delivering exceptional safari experiences across East Africa. As a premier destination management company, we specialize in creating unforgettable wildlife adventures, cultural immersions, and luxury getaways throughout Kenya, Tanzania, Uganda, and Rwanda." %}</p>
-                <p class="mb-4">{% trans "With our headquarters in Nairobi, Kenya, and strategic partner offices in South Africa and Tanzania, we offer tailor-made safari packages that include private game drives, hot air balloon safaris, mountain climbing expeditions, and beach holidays at the Kenyan coast. Our commitment to sustainable tourism and exceptional service ensures every journey with us becomes a lifetime memory." %}</p>
+                <h1 class="mb-4">{% trans "WHO WE ARE" %}</h1>
+                <p class="mb-4">{% trans "We are a premier destination management company headquartered in Nairobi, Kenya, dedicated to creating unforgettable travel experiences across Africa and beyond. Our team of experienced, informative, friendly, and professional guides ensures every client enjoys safe, reliable, personalized, and budget-friendly journeys." %}</p>
+                <p class="mb-4">{% trans "We specialize in both inbound and outbound travel services, offering a diverse range of tailor-made tours that showcase Africa’s breathtaking wildlife, stunning landscapes, rich cultural heritage, and iconic attractions, alongside exciting destinations across Europe, America, and Asia." %}</p>
+                <p class="mb-4">{% trans "Driven by passion and excellence, we go beyond ordinary travel by connecting our clients with authentic experiences, vibrant cultures, fascinating history, and unique cuisines that make every destination memorable. Our commitment is to deliver exceptional service, comfort, and meaningful adventures that leave lasting impressions." %}</p>
                 <div class="row gy-2 gx-4 mb-4">
                     <div class="col-sm-6">
                         <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "First Class Flights" %}</p>
@@ -178,7 +179,7 @@
 </div>
 <!-- Services End -->
 
-<!-- Destination Start -->
+<!-- Destination Start
 <div class="container-fluid destination py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
@@ -201,12 +202,12 @@
                 {% endfor %}
             </ul>
             <div class="tab-content">
-                <!-- All Destinations Tab -->
+                <!- All Destinations Tab
                 <div id="tab-all" class="tab-pane fade show p-0 active">
                     <div class="row g-4">
                         <div class="col-xl-8">
                             <div class="row g-4">
-                                <!-- Landscape Position 1 -->
+                                <!-- Landscape Position 1
                                 <div class="col-lg-6">
                                     {% with dest=tab_destinations.all.landscape_1 %}
                                     {% if dest %}
@@ -232,7 +233,7 @@
                                     {% endif %}
                                     {% endwith %}
                                 </div>
-                                <!-- Landscape Position 2 -->
+                                <!-- Landscape Position 2
                                 <div class="col-lg-6">
                                     {% with dest=tab_destinations.all.landscape_2 %}
                                     {% if dest %}
@@ -258,7 +259,7 @@
                                     {% endif %}
                                     {% endwith %}
                                 </div>
-                                <!-- Landscape Position 3 -->
+                                <!-- Landscape Position 3 -
                                 <div class="col-lg-6">
                                     {% with dest=tab_destinations.all.landscape_3 %}
                                     {% if dest %}
@@ -284,7 +285,7 @@
                                     {% endif %}
                                     {% endwith %}
                                 </div>
-                                <!-- Landscape Position 4 -->
+                                <!-- Landscape Position 4 -
                                 <div class="col-lg-6">
                                     {% with dest=tab_destinations.all.landscape_4 %}
                                     {% if dest %}
@@ -312,7 +313,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Portrait Position (Large Right Column) - NOW DYNAMIC -->
+                        <!-- Portrait Position (Large Right Column) - NOW DYNAMIC -
                         <div class="col-xl-4">
                             {% with dest=tab_destinations.all.portrait %}
                             {% if dest %}
@@ -336,7 +337,7 @@
                                 </div>
                             </div>
                             {% else %}
-                            <!-- Fallback if no portrait destination exists -->
+                            <!-- Fallback if no portrait destination exists -
                             <div class="destination-img h-100">
                                 <img class="img-fluid rounded w-100 h-100" src="{% static 'img/destination-9.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="{% trans 'Placeholder' %}">
                                 <div class="destination-overlay p-4">
@@ -351,7 +352,7 @@
                             {% endif %}
                             {% endwith %}
                         </div>
-                        <!-- Landscape Position 5 -->
+                        <!-- Landscape Position 5 -
                         <div class="col-lg-4">
                             {% with dest=tab_destinations.all.landscape_5 %}
                             {% if dest %}
@@ -377,7 +378,7 @@
                             {% endif %}
                             {% endwith %}
                         </div>
-                        <!-- Landscape Position 6 -->
+                        <!-- Landscape Position 6 -
                         <div class="col-lg-4">
                             {% with dest=tab_destinations.all.landscape_6 %}
                             {% if dest %}
@@ -403,7 +404,7 @@
                             {% endif %}
                             {% endwith %}
                         </div>
-                        <!-- Landscape Position 7 -->
+                        <!-- Landscape Position 7 -
                         <div class="col-lg-4">
                             {% with dest=tab_destinations.all.landscape_7 %}
                             {% if dest %}
@@ -432,7 +433,7 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Category Tabs -->
+                <!-- Dynamic Category Tabs -
                 {% for category in categories %}
                 <div id="tab-{{ category.id }}" class="tab-pane fade show p-0">
                     <div class="row g-4">
@@ -647,10 +648,10 @@
         </div>
     </div>
 </div>
-<!-- Destination End -->
+- Destination End -->
 
 <!-- Packages Start -->
-<div class="container-fluid bg-light packages py-5">
+<div class="container-fluid packages py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
             <h5 class="section-title px-3">{% trans "Packages" %}</h5>
