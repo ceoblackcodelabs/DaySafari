@@ -51,7 +51,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg,
                 rgba(0, 0, 0, 0.8) 0%,
                 rgba(102, 126, 234, 0.4) 50%,
                 rgba(0, 0, 0, 0.8) 100%);
@@ -585,19 +585,19 @@
             .split-container {
                 flex-direction: column;
             }
-            
+
             .welcome-section {
                 min-height: 450px;
             }
-            
+
             .welcome-content {
                 padding: 40px;
             }
-            
+
             .welcome-content h1 {
                 font-size: 2.5rem;
             }
-            
+
             .stats {
                 margin-top: 30px;
             }
@@ -674,7 +674,7 @@
 
                     <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
 
-                    <div class="divider">
+                    {% comment %} <div class="divider">
                         <span>or continue with</span>
                     </div>
 
@@ -685,7 +685,7 @@
                         <button type="button" class="social-btn">
                             <i class="fab fa-facebook-f"></i> Facebook
                         </button>
-                    </div>
+                    </div> {% endcomment %}
 
                     <div class="register-link">
                         Don't have an account? <a href="{% url 'register' %}">Create Account</a>
@@ -699,18 +699,18 @@
         // Particle animation
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
-        
+
         function resizeCanvas() {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
         }
-        
+
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-        
+
         const particles = [];
         const particleCount = 50;
-        
+
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
@@ -721,34 +721,34 @@
                 velocityY: (Math.random() - 0.5) * 0.5
             });
         }
-        
+
         function animateParticles() {
             if (!canvas || !ctx) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             particles.forEach(particle => {
                 particle.x += particle.velocityX;
                 particle.y += particle.velocityY;
-                
+
                 if (particle.x < 0) particle.x = canvas.width;
                 if (particle.x > canvas.width) particle.x = 0;
                 if (particle.y < 0) particle.y = canvas.height;
                 if (particle.y > canvas.height) particle.y = 0;
-                
+
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(255, 255, 255, ${particle.alpha})`;
                 ctx.fill();
             });
-            
+
             requestAnimationFrame(animateParticles);
         }
-        
+
         animateParticles();
-        
+
         // Animated counter for stats
         const statNumbers = document.querySelectorAll('.stat-number');
-        
+
         function animateCounter(element) {
             const target = parseInt(element.getAttribute('data-target'));
             let current = 0;
@@ -764,7 +764,7 @@
             };
             updateCounter();
         }
-        
+
         // Trigger counter animation when stats come into view
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -774,9 +774,9 @@
                 }
             });
         });
-        
+
         observer.observe(document.querySelector('.stats'));
-        
+
         // Password toggle visibility
         const togglePassword = document.querySelector('.toggle-password');
         if (togglePassword) {
@@ -788,18 +788,18 @@
                 this.classList.toggle('fa-eye-slash');
             });
         }
-        
+
         // Form submission with loading state
         const loginForm = document.getElementById('loginForm');
         const loginBtn = document.getElementById('loginBtn');
-        
+
         if (loginForm) {
             loginForm.addEventListener('submit', function() {
                 loginBtn.classList.add('loading');
                 loginBtn.textContent = 'Signing In...';
             });
         }
-        
+
         // Input focus effect
         const inputs = document.querySelectorAll('.input-group input');
         inputs.forEach(input => {
@@ -810,7 +810,7 @@
                 this.parentElement.style.transform = 'translateX(0)';
             });
         });
-        
+
         // Smooth scroll for form section
         if (window.innerWidth <= 968) {
             const formSection = document.querySelector('.form-section');

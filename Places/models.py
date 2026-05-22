@@ -40,9 +40,11 @@ class AwesomePackages(models.Model):
     description = models.TextField()
     category = models.CharField(default="East Africa Tours", max_length=50, choices=(
         ("East Africa Tours", "EA-T"),
+        ("South Africa", "S-A"),
+        ("West Africa", "W-A"),
         ("Africa Tours", "A-T"),
         ("International Tours", "I-T"),
-        ("Cruises",  "cruises")
+        ("Cruises",  "cruises"),
     ))
     image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
 
