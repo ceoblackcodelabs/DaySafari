@@ -14,7 +14,6 @@ from datetime import date, timedelta
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Q
-from OurClients.models import UserMessage
 
 class AdminDashboardView(ListView):
     template_name = 'Dashboard/index.html'
@@ -748,20 +747,11 @@ class ContactReplyView(View):
                 💬 WhatsApp: +254 783 457 058
                 📧 Email: info@daysafarisadventures.com
 
-                We look forward to assisting you with your African adventure!
+                We look forward to creating amazing safari memories with you!
 
                 Warm regards,
                 The Day Safaris Adventures Team
                                 """
-
-                UserMessage.objects.create(
-                    user=contact.client if hasattr(contact, 'client') and contact.client else None,
-                    subject=f"Reply to: {contact.subject}",
-                    priority='high',
-                    email_sent=True,
-                    email_sent_at=timezone.now(),
-                    message=message_content
-                )
                 messages.success(request, f'Reply sent successfully to {contact.email}!')
             else:
                 messages.error(request, 'Failed to send email. Please try again.')

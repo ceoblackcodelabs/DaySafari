@@ -13,8 +13,6 @@ from Home.models import Brochure
 from .forms import (
     BookingsForm, ContactForm
 )
-
-from OurClients.models import UserMessage
 import threading
 
 def send_emails_async(booking):
@@ -104,31 +102,6 @@ class ContactView(FormView):
             contact.user = None
 
         send_contact_response(contact)  # Send email response to user
-
-        # Store the contact message in UserMessage
-        UserMessage.objects.create(
-            user=self.request.user if self.request.user.is_authenticated else None,
-            subject=f"Contact Message from {contact.name}",
-            priority='medium',
-            email_sent=True,
-            email_sent_at=timezone.now(),
-            message=f"""Dear {contact.name},
-
-        Thank you for reaching out to Day Safaris Adventures!
-
-        Your message:
-        "{contact.message}"
-
-        We have received your message and will respond within 24 hours.
-
-        In the meantime, you can reach us at:
-        📞 Call: +254759379600
-        💬 WhatsApp: +254 783 457 058
-        📧 Email: info@daysafarisadventures.com
-
-        Warm regards,
-        The Day Safaris Team 🦁"""
-        )
 
         # Save to database
         contact.save()

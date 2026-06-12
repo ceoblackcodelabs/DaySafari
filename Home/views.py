@@ -3,7 +3,6 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from .models import (Brochure, Services, GalleryCategory, Gallery,
                      Testimonials, Blogs, Trekking, ItineraryTreking
                      )
-from OurClients.models import UserMessage
 from Places.models import Destinations, DestinationsCategory, AwesomePackages
 from colorama import Fore, Style
 from django.urls import reverse_lazy
@@ -73,15 +72,6 @@ class HomeView(ListView):
 
             # Send booking confirmation email
             send_booking_confirmation(booking)
-
-            # backup for email
-            UserMessage.objects.create(
-                user=request.user if request.user.is_authenticated else None,
-                subject=f"Booking Confirmation - #{booking.id} - {booking.name}",
-                priority='high',
-                email_sent=True,
-                message=f"Dear {booking.name},\n\nYour safari booking is confirmed!\n\nBooking ID: #{booking.id}\nDestination: {booking.destination.name if booking.destination else 'TBD'}\nTravel Date: {booking.date}\nPersons: {booking.persons}\n\n📌 Next steps:\n1. Our travel expert will contact you within 24 hours\n2. Pay 30% deposit to confirm your spot\n3. Receive your detailed itinerary\n\n❓ Questions? Call: +254759379600\n\nWe look forward to hosting you in East Africa! 🦁\n\nThe Day Safaris Team"
-            )
 
             # Add success message
             messages.success(
