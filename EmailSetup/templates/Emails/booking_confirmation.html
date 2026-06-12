@@ -15,11 +15,12 @@
     <p><strong>Price Per Person:</strong> ${{ booking.destination.price|default:"0.00" }}</p>
 </div>
 
-<div class="box">
+{% comment %} payment details {% endcomment %}
+{% comment %} <div class="box">
     <p><strong>💰 Payment Details:</strong></p>
     <p><strong>Total Amount:</strong> ${{ booking.destination.price|default:"0.00" }}</p>
     {% comment %} <p><strong>Deposit Required (30%):</strong> ${{ deposit_amount|default:"0.00" }}</p> {% endcomment %}
-</div>
+</div> {% endcomment %}
 
 {% comment %} <div style="text-align: center; margin: 30px 0;">
     <a href="{{ payment_link|default:'#' }}" class="button" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
@@ -36,7 +37,7 @@
 
 <div class="box" style="background: #fff3cd; border-left-color: #ffc107;">
     <p><strong>💳 Payment Options:</strong></p>
-    <p>• <strong>M-Pesa:</strong> Paybill: 851880 | Account: Your Name</p>
+    <p>• <strong>M-Pesa:</strong> Paybill: 651880 | Account: Your Name</p>
     {% comment %} <p>• <strong>Bank Transfer:</strong> Equity Bank | Account: 0123456789</p> {% endcomment %}
     <p>• <strong>Credit/Debit Card:</strong> Click the button above</p>
 </div>
@@ -52,7 +53,7 @@
     <p><strong>💬 WhatsApp:</strong> {{ company_whatsapp }}</p>
 </div>
 
-<p>We look forward to hosting you in East Africa! 🦁</p>
+<p>We look forward to hosting you Soon Enough 🦁</p>
 
 <p><strong>The Day Safaris Team</strong></p>
 
