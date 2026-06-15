@@ -1,9 +1,11 @@
 from django.contrib import admin
 from .models import (
     DestinationsCategory, Destinations, Itinerary,
-    MustVisit, AwesomePackages, PackagePurchase
+    MustVisit, AwesomePackages, PackagePurchase,
+    IncluisiveExcluisive
 )
 from django.utils.html import format_html
+
 
 # Register your models here.
 class ItineraryInline(admin.TabularInline):
@@ -20,6 +22,10 @@ class MustVisitAdmin(admin.ModelAdmin):
     list_display = ('name', 'size')
     search_fields = ('name',)
     list_filter = ('size',)
+
+@admin.register(IncluisiveExcluisive)
+class RegIncluisiveExcluisive(admin.ModelAdmin):
+    list_display = ("package", "name")
 
 @admin.register(AwesomePackages)
 class AwesomePackagesAdmin(admin.ModelAdmin):

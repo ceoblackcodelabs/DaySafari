@@ -12,7 +12,7 @@
     <p><strong>Destination:</strong> {{ booking.destination.name|default:"TBD" }}</p>
     <p><strong>Travel Date:</strong> {{ booking.date }}</p>
     <p><strong>Persons:</strong> {{ booking.persons }}</p>
-    <p><strong>Price Per Person:</strong> ${{ booking.destination.price|default:"0.00" }}</p>
+    {% comment %} <p><strong>Price Per Person:</strong> ${{ booking.destination.price|default:"0.00" }}</p> {% endcomment %}
 </div>
 
 {% comment %} payment details {% endcomment %}

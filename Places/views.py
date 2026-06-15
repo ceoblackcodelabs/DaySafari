@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
 from .models import (
-    Destinations, AwesomePackages, DestinationsCategory
+    Destinations, AwesomePackages, DestinationsCategory, IncluisiveExcluisive
 )
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -196,6 +196,7 @@ class PackagesDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        package = self.object
 
         # Get itineraries for this package
         context['itineraries'] = self.object.itineraries.all().order_by('day_number')
@@ -217,6 +218,19 @@ class PackagesDetailView(DetailView):
         # Check if form was submitted with errors
         if 'form' not in context:
             context['form'] = PackagePurchaseForm(initial=initial_data, package=self.object)
+
+        inclusive = IncluisiveExcluisive.objects.filter(
+            package=package,
+            status=True
+        )
+
+        exclusive = IncluisiveExcluisive.objects.filter(
+            package=package,
+            status=False
+        )
+
+        context['inclusive'] = inclusive
+        context['exclusive'] = exclusive
 
         return context
 

@@ -30,6 +30,11 @@ class MustVisit(models.Model):
     def __str__(self):
         return self.name
 
+class IncluisiveExcluisive(models.Model):
+    package = models.ForeignKey('AwesomePackages', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    status = models.BooleanField(default=True)
+
 class AwesomePackages(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
@@ -98,3 +103,5 @@ class Itinerary(models.Model):
 
     def __str__(self):
         return f"Day {self.day_number}: {self.title} - {self.package.name}"
+
+
