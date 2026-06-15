@@ -83,25 +83,35 @@
                     <p class="mb-4">{{ package.description }}</p>
 
                     <!-- Features List -->
+                    <h5 class="mb-3">What’s Included</h5>
+
                     <div class="row gy-2 gx-4 mb-4">
+                        {% for item in inclusive %}
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Professional Safari Guide" %}</p>
+                            <p class="mb-0">
+                                <i class="fa fa-check-circle text-primary me-2"></i>
+                                {{ item.name }}
+                            </p>
                         </div>
+                        {% empty %}
+                        <p>No inclusions available.</p>
+                        {% endfor %}
+                    </div>
+
+                    <h5 class="mb-3">What’s Not Included</h5>
+
+                    {% comment %} not included {% endcomment %}
+                    <div class="row gy-2 gx-4 mb-4">
+                        {% for item in exclusive %}
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Park Entry Fees Included" %}</p>
+                            <p class="mb-0">
+                                <i class="fa fa-times-circle text-danger me-2"></i>
+                                {{ item.name }}
+                            </p>
                         </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Game Drives in 4x4 Vehicles" %}</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Accommodation & Meals" %}</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "Airport Transfers" %}</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-check-circle text-primary me-2"></i>{% trans "24/7 Customer Support" %}</p>
-                        </div>
+                        {% empty %}
+                        <p>No exclusions listed.</p>
+                        {% endfor %}
                     </div>
 
                     <div class="d-flex gap-3">
@@ -281,7 +291,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-12">
+                        {% comment %} <div class="col-12">
                             <div class="bg-light rounded p-3 mb-3">
                                 <div class="d-flex justify-content-between">
                                     <span>{% trans "Package Price:" %}</span>
@@ -293,7 +303,7 @@
                                 </div>
                             </div>
                             <button class="btn btn-primary w-100 py-3" type="submit">{% trans "Proceed to Payment" %}</button>
-                        </div>
+                        </div> {% endcomment %}
                     </div>
                 </form>
             </div>
