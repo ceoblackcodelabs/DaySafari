@@ -291,6 +291,12 @@ class UpdateInvoiceView(UpdateView):
         total = Invoice.objects.aggregate(total=models.Sum('amount'))['total'] or 0
         return float(total)
 
+# detail view for invoice
+class InvoiceDetailView(DetailView):
+    model = Invoice
+    template_name = 'Invoices/download.html'
+    context_object_name = 'invoice'
+
 
 # class Employee
 from Office.models import Employee

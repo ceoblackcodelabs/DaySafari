@@ -15,58 +15,69 @@
         </ol>
 
         <div class="carousel-inner" role="listbox">
+            {% for cc in cruise_carousels %}
 
-            <div class="carousel-item active">
-                <img src="{% static "img/crus1.jpg" %}" class="img-fluid" alt="Cruise Image">
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ cc.image.url }}" class="img-fluid" alt="Cruise Image">
+
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
+
                         <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">
-                            {% trans "Luxury Ocean Travel" %}
+                            {% if forloop.first %}
+                                {% trans "Luxury Ocean Travel" %}
+                            {% else %}
+                                {% trans "Island Adventures" %}
+                            {% endif %}
                         </h4>
+
                         <h1 class="display-2 text-capitalize text-white mb-4">
-                            {% trans "World-Class Cruise Journeys" %}
+                            {{ cc.name }}
                         </h1>
-                        <p class="mb-5 fs-5">
-                            {% trans "Sail across breathtaking oceans and discover unforgettable destinations" %}
-                        </p>
+
+                        {% comment %} <p class="mb-4 fs-5">
+                            {% if forloop.first %}
+                                {% trans "Sail across breathtaking oceans and discover unforgettable destinations" %}
+                            {% else %}
+                                {% trans "Discover hidden islands, turquoise waters, and scenic coastlines" %}
+                            {% endif %}
+                        </p> {% endcomment %}
+
+                        <!-- INCLUDED (ROW STYLE) -->
+                        <div class="text-white mb-3">
+                            <strong>{% trans "Included:" %}</strong>
+
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                {% for item in cc.incluisiveexcluisive_set.all %}
+                                    {% if item.status %}
+                                        <span class="badge bg-success">
+                                            ✔ {{ item.name }}
+                                        </span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- NOT INCLUDED (ROW STYLE) -->
+                        <div class="text-white">
+                            <strong>{% trans "Not Included:" %}</strong>
+
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                {% for item in cc.incluisiveexcluisive_set.all %}
+                                    {% if not item.status %}
+                                        <span class="badge bg-danger">
+                                            ✖ {{ item.name }}
+                                        </span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
-            <div class="carousel-item">
-                <img src="{% static "img/crus2.jpg" %}" class="img-fluid" alt="Cruise Image">
-                <div class="carousel-caption">
-                    <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">
-                            {% trans "Island Adventures" %}
-                        </h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">
-                            {% trans "Explore Tropical Destinations" %}
-                        </h1>
-                        <p class="mb-5 fs-5">
-                            {% trans "Discover hidden islands, turquoise waters, and scenic coastlines" %}
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="{% static "img/crus3.jpg" %}" class="img-fluid" alt="Cruise Image">
-                <div class="carousel-caption">
-                    <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">
-                            {% trans "Luxury Onboard Experience" %}
-                        </h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">
-                            {% trans "Comfort, Dining & Entertainment" %}
-                        </h1>
-                        <p class="mb-5 fs-5">
-                            {% trans "Enjoy world-class hospitality, fine dining, and endless ocean views" %}
-                        </p>
-                    </div>
-                </div>
-            </div>
-
+            {% endfor %}
         </div>
 
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">

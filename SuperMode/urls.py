@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (AdminDashboardView, InvoiceView, InvoiceCreateView,
+from .views import (AdminDashboardView, InvoiceView, InvoiceCreateView, InvoiceDetailView,
                     UpdateInvoiceView, EmployeeListView, EmployeeCreateView, EmployeeUpdateView,
                     BookingListView, BookingCreateView, BookingUpdateView, BookingDeleteView,
                     ContactListView, ContactUpdateView, ContactDeleteView,  ContactReplyView,
@@ -12,6 +12,7 @@ urlpatterns = [
     path('invoices/', InvoiceView.as_view(), name='invoice_list'),
     path('invoices/create/', InvoiceCreateView.as_view(), name='create_invoice'),
     path('invoices/update/<int:pk>/', UpdateInvoiceView.as_view(), name='update_invoice'),
+    path('invoice/<int:pk>/', InvoiceDetailView.as_view(), name='invoice_detail'),
 
     # employees
     path('employees/', EmployeeListView.as_view(), name='employee_list'),
@@ -33,7 +34,7 @@ urlpatterns = [
     # finance
     path('finance/', FinanceDashboardView.as_view(), name='finance_dashboard'),
 
-    # income 
+    # income
     path('finance/income/', IncomeListView.as_view(), name='income_list'),
     path('finance/income/<int:pk>/edit/', IncomeUpdateView.as_view(), name='update_income'),
     path('finance/income/<int:pk>/delete/', IncomeDeleteView.as_view(), name='delete_income'),
