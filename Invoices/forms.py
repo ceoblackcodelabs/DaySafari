@@ -5,7 +5,7 @@ from decimal import Decimal
 class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
-        fields = ['customer_name', 'invoice_title', 'invoice_description', 'amount', 'amount_paid', 'date']
+        fields = ['customer_name', 'invoice_title', 'invoice_description', 'amount', 'amount_paid', 'date', 'email']
         widgets = {
             'customer_name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -39,14 +39,18 @@ class InvoiceForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'date'
             }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter customer email'
+            })
         }
-    
+
     def clean(self):
         cleaned_data = super().clean()
         amount = cleaned_data.get('amount')
         amount_paid = cleaned_data.get('amount_paid')
-        
+
         if amount and amount_paid and amount_paid > amount:
             self.add_error('amount_paid', 'Amount paid cannot exceed total amount')
-        
+
         return cleaned_data

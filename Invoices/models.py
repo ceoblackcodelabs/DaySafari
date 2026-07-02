@@ -2,9 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+# class InvolvedBudget(models.Model):
+#     name = models.CharField(max_length=100)
+#     description = models.TextField(blank=True, null=True)
+#     amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     date = models.DateField(default=timezone.now)
+
+#     def __str__(self):
+        # return self.name
+
 # Create your models here.
 class Invoice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    email = models.EmailField(max_length=254, default='')
+    # budget = models.ManyToManyField(InvolvedBudget, blank=True, related_name='invoices')
     invoice_number = models.CharField(max_length=20, default='INV-0001')
     invoice_title = models.CharField(max_length=100, default='Invoice')
     invoice_description = models.TextField(blank=True, default='Invoice description goes here.')
@@ -21,7 +32,7 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"Invoice {self.invoice_number} - {self.customer_name}"
-    
+
     def save(self, *args, **kwargs):
         # Calculate balance and update status before saving
         self.balance = self.amount - self.amount_paid

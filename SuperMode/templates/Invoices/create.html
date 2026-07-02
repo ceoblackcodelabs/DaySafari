@@ -94,7 +94,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Create New Invoice</h4>
-          
+
           <!-- Display Messages -->
           {% if messages %}
             {% for message in messages %}
@@ -104,10 +104,10 @@
               </div>
             {% endfor %}
           {% endif %}
-          
+
           <form method="POST">
             {% csrf_token %}
-            
+
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
@@ -128,7 +128,15 @@
                 </div>
               </div>
             </div>
-            
+
+            <div class="form-group">
+              <label for="email">Customer Email</label>
+              {{ form.email }}
+              {% if form.email.errors %}
+                <small class="text-danger">{{ form.email.errors.0 }}</small>
+              {% endif %}
+            </div>
+
             <div class="form-group">
               <label for="invoice_title">Invoice Title *</label>
               {{ form.invoice_title }}
@@ -136,7 +144,7 @@
                 <small class="text-danger">{{ form.invoice_title.errors.0 }}</small>
               {% endif %}
             </div>
-            
+
             <div class="form-group">
               <label for="invoice_description">Invoice Description</label>
               {{ form.invoice_description }}
@@ -144,7 +152,20 @@
                 <small class="text-danger">{{ form.invoice_description.errors.0 }}</small>
               {% endif %}
             </div>
-            
+
+            <!-- Budget Items Field -->
+            <div class="form-group">
+              <label for="budget">Budget Items</label>
+              {{ form.budget }}
+              {% if form.budget.errors %}
+                <small class="text-danger">{{ form.budget.errors.0 }}</small>
+              {% endif %}
+              {% if form.budget.help_text %}
+                <small class="text-muted d-block mt-1">{{ form.budget.help_text }}</small>
+              {% endif %}
+              <small class="text-muted d-block mt-1">Hold Ctrl/Cmd to select multiple items</small>
+            </div>
+
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
@@ -165,7 +186,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="form-group">
               <label class="form-label">Status will be auto-calculated:</label>
               <div class="mt-2">
@@ -174,7 +195,7 @@
                 <span class="badge badge-outline-success">Paid: 100% paid</span>
               </div>
             </div>
-            
+
             <button type="submit" class="btn btn-primary me-2">Create Invoice</button>
             <a href="{% url 'invoice_list' %}" class="btn btn-secondary">Cancel</a>
           </form>
@@ -206,6 +227,7 @@
           <li>Partial payments are recorded for easy tracking</li>
           <li>All fields with * are required</li>
           <li>Add a clear description to help customer understand the charges</li>
+          <li>Select budget items to link them to this invoice</li>
         </ul>
       </div>
     </div>
@@ -216,22 +238,36 @@
 
 {% block injectjs %}
 
+<!-- Select2 for better multi-select experience -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
 (function($) {
   'use strict';
   $.fn.andSelf = function() {
     return this.addBack.apply(this, arguments);
   }
   $(function() {
-    
+
+    // Initialize Select2 for budget field
+    if ($('#id_budget').length) {
+      $('#id_budget').select2({
+        placeholder: 'Select budget items...',
+        allowClear: true,
+        width: '100%'
+      });
+    }
+
     // Line Chart - Revenue & Payment Trends (2 lines)
     if ($("#revenueTrendsChart").length) {
       const revenueCanvas = document.getElementById('revenueTrendsChart');
-      
+
       // Data for the chart (using data from your view)
       var months = {{ chart_months|safe }};
       var invoicedAmounts = {{ chart_invoiced_amounts|default:'[0,0,0,0,0,0]'|safe }};
       var paidAmounts = {{ chart_paid_amounts|default:'[0,0,0,0,0,0]'|safe }};
-      
+
       new Chart(revenueCanvas, {
         type: 'line',
         data: {
@@ -324,5 +360,6 @@
     }
   });
 })(jQuery);
+</script>
 
 {% endblock injectjs %}

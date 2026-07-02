@@ -11,7 +11,8 @@ from ClientRequests.forms import BookingsForm
 from django.contrib import messages
 from .forms import TrekkingBookingForm
 from EmailSetup.utils import send_booking_confirmation
-
+from django.db.models import Prefetch
+from django.db.models.functions import Random
 
 class HomeView(ListView):
     model = Services
@@ -253,20 +254,18 @@ class CruisesView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        services1 = []
-        services2 = []
-        for i, service in enumerate(Services.objects.all()):
-            if i <= 2:
-                services1.append(service)
-            else:
-                services2.append(service)
-        if len(services2) == 0:
-            print(f"{Fore.RED}No services found in the database.")
-        else:
-            print(f"{Fore.GREEN}Successfully retrieved {len(services2)} services from the database.")
-        context['services1'] = services1
-        context['services2'] = services2
+
+        services = list(Services.objects.all())
+        context['services1'] = services[:3]
+        context['services2'] = services[3:]
+
+        cruise_qs = AwesomePackages.objects.filter(category="Cruises").prefetch_related(
+            'incluisiveexcluisive_set'
+        ).order_by(Random())[:3]
+
+        context["cruise_carousels"] = cruise_qs
         context['awesome_packages'] = AwesomePackages.objects.filter(category="Cruises")
+
         return context
 
 class AirLineView(TemplateView):
