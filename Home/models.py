@@ -46,7 +46,22 @@ class BlogComments(models.Model):
         return f"Comment by {self.name} on {self.created_date}"
 
 class Blogs(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+    # SEO Fields
+    seo_title = models.CharField(
+        max_length=300,
+        blank=True,
+        null=True,
+        help_text="Keep under 60 characters. Leave blank to auto-generate from title."
+    )
+    seo_description = models.TextField(
+        max_length=300,
+        blank=True,
+        null=True,
+        help_text="Keep under 160 characters. Leave blank to auto-generate from content."
+    )
+    schema_markup = models.TextField(blank=True, help_text="Paste raw JSON-LD schema here")
     author = models.CharField(max_length=100)
     content = models.TextField()
     likes = models.IntegerField(default=0)
@@ -57,7 +72,18 @@ class Blogs(models.Model):
     def __str__(self):
         return self.title
 
-class Brochure(models.Model):  # Note: Should be "Brochure" not "Bronchure"
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug_base = self.title.lower().replace(' ', '-')
+            slug = slug_base
+            counter = 1
+            while Blogs.objects.filter(slug=slug).exists():
+                slug = f"{slug_base}-{counter}"
+                counter += 1
+            self.slug = slug
+        super(Blogs, self).save(*args, **kwargs)
+
+class Brochure(models.Model):
     title = models.CharField(max_length=200)
     pdf_file = models.FileField(upload_to='brochures/')
     image = models.ImageField(upload_to='brochure_images/', blank=True, null=True)
