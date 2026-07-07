@@ -9,9 +9,18 @@
         <meta charset="utf-8">
         <title>{% block title %}{% trans "Day Safaris Adventures" %}{% endblock title %}</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
-
+        <meta name="keywords" content="{% block meta_keywords %}kenya safari packages, masai mara safari, east africa tours{% endblock %}">
+<meta name="description" content="{% block meta_description %}Days Safaris Adventures - Kenya's premier safari tour operator. Book Masai Mara, Kilimanjaro and East Africa packages from Nairobi.{% endblock %}">
+<meta name="google-site-verification" content="UmcGc9f_IJXUzUxV5_B74pTXzqoSZClfiNTYplHo3Gs" />
+<link rel="canonical" href="https://daysafarisadventures.co.ke/en/">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TTXBT2XFZM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TTXBT2XFZM');
+</script>
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -652,7 +661,7 @@
                                 {% endfor %}
                             </select>
                         </form>
-                        <a href="{% url "faq" %}"><small class="me-3 text-light">{% trans "FAQ" %}</small></a>
+
                         {% if request.user.is_authenticated %}
                         {% else %}
                         <a href="{% url "register" %}"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>{% trans "Register" %}</small></a>
@@ -662,6 +671,7 @@
                             <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i> {% trans "My Dashboard" %}</small></a>
                             <div class="dropdown-menu rounded">
                                 <a href="{% url "profile" %}" class="dropdown-item"><i class="fas fa-user-alt me-2"></i> {% trans "My Profile" %}</a>
+                                <a href="{% url "message_inbox" %}" class="dropdown-item"><i class="fas fa-comment-alt me-2"></i> {% trans "Inbox" %}</a>
                                 <a href="{% url "account_settings" %}" class="dropdown-item"><i class="fas fa-cog me-2"></i> {% trans "Account Settings" %}</a>
                                 <a href="{% url "logout" %}" class="dropdown-item"><i class="fas fa-power-off me-2"></i> {% trans "Log Out" %}</a>
                             </div>
@@ -716,9 +726,9 @@
                                 <a href="{% url "travel_partnerships" %}" class="dropdown-item">{% trans "Travel Partnerships" %}</a>
                                 <a href="{% url "holiday_tailor_made_tours" %}" class="dropdown-item">{% trans "Holiday Tailor Made Tours" %}</a>
                                 <a href="{% url "airport_transfers" %}" class="dropdown-item">{% trans "AirPort Transfers" %}</a>
-                                <a href="{% url "airline" %}" class="dropdown-item">{% trans "AirLine" %}</a>
                             </div>
                         </div>
+                        <a href="{% url "airline" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airline" %}active bg-warning{% endif %}">{% trans "AirLine" %}</a>
                         <a href="{% url "blog" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "blog" %}active bg-warning{% endif %}">{% trans "Blogs" %}</a>
                         <a href="{% url "gallary" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "gallary" %}active bg-warning{% endif %}">{% trans "Gallery" %}</a>
                         <a href="{% url "packages" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "packages" %}active bg-warning{% endif %}">{% trans "Packages" %}</a>
@@ -998,7 +1008,7 @@
                     <div class="message received">
                         <div class="message-content">
                             <i class="fas fa-robot"></i>
-                            <p>{% trans "Hello! 👋 Welcome to Day Safaris Adventures! How can I help you today?" %}</p>
+                            <p>{% trans "Hello! ðŸ‘‹ Welcome to Day Safaris Adventures! How can I help you today?" %}</p>
                         </div>
                         <span class="message-time">{% trans "Just now" %}</span>
                     </div>

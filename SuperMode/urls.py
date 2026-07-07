@@ -1,11 +1,5 @@
 from django.urls import path
-from .views import (AdminDashboardView, InvoiceView, InvoiceCreateView, InvoiceDetailView,
-                    UpdateInvoiceView, EmployeeListView, EmployeeCreateView, EmployeeUpdateView,
-                    BookingListView, BookingCreateView, BookingUpdateView, BookingDeleteView,
-                    ContactListView, ContactUpdateView, ContactDeleteView,  ContactReplyView,
-                    FinanceDashboardView, IncomeListView, ExpenseListView, IncomeCreateView, ExpenseCreateView,
-                    IncomeUpdateView, ExpenseUpdateView, IncomeDeleteView, ExpenseDeleteView
-                    )
+from .views import *
 
 urlpatterns = [
     path('', AdminDashboardView.as_view(), name='admin_dash'),
@@ -45,4 +39,7 @@ urlpatterns = [
     path('finance/expense/add/', ExpenseCreateView.as_view(), name='add_expense'),
     path('finance/expense/<int:pk>/edit/', ExpenseUpdateView.as_view(), name='update_expense'),
     path('finance/expense/<int:pk>/delete/', ExpenseDeleteView.as_view(), name='delete_expense'),
+
+    # hotels
+    path('hotels/', HoteslListView.as_view(), name='hotels_list'),
 ]

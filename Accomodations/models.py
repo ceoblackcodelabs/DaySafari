@@ -1,7 +1,15 @@
 from django.db import models
 
+class MealPlan(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
 # Create your models here.
 class Accomodations(models.Model):
+    destinations = models.CharField(max_length=100, blank=True)
     name =  models.CharField(default="house 1", max_length=100)
     location = models.CharField(default="Nairobi", max_length=100)
     specification = models.CharField(max_length=50, choices=(
@@ -14,22 +22,36 @@ class Accomodations(models.Model):
     description = models.TextField(blank=True)
     price_per_night = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     max_guests = models.IntegerField(default=2)
+    child_policy = models.TextField(blank=True)
+    contact_person = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+    contract_validity = models.DateField(blank=True, null=True)
+    meal_plan = models.ManyToManyField(MealPlan, blank=True, related_name='accomodations')
     created_at = models.DateTimeField(auto_now_add=True)
-    
+    remarks = models.TextField(blank=True)
+    rating = models.CharField(max_length=10, blank=True, choices=(
+        ("1", "1 Star"),
+        ("2", "2 Star"),
+        ("3", "3 Star"),
+        ("4", "4 Star"),
+        ("5", "5 Star"),
+    ))
+
     def __str__(self):
         return f"{self.location} - {self.get_specification_display()}"
-    
+
     @property
     def main_image(self):
         """Get the first image as main image"""
         return self.images.first()
-    
+
     @property
     def all_images(self):
         """Get all images"""
         return self.images.all()
-     
-     
+
+
 class AccomodationsImage(models.Model):
     accomodation = models.ForeignKey(Accomodations, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='Accomodations/', default="Accomodations/default.jpg")
@@ -37,14 +59,14 @@ class AccomodationsImage(models.Model):
     is_featured = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         ordering = ['order', '-uploaded_at']
-    
+
     def __str__(self):
         return f"Image for {self.accomodation.location}"
-    
-    
+
+
 class AirBNB(models.Model):
     location = models.CharField(max_length=100)
     specification = models.CharField(max_length=50, choices=(
@@ -59,15 +81,15 @@ class AirBNB(models.Model):
     price_per_night = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     max_guests = models.IntegerField(default=2)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f"{self.location} - {self.get_specification_display()}"
-    
+
     @property
     def main_image(self):
         """Get the first image as main image"""
         return self.images.first()
-    
+
     @property
     def all_images(self):
         """Get all images"""
@@ -81,10 +103,10 @@ class AirBNBImage(models.Model):
     is_featured = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         ordering = ['order', '-uploaded_at']
-    
+
     def __str__(self):
         return f"Image for {self.airbnb.location}"
 
@@ -97,6 +119,6 @@ class AirBNBBooking(models.Model):
     guests = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    
+
     def __str__(self):
         return f"Booking for {self.airbnb.location} by {self.guest_name}"

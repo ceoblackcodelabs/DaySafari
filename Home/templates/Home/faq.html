@@ -1,0 +1,184 @@
+{% extends "Home/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load custom_filters %}
+
+{% block title %}{% trans "FAQ - Days Safaris Adventures" %}{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">{% trans "Frequently Asked Questions" %}</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url "home" %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "FAQ" %}</li>
+        </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+
+<!-- FAQ Start -->
+<div class="container-fluid bg-light py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">FAQ</h5>
+            <h1 class="mb-0">Frequently Asked Questions</h1>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Left Column -->
+            <div class="col-lg-6">
+                <div class="row g-4">
+
+                    <div class="col-12">
+                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
+                            <div class="service-content text-end">
+                                <h5 class="mb-3">What does Day Safaris Adventures specialize in?</h5>
+                                <p class="mb-0">
+                                    We specialize in African wildlife safaris, tailor-made tours, beach holidays, mountain adventures, cultural experiences, airport transfers, hotel bookings, visa assistance, and international travel packages.
+                                </p>
+                            </div>
+                            <div class="service-icon p-4">
+                                <i class="fas fa-binoculars fa-4x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
+                            <div class="service-content text-end">
+                                <h5 class="mb-3">Where are you located?</h5>
+                                <p class="mb-0">
+                                    Our head office is conveniently located at <strong>Nairobi Railways Museum, Nairobi, Kenya (00200)</strong>, making it easy for clients to visit us for travel consultations and bookings.
+                                </p>
+                            </div>
+                            <div class="service-icon p-4">
+                                <i class="fas fa-map-marker-alt fa-4x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
+                            <div class="service-content text-end">
+                                <h5 class="mb-3">What are your business hours?</h5>
+                                <p class="mb-0">
+                                    We are open <strong>Monday to Sunday</strong> from <strong>8:00 AM to 8:00 PM</strong>. Our customer support team is available throughout these hours to assist with bookings and travel inquiries.
+                                </p>
+                            </div>
+                            <div class="service-icon p-4">
+                                <i class="fas fa-clock fa-4x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-6">
+                <div class="row g-4">
+
+                    <div class="col-12">
+                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 ps-0">
+                            <div class="service-icon p-4">
+                                <i class="fas fa-phone-alt fa-4x text-primary"></i>
+                            </div>
+                            <div class="service-content">
+                                <h5 class="mb-3">How can I contact Day Safaris Adventures?</h5>
+                                <p class="mb-0">
+                                    You can reach us via email at <strong>info@daysafarisadventures.com</strong> or call us on <strong>+254 759 379 600</strong>.  off - office number is <strong>+254 734 962 965</strong>. You may also visit our office during business hours.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 ps-0">
+                            <div class="service-icon p-4">
+                                <i class="fas fa-passport fa-4x text-primary"></i>
+                            </div>
+                            <div class="service-content">
+                                <h5 class="mb-3">Can you help with visa processing?</h5>
+                                <p class="mb-0">
+                                    Yes. We provide professional visa processing assistance, helping clients prepare documents, complete applications, and track their visa status for various destinations.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 ps-0">
+                            <div class="service-icon p-4">
+                                <i class="fas fa-calendar-check fa-4x text-primary"></i>
+                            </div>
+                            <div class="service-content">
+                                <h5 class="mb-3">How do I book a safari?</h5>
+                                <p class="mb-0">
+                                    Booking is easy. Simply fill out our online booking form, call our travel consultants, or send us an email. We'll help you choose the perfect package and customize your adventure to suit your budget and preferences.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- FAQ End -->
+
+
+<!-- Testimonial Start -->
+<div class="container-fluid testimonial py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">{% trans "Testimonial" %}</h5>
+            <h1 class="mb-0">{% trans "What Our Clients Say About Us" %}</h1>
+        </div>
+        <div class="testimonial-carousel owl-carousel">
+            {% for testimonial in testimonials %}
+            <div class="testimonial-item text-center rounded pb-4">
+                <div class="testimonial-comment bg-light rounded p-4">
+                    <p class="text-center mb-5">"{{ testimonial.feedback }}"</p>
+                </div>
+                <div class="testimonial-img p-1">
+                    {% if testimonial.image %}
+                    <img src="{{ testimonial.image.url }}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}">
+                    {% else %}
+                    <img src="{% static 'img/avatar-placeholder.jpg' %}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}">
+                    {% endif %}
+                </div>
+                <div style="margin-top: -35px;">
+                    <h5 class="mb-0">{{ testimonial.name }}</h5>
+                    <p class="mb-0">{{ testimonial.location }}</p>
+                    <div class="d-flex justify-content-center">
+                        {% for i in ""|ljust:testimonial.starRating %}
+                        <i class="fas fa-star text-primary"></i>
+                        {% endfor %}
+                        {% for i in ""|ljust:5 %}
+                        {% if forloop.counter > testimonial.starRating %}
+                        <i class="fas fa-star text-muted"></i>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <h3>{% trans "No testimonials yet" %}</h3>
+                <p>{% trans "Be the first to share your experience with us!" %}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+
+{% endblock body %}
