@@ -1,0 +1,328 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Hotels - Admin Dashboard{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <!-- Hotel List Header -->
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="card-title">Hotels & Accommodations</h4>
+          <a href="" class="btn btn-primary">
+            <i class="mdi mdi-plus"></i> Add New Hotel
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hotel Cards Grid -->
+<div class="row">
+  {% for hotel in hotels %}
+  <div class="col-xl-4 col-lg-6 col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <!-- Hotel Image -->
+        <div class="hotel-image-container mb-3">
+          {% if hotel.main_image %}
+            <img src="{{ hotel.main_image.image.url }}" alt="{{ hotel.name }}" class="img-fluid rounded" style="width: 100%; height: 200px; object-fit: cover;">
+          {% else %}
+            <div class="bg-light d-flex align-items-center justify-content-center rounded" style="width: 100%; height: 200px;">
+              <span class="text-muted">No Image</span>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Hotel Details -->
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h5 class="card-title mb-0">{{ hotel.name }}</h5>
+            <p class="text-muted mb-0">
+              <i class="mdi mdi-map-marker"></i> {{ hotel.location }}
+            </p>
+          </div>
+          <!-- Rating Badge -->
+          {% if hotel.rating %}
+            <span class="badge badge-warning">
+              <i class="mdi mdi-star"></i> {{ hotel.get_rating_display }}
+            </span>
+          {% endif %}
+        </div>
+
+        <!-- Specification & Price -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge badge-outline-info">{{ hotel.get_specification_display }}</span>
+          <span class="text-success font-weight-bold">
+            Ksh {{ hotel.price_per_night|default:"0.00" }}
+            <small class="text-muted">/ night</small>
+          </span>
+        </div>
+
+        <!-- Max Guests -->
+        <p class="card-text text-muted mb-2">
+          <i class="mdi mdi-account-group"></i> Max Guests: {{ hotel.max_guests }}
+        </p>
+
+        <!-- Description -->
+        <p class="card-text text-muted small">
+          {{ hotel.description|truncatechars:100 }}
+        </p>
+
+        <!-- Contact Info -->
+        <div class="border-top pt-2 mt-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <p class="mb-0 small">
+                <i class="mdi mdi-account"></i> {{ hotel.contact_person|default:"N/A" }}
+              </p>
+              <p class="mb-0 small">
+                <i class="mdi mdi-phone"></i> {{ hotel.phone_number|default:"N/A" }}
+              </p>
+            </div>
+            <a href="" class="btn btn-sm btn-outline-primary">
+              View Details
+            </a>
+          </div>
+        </div>
+
+        <!-- Meal Plans -->
+        {% if hotel.meal_plan.all %}
+        <div class="mt-2">
+          <p class="mb-1 small font-weight-bold">Meal Plans:</p>
+          <div class="d-flex flex-wrap gap-1">
+            {% for meal in hotel.meal_plan.all|slice:":3" %}
+              <span class="badge badge-outline-success small">{{ meal.name }}</span>
+            {% endfor %}
+            {% if hotel.meal_plan.all|length > 3 %}
+              <span class="badge badge-outline-secondary small">+{{ hotel.meal_plan.all|length|add:"-3" }}</span>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body text-center">
+        <h5 class="text-muted">No hotels found</h5>
+        <p class="text-muted">Click the "Add New Hotel" button to create your first hotel listing.</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if is_paginated %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex mt-4 flex-wrap justify-content-between align-items-center">
+          <p class="text-muted mb-0">
+            Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} hotels
+          </p>
+          <nav>
+            <ul class="pagination pagination-sm mb-0">
+              {% if page_obj.has_previous %}
+                <li class="page-item">
+                  <a href="?page=1" class="page-link">&laquo;&laquo;</a>
+                </li>
+                <li class="page-item">
+                  <a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo;</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">&laquo;&laquo;</span>
+                </li>
+                <li class="page-item disabled">
+                  <span class="page-link">&laquo;</span>
+                </li>
+              {% endif %}
+
+              {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                  <li class="page-item active">
+                    <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                  </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                  <li class="page-item">
+                    <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+
+              {% if page_obj.has_next %}
+                <li class="page-item">
+                  <a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a>
+                </li>
+                <li class="page-item">
+                  <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">&raquo;&raquo;</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">&raquo;</span>
+                </li>
+                <li class="page-item disabled">
+                  <span class="page-link">&raquo;&raquo;</span>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<style>
+  .gap-1 {
+    gap: 0.25rem;
+  }
+  .hotel-image-container {
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .hotel-image-container img {
+    transition: transform 0.3s ease;
+  }
+  .hotel-image-container img:hover {
+    transform: scale(1.05);
+  }
+</style>
+
+{% endblock body %}
+
+{% block injectjs %}
+
+$(function() {
+  'use strict';
+
+  // Area Chart - Invoice Trends
+  if ($("#areaChart").length) {
+    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+    var areaData = {
+      labels: {{ chart_months|safe }},
+      datasets: [{
+        label: 'Number of Invoices',
+        data: {{ invoice_counts|safe }},
+        backgroundColor: 'rgba(90, 18, 51, 0.2)',
+        borderColor: 'rgba(90, 18, 51, 1)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: '#5a1233'
+      }]
+    };
+    var areaOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          },
+          ticks: {
+            stepSize: 1
+          }
+        },
+        x: {
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        }
+      }
+    };
+    var areaChart = new Chart(areaChartCanvas, {
+      type: 'line',
+      data: areaData,
+      options: areaOptions
+    });
+  }
+
+  // Bar Chart - Cash Flow
+  if ($("#barChart").length) {
+    var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    var barData = {
+      labels: {{ chart_months|safe }},
+      datasets: [
+        {
+          label: 'Cash In (Paid Invoices)',
+          data: {{ chart_cash_in|safe }},
+          backgroundColor: 'rgba(40, 167, 69, 0.7)',
+          borderColor: 'rgba(40, 167, 69, 1)',
+          borderWidth: 1,
+          borderRadius: 4
+        },
+        {
+          label: 'Cash Out (Expenses)',
+          data: {{ chart_cash_out|safe }},
+          backgroundColor: 'rgba(220, 53, 69, 0.7)',
+          borderColor: 'rgba(220, 53, 69, 1)',
+          borderWidth: 1,
+          borderRadius: 4
+        }
+      ]
+    };
+    var barOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          },
+          ticks: {
+            callback: function(value) {
+              return 'Ksh ' + value.toLocaleString();
+            }
+          }
+        },
+        x: {
+          grid: {
+            color: "rgba(204, 204, 204, 0.1)"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.dataset.label + ': Ksh ' + context.raw.toLocaleString();
+            }
+          }
+        }
+      }
+    };
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barData,
+      options: barOptions
+    });
+  }
+});
+
+{% endblock injectjs %}

@@ -3,12 +3,13 @@ from .views import (BrochureView, HomeView, AboutView, ServicesView,
                     CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
                     BlogDetailView, TanzaniaTrekking, KenyaTrekking, KilimanjaroTrekking, SuswaTrekking, LongonotTrekking,
-                    TrekkingDetailView, MeruTrekking
+                    TrekkingDetailView, MeruTrekking, FAQView
                     )
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('about/', AboutView.as_view(), name='about'),
+    path('faq/', FAQView.as_view(), name='faq'),
 
     # services
     path('services/', ServicesView.as_view(), name='services'),

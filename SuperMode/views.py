@@ -1077,3 +1077,10 @@ class ExpenseDeleteView(DeleteView):
         self.object = self.get_object()
         messages.success(request, f'Expense {self.object.name} has been deleted successfully!')
         return super().delete(request, *args, **kwargs)
+
+from Accomodations.models import Accomodations
+class HoteslListView(ListView):
+    model = Accomodations
+    template_name = 'Hotels/hotels.html'
+    context_object_name = 'hotels'
+    paginate_by = 10

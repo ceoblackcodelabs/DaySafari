@@ -190,6 +190,14 @@ class HomeView(ListView):
 
         return organized
 
+class FAQView(TemplateView):
+    template_name = 'Home/faq.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['testimonials'] = Testimonials.objects.all().order_by('-id')[:6]
+        return context
+
 class AboutView(ListView):
     model = Services
     context_object_name = 'services'

@@ -205,6 +205,28 @@
           </li>
 
           <li class="nav-item nav-category">
+            <span class="nav-link">Hotel Accomodations</span>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" data-bs-toggle="collapse" href="#authAccomodation" aria-expanded="false" aria-controls="auth">
+              <span class="menu-icon">
+                <i class="mdi mdi-cash-multiple"></i>
+              </span>
+              <span class="menu-title">Hotels</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="authAccomodation">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url "hotels_list" %}"> Hotels </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "income_list" %}"> Incomes </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "add_income" %}"> Add Income </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "expense_list" %}"> Expenses </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "add_expense" %}"> Add Expense </a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item nav-category">
             <span class="nav-link">Automations</span>
           </li>
 

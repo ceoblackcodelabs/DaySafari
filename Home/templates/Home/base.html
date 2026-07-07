@@ -652,7 +652,7 @@
                                 {% endfor %}
                             </select>
                         </form>
-
+                        <a href="{% url "faq" %}"><small class="me-3 text-light">{% trans "FAQ" %}</small></a>
                         {% if request.user.is_authenticated %}
                         {% else %}
                         <a href="{% url "register" %}"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>{% trans "Register" %}</small></a>
@@ -716,9 +716,9 @@
                                 <a href="{% url "travel_partnerships" %}" class="dropdown-item">{% trans "Travel Partnerships" %}</a>
                                 <a href="{% url "holiday_tailor_made_tours" %}" class="dropdown-item">{% trans "Holiday Tailor Made Tours" %}</a>
                                 <a href="{% url "airport_transfers" %}" class="dropdown-item">{% trans "AirPort Transfers" %}</a>
+                                <a href="{% url "airline" %}" class="dropdown-item">{% trans "AirLine" %}</a>
                             </div>
                         </div>
-                        <a href="{% url "airline" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "airline" %}active bg-warning{% endif %}">{% trans "AirLine" %}</a>
                         <a href="{% url "blog" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "blog" %}active bg-warning{% endif %}">{% trans "Blogs" %}</a>
                         <a href="{% url "gallary" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "gallary" %}active bg-warning{% endif %}">{% trans "Gallery" %}</a>
                         <a href="{% url "packages" %}" class="nav-item nav-link {% if request.resolver_match.url_name == "packages" %}active bg-warning{% endif %}">{% trans "Packages" %}</a>
