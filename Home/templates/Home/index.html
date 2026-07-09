@@ -18,8 +18,11 @@
             <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active"></li>
             <li data-bs-target="#carouselId" data-bs-slide-to="1"></li>
             <li data-bs-target="#carouselId" data-bs-slide-to="2"></li>
+            <li data-bs-target="#carouselId" data-bs-slide-to="3"></li>
+            <li data-bs-target="#carouselId" data-bs-slide-to="4"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
+            <!-- Existing Image Slides -->
             <div class="carousel-item active">
                 <img src="{% static "img/carousel-2.jpg" %}" class="img-fluid" alt="Image">
                 <div class="carousel-caption">
@@ -57,6 +60,75 @@
                         <p class="mb-5 fs-5">{% trans "We Are Your Ultimate Cruise Escape" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
                             <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Video Slide 1-->
+            <div class="carousel-item">
+                <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
+                    <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
+                            <source src="{% static 'videos/giraffe.mp4' %}" type="video/mp4">
+                            <source src="{% static 'videos/giraffe.mp4' %}" type="video/mp4">
+                            <!-- Fallback image if video doesn't load -->
+                            <img src="{% static 'img/fallback-video-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Video Fallback">
+                        </video>
+                    </div>
+                </div>
+                <div class="carousel-caption">
+                    <div class="p-3" style="max-width: 900px;">
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Witness The Wild" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Experience The Magic of Masai Mara" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "Watch the Great Migration in All Its Glory" %}</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'packages' %}">{% trans "Explore Packages" %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Slide 2 - mp4 Embed -->
+            <div class="carousel-item">
+                <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
+                    <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
+                            <source src="{% static 'videos/elephant.mp4' %}" type="video/mp4">
+                            <source src="{% static 'videos/elephant.mp4' %}" type="video/mp4">
+                            <img src="{% static 'img/fallback-video-2.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Video Fallback">
+                        </video>
+                    </div>
+                </div>
+                <div class="carousel-caption">
+                    <div class="p-3" style="max-width: 900px;">
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Explore East Africa" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "From Kilimanjaro to Zanzibar" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "Unforgettable Adventures Across East Africa" %}</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'packages' %}">{% trans "View Tours" %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Slide 3-->
+            <div class="carousel-item">
+                <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
+                    <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
+                            <source src="{% static 'videos/ostrich.mp4' %}" type="video/mp4">
+                            <source src="{% static 'videos/ostrich.mp4' %}" type="video/mp4">
+                            <img src="{% static 'img/fallback-video-3.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Video Fallback">
+                        </video>
+                    </div>
+                </div>
+                <div class="carousel-caption">
+                    <div class="p-3" style="max-width: 900px;">
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Ultimate Safari Experience" %}</h4>
+                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Luxury Safari Adventures Await" %}</h1>
+                        <p class="mb-5 fs-5">{% trans "Discover the Best of African Wildlife and Culture" %}</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Learn More" %}</a>
                         </div>
                     </div>
                 </div>
@@ -182,477 +254,6 @@
     </div>
 </div>
 <!-- Services End -->
-
-<!-- Destination Start
-<div class="container-fluid destination py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Destination" %}</h5>
-            <h1 class="mb-0">{% trans "The 'Must Visit' Destinations in East Africa" %}</h1>
-        </div>
-        <div class="tab-class text-center">
-            <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
-                <li class="nav-item">
-                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-all">
-                        <span class="text-dark" style="width: 150px;">{% trans "All Destinations" %}</span>
-                    </a>
-                </li>
-                {% for category in categories %}
-                <li class="nav-item">
-                    <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-{{ category.id }}">
-                        <span class="text-dark" style="width: 150px;">{{ category.category }}</span>
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
-            <div class="tab-content">
-                <!- All Destinations Tab
-                <div id="tab-all" class="tab-pane fade show p-0 active">
-                    <div class="row g-4">
-                        <div class="col-xl-8">
-                            <div class="row g-4">
-                                <!-- Landscape Position 1
-                                <div class="col-lg-6">
-                                    {% with dest=tab_destinations.all.landscape_1 %}
-                                    {% if dest %}
-                                    <div class="destination-img">
-                                        {% if dest.image %}
-                                        <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                        {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                        {% endif %}
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                            <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            {% if dest.image %}
-                                            <a href="{{ dest.image.url }}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% else %}
-                                            <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                                <!-- Landscape Position 2
-                                <div class="col-lg-6">
-                                    {% with dest=tab_destinations.all.landscape_2 %}
-                                    {% if dest %}
-                                    <div class="destination-img">
-                                        {% if dest.image %}
-                                        <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                        {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                        {% endif %}
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                            <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            {% if dest.image %}
-                                            <a href="{{ dest.image.url }}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% else %}
-                                            <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                                <!-- Landscape Position 3 -
-                                <div class="col-lg-6">
-                                    {% with dest=tab_destinations.all.landscape_3 %}
-                                    {% if dest %}
-                                    <div class="destination-img">
-                                        {% if dest.image %}
-                                        <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                        {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                        {% endif %}
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                            <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            {% if dest.image %}
-                                            <a href="{{ dest.image.url }}" data-lightbox="destination-3"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% else %}
-                                            <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="destination-3"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                                <!-- Landscape Position 4 -
-                                <div class="col-lg-6">
-                                    {% with dest=tab_destinations.all.landscape_4 %}
-                                    {% if dest %}
-                                    <div class="destination-img">
-                                        {% if dest.image %}
-                                        <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                        {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                        {% endif %}
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                            <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            {% if dest.image %}
-                                            <a href="{{ dest.image.url }}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% else %}
-                                            <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Portrait Position (Large Right Column) - NOW DYNAMIC -
-                        <div class="col-xl-4">
-                            {% with dest=tab_destinations.all.portrait %}
-                            {% if dest %}
-                            <div class="destination-img h-100">
-                                {% if dest.image %}
-                                <img class="img-fluid rounded w-100 h-100" src="{{ dest.image.url }}" style="object-fit: cover; min-height: 300px;" alt="{{ dest.name }}">
-                                {% else %}
-                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/placeholder-portrait.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="{% trans 'Placeholder Image' %}">
-                                {% endif %}
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    {% if dest.image %}
-                                    <a href="{{ dest.image.url }}" data-lightbox="destination-portrait"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% else %}
-                                    <a href="{% static 'img/placeholder-portrait.jpg' %}" data-lightbox="destination-portrait"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% else %}
-                            <!-- Fallback if no portrait destination exists -
-                            <div class="destination-img h-100">
-                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/destination-9.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="{% trans 'Placeholder' %}">
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Coming Soon" %}</a>
-                                    <h4 class="text-white mb-2 mt-3">{% trans "New Destination" %}</h4>
-                                    <a href="#" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    <a href="{% static 'img/placeholder-portrait.jpg' %}" data-lightbox="destination-portrait"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <!-- Landscape Position 5 -
-                        <div class="col-lg-4">
-                            {% with dest=tab_destinations.all.landscape_5 %}
-                            {% if dest %}
-                            <div class="destination-img">
-                                {% if dest.image %}
-                                <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                {% endif %}
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    {% if dest.image %}
-                                    <a href="{{ dest.image.url }}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% else %}
-                                    <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <!-- Landscape Position 6 -
-                        <div class="col-lg-4">
-                            {% with dest=tab_destinations.all.landscape_6 %}
-                            {% if dest %}
-                            <div class="destination-img">
-                                {% if dest.image %}
-                                <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                {% endif %}
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    {% if dest.image %}
-                                    <a href="{{ dest.image.url }}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% else %}
-                                    <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <!-- Landscape Position 7 -
-                        <div class="col-lg-4">
-                            {% with dest=tab_destinations.all.landscape_7 %}
-                            {% if dest %}
-                            <div class="destination-img">
-                                {% if dest.image %}
-                                <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                {% endif %}
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    {% if dest.image %}
-                                    <a href="{{ dest.image.url }}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% else %}
-                                    <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dynamic Category Tabs -
-                {% for category in categories %}
-                <div id="tab-{{ category.id }}" class="tab-pane fade show p-0">
-                    <div class="row g-4">
-                        <div class="col-xl-8">
-                            <div class="row g-4">
-                                <div class="col-lg-6">
-                                    {% with dest=tab_destinations|get_item:category.id|get_item:'landscape_1' %}
-                                    {% if dest %}
-                                    <div class="destination-img">
-                                        {% if dest.image %}
-                                        <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                        {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                        {% endif %}
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                            <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            {% if dest.image %}
-                                            <a href="{{ dest.image.url }}" data-lightbox="dest-{{ category.id }}-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% else %}
-                                            <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="dest-{{ category.id }}-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                                <div class="col-lg-6">
-                                    {% with dest=tab_destinations|get_item:category.id|get_item:'landscape_2' %}
-                                    {% if dest %}
-                                    <div class="destination-img">
-                                        {% if dest.image %}
-                                        <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                        {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                        {% endif %}
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                            <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            {% if dest.image %}
-                                            <a href="{{ dest.image.url }}" data-lightbox="dest-{{ category.id }}-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% else %}
-                                            <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="dest-{{ category.id }}-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                                <div class="col-lg-6">
-                                    {% with dest=tab_destinations|get_item:category.id|get_item:'landscape_3' %}
-                                    {% if dest %}
-                                    <div class="destination-img">
-                                        {% if dest.image %}
-                                        <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                        {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                        {% endif %}
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                            <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            {% if dest.image %}
-                                            <a href="{{ dest.image.url }}" data-lightbox="dest-{{ category.id }}-3"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% else %}
-                                            <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="dest-{{ category.id }}-3"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                                <div class="col-lg-6">
-                                    {% with dest=tab_destinations|get_item:category.id|get_item:'landscape_4' %}
-                                    {% if dest %}
-                                    <div class="destination-img">
-                                        {% if dest.image %}
-                                        <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                        {% else %}
-                                        <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                        {% endif %}
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                            <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                            <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            {% if dest.image %}
-                                            <a href="{{ dest.image.url }}" data-lightbox="dest-{{ category.id }}-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% else %}
-                                            <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="dest-{{ category.id }}-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4">
-                            {% with dest=tab_destinations|get_item:category.id|get_item:'portrait' %}
-                            {% if dest %}
-                            <div class="destination-img h-100">
-                                {% if dest.image %}
-                                <img class="img-fluid rounded w-100 h-100" src="{{ dest.image.url }}" style="object-fit: cover; min-height: 300px;" alt="{{ dest.name }}">
-                                {% else %}
-                                <img class="img-fluid rounded w-100 h-100" src="{% static 'img/placeholder-portrait.jpg' %}" style="object-fit: cover; min-height: 300px;" alt="{% trans 'Placeholder Image' %}">
-                                {% endif %}
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    {% if dest.image %}
-                                    <a href="{{ dest.image.url }}" data-lightbox="dest-{{ category.id }}-portrait"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% else %}
-                                    <a href="{% static 'img/placeholder-portrait.jpg' %}" data-lightbox="dest-{{ category.id }}-portrait"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <div class="col-lg-4">
-                            {% with dest=tab_destinations|get_item:category.id|get_item:'landscape_5' %}
-                            {% if dest %}
-                            <div class="destination-img">
-                                {% if dest.image %}
-                                <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                {% endif %}
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    {% if dest.image %}
-                                    <a href="{{ dest.image.url }}" data-lightbox="dest-{{ category.id }}-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% else %}
-                                    <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="dest-{{ category.id }}-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <div class="col-lg-4">
-                            {% with dest=tab_destinations|get_item:category.id|get_item:'landscape_6' %}
-                            {% if dest %}
-                            <div class="destination-img">
-                                {% if dest.image %}
-                                <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                {% endif %}
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    {% if dest.image %}
-                                    <a href="{{ dest.image.url }}" data-lightbox="dest-{{ category.id }}-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% else %}
-                                    <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="dest-{{ category.id }}-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <div class="col-lg-4">
-                            {% with dest=tab_destinations|get_item:category.id|get_item:'landscape_7' %}
-                            {% if dest %}
-                            <div class="destination-img">
-                                {% if dest.image %}
-                                <img class="img-fluid rounded w-100" src="{{ dest.image.url }}" alt="{{ dest.name }}">
-                                {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-landscape.jpg' %}" alt="{% trans 'Placeholder Image' %}">
-                                {% endif %}
-                                <div class="destination-overlay p-4">
-                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ dest.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ dest.name }}</h4>
-                                    <a href="{% url 'destination_detail' dest.id %}" class="btn-hover text-white">{% trans "View All Places" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                                <div class="search-icon">
-                                    {% if dest.image %}
-                                    <a href="{{ dest.image.url }}" data-lightbox="dest-{{ category.id }}-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% else %}
-                                    <a href="{% static 'img/placeholder-landscape.jpg' %}" data-lightbox="dest-{{ category.id }}-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
-- Destination End -->
 
 <!-- Packages Start -->
 <div class="container-fluid packages py-5">
