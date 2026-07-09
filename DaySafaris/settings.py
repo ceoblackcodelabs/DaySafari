@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i9#fnbul=t8lgg$(zv1x^uq0y!+so2rq*&7*p4rph$iai!q&xl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -152,8 +152,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICROOTS = [
-    BASE_DIR / 'static',
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'Home' / 'static',
 ]
 
 MEDIA_URL = 'media/'
@@ -169,8 +171,8 @@ LOGOUT_REDIRECT_URL = 'home'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = [
-'https://d38a-217-199-148-239.ngrok-free.app',
+CSRF_TRUSTED_ORIGINS = ['https://a50c-154-159-252-109.ngrok-free.app',
+'https://6457-105-161-237-37.ngrok-free.app',
 'https://daysafarisadventures.co.ke/',
 'http://daysafarisadventures.co.ke/',
 'https://www.daysafarisadventures.co.ke/',
