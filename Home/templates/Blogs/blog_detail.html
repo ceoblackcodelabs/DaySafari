@@ -1,68 +1,310 @@
 {% extends "Home/base.html" %}
 {% load static i18n %}
 
-{% block title %}{{ object.title }} - {% trans "Days Safaris Adventures" %}{% endblock title %}
+{% block title %}{{ blog.seo_title|default:blog.title }} - {% trans "Days Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{{ object.title }}</h3>
+        <h3 class="text-white display-3 mb-4">{{ blog.title }}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item"><a href="{% url "home" %}">{% trans "Home" %}</a></li>
             <li class="breadcrumb-item"><a href="{% url 'blog' %}">{% trans "Blog" %}</a></li>
-            <li class="breadcrumb-item active text-white">{{ object.title|truncatechars:30 }}</li>
+            <li class="breadcrumb-item active text-white">{{ blog.title|truncatechars:30 }}</li>
         </ol>
     </div>
 </div>
 <!-- Header End -->
 
-<!-- About Start -->
-<div class="container-fluid about py-5">
+<!-- Blog Detail Start -->
+<div class="container-fluid blog-detail py-5">
     <div class="container py-5">
-        <div class="row g-5 align-items-center">
-            <div class="col-lg-5">
-                <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    {% if object.image %}
-                    <img src="{{ object.image.url }}" class="img-fluid w-100 h-100" alt="{{ object.title }}">
-                    {% else %}
-                    <img src="{% static 'img/about-img.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'About Day Safaris' %}">
+        <div class="row g-5">
+
+            <!-- Article Column -->
+            <div class="col-lg-8">
+                <article class="blog-article">
+
+                    {% if blog.image %}
+                    <div class="blog-featured-img mb-4">
+                        <img src="{{ blog.image.url }}" class="img-fluid w-100" alt="{{ blog.title }}">
+                    </div>
                     {% endif %}
+
+                    <!-- Meta Row -->
+                    <div class="d-flex flex-wrap align-items-center gap-4 mb-4 blog-meta">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="blog-meta-avatar"><i class="fa fa-user"></i></span>
+                            <span>{{ blog.author }}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa fa-calendar-alt text-primary"></i>
+                            <span>{{ blog.published_date|date:"F d, Y" }}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa fa-clock text-primary"></i>
+                            <span>{{ reading_time }} {% trans "min read" %}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa fa-heart text-primary"></i>
+                            <span>{{ blog.likes }} {% trans "likes" %}</span>
+                        </div>
+                    </div>
+
+                    <h1 class="blog-title mb-4">{{ blog.title }}</h1>
+
+                    <!-- Rich content rendered from CKEditor -->
+                    <div class="blog-content">
+                        {{ blog.content|safe }}
+                    </div>
+
+                    <!-- Share Row -->
+                    <div class="d-flex flex-wrap align-items-center gap-3 mt-5 pt-4 border-top">
+                        <strong class="me-2">{% trans "Share this:" %}</strong>
+                        <a class="share-btn" target="_blank" rel="noopener"
+                           href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="share-btn" target="_blank" rel="noopener"
+                           href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ blog.title|urlencode }}">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="share-btn" target="_blank" rel="noopener"
+                           href="https://wa.me/?text={{ blog.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a class="share-btn" target="_blank" rel="noopener"
+                           href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+
+                    <!-- Author box -->
+                    <div class="author-box d-flex align-items-center gap-4 mt-4 p-4 rounded">
+                        <div class="author-avatar"><i class="fa fa-user"></i></div>
+                        <div>
+                            <h6 class="mb-1">{% trans "Written by" %} {{ blog.author }}</h6>
+                            <p class="mb-0 text-muted">{% trans "Storyteller at Day Safaris Adventures, sharing tips, guides and adventures from across East Africa." %}</p>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="mt-5 pt-2">
+                    <a href="{% url 'blog' %}" class="btn btn-outline-primary rounded-pill py-2 px-4">
+                        <i class="fa fa-arrow-left me-2"></i>{% trans "Back to Blog" %}
+                    </a>
                 </div>
             </div>
-            <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">{% trans "Welcome To Day Safaris Adventures" %}</h5>
-                <h1 class="mb-4">{{ object.title }}</h1>
 
-                <!-- Blog Meta Info -->
-                <div class="d-flex gap-3 mb-4 text-muted">
-                    <small><i class="fa fa-calendar-alt me-1"></i> {{ object.published_date|date:"F d, Y" }}</small>
-                    <small><i class="fa fa-user me-1"></i> {{ object.author }}</small>
-                    {% if object.category %}
-                    <small><i class="fa fa-folder me-1"></i> {{ object.category.name }}</small>
-                    {% endif %}
-                </div>
+            <!-- Sidebar Column -->
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
 
-                <p class="mb-4">{{ object.content|linebreaks }}</p>
+                    <!-- Book a Safari CTA -->
+                    <div class="sidebar-widget cta-widget rounded p-4 mb-4 text-white">
+                        <h5 class="text-white mb-3">{% trans "Ready for an adventure?" %}</h5>
+                        <p class="mb-4">{% trans "Turn inspiration into an itinerary. Let's plan your next safari." %}</p>
+                        <a href="{% url 'home' %}" class="btn btn-light rounded-pill py-2 px-4 w-100">{% trans "Book a Safari" %}</a>
+                    </div>
 
-                {% if object.tags %}
-                <div class="mb-4">
-                    <strong>{% trans "Tags:" %}</strong>
-                    {% for tag in object.tags.split %}
-                    <span class="badge bg-light text-dark me-1">#{{ tag }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
+                    <!-- Recent Posts -->
+                    <div class="sidebar-widget rounded p-4 mb-4">
+                        <h5 class="sidebar-widget-title mb-4">{% trans "Recent Posts" %}</h5>
+                        {% for post in recent_posts %}
+                        <a href="{% url 'blog_detail' post.slug %}" class="recent-post-item d-flex gap-3 mb-3 text-decoration-none">
+                            <div class="recent-post-img flex-shrink-0">
+                                {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                                {% else %}
+                                <img src="{% static 'img/about-img.jpg' %}" alt="{{ post.title }}">
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h6 class="recent-post-title mb-1">{{ post.title|truncatechars:55 }}</h6>
+                                <small class="text-muted"><i class="fa fa-calendar-alt me-1"></i>{{ post.published_date|date:"M d, Y" }}</small>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p class="text-muted mb-0">{% trans "No other posts yet." %}</p>
+                        {% endfor %}
+                    </div>
 
-                <div class="d-flex gap-3">
-                    <a href="{% url 'blog' %}" class="btn btn-outline-primary rounded-pill py-2 px-4">{% trans "Back to Blog" %}</a>
-                    <a href="{% url 'home' %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Book a Safari" %}</a>
+                    <!-- Contact / Help Widget -->
+                    <div class="sidebar-widget rounded p-4 text-center">
+                        <i class="fa fa-headset fa-2x text-primary mb-3"></i>
+                        <h6 class="mb-2">{% trans "Need help planning?" %}</h6>
+                        <p class="text-muted mb-3">{% trans "Our safari experts are ready to help you plan the perfect trip." %}</p>
+                        <a href="{% url 'home' %}" class="btn btn-outline-primary rounded-pill py-2 px-4 w-100">{% trans "Contact Us" %}</a>
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>
-<!-- About End -->
+<!-- Blog Detail End -->
+
+<style>
+    /* ===== Article typography (renders CKEditor output) ===== */
+    .blog-title {
+        font-size: 2rem;
+    }
+
+    .blog-featured-img img {
+        border-radius: 10px;
+        max-height: 450px;
+        object-fit: cover;
+    }
+
+    .blog-meta {
+        color: #757575;
+        font-size: 14px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1.25rem;
+    }
+
+    .blog-meta-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--bs-primary);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+    }
+
+    .blog-content {
+        font-size: 1.05rem;
+        line-height: 1.9;
+        color: #444;
+    }
+
+    .blog-content h1,
+    .blog-content h2,
+    .blog-content h3,
+    .blog-content h4 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: var(--bs-dark, #14141F);
+    }
+
+    .blog-content h2 { font-size: 1.6rem; }
+    .blog-content h3 { font-size: 1.3rem; }
+
+    .blog-content p { margin-bottom: 1.25rem; }
+
+    .blog-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1rem 0;
+    }
+
+    .blog-content a { color: var(--bs-primary); text-decoration: underline; }
+
+    .blog-content blockquote {
+        border-left: 4px solid var(--bs-primary);
+        background: #f9f6f7;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        font-style: italic;
+        color: #555;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .blog-content ul, .blog-content ol {
+        margin-bottom: 1.25rem;
+        padding-left: 1.5rem;
+    }
+
+    .blog-content table {
+        width: 100%;
+        margin-bottom: 1.25rem;
+        border-collapse: collapse;
+    }
+
+    .blog-content table td, .blog-content table th {
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+    }
+
+    /* ===== Share buttons ===== */
+    .share-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid var(--bs-primary);
+        color: var(--bs-primary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .share-btn:hover {
+        background: var(--bs-primary);
+        color: #fff;
+    }
+
+    /* ===== Author box ===== */
+    .author-box {
+        background: #f9f9f9;
+    }
+
+    .author-avatar {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        border-radius: 50%;
+        background: var(--bs-primary);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    /* ===== Sidebar ===== */
+    .sidebar-widget {
+        background: #fff;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+    }
+
+    .sidebar-widget-title {
+        position: relative;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .cta-widget {
+        background: linear-gradient(135deg, var(--bs-primary), #2a0817);
+    }
+
+    .recent-post-img img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .recent-post-title {
+        font-size: 14px;
+        color: #14141F;
+        transition: color 0.2s ease;
+    }
+
+    .recent-post-item:hover .recent-post-title {
+        color: var(--bs-primary);
+    }
+
+    @media (max-width: 991px) {
+        .blog-title { font-size: 1.6rem; }
+    }
+</style>
 
 {% endblock body %}

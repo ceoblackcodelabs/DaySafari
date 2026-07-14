@@ -158,7 +158,7 @@
                             {% endif %}
                             {% endfor %}
                         </div>
-                        <p class="mb-4">{{ package.description|truncatewords:30 }}</p>
+                        <p class="mb-4">{{ package.description|striptags|truncatewords:30 }}</p>
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">

@@ -74,7 +74,7 @@
                         <span class="badge bg-info rounded-pill px-3 py-2 ms-2">{{ destination.category.location }}</span>
                     </div>
 
-                    <p class="mb-4">{{ destination.description }}</p>
+                    <div class="mb-4 package-description">{{ destination.description|safe }}</div>
 
                     <!-- Features List -->
                     <div class="row gy-2 gx-4 mb-4">
@@ -243,7 +243,7 @@
                             <small class="fa fa-map-marker-alt me-1 text-primary"></small>
                             <small>{{ similar.category.location }}</small>
                         </div>
-                        <p class="mb-3">{{ similar.description|truncatewords:15 }}</p>
+                        <p class="mb-3">{{ similar.description|striptags|truncatewords:15 }}</p>
                         <a href="{% url 'destination_detail' similar.id %}" class="btn btn-primary rounded-pill py-2 px-4">View Details</a>
                     </div>
                 </div>
@@ -259,6 +259,19 @@
 
 
 <style>
+    .package-description h1,
+    .package-description h2,
+    .package-description h3,
+    .package-description h4 {
+        margin-top: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    .package-description img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
     .service-item {
         transition: all 0.3s ease;
     }

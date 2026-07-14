@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'CryptoTransfer',
     'BankTransfer',
     'SuperMode',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 # ========== MIDDLEWARE ==========
@@ -176,6 +178,29 @@ mimetypes.add_type("video/x-msvideo", ".avi", True)
 # For user-uploaded files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# ========== CKEDITOR (rich text for Blog/Package/Destination content) ==========
+CKEDITOR_UPLOAD_PATH = 'ckeditor_uploads/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+CKEDITOR_RESTRICT_BY_USER = False
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Format', 'Bold', 'Italic', 'Underline', 'Strike'],
+            ['TextColor', 'BGColor'],
+            ['NumberedList', 'BulletedList', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight'],
+            ['Link', 'Unlink', 'Image', 'Table', 'HorizontalRule'],
+            ['Undo', 'Redo', '-', 'RemoveFormat', 'Source'],
+        ],
+        'format_tags': 'h1;h2;h3;h4;p;pre',
+        'height': 400,
+        'width': '100%',
+        'extraPlugins': ','.join(['uploadimage']),
+        'removePlugins': 'stylesheetparser',
+    },
+}
 
 # ========== AUTHENTICATION ==========
 LOGIN_URL = 'login'

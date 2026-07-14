@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from google.auth import default
 from django.urls import reverse
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 class DestinationsCategory(models.Model):
@@ -16,7 +17,7 @@ class DestinationsCategory(models.Model):
 class Destinations(models.Model):
     category = models.ForeignKey(DestinationsCategory, on_delete=models.CASCADE )
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = RichTextUploadingField()
     image = models.ImageField(upload_to='destinations/', blank=True, null=True)
     price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     def __str__(self):
@@ -42,7 +43,7 @@ class AwesomePackages(models.Model):
     days = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     persons = models.IntegerField()
-    description = models.TextField()
+    description = RichTextUploadingField()
     category = models.CharField(default="East Africa Tours", max_length=50, choices=(
         ("East Africa Tours", "EA-T"),
         ("South Africa", "S-A"),
