@@ -29,12 +29,13 @@ class RegIncluisiveExcluisive(admin.ModelAdmin):
 
 @admin.register(AwesomePackages)
 class AwesomePackagesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'location', 'starRating', 'days', 'price', 'persons')
+    list_display = ('name', 'category', 'location', 'starRating', 'days', 'price', 'persons', 'slug')
     inlines = [ItineraryInline]
-    search_fields = ('name', 'category', 'location')
+    search_fields = ('name', 'category', 'location', 'slug')
     list_filter = ('starRating', 'category', 'location')
     list_editable = ('price', 'category', 'days')
     ordering = ('-starRating', 'price')
+    prepopulated_fields = {'slug': ('name', 'location')}
 # Register DestinationsCategory model
 @admin.register(DestinationsCategory)
 class DestinationsCategoryAdmin(admin.ModelAdmin):

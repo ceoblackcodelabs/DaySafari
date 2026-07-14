@@ -12,13 +12,14 @@ from django.utils import timezone
 from Home.models import Destinations
 from Places.models import AwesomePackages
 from ClientRequests.models import Bookings
-from .models import UserRecommendations
+from .models import UserRecommendations, SavedDestination
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
+from django.utils.http import url_has_allowed_host_and_scheme
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from EmailSetup.utils import send_welcome_email, send_new_user_alert_to_admin
 import threading
@@ -187,6 +188,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         # Get recent notifications (you can create a simple system using session or a new model)
         notifications = []
 
+        # Saved / favorite destinations
+        saved_destinations = SavedDestination.objects.filter(user=user).select_related('destination')[:6]
+        saved_destinations_count = SavedDestination.objects.filter(user=user).count()
+
         context.update({
             'user': user,
             'title': 'My Profile - Day Safaris Adventures',
@@ -198,6 +203,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             'completed_bookings': completed_bookings,
             'loyalty_points': loyalty_points,
             'notifications': notifications,
+            'saved_destinations': saved_destinations,
+            'saved_destinations_count': saved_destinations_count,
             'today': today,
         })
 
@@ -404,6 +411,50 @@ class OffersView(LoginRequiredMixin, TemplateView):
 
         context['offers'] = offers
         return context
+
+
+class FavoritesView(LoginRequiredMixin, ListView):
+    model = SavedDestination
+    template_name = 'registration/favorites.html'
+    context_object_name = 'saved_destinations'
+    login_url = reverse_lazy('login')
+
+    def get_queryset(self):
+        return SavedDestination.objects.filter(
+            user=self.request.user
+        ).select_related('destination', 'destination__category')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Saved Destinations - Day Safaris Adventures'
+        return context
+
+
+class ToggleFavoriteView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('login')
+
+    def post(self, request, destination_id):
+        destination = get_object_or_404(Destinations, id=destination_id)
+        favorite, created = SavedDestination.objects.get_or_create(
+            user=request.user, destination=destination
+        )
+
+        if not created:
+            favorite.delete()
+            messages.info(request, f"Removed {destination.name} from your saved destinations.")
+        else:
+            messages.success(request, f"Added {destination.name} to your saved destinations!")
+
+        next_url = request.POST.get('next') or request.META.get('HTTP_REFERER')
+
+        # Security: never redirect to an attacker-supplied off-site URL.
+        # Only follow `next`/Referer if it points back to our own host.
+        if not next_url or not url_has_allowed_host_and_scheme(
+            url=next_url, allowed_hosts={request.get_host()}, require_https=request.is_secure()
+        ):
+            next_url = reverse_lazy('profile')
+
+        return HttpResponseRedirect(next_url)
 
 
 class PackagesView(ListView):

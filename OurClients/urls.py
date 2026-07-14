@@ -3,7 +3,7 @@ from .views import (
     RegisterView, CustomLoginView, CustomLogoutView, ProfileView,
     EditProfileView, AccountSettingsView, BookingDetailView,
     CancelBookingView, PackagesView, PackageDetailView,
-    BookPackageView, OffersView
+    BookPackageView, OffersView, FavoritesView, ToggleFavoriteView
 )
 
 urlpatterns = [
@@ -17,6 +17,8 @@ urlpatterns = [
     path('accounts/profile/edit/', EditProfileView.as_view(), name='edit_profile'),
     path('accounts/profile/settings/', AccountSettingsView.as_view(), name='account_settings'),
     path('accounts/profile/offers/', OffersView.as_view(), name='offers'),
+    path('accounts/profile/favorites/', FavoritesView.as_view(), name='favorites'),
+    path('destination/<int:destination_id>/toggle-favorite/', ToggleFavoriteView.as_view(), name='toggle_favorite'),
 
     # Booking URLs
     path('booking/<int:pk>/', BookingDetailView.as_view(), name='booking_detail'),
@@ -24,6 +26,6 @@ urlpatterns = [
 
     # Package URLs
     path('packages/', PackagesView.as_view(), name='packages'),
-    path('package/<int:pk>/', PackageDetailView.as_view(), name='package_detail'),
+    path('package/<int:pk>/', PackageDetailView.as_view(), name='client_package_detail'),
     path('package/<int:package_id>/book/', BookPackageView.as_view(), name='book_package'),
 ]
