@@ -353,7 +353,7 @@
                             <small class="ms-3"><i class="fa fa-calendar-alt me-1 text-primary"></i>{{ similar.days }} {% trans "days" %}</small>
                         </div>
                         <p class="mb-3">{{ similar.description|striptags|truncatewords:15 }}</p>
-                        <a href="{% url 'package_detail' similar.id %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "View Details" %}</a>
+                        <a href="{% url 'package_detail' similar.slug %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "View Details" %}</a>
                     </div>
                 </div>
             </div>

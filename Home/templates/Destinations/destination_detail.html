@@ -40,7 +40,22 @@
                             {{ destination.category.location }}
                         </div>
                     </div>
-                    <h1 class="mb-4">{{ destination.name }}</h1>
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h1 class="mb-0">{{ destination.name }}</h1>
+                        {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'toggle_favorite' destination.id %}" class="ms-3">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button type="submit" class="btn favorite-btn {% if is_saved %}favorite-btn-active{% endif %}" title="{% if is_saved %}Remove from saved destinations{% else %}Save destination{% endif %}">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        </form>
+                        {% else %}
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn favorite-btn" title="Log in to save this destination">
+                            <i class="fa fa-heart"></i>
+                        </a>
+                        {% endif %}
+                    </div>
 
                     <!-- Quick Info Cards -->
                     <div class="row g-3 mb-4">
@@ -259,6 +274,30 @@
 
 
 <style>
+    .favorite-btn {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        border-radius: 50%;
+        border: 2px solid var(--bs-primary);
+        color: var(--bs-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+
+    .favorite-btn:hover {
+        background: var(--bs-primary);
+        color: #fff;
+    }
+
+    .favorite-btn-active {
+        background: var(--bs-primary);
+        color: #fff;
+    }
+
     .package-description h1,
     .package-description h2,
     .package-description h3,

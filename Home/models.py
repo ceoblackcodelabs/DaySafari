@@ -1,7 +1,7 @@
 from django.db import models
 from PIL import Image
 from django.utils import timezone
-from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field
 from Places.models import Destinations
 
 class Services(models.Model):
@@ -64,7 +64,7 @@ class Blogs(models.Model):
     )
     schema_markup = models.TextField(blank=True, help_text="Paste raw JSON-LD schema here")
     author = models.CharField(max_length=100)
-    content = RichTextUploadingField()
+    content = CKEditor5Field('Content', config_name='default')
     likes = models.IntegerField(default=0)
     comments = models.ManyToManyField(BlogComments, blank=True)
     published_date = models.DateTimeField(auto_now_add=True)

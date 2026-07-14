@@ -1,0 +1,109 @@
+{% extends "Home/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block body %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">Saved Destinations</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'profile' %}">My Profile</a></li>
+            <li class="breadcrumb-item active text-white">Saved Destinations</li>
+        </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+
+        {% if saved_destinations %}
+        <div class="row g-4">
+            {% for saved in saved_destinations %}
+            <div class="col-lg-4 col-md-6">
+                <div class="favorite-card rounded overflow-hidden h-100">
+                    <div class="favorite-card-img position-relative">
+                        {% if saved.destination.image %}
+                        <img src="{{ saved.destination.image.url }}" class="img-fluid w-100" alt="{{ saved.destination.name }}">
+                        {% else %}
+                        <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100" alt="{{ saved.destination.name }}">
+                        {% endif %}
+                        <form method="post" action="{% url 'toggle_favorite' saved.destination.id %}" class="position-absolute top-0 end-0 m-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{% url 'favorites' %}">
+                            <button type="submit" class="btn favorite-remove-btn" title="Remove from saved destinations">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="mb-2">{{ saved.destination.name }}</h5>
+                        <p class="text-muted mb-3 small"><i class="fa fa-map-marker-alt text-primary me-1"></i>{{ saved.destination.category.location }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-primary">${{ saved.destination.price|floatformat:2 }}</span>
+                            <a href="{% url 'destination_detail' saved.destination.id %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">View</a>
+                        </div>
+                        <p class="text-muted small mt-3 mb-0"><i class="fa fa-clock me-1"></i>Saved {{ saved.created_at|timesince }} ago</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 bg-light rounded">
+            <i class="fa fa-heart-crack fa-4x text-muted mb-3"></i>
+            <h3>No Saved Destinations Yet</h3>
+            <p class="mb-4">Tap the heart icon on any destination page to save it here for later.</p>
+            <a href="{% url 'east_africa_tours' %}" class="btn btn-primary rounded-pill py-2 px-4">
+                <i class="fa fa-compass me-2"></i>Browse Destinations
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="mt-5 text-center">
+            <a href="{% url 'profile' %}" class="btn btn-outline-primary rounded-pill py-2 px-4">
+                <i class="fa fa-arrow-left me-2"></i>Back to Profile
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .favorite-card {
+        background: #fff;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease;
+    }
+
+    .favorite-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .favorite-card-img img {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .favorite-remove-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.9);
+        color: var(--bs-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+    }
+
+    .favorite-remove-btn:hover {
+        background: var(--bs-primary);
+        color: #fff;
+    }
+</style>
+
+{% endblock body %}

@@ -24,6 +24,12 @@ class DestinationDetailView(DetailView):
 
         context['similar_destinations'] = similar_destinations
 
+        # Has the logged-in user already saved this destination?
+        if self.request.user.is_authenticated:
+            context['is_saved'] = self.object.saved_by.filter(user=self.request.user).exists()
+        else:
+            context['is_saved'] = False
+
         return context
 
 # tours

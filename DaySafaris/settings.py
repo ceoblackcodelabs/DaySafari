@@ -49,8 +49,7 @@ INSTALLED_APPS = [
     'CryptoTransfer',
     'BankTransfer',
     'SuperMode',
-    'ckeditor',
-    'ckeditor_uploader',
+    'django_ckeditor_5',
 ]
 
 # ========== MIDDLEWARE ==========
@@ -179,28 +178,40 @@ mimetypes.add_type("video/x-msvideo", ".avi", True)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ========== CKEDITOR (rich text for Blog/Package/Destination content) ==========
-CKEDITOR_UPLOAD_PATH = 'ckeditor_uploads/'
-CKEDITOR_IMAGE_BACKEND = 'pillow'
-CKEDITOR_RESTRICT_BY_USER = False
-CKEDITOR_BROWSE_SHOW_DIRS = True
-CKEDITOR_CONFIGS = {
+# ========== CKEDITOR 5 (rich text for Blog/Package/Destination content) ==========
+# Using CKEditor 5 (django-ckeditor-5) instead of the legacy CKEditor 4 bundled
+# with django-ckeditor, which is end-of-life and has unfixed security issues.
+CKEDITOR_5_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+CKEDITOR_5_UPLOAD_PATH = 'ckeditor_uploads/'
+CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Format', 'Bold', 'Italic', 'Underline', 'Strike'],
-            ['TextColor', 'BGColor'],
-            ['NumberedList', 'BulletedList', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight'],
-            ['Link', 'Unlink', 'Image', 'Table', 'HorizontalRule'],
-            ['Undo', 'Redo', '-', 'RemoveFormat', 'Source'],
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
+            'bulletedList', 'numberedList', 'blockQuote', '|',
+            'alignment', '|',
+            'link', 'insertImage', 'insertTable', 'horizontalLine', '|',
+            'undo', 'redo', '|',
+            'sourceEditing',
         ],
-        'format_tags': 'h1;h2;h3;h4;p;pre',
-        'height': 400,
-        'width': '100%',
-        'extraPlugins': ','.join(['uploadimage']),
-        'removePlugins': 'stylesheetparser',
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
+                {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'},
+                {'model': 'heading4', 'view': 'h4', 'title': 'Heading 4', 'class': 'ck-heading_heading4'},
+            ]
+        },
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells'],
+        },
     },
 }
+
 
 # ========== AUTHENTICATION ==========
 LOGIN_URL = 'login'
