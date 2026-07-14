@@ -80,7 +80,7 @@
                         <span class="text-muted ms-2">({{ package.starRating }}/5)</span>
                     </div>
 
-                    <p class="mb-4">{{ package.description }}</p>
+                    <div class="mb-4 package-description">{{ package.description|safe }}</div>
 
                     <!-- Features List -->
                     <h5 class="mb-3">What’s Included</h5>
@@ -135,68 +135,81 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-10">
+                <div class="accordion itinerary-accordion" id="itineraryAccordion">
                 {% if itineraries %}
                     {% for itinerary in itineraries %}
-                    <div class="timeline-item d-flex mb-4">
-                        <div class="timeline-badge bg-primary rounded-circle text-white text-center" style="min-width: 60px; height: 60px; line-height: 60px;">
-                            {% trans "Day" %} {{ itinerary.day_number }}
-                        </div>
-                        <div class="timeline-content bg-white rounded p-4 ms-3 flex-grow-1 shadow-sm">
-                            <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
-                                <h4 class="mb-2">{{ itinerary.title }}</h4>
-                                <div>
-                                    <span class="badge bg-primary me-2">{{ itinerary.meals }}</span>
-                                    {% if itinerary.accommodation %}
-                                    <span class="badge bg-info">{{ itinerary.accommodation }}</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <p class="mb-3">{{ itinerary.description }}</p>
-
-                            {% if itinerary.activities %}
-                            <div class="mt-3">
-                                <strong><i class="fa fa-list-check me-2"></i>{% trans "Activities:" %}</strong>
-                                <ul class="mt-2">
-                                    {% for activity in itinerary.activities.split|slice:":5" %}
-                                    <li>{{ activity|capfirst }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            {% endif %}
-
+                    <div class="itinerary-day{% if not forloop.first %} mt-3{% endif %}">
+                        <div class="itinerary-day-header d-flex align-items-center gap-3" role="button"
+                             data-bs-toggle="collapse" data-bs-target="#day{{ itinerary.day_number }}"
+                             aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                            <span class="day-number">{{ itinerary.day_number }}</span>
                             {% if itinerary.image %}
-                            <div class="mt-3">
-                                <img src="{{ itinerary.image.url }}" alt="{{ itinerary.title }}" class="img-fluid rounded" style="max-height: 200px; width: 100%; object-fit: cover;">
+                            <div class="day-thumb flex-shrink-0">
+                                <img src="{{ itinerary.image.url }}" alt="{{ itinerary.title }}">
                             </div>
                             {% endif %}
+                            <div class="flex-grow-1">
+                                <span class="day-label">{% trans "Day" %} {{ itinerary.day_number }}</span>
+                                <h5 class="mb-0">{{ itinerary.title }}</h5>
+                            </div>
+                            <span class="badge bg-primary d-none d-sm-inline-block">{{ itinerary.meals }}</span>
+                            <i class="fa fa-chevron-down itinerary-chevron"></i>
+                        </div>
+                        <div class="collapse{% if forloop.first %} show{% endif %}" id="day{{ itinerary.day_number }}" data-bs-parent="#itineraryAccordion">
+                            <div class="itinerary-day-body">
+                                <p class="mb-3">{{ itinerary.description }}</p>
+
+                                {% if itinerary.accommodation %}
+                                <p class="mb-2"><i class="fa fa-bed text-primary me-2"></i><strong>{% trans "Accommodation:" %}</strong> {{ itinerary.accommodation }}</p>
+                                {% endif %}
+
+                                {% if itinerary.activities %}
+                                <div class="mt-3">
+                                    <strong><i class="fa fa-list-check me-2 text-primary"></i>{% trans "Activities:" %}</strong>
+                                    <ul class="mt-2 mb-0">
+                                        {% for activity in itinerary.activities.split|slice:":6" %}
+                                        <li>{{ activity|capfirst }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
                 {% else %}
                     <!-- Fallback dynamic itinerary based on days -->
                     {% for day in ""|ljust:package.days %}
-                    <div class="timeline-item d-flex mb-4">
-                        <div class="timeline-badge bg-primary rounded-circle text-white text-center" style="min-width: 60px; height: 60px; line-height: 60px;">
-                            {% trans "Day" %} {{ forloop.counter }}
+                    <div class="itinerary-day{% if not forloop.first %} mt-3{% endif %}">
+                        <div class="itinerary-day-header d-flex align-items-center gap-3" role="button"
+                             data-bs-toggle="collapse" data-bs-target="#fday{{ forloop.counter }}"
+                             aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                            <span class="day-number">{{ forloop.counter }}</span>
+                            <div class="flex-grow-1">
+                                <span class="day-label">{% trans "Day" %} {{ forloop.counter }}</span>
+                                <h5 class="mb-0">{% if forloop.counter == 1 %}{% trans "Arrival & Welcome" %}{% elif forloop.counter == package.days %}{% trans "Departure" %}{% else %}{% trans "Safari Experience" %}{% endif %}</h5>
+                            </div>
+                            <i class="fa fa-chevron-down itinerary-chevron"></i>
                         </div>
-                        <div class="timeline-content bg-white rounded p-4 ms-3 flex-grow-1 shadow-sm">
-                            <h4>{% trans "Day" %} {{ forloop.counter }}: {% if forloop.counter == 1 %}{% trans "Arrival & Welcome" %}{% elif forloop.counter == package.days %}{% trans "Departure" %}{% else %}{% trans "Safari Experience" %}{% endif %}</h4>
-                            <p>
-                                {% if forloop.counter == 1 %}
-                                {% trans "Arrive at" %} {{ package.location }}, {% trans "meet your safari guide, and transfer to your accommodation. Evening briefing about your" %} {{ package.days }}-{% trans "day adventure." %}
-                                {% elif forloop.counter == package.days %}
-                                {% trans "Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the airport for your departure flight." %}
-                                {% else %}
-                                {% trans "Early morning game drive to spot wildlife in their natural habitat. Return to lodge for breakfast. Afternoon relaxation or optional activities. Evening game drive with sundowners." %}
-                                {% endif %}
-                            </p>
-                            <div class="mt-3">
-                                <strong>{% trans "Meals:" %}</strong> {% trans "Full Board (Breakfast, Lunch & Dinner)" %}
+                        <div class="collapse{% if forloop.first %} show{% endif %}" id="fday{{ forloop.counter }}" data-bs-parent="#itineraryAccordion">
+                            <div class="itinerary-day-body">
+                                <p>
+                                    {% if forloop.counter == 1 %}
+                                    {% trans "Arrive at" %} {{ package.location }}, {% trans "meet your safari guide, and transfer to your accommodation. Evening briefing about your" %} {{ package.days }}-{% trans "day adventure." %}
+                                    {% elif forloop.counter == package.days %}
+                                    {% trans "Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the airport for your departure flight." %}
+                                    {% else %}
+                                    {% trans "Early morning game drive to spot wildlife in their natural habitat. Return to lodge for breakfast. Afternoon relaxation or optional activities. Evening game drive with sundowners." %}
+                                    {% endif %}
+                                </p>
+                                <p class="mb-0"><i class="fa fa-utensils text-primary me-2"></i><strong>{% trans "Meals:" %}</strong> {% trans "Full Board (Breakfast, Lunch & Dinner)" %}</p>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
                 {% endif %}
+                </div>
+                <p class="text-muted small mt-3 mb-0"><i class="fa fa-circle-info me-1"></i>{% trans "Tap a day to expand its details." %}</p>
             </div>
         </div>
     </div>
@@ -339,7 +352,7 @@
                             <small>{{ similar.location }}</small>
                             <small class="ms-3"><i class="fa fa-calendar-alt me-1 text-primary"></i>{{ similar.days }} {% trans "days" %}</small>
                         </div>
-                        <p class="mb-3">{{ similar.description|truncatewords:15 }}</p>
+                        <p class="mb-3">{{ similar.description|striptags|truncatewords:15 }}</p>
                         <a href="{% url 'package_detail' similar.id %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "View Details" %}</a>
                     </div>
                 </div>
@@ -421,24 +434,81 @@
 </div>
 
 <style>
-    .timeline-item {
-        position: relative;
+    /* ===== Rich-text package description ===== */
+    .package-description h1,
+    .package-description h2,
+    .package-description h3,
+    .package-description h4 {
+        margin-top: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    .package-description img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
     }
 
-    .timeline-badge {
+    /* ===== Itinerary accordion ===== */
+    .itinerary-day {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        overflow: hidden;
+    }
+
+    .itinerary-day-header {
+        padding: 1.1rem 1.5rem;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .itinerary-day-header:hover {
+        background: #faf7f8;
+    }
+
+    .itinerary-day-header[aria-expanded="true"] .itinerary-chevron {
+        transform: rotate(180deg);
+    }
+
+    .itinerary-chevron {
+        color: var(--bs-primary);
+        transition: transform 0.25s ease;
+    }
+
+    .day-number {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: bold;
+        min-width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--bs-primary);
+        color: #fff;
+        font-weight: 700;
         flex-shrink: 0;
     }
 
-    .timeline-content {
-        transition: transform 0.3s ease;
+    .day-label {
+        display: block;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--bs-primary);
+        font-weight: 600;
     }
 
-    .timeline-content:hover {
-        transform: translateX(10px);
+    .day-thumb img {
+        width: 56px;
+        height: 56px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .itinerary-day-body {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        border-top: 1px solid #f0f0f0;
+        margin-top: 0.25rem;
+        padding-top: 1rem;
     }
 
     .service-item {
@@ -451,15 +521,19 @@
     }
 
     @media (max-width: 768px) {
-        .timeline-badge {
-            min-width: 40px;
-            height: 40px;
-            line-height: 40px;
+        .day-number {
+            min-width: 36px;
+            height: 36px;
             font-size: 14px;
         }
 
-        .timeline-content h5 {
+        .itinerary-day-header h5 {
             font-size: 16px;
+        }
+
+        .day-thumb img {
+            width: 40px;
+            height: 40px;
         }
     }
 </style>

@@ -13,6 +13,7 @@ from .forms import TrekkingBookingForm
 from EmailSetup.utils import send_booking_confirmation
 from django.db.models import Prefetch
 from django.db.models.functions import Random
+from django.utils.html import strip_tags
 
 class HomeView(ListView):
     model = Services
@@ -288,6 +289,20 @@ class BlogDetailView(DetailView):
     model = Blogs
     context_object_name = 'blog'
     template_name = 'Blogs/blog_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Recent/related posts for the sidebar
+        context['recent_posts'] = Blogs.objects.exclude(
+            id=self.object.id
+        ).order_by('-published_date')[:5]
+
+        # Simple reading-time estimate (~200 words/min) for the meta row
+        word_count = len(strip_tags(self.object.content).split())
+        context['reading_time'] = max(1, round(word_count / 200))
+
+        return context
 
 # Gallery
 class GalleryView(ListView):

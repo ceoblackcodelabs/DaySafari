@@ -11,7 +11,7 @@ from django.utils.html import format_html
 class ItineraryInline(admin.TabularInline):
     model = Itinerary
     extra = 1
-    fields = ['day_number', 'title', 'description', 'accommodation', 'meals']
+    fields = ['day_number', 'title', 'description', 'activities', 'accommodation', 'meals', 'image']
 
 @admin.register(Itinerary)
 class ItineraryAdmin(admin.ModelAdmin):
