@@ -55,7 +55,7 @@ INSTALLED_APPS = [
 # ========== MIDDLEWARE ==========
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Keep this for static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,8 +88,12 @@ WSGI_APPLICATION = 'DaySafaris.wsgi.application'
 # ========== DATABASE ==========
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'daysafaris',
+        'USER': 'sudo',
+        'PASSWORD': '@D4y54f4r15',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
