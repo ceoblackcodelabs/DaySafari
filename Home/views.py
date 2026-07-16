@@ -356,7 +356,7 @@ class TrekkingListView(ListView):
 
     def get_queryset(self):
         return Trekking.objects.only(
-            'id', 'name', 'image', 'price', 'days', 'category', 'location'
+            'id', 'name', 'image', 'price', 'days', 'category', 'location' 
         ).all()
 
 class KenyaTrekking(TemplateView):
@@ -367,7 +367,7 @@ class KenyaTrekking(TemplateView):
         context = super().get_context_data(**kwargs)
         context["packages"] = Trekking.objects.filter(
             category="Kenya"
-        ).only('id', 'name', 'image', 'price', 'duration', 'category')[:12]
+        ).only('id', 'name', 'image', 'price', 'days', 'category')[:12]
         return context
 
 
@@ -383,7 +383,7 @@ class KilimanjaroTrekking(ListView):
         context = super().get_context_data(**kwargs)
         context["packages"] = Trekking.objects.filter(
             category="Kilimanjaro"
-        ).only('id', 'name', 'image', 'price', 'duration', 'category')[:12]
+        ).only('id', 'name', 'image', 'price', 'days', 'category')[:12]
         return context
 
 
@@ -395,7 +395,7 @@ class SuswaTrekking(TemplateView):
         context = super().get_context_data(**kwargs)
         context["packages"] = Trekking.objects.filter(
             category="Suswa"
-        ).only('id', 'name', 'image', 'price', 'duration', 'category')[:12]
+        ).only('id', 'name', 'image', 'price', 'days', 'category')[:12]
         return context
 
 
@@ -407,7 +407,7 @@ class LongonotTrekking(TemplateView):
         context = super().get_context_data(**kwargs)
         context["packages"] = Trekking.objects.filter(
             category="Longonot"
-        ).only('id', 'name', 'image', 'price', 'duration', 'category')[:12]
+        ).only('id', 'name', 'image', 'price', 'days', 'category')[:12]
         return context
 
 
@@ -419,7 +419,7 @@ class MeruTrekking(TemplateView):
         context = super().get_context_data(**kwargs)
         context["packages"] = Trekking.objects.filter(
             category="Meru"
-        ).only('id', 'name', 'image', 'price', 'duration', 'category')[:12]
+        ).only('id', 'name', 'image', 'price', 'days', 'category')[:12]
         return context
 
 

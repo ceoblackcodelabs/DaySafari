@@ -5,7 +5,8 @@ from django.core.cache import cache
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from Places.models import Destinations
-
+import logging
+logger = logging.getLogger(__name__)
 
 class Services(models.Model):
     name = models.CharField(max_length=100)
@@ -397,4 +398,19 @@ class Ad(models.Model):
 @receiver([post_save, post_delete], sender=Blogs)
 def clear_home_cache(sender, **kwargs):
     """Clear homepage cache when any of these models change"""
-    cache.delete_pattern('home_context_data_*')
+    try:
+        from django.core.cache import cache
+        # Try pattern deletion if available
+        if hasattr(cache, 'delete_pattern'):
+            cache.delete_pattern('home_context_data_*')
+        else:
+            # Fallback to deleting specific keys
+            keys_to_delete = ['home_context_data_True', 'home_context_data_False']
+            for key in keys_to_delete:
+                try:
+                    cache.delete(key)
+                except:
+                    pass
+    except Exception as e:
+        # Don't break the application if cache clearing fails
+        logger.warning(f"Cache clearing failed during migration: {e}")
