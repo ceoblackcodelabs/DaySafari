@@ -93,7 +93,23 @@ DATABASES = {
         'USER': 'sudo',
         'PASSWORD': '@D4y54f4r15',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '5432',
+        'OPTIONS': {
+            'connect_timeout': 10,
+            'options': '-c statement_timeout=5000ms',
+        },
+    }
+}
+
+# CACHE
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 300,  # 5 minutes default
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        }
     }
 }
 

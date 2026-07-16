@@ -1,54 +1,112 @@
 from django.db import models
-from PIL import Image
 from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
+from django.core.cache import cache
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from Places.models import Destinations
 
+
 class Services(models.Model):
-    # img = models.ImageField(upload_to='services_images/', default="services_images/default.jpg", null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.CharField(max_length=100, default='fa fa-globe')
 
+    class Meta:
+        verbose_name = 'Service'
+        verbose_name_plural = 'Services'
+        ordering = ['name']
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+
     def __str__(self):
         return self.name
+
 
 class GalleryCategory(models.Model):
     name = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = 'Gallery Category'
+        verbose_name_plural = 'Gallery Categories'
+        ordering = ['name']
+
     def __str__(self):
         return self.name
+
 
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
-    category = models.ForeignKey(GalleryCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(GalleryCategory, on_delete=models.CASCADE, related_name='galleries')
     image = models.ImageField(upload_to='gallery_images/')
 
+    class Meta:
+        verbose_name = 'Gallery Image'
+        verbose_name_plural = 'Gallery Images'
+        ordering = ['category', 'name']
+        indexes = [
+            models.Index(fields=['category']),
+        ]
+
     def __str__(self):
         return self.name
+
 
 class Testimonials(models.Model):
-    name = models.CharField(max_length=100)
+    STAR_CHOICES = [
+        (1, '1 Star'),
+        (2, '2 Stars'),
+        (3, '3 Stars'),
+        (4, '4 Stars'),
+        (5, '5 Stars')
+    ]
+
+    name = models.CharField(max_length=100, db_index=True)
     location = models.CharField(max_length=100)
     feedback = models.TextField()
-    starRating = models.IntegerField(choices=[(1, '1 Star'), (2, '2 Stars'), (3, '3 Stars'), (4, '4 Stars'), (5, '5 Stars')], default=5)
-    image = models.ImageField(upload_to='testimonials/', default='testimonials/default.jpg', blank=True, null=True)
+    star_rating = models.IntegerField(choices=STAR_CHOICES, default=5)
+    image = models.ImageField(upload_to='testimonials/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Testimonial'
+        verbose_name_plural = 'Testimonials'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['star_rating']),
+            models.Index(fields=['created_at']),
+        ]
 
     def __str__(self):
         return self.name
+
+    @property
+    def starRating(self):
+        """Backward compatibility for templates using starRating"""
+        return self.star_rating
+
 
 class BlogComments(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     comment = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
+    blog = models.ForeignKey('Blogs', on_delete=models.CASCADE, related_name='blog_comments', null=True)
+
+    class Meta:
+        verbose_name = 'Blog Comment'
+        verbose_name_plural = 'Blog Comments'
+        ordering = ['-created_date']
 
     def __str__(self):
         return f"Comment by {self.name} on {self.created_date}"
 
+
 class Blogs(models.Model):
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    title = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(unique=True, blank=True, null=True, db_index=True)
+
     # SEO Fields
     seo_title = models.CharField(
         max_length=300,
@@ -63,12 +121,23 @@ class Blogs(models.Model):
         help_text="Keep under 160 characters. Leave blank to auto-generate from content."
     )
     schema_markup = models.TextField(blank=True, help_text="Paste raw JSON-LD schema here")
-    author = models.CharField(max_length=100)
+    author = models.CharField(max_length=100, db_index=True)
     content = CKEditor5Field('Content', config_name='default')
     likes = models.IntegerField(default=0)
     comments = models.ManyToManyField(BlogComments, blank=True)
     published_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(default='blog_images/default.jpg', upload_to='blog_images/', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Blog'
+        verbose_name_plural = 'Blogs'
+        ordering = ['-published_date']
+        indexes = [
+            models.Index(fields=['title']),
+            models.Index(fields=['slug']),
+            models.Index(fields=['author']),
+            models.Index(fields=['published_date']),
+        ]
 
     def __str__(self):
         return self.title
@@ -82,65 +151,104 @@ class Blogs(models.Model):
                 slug = f"{slug_base}-{counter}"
                 counter += 1
             self.slug = slug
-        super(Blogs, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
+
 
 class Brochure(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, db_index=True)
     pdf_file = models.FileField(upload_to='brochures/')
     image = models.ImageField(upload_to='brochure_images/', blank=True, null=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.title
-
     class Meta:
         verbose_name = "Brochure"
         verbose_name_plural = "Brochures"
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['title']),
+            models.Index(fields=['created_at']),
+        ]
 
-# Home/models.py
+    def __str__(self):
+        return self.title
+
 
 class ItineraryTreking(models.Model):
+    MEAL_CHOICES = [
+        ('Breakfast', 'Breakfast Only'),
+        ('Half Board', 'Breakfast & Dinner'),
+        ('Full Board', 'Breakfast, Lunch & Dinner'),
+        ('All Inclusive', 'All Meals & Drinks'),
+    ]
+
     package = models.ForeignKey('Trekking', on_delete=models.CASCADE, related_name='itinerary_days')
     day_number = models.IntegerField()
     title = models.CharField(max_length=200)
     description = models.TextField()
     activities = models.TextField(help_text="List activities for this day, separated by commas", blank=True)
     accommodation = models.CharField(max_length=200, blank=True)
-    meals = models.CharField(max_length=100, choices=[
-        ('Breakfast', 'Breakfast Only'),
-        ('Half Board', 'Breakfast & Dinner'),
-        ('Full Board', 'Breakfast, Lunch & Dinner'),
-        ('All Inclusive', 'All Meals & Drinks'),
-    ], default='Full Board')
+    meals = models.CharField(max_length=100, choices=MEAL_CHOICES, default='Full Board')
     image = models.ImageField(upload_to='itinerary_trekking_images/', blank=True, null=True)
 
     class Meta:
         ordering = ['day_number']
         unique_together = ['package', 'day_number']
+        indexes = [
+            models.Index(fields=['package', 'day_number']),
+        ]
 
     def __str__(self):
-        return f"Day {self.day_number}: {self.title} - {self.package.name}"
+        return f"Day {self.day_number}: {self.title}"
+
 
 class Trekking(models.Model):
-    name = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
-    starRating = models.IntegerField(choices=[(1, '1 Star'), (2, '2 Stars'), (3, '3 Stars'), (4, '4 Stars'), (5, '5 Stars')], default=5)
+    CATEGORY_CHOICES = [
+        ("Kilimanjaro", "Kilimanjaro"),
+        ("Kenya", "Kenya"),
+        ("Longonot", "Longonot"),
+        ("Suswa", "Suswa"),
+        ("Meru", "Meru")
+    ]
+
+    STAR_CHOICES = [
+        (1, '1 Star'),
+        (2, '2 Stars'),
+        (3, '3 Stars'),
+        (4, '4 Stars'),
+        (5, '5 Stars')
+    ]
+
+    name = models.CharField(max_length=100, db_index=True)
+    location = models.CharField(max_length=100, db_index=True)
+    star_rating = models.IntegerField(choices=STAR_CHOICES, default=5)
     days = models.IntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, db_index=True)
     persons = models.IntegerField()
     description = models.TextField()
-    category = models.CharField(default="East Africa Tours", max_length=50, choices=(
-        ("Kilimanjaro", "kilimanjaro"),
-        ("Kenya", "kenya"),
-        ("Longonot", "longonot"),
-        ("Suswa", "suswa"),
-        ("Meru", "meru")
-    ))
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, db_index=True)
     image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Trekking Package'
+        verbose_name_plural = 'Trekking Packages'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['category']),
+            models.Index(fields=['price']),
+            models.Index(fields=['category', 'price']),
+        ]
 
     def __str__(self):
         return self.name
+
+    @property
+    def starRating(self):
+        """Backward compatibility for templates using starRating"""
+        return self.star_rating
+
 
 class TrekkingBooking(models.Model):
     BOOKING_STATUS = [
@@ -150,29 +258,16 @@ class TrekkingBooking(models.Model):
         ('completed', 'Completed'),
     ]
 
-    # Booking reference
-    booking_reference = models.CharField(max_length=20, unique=True, editable=False)
-
-    # Package details
+    booking_reference = models.CharField(max_length=20, unique=True, editable=False, db_index=True)
     package = models.ForeignKey('Trekking', on_delete=models.CASCADE, related_name='bookings')
-
-    # Customer details
-    full_name = models.CharField(max_length=200)
-    email = models.EmailField()
+    full_name = models.CharField(max_length=200, db_index=True)
+    email = models.EmailField(db_index=True)
     phone_number = models.CharField(max_length=20)
-
-    # Booking details
     number_of_persons = models.IntegerField()
-    travel_date = models.DateField()
+    travel_date = models.DateField(db_index=True)
     total_price = models.DecimalField(max_digits=12, decimal_places=2)
-
-    # Optional
     special_requests = models.TextField(blank=True)
-
-    # Status
-    booking_status = models.CharField(max_length=20, choices=BOOKING_STATUS, default='pending')
-
-    # Timestamps
+    booking_status = models.CharField(max_length=20, choices=BOOKING_STATUS, default='pending', db_index=True)
     booking_date = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -180,6 +275,12 @@ class TrekkingBooking(models.Model):
         ordering = ['-booking_date']
         verbose_name = "Trekking Booking"
         verbose_name_plural = "Trekking Bookings"
+        indexes = [
+            models.Index(fields=['booking_reference']),
+            models.Index(fields=['email']),
+            models.Index(fields=['booking_status']),
+            models.Index(fields=['travel_date']),
+        ]
 
     def save(self, *args, **kwargs):
         if not self.booking_reference:
@@ -192,9 +293,8 @@ class TrekkingBooking(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.booking_reference} - {self.full_name} - {self.package.name}"
+        return f"{self.booking_reference} - {self.full_name}"
 
-# models.py
 
 class Ad(models.Model):
     """Popup advertisement model"""
@@ -234,8 +334,6 @@ class Ad(models.Model):
             return self.package.get_absolute_url()
         elif self.trekking_package:
             return f"/trekking/{self.trekking_package.category.lower()}/{self.trekking_package.id}/"
-        elif self.cruise_package:
-            return f"/cruises/{self.cruise_package.id}/"
         return "#"
 
     def get_package_name(self):
@@ -244,8 +342,6 @@ class Ad(models.Model):
             return self.package.name
         elif self.trekking_package:
             return self.trekking_package.name
-        elif self.cruise_package:
-            return self.cruise_package.name
         return self.title
 
     def get_package_price(self):
@@ -254,8 +350,6 @@ class Ad(models.Model):
             return self.package.price
         elif self.trekking_package:
             return self.trekking_package.price
-        elif self.cruise_package:
-            return self.cruise_package.price
         return None
 
     def get_discounted_price(self):
@@ -272,8 +366,6 @@ class Ad(models.Model):
             return f'/places/package/{self.package.id}/book/'
         elif self.trekking_package:
             return f'/trekking/{self.trekking_package.category.lower()}/{self.trekking_package.id}/book/'
-        elif self.cruise_package:
-            return f'/cruises/{self.cruise_package.id}/book/'
         return "#"
 
     def get_whatsapp_message(self):
@@ -296,3 +388,13 @@ class Ad(models.Model):
         Thank you!"""
 
         return message
+
+
+# Signal to clear cache when data changes
+@receiver([post_save, post_delete], sender=Services)
+@receiver([post_save, post_delete], sender=Destinations)
+@receiver([post_save, post_delete], sender=Testimonials)
+@receiver([post_save, post_delete], sender=Blogs)
+def clear_home_cache(sender, **kwargs):
+    """Clear homepage cache when any of these models change"""
+    cache.delete_pattern('home_context_data_*')

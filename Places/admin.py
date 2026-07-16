@@ -5,190 +5,230 @@ from .models import (
     IncluisiveExcluisive
 )
 from django.utils.html import format_html
+from django.contrib import messages
 
 
-# Register your models here.
 class ItineraryInline(admin.TabularInline):
     model = Itinerary
     extra = 1
     fields = ['day_number', 'title', 'description', 'activities', 'accommodation', 'meals', 'image']
+    ordering = ['day_number']
+
 
 @admin.register(Itinerary)
 class ItineraryAdmin(admin.ModelAdmin):
     list_display = ['package', 'day_number', 'title']
     list_filter = ['package']
+    search_fields = ['package__name', 'title', 'description']
+    ordering = ['package', 'day_number']
+
+
 @admin.register(MustVisit)
 class MustVisitAdmin(admin.ModelAdmin):
-    list_display = ('name', 'size')
-    search_fields = ('name',)
-    list_filter = ('size',)
+    list_display = ['name', 'size', 'order', 'image_preview']
+    search_fields = ['name']
+    list_filter = ['size']
+    ordering = ['order', 'name']
+    list_editable = ['order', 'size']
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover; border-radius: 4px;" />', obj.image.url)
+        return "No Image"
+    image_preview.short_description = 'Image'
+
 
 @admin.register(IncluisiveExcluisive)
-class RegIncluisiveExcluisive(admin.ModelAdmin):
-    list_display = ("package", "name")
+class IncluisiveExcluisiveAdmin(admin.ModelAdmin):
+    list_display = ['package', 'name', 'is_inclusive', 'type_badge']
+    list_filter = ['is_inclusive', 'package']
+    search_fields = ['name', 'package__name']
+    list_editable = ['is_inclusive']
+    ordering = ['-is_inclusive', 'name']
+
+    def type_badge(self, obj):
+        color = '#28a745' if obj.is_inclusive else '#dc3545'
+        label = '✓ Included' if obj.is_inclusive else '✗ Excluded'
+        return format_html(
+            '<span style="background-color: {}; color: white; padding: 3px 10px; border-radius: 12px; font-size: 11px;">{}</span>',
+            color, label
+        )
+    type_badge.short_description = 'Type'
+
 
 @admin.register(AwesomePackages)
 class AwesomePackagesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'location', 'starRating', 'days', 'price', 'persons', 'slug')
+    list_display = [
+        'name', 'category', 'location', 'star_rating_display',
+        'days', 'price_formatted', 'persons', 'slug', 'created_at'
+    ]
     inlines = [ItineraryInline]
-    search_fields = ('name', 'category', 'location', 'slug')
-    list_filter = ('starRating', 'category', 'location')
-    list_editable = ('price', 'category', 'days')
-    ordering = ('-starRating', 'price')
+    search_fields = ['name', 'category', 'location', 'slug', 'description']
+    list_filter = ['category', 'location', 'star_rating']
+    list_editable = ['category', 'days']
+    ordering = ['-created_at', 'name']
     prepopulated_fields = {'slug': ('name', 'location')}
-# Register DestinationsCategory model
+    readonly_fields = ['created_at']
+    list_per_page = 25
+
+    def star_rating_display(self, obj):
+        if obj.star_rating:
+            stars = '⭐' * obj.star_rating
+            return format_html(f'<span style="font-size: 14px;">{stars}</span>')
+        return 'No Rating'
+    star_rating_display.short_description = 'Rating'
+    star_rating_display.admin_order_field = 'star_rating'
+
+    def price_formatted(self, obj):
+        return f"${obj.price:,.2f}"
+    price_formatted.short_description = 'Price'
+    price_formatted.admin_order_field = 'price'
+
+    actions = ['clone_package']
+
+    def clone_package(self, request, queryset):
+        cloned_count = 0
+        for package in queryset:
+            cloned = AwesomePackages(
+                name=f"{package.name} (Copy)",
+                location=package.location,
+                star_rating=package.star_rating,
+                days=package.days,
+                price=package.price,
+                persons=package.persons,
+                description=package.description,
+                category=package.category,
+                image=package.image,
+            )
+            cloned.save()
+
+            for itinerary in package.itineraries.all():
+                Itinerary.objects.create(
+                    package=cloned,
+                    day_number=itinerary.day_number,
+                    title=itinerary.title,
+                    description=itinerary.description,
+                    activities=itinerary.activities,
+                    accommodation=itinerary.accommodation,
+                    meals=itinerary.meals,
+                    image=itinerary.image,
+                )
+
+            for item in package.inclusions.all():
+                IncluisiveExcluisive.objects.create(
+                    package=cloned,
+                    name=item.name,
+                    is_inclusive=item.is_inclusive,
+                )
+
+            cloned_count += 1
+
+        self.message_user(request, f"Successfully cloned {cloned_count} package(s).")
+    clone_package.short_description = "Clone selected packages"
+
+
 @admin.register(DestinationsCategory)
 class DestinationsCategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'category', 'location', 'image_orientation', 'image')
-    search_fields = ('category', 'location')
-    list_filter = ('image_orientation',)
-    ordering = ('category',)
-    list_per_page = 20
+    list_display = ['id', 'category', 'location', 'image_orientation', 'image_preview']
+    search_fields = ['category', 'location']
+    list_filter = ['image_orientation']
+    ordering = ['category']
+    list_editable = ['image_orientation']
 
-    # Add fieldsets for better organization
-    fieldsets = (
-        ('Basic Information', {
-            'fields': ('category', 'location')
-        }),
-        ('Media', {
-            'fields': ('image', 'image_orientation'),
-            'description': 'Upload an image for this category. Choose orientation based on the image shape.'
-        }),
-    )
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />', obj.image.url)
+        return "No Image"
+    image_preview.short_description = 'Image Preview'
+
+    actions = ['make_landscape', 'make_portrait']
+
+    def make_landscape(self, request, queryset):
+        updated = queryset.update(image_orientation='landscape')
+        self.message_user(request, f'{updated} category(ies) set to landscape.')
+    make_landscape.short_description = "Set to landscape"
+
+    def make_portrait(self, request, queryset):
+        updated = queryset.update(image_orientation='portrait')
+        self.message_user(request, f'{updated} category(ies) set to portrait.')
+    make_portrait.short_description = "Set to portrait"
+
+
+@admin.register(Destinations)
+class DestinationsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'category', 'price_formatted', 'image_preview', 'created_at']
+    search_fields = ['name', 'description', 'category__category']
+    list_filter = ['category', 'created_at']
+    ordering = ['category', 'name']
+    autocomplete_fields = ['category']
+    readonly_fields = ['created_at']
+
+    def price_formatted(self, obj):
+        return f"${obj.price:,.2f}"
+    price_formatted.short_description = 'Price'
+    price_formatted.admin_order_field = 'price'
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover; border-radius: 4px;" />', obj.image.url)
+        return "No Image"
+    image_preview.short_description = 'Image Preview'
+
 
 @admin.register(PackagePurchase)
 class PackagePurchaseAdmin(admin.ModelAdmin):
-    list_display = ['id', 'full_name', 'package', 'number_of_persons', 'amount_spent_formatted', 'travel_date', 'status', 'status_badge', 'purchase_date']
+    list_display = [
+        'id', 'full_name', 'package', 'number_of_persons',
+        'amount_spent_formatted', 'travel_date', 'status',
+        'purchase_date'
+    ]
     list_filter = ['status', 'package', 'travel_date', 'purchase_date']
     search_fields = ['full_name', 'email', 'phone_number', 'package__name']
-    readonly_fields = ['amount_spent_calculated']
+    readonly_fields = ['amount_spent_calculated', 'purchase_date']
     list_per_page = 20
     date_hierarchy = 'travel_date'
     list_editable = ['status']
-
-    fieldsets = (
-        ('Customer Information', {
-            'fields': ('full_name', 'email', 'phone_number')
-        }),
-        ('Booking Details', {
-            'fields': ('package', 'number_of_persons', 'travel_date', 'special_requests', 'amount_spent_calculated', 'status')
-        }),
-        ('User Account', {
-            'fields': ('user',),
-            'classes': ('collapse',)
-        }),
-        ('Payment Information', {
-            'fields': ('purchase_date',),
-            'classes': ('collapse',)
-        }),
-    )
+    autocomplete_fields = ['package', 'user']
 
     def amount_spent_formatted(self, obj):
         return f"${obj.amount_spent:,.2f}"
-    amount_spent_formatted.short_description = 'Amount Spent'
+    amount_spent_formatted.short_description = 'Amount'
     amount_spent_formatted.admin_order_field = 'amount_spent'
 
     def amount_spent_calculated(self, obj):
-        """Show calculated amount based on package price and persons"""
-        if obj.package:
+        if obj.package and obj.package.price:
             calculated = obj.package.price * obj.number_of_persons
-            return f"${calculated:,.2f}"
+            return format_html(
+                '<strong>${:,.2f}</strong> <span style="color: #6c757d; font-size: 11px;">({} × ${:,.2f})</span>',
+                calculated, obj.number_of_persons, obj.package.price
+            )
         return "N/A"
     amount_spent_calculated.short_description = 'Calculated Amount'
-
-    def status_badge(self, obj):
-        colors = {
-            'Pending': 'orange',
-            'Confirmed': 'green',
-            'Cancelled': 'red',
-        }
-        color = colors.get(obj.status, 'gray')
-        return format_html(
-            '<span style="background-color: {}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">{}</span>',
-            color, obj.status
-        )
-    status_badge.short_description = 'Status'
 
     actions = ['mark_as_confirmed', 'mark_as_cancelled', 'mark_as_pending']
 
     def mark_as_confirmed(self, request, queryset):
         updated = queryset.update(status='Confirmed')
-        self.message_user(request, f"{updated} booking(s) marked as confirmed.")
-    mark_as_confirmed.short_description = "Mark selected as Confirmed"
+        self.message_user(request, f"✅ {updated} booking(s) confirmed.")
+    mark_as_confirmed.short_description = "Mark as Confirmed"
 
     def mark_as_cancelled(self, request, queryset):
         updated = queryset.update(status='Cancelled')
-        self.message_user(request, f"{updated} booking(s) marked as cancelled.")
-    mark_as_cancelled.short_description = "Mark selected as Cancelled"
+        self.message_user(request, f"❌ {updated} booking(s) cancelled.")
+    mark_as_cancelled.short_description = "Mark as Cancelled"
 
     def mark_as_pending(self, request, queryset):
         updated = queryset.update(status='Pending')
-        self.message_user(request, f"{updated} booking(s) marked as pending.")
-    mark_as_pending.short_description = "Mark selected as Pending"
-
-    def resend_payment_email(self, request, queryset):
-        sent_count = 0
-        for purchase in queryset:
-            if send_package_payment_email(purchase):
-                sent_count += 1
-        self.message_user(request, f"Payment email resent to {sent_count} customer(s).")
-    resend_payment_email.short_description = "Resend payment email to selected customers"
+        self.message_user(request, f"⏳ {updated} booking(s) pending.")
+    mark_as_pending.short_description = "Mark as Pending"
 
     def save_model(self, request, obj, form, change):
-        # Auto-calculate amount_spent if not set
         if not obj.amount_spent and obj.package:
             obj.amount_spent = obj.package.price * obj.number_of_persons
         super().save_model(request, obj, form, change)
 
-# Register Destinations model
-@admin.register(Destinations)
-class DestinationsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'category', 'display_image')
-    search_fields = ('name', 'description', 'category__category')
-    list_filter = ('category',)
-    ordering = ('category', 'name')
-    list_per_page = 20
-    autocomplete_fields = ['category']
 
-    # Add fieldsets for better organization
-    fieldsets = (
-        ('Basic Information', {
-            'fields': ('category', 'name', 'price')
-        }),
-        ('Content', {
-            'fields': ('description',),
-            'classes': ('wide',)
-        }),
-        ('Media', {
-            'fields': ('image',),
-            'description': 'Upload a destination image'
-        }),
-    )
-
-    def display_image(self, obj):
-        """Display a thumbnail of the image in admin list view"""
-        if obj.image:
-            from django.utils.html import format_html
-            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', obj.image.url)
-        return "No Image"
-    display_image.short_description = 'Image Preview'
-
-    # Override save method if needed
-    def save_model(self, request, obj, form, change):
-        """Add custom save behavior if needed"""
-        super().save_model(request, obj, form, change)
-
-    # Add actions for bulk operations
-    actions = ['make_landscape', 'make_portrait']
-
-    def make_landscape(self, request, queryset):
-        """Bulk action to set category orientation to landscape"""
-        updated = queryset.update(category__image_orientation='landscape')
-        self.message_user(request, f'{updated} destinations set to landscape orientation.')
-    make_landscape.short_description = "Set selected destinations' categories to landscape"
-
-    def make_portrait(self, request, queryset):
-        """Bulk action to set category orientation to portrait"""
-        updated = queryset.update(category__image_orientation='portrait')
-        self.message_user(request, f'{updated} destinations set to portrait orientation.')
-    make_portrait.short_description = "Set selected destinations' categories to portrait"
+# Admin site headers
+admin.site.site_header = "Day Safaris Adventures Admin"
+admin.site.site_title = "Day Safaris Admin Portal"
+admin.site.index_title = "Welcome to Day Safaris Adventures Dashboard"
