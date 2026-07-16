@@ -7,6 +7,10 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
 from EmailSetup.utils import send_package_payment_email
+from .forms import PackagePurchaseForm
+from datetime import date
+from django.db.models import Prefetch
+
 
 # Create your views here.
 class DestinationDetailView(DetailView):
@@ -20,7 +24,7 @@ class DestinationDetailView(DetailView):
         # Get similar destinations (same category)
         similar_destinations = Destinations.objects.filter(
             category=self.object.category
-        ).exclude(id=self.object.id)[:3]
+        ).exclude(id=self.object.id).only('id', 'name', 'image', 'price', 'category')[:3]
 
         context['similar_destinations'] = similar_destinations
 
@@ -32,24 +36,33 @@ class DestinationDetailView(DetailView):
 
         return context
 
+
 # tours
 class TourView(TemplateView):
     template_name = 'Home/tours.html'
+
 
 class AfricaTourView(ListView):
     model = AwesomePackages
     context_object_name = "africaPackages"
     template_name = 'Tours/africa_tours.html'
 
+    def get_queryset(self):
+        return AwesomePackages.objects.filter(
+            category__in=['East Africa Tours', 'South Africa', 'West Africa', 'Africa Tours']
+        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location')[:12]
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         # Get all destination categories for tabs
-        categories = DestinationsCategory.objects.all()
+        categories = DestinationsCategory.objects.only('id', 'category', 'location', 'image_orientation').all()
         context['categories'] = categories
 
-        # Get all destinations
-        all_destinations = Destinations.objects.select_related('category')[:9]
+        # Get all destinations with select_related for optimization
+        all_destinations = Destinations.objects.select_related('category').only(
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+        )[:9]
         context['all_destinations'] = all_destinations
 
         # Organize destinations by category for filtering
@@ -57,12 +70,15 @@ class AfricaTourView(ListView):
         for category in categories:
             category_destinations = Destinations.objects.filter(
                 category=category
-            ).select_related('category')
+            ).select_related('category').only(
+                'id', 'name', 'image', 'price', 'category__id', 'category__category'
+            )
             destinations_by_category[category.id] = category_destinations
 
         context['destinations_by_category'] = destinations_by_category
 
         return context
+
 
 class EastAfricaTourView(ListView):
     model = AwesomePackages
@@ -70,18 +86,21 @@ class EastAfricaTourView(ListView):
     template_name = 'Tours/east_africa_tours.html'
 
     def get_queryset(self):
-        """Filter packages to show only International Tours category"""
-        return AwesomePackages.objects.filter(category='East Africa Tours')
+        return AwesomePackages.objects.filter(
+            category='East Africa Tours'
+        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         # Get all destination categories for tabs
-        categories = DestinationsCategory.objects.all()
+        categories = DestinationsCategory.objects.only('id', 'category', 'location', 'image_orientation').all()
         context['categories'] = categories
 
         # Get all destinations
-        all_destinations = Destinations.objects.select_related('category')[:9]
+        all_destinations = Destinations.objects.select_related('category').only(
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+        )[:9]
         context['all_destinations'] = all_destinations
 
         # Organize destinations by category for filtering
@@ -89,12 +108,15 @@ class EastAfricaTourView(ListView):
         for category in categories:
             category_destinations = Destinations.objects.filter(
                 category=category
-            ).select_related('category')
+            ).select_related('category').only(
+                'id', 'name', 'image', 'price', 'category__id', 'category__category'
+            )
             destinations_by_category[category.id] = category_destinations
 
         context['destinations_by_category'] = destinations_by_category
 
         return context
+
 
 class SouthAfricaTourView(ListView):
     model = AwesomePackages
@@ -102,18 +124,21 @@ class SouthAfricaTourView(ListView):
     template_name = 'Tours/south_africa_tours.html'
 
     def get_queryset(self):
-        """Filter packages to show only International Tours category"""
-        return AwesomePackages.objects.filter(category='South Africa')
+        return AwesomePackages.objects.filter(
+            category='South Africa'
+        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         # Get all destination categories for tabs
-        categories = DestinationsCategory.objects.all()
+        categories = DestinationsCategory.objects.only('id', 'category', 'location', 'image_orientation').all()
         context['categories'] = categories
 
         # Get all destinations
-        all_destinations = Destinations.objects.select_related('category')[:9]
+        all_destinations = Destinations.objects.select_related('category').only(
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+        )[:9]
         context['all_destinations'] = all_destinations
 
         # Organize destinations by category for filtering
@@ -121,12 +146,15 @@ class SouthAfricaTourView(ListView):
         for category in categories:
             category_destinations = Destinations.objects.filter(
                 category=category
-            ).select_related('category')
+            ).select_related('category').only(
+                'id', 'name', 'image', 'price', 'category__id', 'category__category'
+            )
             destinations_by_category[category.id] = category_destinations
 
         context['destinations_by_category'] = destinations_by_category
 
         return context
+
 
 class WestAfricaTourView(ListView):
     model = AwesomePackages
@@ -134,18 +162,21 @@ class WestAfricaTourView(ListView):
     template_name = 'Tours/west_africa_tours.html'
 
     def get_queryset(self):
-        """Filter packages to show only International Tours category"""
-        return AwesomePackages.objects.filter(category='West Africa')
+        return AwesomePackages.objects.filter(
+            category='West Africa'
+        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         # Get all destination categories for tabs
-        categories = DestinationsCategory.objects.all()
+        categories = DestinationsCategory.objects.only('id', 'category', 'location', 'image_orientation').all()
         context['categories'] = categories
 
         # Get all destinations
-        all_destinations = Destinations.objects.select_related('category')[:9]
+        all_destinations = Destinations.objects.select_related('category').only(
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+        )[:9]
         context['all_destinations'] = all_destinations
 
         # Organize destinations by category for filtering
@@ -153,12 +184,15 @@ class WestAfricaTourView(ListView):
         for category in categories:
             category_destinations = Destinations.objects.filter(
                 category=category
-            ).select_related('category')
+            ).select_related('category').only(
+                'id', 'name', 'image', 'price', 'category__id', 'category__category'
+            )
             destinations_by_category[category.id] = category_destinations
 
         context['destinations_by_category'] = destinations_by_category
 
         return context
+
 
 class InternationalAfricaTourView(ListView):
     model = AwesomePackages
@@ -166,18 +200,21 @@ class InternationalAfricaTourView(ListView):
     template_name = 'Tours/international_tours.html'
 
     def get_queryset(self):
-        """Filter packages to show only International Tours category"""
-        return AwesomePackages.objects.filter(category='International Tours')
+        return AwesomePackages.objects.filter(
+            category='International Tours'
+        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         # Get all destination categories for tabs
-        categories = DestinationsCategory.objects.all()
+        categories = DestinationsCategory.objects.only('id', 'category', 'location', 'image_orientation').all()
         context['categories'] = categories
 
         # Get all destinations
-        all_destinations = Destinations.objects.select_related('category')[:9]
+        all_destinations = Destinations.objects.select_related('category').only(
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+        )[:9]
         context['all_destinations'] = all_destinations
 
         # Organize destinations by category for filtering
@@ -185,16 +222,17 @@ class InternationalAfricaTourView(ListView):
         for category in categories:
             category_destinations = Destinations.objects.filter(
                 category=category
-            ).select_related('category')
+            ).select_related('category').only(
+                'id', 'name', 'image', 'price', 'category__id', 'category__category'
+            )
             destinations_by_category[category.id] = category_destinations
 
         context['destinations_by_category'] = destinations_by_category
 
         return context
 
-#  packages
-from .forms import PackagePurchaseForm
-from datetime import date
+
+# packages
 class PackagesDetailView(DetailView):
     model = AwesomePackages
     context_object_name = 'package'
@@ -210,7 +248,9 @@ class PackagesDetailView(DetailView):
         # Get similar packages
         similar_packages = AwesomePackages.objects.filter(
             category=self.object.category
-        ).exclude(id=self.object.id)[:3]
+        ).exclude(id=self.object.id).only(
+            'id', 'name', 'image', 'price', 'days', 'category', 'star_rating'
+        )[:3]
         context['similar_packages'] = similar_packages
 
         # Initialize form with user data if logged in
@@ -225,15 +265,16 @@ class PackagesDetailView(DetailView):
         if 'form' not in context:
             context['form'] = PackagePurchaseForm(initial=initial_data, package=self.object)
 
+        # FIXED: Changed 'status' to 'is_inclusive'
         inclusive = IncluisiveExcluisive.objects.filter(
             package=package,
-            status=True
-        )
+            is_inclusive=True  # Changed from 'status=True'
+        ).only('id', 'name', 'is_inclusive')
 
         exclusive = IncluisiveExcluisive.objects.filter(
             package=package,
-            status=False
-        )
+            is_inclusive=False  # Changed from 'status=False'
+        ).only('id', 'name', 'is_inclusive')
 
         context['inclusive'] = inclusive
         context['exclusive'] = exclusive
@@ -273,5 +314,3 @@ class PackagesDetailView(DetailView):
 
         # Render the page with form errors
         return self.render_to_response(self.get_context_data(form=form))
-
-#

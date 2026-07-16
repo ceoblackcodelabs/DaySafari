@@ -25,6 +25,7 @@ from EmailSetup.utils import send_welcome_email, send_new_user_alert_to_admin
 import threading
 from time import sleep
 
+
 def send_registration_emails_async(email, name, user):
     """Send registration emails in background thread"""
     def send():
@@ -41,6 +42,7 @@ def send_registration_emails_async(email, name, user):
     thread = threading.Thread(target=send)
     thread.daemon = True
     thread.start()
+
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
@@ -94,6 +96,7 @@ class CustomLogoutView(LogoutView):
 
         return response
 
+
 class RegisterView(CreateView):
     template_name = 'registration/register.html'
     form_class = CustomUserCreationForm
@@ -101,7 +104,7 @@ class RegisterView(CreateView):
 
     def form_valid(self, form):
         """Handle valid registration form"""
-        response = super().form_valid(form)
+        response = super().form_valid(response)
 
         messages.success(self.request,
             f"Account created successfully! Welcome {form.cleaned_data.get('username')}! 🎉 "
@@ -174,10 +177,12 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             ).exclude(
                 # Exclude already booked packages? (you might not have direct relation)
                 id__in=[]
-            ).order_by('-starRating')[:6]
+            ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug').order_by('-star_rating')[:6]  # FIXED: starRating -> star_rating
         else:
             # Default recommendations for new users
-            recommended_packages = recommended_packages.order_by('-starRating')[:6]
+            recommended_packages = recommended_packages.only(
+                'id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug'
+            ).order_by('-star_rating')[:6]  # FIXED: starRating -> star_rating
 
         # Get user's recommendations from the new model if exists
         if hasattr(user, 'recommendations'):
@@ -498,18 +503,24 @@ class PackagesView(ListView):
                 Q(description__icontains=search)
             )
 
-        # Sort
+        # Sort - FIXED: starRating -> star_rating
         sort_by = self.request.GET.get('sort')
         if sort_by == 'price_asc':
             queryset = queryset.order_by('price')
         elif sort_by == 'price_desc':
             queryset = queryset.order_by('-price')
         elif sort_by == 'rating':
-            queryset = queryset.order_by('-starRating')
+            queryset = queryset.order_by('-star_rating')  # FIXED
         elif sort_by == 'days_asc':
             queryset = queryset.order_by('days')
         else:
-            queryset = queryset.order_by('-starRating')
+            queryset = queryset.order_by('-star_rating')  # FIXED
+
+        # Only select necessary fields for performance
+        queryset = queryset.only(
+            'id', 'name', 'image', 'price', 'days', 'category',
+            'star_rating', 'location', 'slug', 'description'
+        )
 
         return queryset
 
