@@ -1,0 +1,1 @@
+from DaySafaris.wsgi import application

@@ -1,0 +1,1070 @@
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/mysql/base.py", line 16, in <module>
+    import MySQLdb as Database
+ModuleNotFoundError: No module named 'MySQLdb'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/DaySafaris/passenger_wsgi.py", line 1, in <module>
+    from DaySafaris.wsgi import application
+  File "/home/daysafaris/DaySafaris/DaySafaris/wsgi.py", line 16, in <module>
+    application = get_wsgi_application()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+    django.setup(set_prefix=False)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/__init__.py", line 24, in setup
+    apps.populate(settings.INSTALLED_APPS)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/apps/registry.py", line 116, in populate
+    app_config.import_models()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/apps/config.py", line 269, in import_models
+    self.models_module = import_module(models_module_name)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/alt/python312/lib64/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/contrib/auth/models.py", line 5, in <module>
+    from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/contrib/auth/base_user.py", line 43, in <module>
+    class AbstractBaseUser(models.Model):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/base.py", line 145, in __new__
+    new_class.add_to_class("_meta", Options(meta, app_label))
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/base.py", line 393, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/options.py", line 238, in contribute_to_class
+    self.db_table, connection.ops.max_name_length()
+                   ^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/connection.py", line 15, in __getattr__
+    return getattr(self._connections[self._alias], item)
+                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/connection.py", line 62, in __getitem__
+    conn = self.create_connection(alias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 196, in create_connection
+    backend = load_backend(db["ENGINE"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 116, in load_backend
+    return import_module("%s.base" % backend_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/alt/python312/lib64/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/mysql/base.py", line 18, in <module>
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Error loading MySQLdb module.
+Did you install mysqlclient?
+Traceback (most recent call last):
+  File "/home/daysafaris/DaySafaris/passenger_wsgi.py", line 1, in <module>
+    from DaySafaris.wsgi import application
+  File "/home/daysafaris/DaySafaris/DaySafaris/wsgi.py", line 16, in <module>
+    application = get_wsgi_application()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+    django.setup(set_prefix=False)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/__init__.py", line 24, in setup
+    apps.populate(settings.INSTALLED_APPS)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/apps/registry.py", line 83, in populate
+    raise RuntimeError("populate() isn't reentrant")
+RuntimeError: populate() isn't reentrant
+[UID:2050][548605] Child process with pid: 548945 was killed by signal: 15, core dumped: no
+Traceback (most recent call last):
+  File "/home/daysafaris/DaySafaris/passenger_wsgi.py", line 1, in <module>
+    from DaySafaris.wsgi import application
+  File "/home/daysafaris/DaySafaris/DaySafaris/wsgi.py", line 16, in <module>
+    application = get_wsgi_application()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+    django.setup(set_prefix=False)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/__init__.py", line 24, in setup
+    apps.populate(settings.INSTALLED_APPS)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/apps/registry.py", line 83, in populate
+    raise RuntimeError("populate() isn't reentrant")
+RuntimeError: populate() isn't reentrant
+[UID:2050][548605] Child process with pid: 553432 was killed by signal: 15, core dumped: no
+Traceback (most recent call last):
+  File "/home/daysafaris/DaySafaris/passenger_wsgi.py", line 1, in <module>
+    from DaySafaris.wsgi import application
+  File "/home/daysafaris/DaySafaris/DaySafaris/wsgi.py", line 16, in <module>
+    application = get_wsgi_application()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+    django.setup(set_prefix=False)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/__init__.py", line 24, in setup
+    apps.populate(settings.INSTALLED_APPS)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/apps/registry.py", line 83, in populate
+    raise RuntimeError("populate() isn't reentrant")
+RuntimeError: populate() isn't reentrant
+[UID:2050][548605] Child process with pid: 553475 was killed by signal: 15, core dumped: no
+Internal Server Error: /en/SudoSu/itinerary/
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/cursors.py", line 159, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/cursors.py", line 330, in _query
+    conn.query(q)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/connections.py", line 582, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/connections.py", line 847, in _read_query_result
+    result.read()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/connections.py", line 1245, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/connections.py", line 803, in _read_packet
+    packet.raise_for_error()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+pymysql.err.ProgrammingError: (1146, "Table 'daysafaris_daysafarisadventure.SuperMode_itinerarybuilder' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/alt/python312/lib64/python3.12/contextlib.py", line 81, in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/contrib/auth/mixins.py", line 74, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 178, in get
+    context = self.get_context_data()
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/SuperMode/views.py", line 1137, in get_context_data
+    context = super().get_context_data(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 128, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(
+                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 73, in paginate_queryset
+    page = paginator.page(page_number)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 177, in page
+    number = self.validate_number(number)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 160, in validate_number
+    return self._validate_number(number, self.num_pages)
+                                         ^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 195, in num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+       ^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 189, in count
+    return c()
+           ^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/cursors.py", line 159, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/cursors.py", line 330, in _query
+    conn.query(q)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/connections.py", line 582, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/connections.py", line 847, in _read_query_result
+    result.read()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/connections.py", line 1245, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/connections.py", line 803, in _read_packet
+    packet.raise_for_error()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+django.db.utils.ProgrammingError: (1146, "Table 'daysafaris_daysafarisadventure.SuperMode_itinerarybuilder' doesn't exist")
+Not Found: /favicon.ico
+Traceback (most recent call last):
+  File "/home/daysafaris/DaySafaris/passenger_wsgi.py", line 1, in <module>
+    from DaySafaris.wsgi import application
+  File "/home/daysafaris/DaySafaris/DaySafaris/wsgi.py", line 16, in <module>
+    application = get_wsgi_application()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+    django.setup(set_prefix=False)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/__init__.py", line 19, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 75, in __getattr__
+    self._setup(name)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 62, in _setup
+    self._wrapped = Settings(settings_module)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 162, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/alt/python312/lib64/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/DaySafaris/settings.py", line 88
+    ========== DATABASE ==========
+    ^^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "/home/daysafaris/DaySafaris/passenger_wsgi.py", line 1, in <module>
+    from DaySafaris.wsgi import application
+  File "/home/daysafaris/DaySafaris/DaySafaris/wsgi.py", line 16, in <module>
+    application = get_wsgi_application()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+    django.setup(set_prefix=False)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/__init__.py", line 19, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 75, in __getattr__
+    self._setup(name)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 62, in _setup
+    self._wrapped = Settings(settings_module)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 162, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/alt/python312/lib64/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/DaySafaris/settings.py", line 88
+    ========== DATABASE ==========
+    ^^
+SyntaxError: invalid syntax
+[UID:2050][760696] Child process with pid: 761023 was killed by signal: 15, core dumped: no
+Traceback (most recent call last):
+  File "/home/daysafaris/DaySafaris/passenger_wsgi.py", line 1, in <module>
+    from DaySafaris.wsgi import application
+  File "/home/daysafaris/DaySafaris/DaySafaris/wsgi.py", line 16, in <module>
+    application = get_wsgi_application()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+    django.setup(set_prefix=False)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/__init__.py", line 19, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 75, in __getattr__
+    self._setup(name)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 62, in _setup
+    self._wrapped = Settings(settings_module)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 162, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/alt/python312/lib64/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/DaySafaris/settings.py", line 88
+    ========== DATABASE ==========
+    ^^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "/home/daysafaris/DaySafaris/passenger_wsgi.py", line 1, in <module>
+    from DaySafaris.wsgi import application
+  File "/home/daysafaris/DaySafaris/DaySafaris/wsgi.py", line 16, in <module>
+    application = get_wsgi_application()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+    django.setup(set_prefix=False)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/__init__.py", line 19, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 75, in __getattr__
+    self._setup(name)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 62, in _setup
+    self._wrapped = Settings(settings_module)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/conf/__init__.py", line 162, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/alt/python312/lib64/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/DaySafaris/settings.py", line 88
+    ========== DATABASE ==========
+    ^^
+SyntaxError: invalid syntax
+[UID:2050][761124] Child process with pid: 761497 was killed by signal: 15, core dumped: no
+Not Found: /favicon.ico
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+Not Found: /static/img/fallback-video-1.jpg
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+Not Found: /static/img/fallback-video-2.jpg
+Not Found: /static/img/fallback-video-3.jpg
+Not Found: /static/img/fallback-video-2.jpg
+Not Found: /static/img/fallback-video-1.jpg
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+Not Found: /static/img/fallback-video-3.jpg
+/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'Invoices.models.Invoice'> QuerySet.
+  return self.paginator_class(
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Not Found: /static/assets/images/logo.png
+Not Found: /static/assets/images/logo.png
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /plugins/uploadify/uploadify.css
+Invalid HTTP_HOST header: 'mail.daysafarisadventures.co.ke'. You may need to add 'mail.daysafarisadventures.co.ke' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/http/request.py", line 206, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'mail.daysafarisadventures.co.ke'. You may need to add 'mail.daysafarisadventures.co.ke' to ALLOWED_HOSTS.
+Not Found: /en/packages/10/
+Method Not Allowed (GET): /en/accounts/logout/
+Not Found: /.well-known/acme-challenge/Q4CCNUP761EVO8T69O-S5C1TQ0Z1XN1J
+Not Found: /.well-known/acme-challenge/YBMV-Q8IBU7YKH0Z_HN4C_7NZYRJKY5J
+Invalid HTTP_HOST header: 'mail.daysafarisadventures.co.ke'. You may need to add 'mail.daysafarisadventures.co.ke' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/http/request.py", line 206, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'mail.daysafarisadventures.co.ke'. You may need to add 'mail.daysafarisadventures.co.ke' to ALLOWED_HOSTS.
+Not Found: /.well-known/acme-challenge/ZTC6Y1_9NV5PZXCHZAMTFIM59RDHVXCF
+Not Found: /.well-known/acme-challenge/V_0492NXXT2V5KMDQK1E_004WLZRFI37
+Not Found: /.well-known/acme-challenge/NG8D2-A94PKOZOGWAUN1YG39HDNPRYRM
+Not Found: /.well-known/acme-challenge/7GKE8VQXCI1A2GULQDFT_FEBUX0A5L-8
+Not Found: /.well-known/acme-challenge/-9X-NWBR11M9QWPS4_K4E7_ACRHPC9FJ
+Not Found: /en/packages/2/
+Not Found: /en/destination/18/
+Not Found: /en/trekking/Mt-Kilimanjaro/index.html
+Not Found: /en/packages/29/
+Not Found: /static/img/fallback-video-1.jpg
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+io.UnsupportedOperation: fileno
+Not Found: /static/img/fallback-video-2.jpg
+Not Found: /static/img/fallback-video-3.jpg
+Method Not Allowed (GET): /en/accounts/logout/
+Not Found: /en/itinerary
+/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'Invoices.models.Invoice'> QuerySet.
+  return self.paginator_class(
+Internal Server Error: /en/SudoSu/
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: Invoices_invoice.email
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/defaulttags.py", line 202, in render
+    len_values = len(values)
+                 ^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 372, in __len__
+    self._fetch_all()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: Invoices_invoice.email
+Not Found: /robots.txt
+Internal Server Error: /en/services/
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/fields/related_descriptors.py", line 241, in __get__
+    rel_obj = self.field.get_cached_value(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/fields/mixins.py", line 21, in get_cached_value
+    return instance._state.fields_cache[self.cache_name]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'package'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: Places_awesomepackages.star_rating
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/defaulttags.py", line 581, in render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1150, in render
+    output = self.filter_expression.resolve(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 788, in resolve
+    obj = self.var.resolve(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 928, in resolve
+    value = self._resolve_lookup(context)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/template/base.py", line 1000, in _resolve_lookup
+    current = current()
+              ^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/Home/models.py", line 334, in get_package_url
+    if self.package:
+       ^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/fields/related_descriptors.py", line 257, in __get__
+    rel_obj = self.get_object(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/fields/related_descriptors.py", line 222, in get_object
+    return qs.get(self.field.get_reverse_related_filter(instance))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 635, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 372, in __len__
+    self._fetch_all()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: Places_awesomepackages.star_rating
+Internal Server Error: /en/packages/27/
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: Places_awesomepackages.star_rating
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/detail.py", line 112, in get
+    self.object = self.get_object()
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/detail.py", line 53, in get_object
+    obj = queryset.get()
+          ^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 635, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 372, in __len__
+    self._fetch_all()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: Places_awesomepackages.star_rating
+/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'Invoices.models.Invoice'> QuerySet.
+  return self.paginator_class(
+Not Found: /static/assets/images/logo.png
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Internal Server Error: /en/SudoSu/itinerary/
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: SuperMode_itinerarybuilder
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/contrib/auth/mixins.py", line 74, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 178, in get
+    context = self.get_context_data()
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/SuperMode/views.py", line 1137, in get_context_data
+    context = super().get_context_data(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 128, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(
+                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 73, in paginate_queryset
+    page = paginator.page(page_number)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 177, in page
+    number = self.validate_number(number)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 160, in validate_number
+    return self._validate_number(number, self.num_pages)
+                                         ^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 195, in num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+       ^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 189, in count
+    return c()
+           ^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: SuperMode_itinerarybuilder
+Internal Server Error: /en/SudoSu/itinerary/
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: SuperMode_itinerarybuilder
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/contrib/auth/mixins.py", line 74, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 178, in get
+    context = self.get_context_data()
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/SuperMode/views.py", line 1137, in get_context_data
+    context = super().get_context_data(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 128, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(
+                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 73, in paginate_queryset
+    page = paginator.page(page_number)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 177, in page
+    number = self.validate_number(number)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 160, in validate_number
+    return self._validate_number(number, self.num_pages)
+                                         ^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 195, in num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+       ^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/paginator.py", line 189, in count
+    return c()
+           ^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: SuperMode_itinerarybuilder
+Not Found: /favicon.ico
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/assets/images/logo.png
+/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'Accomodations.models.Accomodations'> QuerySet.
+  return self.paginator_class(
+Not Found: /static/assets/images/logo.png
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/assets/images/logo.png
+Not Found: /static/assets/images/logo.png
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/assets/images/logo.png
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'ClientRequests.models.Bookings'> QuerySet.
+  return self.paginator_class(
+Internal Server Error: /en/SudoSu/bookings/
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: Places_destinations.created_at
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py", line 178, in get
+    context = self.get_context_data()
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/DaySafaris/SuperMode/views.py", line 492, in get_context_data
+    for booking in Bookings.objects.select_related('destination').all():
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 390, in __iter__
+    self._fetch_all()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: Places_destinations.created_at
+Internal Server Error: /en/packages/6/
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: Places_awesomepackages.star_rating
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/detail.py", line 112, in get
+    self.object = self.get_object()
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/detail.py", line 53, in get_object
+    obj = queryset.get()
+          ^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 635, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 372, in __len__
+    self._fetch_all()
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: Places_awesomepackages.star_rating
+/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'ClientRequests.models.Bookings'> QuerySet.
+  return self.paginator_class(
+Not Found: /static/assets/images/logo.png
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'Office.models.Employee'> QuerySet.
+  return self.paginator_class(
+Not Found: /static/assets/images/logo.png
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Not Found: /static/assets/images/faces/face4.jpg
+/home/daysafaris/virtualenv/DaySafaris/3.12/lib/python3.12/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'Invoices.models.Invoice'> QuerySet.
+  return self.paginator_class(
+Not Found: /static/SuperMode/assets/vendors/progressbar.js/progressbar.min.js
+Not Found: /static/assets/images/faces/face4.jpg
+Not Found: /static/assets/images/logo.png
