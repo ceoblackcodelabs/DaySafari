@@ -43,17 +43,30 @@ urlpatterns = [
     # hotels
     path('hotels/', HoteslListView.as_view(), name='hotels_list'),
 
-    # itineraries
-    path('itinerary/', ItineraryListView.as_view(), name='itinerary_list'),
-    path('create-Itinerary/', ItineraryCreateView.as_view(), name='create_itinerary'),
-    path('<slug:slug>/', ItineraryDetailView.as_view(), name='itinerary_detail'),
-    path('<slug:slug>/edit/', ItineraryUpdateView.as_view(), name='edit_itinerary'),
-    path('<slug:slug>/delete/', ItineraryDeleteView.as_view(), name='delete_itinerary'),
+    # ================================================
+    # ITINERARY URLS - ORDER MATTERS!
+    # More specific paths must come before generic ones
+    # ================================================
 
-    # Share link URLs
-    path('<slug:slug>/generate-link/', GenerateShareLinkView.as_view(), name='generate_itinerary_link'),
-    path('share/<slug:slug>/', PublicItineraryView.as_view(), name='public_itinerary'),
-
-    # AJAX URLs
+    # 1. AJAX URLs (most specific)
     path('ajax/hotel-images/', get_hotel_images, name='get_hotel_images'),
+
+    # 2. Share link URLs (specific pattern)
+    path('itinerary/share/<slug:slug>/', PublicItineraryView.as_view(), name='public_itinerary'),
+
+    # 3. Generate link URL
+    path('itinerary/<slug:slug>/generate-link/', GenerateShareLinkView.as_view(), name='generate_itinerary_link'),
+
+    # 4. Itinerary CRUD with explicit paths
+    path('itinerary/', ItineraryListView.as_view(), name='itinerary_list'),
+    path('itinerary/create/', ItineraryCreateView.as_view(), name='create_itinerary'),
+
+    # 5. Detail, Edit, Delete - these use slug and should come AFTER the more specific ones
+    path('itinerary/<slug:slug>/', ItineraryDetailView.as_view(), name='itinerary_detail'),
+    path('itinerary/<slug:slug>/edit/', ItineraryUpdateView.as_view(), name='edit_itinerary'),
+    path('itinerary/<slug:slug>/delete/', ItineraryDeleteView.as_view(), name='delete_itinerary'),
+
+    # 6. Cleanup - if you want a clean public URL without /itinerary/ prefix
+    # WARNING: This will catch ANY slug, so use with caution
+    # path('share/<slug:slug>/', PublicItineraryView.as_view(), name='public_itinerary_short'),
 ]

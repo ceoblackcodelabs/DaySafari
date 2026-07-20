@@ -8,6 +8,27 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 
+class DestinationImage(models.Model):
+    """Model for multiple images per destination"""
+    destination = models.ForeignKey(
+        "Destinations",
+        on_delete=models.CASCADE,
+        related_name='images'
+    )
+    image = models.ImageField(upload_to='destination_images/')
+    caption = models.CharField(max_length=200, blank=True)
+    is_featured = models.BooleanField(default=False, help_text="Mark as the main image for this destination")
+    order = models.IntegerField(default=0, help_text="Order of images in the gallery")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['order', '-created_at']
+        verbose_name = 'Destination Image'
+        verbose_name_plural = 'Destination Images'
+
+    def __str__(self):
+        return f"{self.destination.name} - Image {self.order or self.id}"
+
 class DestinationsCategory(models.Model):
     ORIENTATION_CHOICES = [
         ('landscape', 'Landscape'),
@@ -36,7 +57,7 @@ class Destinations(models.Model):
     category = models.ForeignKey(DestinationsCategory, on_delete=models.CASCADE, related_name='destinations')
     name = models.CharField(max_length=100, db_index=True)
     description = CKEditor5Field('Description', config_name='default')
-    image = models.ImageField(upload_to='destinations/', blank=True, null=True)
+    image = models.ImageField(upload_to='destinations/', blank=True, null=True)  # Keep for backward compatibility
     price = models.DecimalField(default=0, max_digits=10, decimal_places=2, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -52,6 +73,34 @@ class Destinations(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def featured_image(self):
+        """Get the featured image or the first available image"""
+        featured = self.images.filter(is_featured=True).first()
+        if featured:
+            return featured.image
+        first = self.images.first()
+        if first:
+            return first.image
+        return self.image  # Fallback to the old single image field
+
+    @property
+    def all_images(self):
+        """Get all images for this destination"""
+        images = list(self.images.all())
+        # If there are no images in the new model but there's an old image, include it
+        if not images and self.image:
+            # Create a virtual image object
+            class VirtualImage:
+                def __init__(self, image, destination):
+                    self.image = image
+                    self.destination = destination
+                    self.caption = ''
+                    self.is_featured = True
+                    self.order = 0
+            return [VirtualImage(self.image, self)]
+        return images
 
 
 class MustVisit(models.Model):
@@ -221,12 +270,18 @@ class Itinerary(models.Model):
         return f"Day {self.day_number}: {self.title} - {self.package.name}"
 
 
-# Cache clearing signals
+# Places/models.py - Update signals
 @receiver([post_save, post_delete], sender=AwesomePackages)
 @receiver([post_save, post_delete], sender=Destinations)
 @receiver([post_save, post_delete], sender=DestinationsCategory)
+@receiver([post_save, post_delete], sender=DestinationImage)  # Add this
 def clear_related_cache(sender, **kwargs):
     """Clear relevant caches when package or destination data changes"""
-    cache.delete_pattern('home_context_data_*')
-    cache.delete_pattern('package_*')
-    cache.delete_pattern('destination_*')
+    # Try delete_pattern, fallback to clear if not available
+    try:
+        cache.delete_pattern('home_context_data_*')
+        cache.delete_pattern('package_*')
+        cache.delete_pattern('destination_*')
+    except AttributeError:
+        # If using LocMemCache, clear everything
+        cache.clear()
