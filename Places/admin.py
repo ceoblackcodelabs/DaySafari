@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     DestinationsCategory, Destinations, Itinerary,
     MustVisit, AwesomePackages, PackagePurchase,
-    IncluisiveExcluisive
+    IncluisiveExcluisive, DestinationImage
 )
 from django.utils.html import format_html
 from django.contrib import messages
@@ -154,25 +154,24 @@ class DestinationsCategoryAdmin(admin.ModelAdmin):
     make_portrait.short_description = "Set to portrait"
 
 
+class DestinationImageInline(admin.TabularInline):
+    model = DestinationImage
+    extra = 3
+    fields = ['image', 'caption', 'is_featured', 'order']
+    ordering = ['order']
+
 @admin.register(Destinations)
 class DestinationsAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'category', 'price_formatted', 'image_preview', 'created_at']
-    search_fields = ['name', 'description', 'category__category']
+    list_display = ['name', 'category', 'price', 'created_at']
     list_filter = ['category', 'created_at']
-    ordering = ['category', 'name']
-    autocomplete_fields = ['category']
-    readonly_fields = ['created_at']
+    search_fields = ['name', 'description']
+    inlines = [DestinationImageInline]
 
-    def price_formatted(self, obj):
-        return f"${obj.price:,.2f}"
-    price_formatted.short_description = 'Price'
-    price_formatted.admin_order_field = 'price'
-
-    def image_preview(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover; border-radius: 4px;" />', obj.image.url)
-        return "No Image"
-    image_preview.short_description = 'Image Preview'
+@admin.register(DestinationImage)
+class DestinationImageAdmin(admin.ModelAdmin):
+    list_display = ['destination', 'caption', 'is_featured', 'order', 'created_at']
+    list_filter = ['is_featured', 'destination', 'created_at']
+    search_fields = ['caption', 'destination__name']
 
 
 @admin.register(PackagePurchase)

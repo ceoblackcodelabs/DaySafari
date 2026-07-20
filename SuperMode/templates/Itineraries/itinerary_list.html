@@ -179,6 +179,15 @@
                     <i class="mdi mdi-eye"></i>
                   </a>
 
+                  <!-- View Public Button -->
+                  <a href="{% url 'public_itinerary' slug=itinerary.slug %}"
+                     class="btn btn-sm btn-success"
+                     data-bs-toggle="tooltip"
+                     title="View Public Itinerary"
+                     target="_blank">
+                    <i class="mdi mdi-earth"></i>
+                  </a>
+
                   <!-- Edit Button -->
                   <a href="{% url 'edit_itinerary' slug=itinerary.slug %}"
                      class="btn btn-sm btn-primary"
@@ -189,7 +198,7 @@
 
                   <!-- Generate Share Link Button -->
                   <a href="{% url 'generate_itinerary_link' slug=itinerary.slug %}"
-                     class="btn btn-sm btn-success"
+                     class="btn btn-sm btn-warning"
                      data-bs-toggle="tooltip"
                      title="Generate Share Link">
                     <i class="mdi mdi-link-plus"></i>

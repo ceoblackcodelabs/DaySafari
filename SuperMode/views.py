@@ -13,6 +13,7 @@ from Invoices.forms import InvoiceForm
 from datetime import date, timedelta
 from django.http import JsonResponse
 from django.utils import timezone
+import json
 from django.db.models import Q
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -29,6 +30,11 @@ from .forms import ItineraryBuilderForm, ItineraryActivityForm
 from .models import ItineraryBuilder, ItineraryActivity
 from django.forms import formset_factory, modelformset_factory
 from collections import defaultdict
+
+import logging
+from collections import defaultdict
+
+logger = logging.getLogger(__name__)
 
 class AdminDashboardView(ListView):
     template_name = 'Dashboard/index.html'
@@ -1412,17 +1418,96 @@ class PublicItineraryView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # Get hotel images
         context['hotel_images'] = self.object.hotel_images.select_related('accomodation').all()
-        context['destination_images'] = self.object.destination_images.all()
 
-        activities_by_day = defaultdict(list)
-        for activity in self.object.activities.all():
-            activities_by_day[activity.day_number].append(activity)
+        # Get destination images with their related images
+        destination_images = self.object.destination_images.prefetch_related('images').all()
+        context['destination_images'] = destination_images
 
-        context['day_slides'] = [
-            {'day_number': day, 'activities': activities_by_day.get(day, [])}
-            for day in range(1, (self.object.days_spent or 0) + 1)
-        ]
+        # Build destination images data for JavaScript with FULL URLs
+        dest_images_data = []
+        all_destination_images = []  # Collect all images for fallback
+
+        for dest in destination_images:
+            dest_images = []
+            if hasattr(dest, 'images') and dest.images.exists():
+                for img in dest.images.all().order_by('order'):
+                    image_url = img.image.url if img.image else ''
+                    dest_images.append({
+                        'id': img.id,
+                        'url': image_url,
+                        'caption': img.caption or '',
+                        'is_featured': img.is_featured,
+                        'order': img.order
+                    })
+                    if image_url:
+                        all_destination_images.append(image_url)
+            elif dest.image:
+                image_url = dest.image.url if dest.image else ''
+                dest_images.append({
+                    'id': 0,
+                    'url': image_url,
+                    'caption': dest.name,
+                    'is_featured': True,
+                    'order': 0
+                })
+                if image_url:
+                    all_destination_images.append(image_url)
+
+            dest_images_data.append({
+                'id': dest.id,
+                'name': dest.name,
+                'images': dest_images
+            })
+
+        context['destination_images_json'] = json.dumps(dest_images_data, default=str)
+        context['all_destination_images'] = all_destination_images
+
+        # Build day slides with activities from the Itinerary model
+        # Note: Your Itinerary model is linked to AwesomePackages, not ItineraryBuilder
+        # So we need to use the activities stored in the itinerary's related packages
+        day_slides = []
+
+        # Get all itineraries (activities) for the packages associated with this itinerary
+        # Since your ItineraryBuilder doesn't have a direct relation to Itinerary,
+        # we'll use the destination images directly
+
+        # Build slides from destination images
+        for day in range(1, (self.object.days_spent or 0) + 1):
+            # Use destination images as the slide content
+            slide_images = []
+            # Cycle through destination images for each day
+            if all_destination_images:
+                idx = (day - 1) % len(all_destination_images)
+                # Get a few images for this slide
+                for i in range(4):
+                    img_idx = (idx + i) % len(all_destination_images)
+                    slide_images.append(all_destination_images[img_idx])
+            else:
+                # Fallback images
+                fallbacks = [
+                    'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1200&q=80',
+                    'https://images.unsplash.com/photo-1534536281715-e28d76689b4d?w=1200&q=80',
+                    'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1200&q=80',
+                    'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=1200&q=80'
+                ]
+                slide_images = fallbacks
+
+            # Get destination name
+            dest_name = destination_images[0].name if destination_images.exists() else 'Safari'
+
+            day_slides.append({
+                'day_number': day,
+                'title': f'Day {day} - {dest_name}',
+                'description': f'Explore {dest_name} on day {day} of your safari adventure.',
+                'images': slide_images,
+                'destination_name': dest_name,
+                'featured_image': slide_images[0] if slide_images else ''
+            })
+
+        context['day_slides'] = day_slides
 
         return context
 
