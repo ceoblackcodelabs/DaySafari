@@ -86,31 +86,31 @@ TEMPLATES = [
 WSGI_APPLICATION = 'DaySafaris.wsgi.application'
 
 # ========== DATABASE ==========
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
-# ========== PRODUCTION DATABASE ==========
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'daysafaris',
-        'USER': 'sudo',
-        'PASSWORD': 'REMOVED_DB_PASSWORD',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'OPTIONS': {
-            'connect_timeout': 10,
-            'options': '-c statement_timeout=5000ms',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-# ========== mysql DATABASE ==========
+
+# ========== PRODUCTION DATABASE ==========
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'daysafaris_daysafarisadventure',
+#         'USER': 'daysafaris_sudo',
+#         'PASSWORD': 'REMOVED_DB_PASSWORD',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+        #     'OPTIONS': {
+        #     'connect_timeout': 10,
+        #     'options': '-c statement_timeout=5000ms',
+        # },
+#     }
+# }
+
+# # ========== mysql DATABASE ==========
 # DATABASES = {
 #     'default': {
 #         'ENGINE': config('DB_ENGINE', default='django.db.backends.mysql'),
