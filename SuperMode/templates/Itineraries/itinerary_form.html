@@ -1,0 +1,590 @@
+{% extends "Dashboard/base.html" %}
+
+{% load static %}
+
+{% block title %}Create Itinerary{% endblock title %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ total_itineraries|default:0 }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+{{ new_itineraries|default:0 }}%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-file-document icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Itineraries</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ total_clients|default:0 }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+5%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-account-multiple icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Clients</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">{{ avg_days|default:0 }}</h3>
+              <p class="text-primary ms-2 mb-0 font-weight-medium">avg</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-info">
+              <span class="mdi mdi-calendar-clock icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Average Days</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Ksh {{ total_price|default:0|floatformat:2 }}</h3>
+              <p class="text-success ms-2 mb-0 font-weight-medium">+12%</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-currency-usd icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal">Total Value</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Left Column - Main Form -->
+  <div class="col-md-7 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Create New Itinerary</h4>
+
+        <!-- Display Messages -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <form method="POST" id="itineraryForm">
+          {% csrf_token %}
+          {{ activity_formset.management_form }}
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="title">Itinerary Title *</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                  <small class="text-danger">{{ form.title.errors.0 }}</small>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="client_name">Client Name</label>
+                {{ form.client_name }}
+                {% if form.client_name.errors %}
+                  <small class="text-danger">{{ form.client_name.errors.0 }}</small>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="days_spent">Days Spent *</label>
+                {{ form.days_spent }}
+                {% if form.days_spent.errors %}
+                  <small class="text-danger">{{ form.days_spent.errors.0 }}</small>
+                {% endif %}
+                <small class="text-muted d-block mt-1">Minimum 1 day - Daily Activities on the right update instantly as you type</small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="price">Total Price (Ksh) *</label>
+                {{ form.price }}
+                {% if form.price.errors %}
+                  <small class="text-danger">{{ form.price.errors.0 }}</small>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+              <small class="text-danger">{{ form.description.errors.0 }}</small>
+            {% endif %}
+            <small class="text-muted d-block mt-1">Provide a detailed description of the itinerary</small>
+          </div>
+
+          <!-- Hotel Images Field -->
+          <div class="form-group">
+            <label for="hotel_images">Hotel Images <span class="badge badge-info">Max 5 images</span></label>
+            {{ form.hotel_images }}
+            {% if form.hotel_images.errors %}
+              <small class="text-danger">{{ form.hotel_images.errors.0 }}</small>
+            {% endif %}
+            <small class="text-muted d-block mt-1">Hold Ctrl/Cmd to select multiple images</small>
+            <small class="text-muted d-block">Selected: <span id="hotel_count">0</span>/5</small>
+          </div>
+
+          <!-- Destination Images Field -->
+          <div class="form-group">
+            <label for="destination_images">Destination Images <span class="badge badge-info">Max 5 images</span></label>
+            {{ form.destination_images }}
+            {% if form.destination_images.errors %}
+              <small class="text-danger">{{ form.destination_images.errors.0 }}</small>
+            {% endif %}
+            <small class="text-muted d-block mt-1">Hold Ctrl/Cmd to select multiple images</small>
+            <small class="text-muted d-block">Selected: <span id="destination_count">0</span>/5</small>
+          </div>
+
+          <div class="form-group mt-4">
+            <label class="form-label">Quick Stats:</label>
+            <div class="mt-2">
+              <span class="badge badge-outline-primary me-2">Auto-generates unique slug</span>
+              <span class="badge badge-outline-success me-2">Share link ready</span>
+              <span class="badge badge-outline-info">Created: {% now "M d, Y H:i" %}</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary me-2">
+            <i class="mdi mdi-content-save"></i> Create Itinerary
+          </button>
+          <a href="{% url 'itinerary_list' %}" class="btn btn-secondary">
+            <i class="mdi mdi-close"></i> Cancel
+          </a>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column - Activities Form -->
+  <div class="col-md-5 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">
+          <i class="mdi mdi-calendar-clock me-2"></i>
+          Daily Activities
+          <span class="badge badge-primary ms-2" id="activityCount">{{ activity_formset.total_form_count }}</span>
+        </h4>
+        <p class="text-muted small">Fill in the activities for each day of the itinerary.</p>
+
+        <!-- Activities are inside the same form -->
+        <div class="activities-container" id="activitiesContainer" style="max-height: 550px; overflow-y: auto; padding-right: 5px;">
+          {% for activity_form in activity_formset %}
+          <div class="card mb-3 activity-card" data-index="{{ forloop.counter0 }}">
+            <div class="card-header bg-light py-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 day-label">
+                  <i class="mdi mdi-flag-variant me-1"></i>
+                  Day {{ activity_form.instance.day_number|default:forloop.counter }}
+                </h6>
+                <span class="badge badge-outline-primary">Activity {{ forloop.counter }}</span>
+              </div>
+            </div>
+            <div class="card-body">
+              {{ activity_form.id }}
+              {{ activity_form.DELETE }}
+
+              <!-- Hidden day_number field -->
+              <div style="display: none;">
+                {{ activity_form.day_number }}
+              </div>
+
+              <div class="form-group">
+                <label class="small">Activity Title *</label>
+                {{ activity_form.title }}
+                {% if activity_form.title.errors %}
+                  <small class="text-danger">{{ activity_form.title.errors.0 }}</small>
+                {% endif %}
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="small">Location</label>
+                    {{ activity_form.location }}
+                    {% if activity_form.location.errors %}
+                      <small class="text-danger">{{ activity_form.location.errors.0 }}</small>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="small">Duration</label>
+                    {{ activity_form.duration }}
+                    {% if activity_form.duration.errors %}
+                      <small class="text-danger">{{ activity_form.duration.errors.0 }}</small>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group mb-0">
+                <label class="small">Description</label>
+                {{ activity_form.description }}
+                {% if activity_form.description.errors %}
+                  <small class="text-danger">{{ activity_form.description.errors.0 }}</small>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Hidden template used by JS to clone a fresh activity card for each new day.
+             Django's formset.empty_form gives us properly-prefixed fields (__prefix__)
+             that we swap for the real index client-side. -->
+        <div id="activityCardTemplate" style="display:none;">
+          <div class="card mb-3 activity-card" data-index="__prefix__">
+            <div class="card-header bg-light py-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 day-label">
+                  <i class="mdi mdi-flag-variant me-1"></i>
+                  Day <span class="day-number-text">__prefix__</span>
+                </h6>
+                <span class="badge badge-outline-primary">Activity <span class="activity-number-text">__prefix__</span></span>
+              </div>
+            </div>
+            <div class="card-body">
+              {{ activity_formset.empty_form.id }}
+              {{ activity_formset.empty_form.DELETE }}
+
+              <div style="display: none;">
+                {{ activity_formset.empty_form.day_number }}
+              </div>
+
+              <div class="form-group">
+                <label class="small">Activity Title *</label>
+                {{ activity_formset.empty_form.title }}
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="small">Location</label>
+                    {{ activity_formset.empty_form.location }}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="small">Duration</label>
+                    {{ activity_formset.empty_form.duration }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group mb-0">
+                <label class="small">Description</label>
+                {{ activity_formset.empty_form.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Quick Tips</h4>
+        <ul class="text-muted">
+          <li>A unique slug is automatically generated from the title and client name</li>
+          <li>Share link is automatically generated after creation</li>
+          <li>You can select a maximum of <strong>5</strong> hotel images and <strong>5</strong> destination images</li>
+          <li>All fields with * are required</li>
+          <li>Images can be selected from the existing galleries</li>
+          <li>The itinerary can be shared with clients via the generated link</li>
+          <li>You can edit the itinerary after creation to add more details</li>
+          <li>Activities are automatically generated based on the number of days</li>
+          <li>Each activity card represents one day of the itinerary</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block injectjs %}
+
+<!-- Select2 for better multi-select experience -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+(function($) {
+  'use strict';
+
+  $(function() {
+    console.log('Document ready');
+
+    // ------------------------------------------------------------------
+    // Live "Days Spent" -> "Daily Activities" sync (no page reload)
+    //
+    // The hidden #activityCardTemplate holds Django's formset.empty_form
+    // markup with "__prefix__" placeholders. We clone it, swap in the
+    // real index, and append/remove cards so the number of activity
+    // cards always matches the Days Spent value. TOTAL_FORMS is kept in
+    // sync so Django's formset saves the exact same number of
+    // ItineraryActivity rows on submit.
+    //
+    // This runs FIRST, before select2/etc., so a third-party script
+    // failing to load elsewhere in this handler can never block the
+    // activity cards from working.
+    // ------------------------------------------------------------------
+    var MAX_DAYS = 90;
+    var $activitiesContainer = $('#activitiesContainer');
+    var activityTemplateEl = document.getElementById('activityCardTemplate');
+    var templateHtml = activityTemplateEl ? activityTemplateEl.innerHTML : '';
+    var $totalForms = $('#id_activities-TOTAL_FORMS');
+
+    function getCardCount() {
+      return $activitiesContainer.find('.activity-card').length;
+    }
+
+    function renumberCards() {
+      $activitiesContainer.find('.activity-card').each(function(i) {
+        $(this).find('.day-label').html('<i class="mdi mdi-flag-variant me-1"></i> Day ' + (i + 1));
+        $(this).find('.badge-outline-primary').text('Activity ' + (i + 1));
+      });
+    }
+
+    function updateActivityCountBadge() {
+      $('#activityCount').text(getCardCount());
+    }
+
+    function addActivityCard(index) {
+      if (!templateHtml) return;
+      var html = templateHtml.split('__prefix__').join(index);
+      var $card = $(html.trim());
+
+      // Pre-fill the hidden day number and a friendly default title for the new day
+      $card.find('input[id$="-day_number"]').val(index + 1);
+      var $title = $card.find('input[id$="-title"]');
+      if (!$title.val()) {
+        $title.val('Day ' + (index + 1) + ' - Activity');
+      }
+
+      $activitiesContainer.append($card);
+    }
+
+    function removeLastActivityCard() {
+      $activitiesContainer.find('.activity-card').last().remove();
+    }
+
+    function syncActivityCards(rawCount) {
+      var target = Math.max(1, Math.min(MAX_DAYS, parseInt(rawCount, 10) || 1));
+      var current = getCardCount();
+
+      if (target > current) {
+        for (var i = current; i < target; i++) {
+          addActivityCard(i);
+        }
+      } else if (target < current) {
+        for (var j = current; j > target; j--) {
+          removeLastActivityCard();
+        }
+      }
+
+      if ($totalForms.length) $totalForms.val(target);
+      renumberCards();
+      updateActivityCountBadge();
+    }
+
+    var daysInput = $('#id_days_spent');
+    var daysDebounce = null;
+
+    daysInput.on('input change', function() {
+      var days = $(this).val();
+      clearTimeout(daysDebounce);
+      daysDebounce = setTimeout(function() {
+        if (days && parseInt(days, 10) > 0) {
+          syncActivityCards(days);
+        }
+      }, 250);
+    });
+
+    // Make sure cards/TOTAL_FORMS match whatever days_spent already holds on load
+    // (covers browser back/forward cache restoring a previously typed value)
+    if (daysInput.val()) {
+      syncActivityCards(daysInput.val());
+    }
+
+    // Initialize Select2 for hotel images (guarded: if the CDN failed to
+    // load, $.fn.select2 won't exist -- skip instead of throwing, so it
+    // can never block the activity-card logic above or anything below)
+    if ($('#id_hotel_images').length) {
+      if (typeof $.fn.select2 === 'function') {
+        console.log('Initializing hotel images select2');
+        $('#id_hotel_images').select2({
+          placeholder: 'Select hotel images...',
+          allowClear: true,
+          width: '100%'
+        });
+      } else {
+        console.warn('select2 library did not load (check network/CDN access) - using plain multi-select for hotel images');
+      }
+    }
+
+    // Initialize Select2 for destination images (same guard as above)
+    if ($('#id_destination_images').length) {
+      if (typeof $.fn.select2 === 'function') {
+        console.log('Initializing destination images select2');
+        $('#id_destination_images').select2({
+          placeholder: 'Select destination images...',
+          allowClear: true,
+          width: '100%'
+        });
+      } else {
+        console.warn('select2 library did not load (check network/CDN access) - using plain multi-select for destination images');
+      }
+    }
+
+    // Update image count display for hotel images
+    $('#id_hotel_images').on('change', function() {
+      var count = $(this).find('option:selected').length;
+      $('#hotel_count').text(count);
+
+      if (count > 5) {
+        $('#hotel_count').css('color', 'red');
+        $('#hotel_count').css('font-weight', 'bold');
+        $('#hotel_count').text(count + ' (⚠️ Max 5)');
+      } else {
+        $('#hotel_count').css('color', '');
+        $('#hotel_count').css('font-weight', '');
+        $('#hotel_count').text(count);
+      }
+    });
+
+    // Update image count display for destination images
+    $('#id_destination_images').on('change', function() {
+      var count = $(this).find('option:selected').length;
+      $('#destination_count').text(count);
+
+      if (count > 5) {
+        $('#destination_count').css('color', 'red');
+        $('#destination_count').css('font-weight', 'bold');
+        $('#destination_count').text(count + ' (⚠️ Max 5)');
+      } else {
+        $('#destination_count').css('color', '');
+        $('#destination_count').css('font-weight', '');
+        $('#destination_count').text(count);
+      }
+    });
+
+    // Initialize counts on page load
+    setTimeout(function() {
+      var hotelCount = $('#id_hotel_images').find('option:selected').length;
+      $('#hotel_count').text(hotelCount);
+
+      var destCount = $('#id_destination_images').find('option:selected').length;
+      $('#destination_count').text(destCount);
+    }, 100);
+
+    // Form validation before submit
+    $('#itineraryForm').on('submit', function(e) {
+      var hotelCount = $('#id_hotel_images').find('option:selected').length;
+      var destCount = $('#id_destination_images').find('option:selected').length;
+
+      if (hotelCount > 5) {
+        e.preventDefault();
+        alert('You can select a maximum of 5 hotel images. Currently selected: ' + hotelCount);
+        return false;
+      }
+
+      if (destCount > 5) {
+        e.preventDefault();
+        alert('You can select a maximum of 5 destination images. Currently selected: ' + destCount);
+        return false;
+      }
+
+      // Validate activities (scoped to the real container, not the
+      // hidden #activityCardTemplate -- which also carries the
+      // .activity-card class so JS can clone it, but is never a real
+      // day and must never be counted here)
+      var isValid = true;
+      var errorMessages = [];
+
+      $('#activitiesContainer').find('.activity-card').each(function(index) {
+        var titleInput = $(this).find('input[id$="title"]');
+        var title = titleInput.val();
+
+        if (!title || title.trim() === '') {
+          isValid = false;
+          titleInput.addClass('is-invalid');
+          errorMessages.push('Day ' + (index + 1) + ' activity title is required.');
+        } else {
+          titleInput.removeClass('is-invalid');
+        }
+      });
+
+      if (!isValid) {
+        e.preventDefault();
+        alert('Please fill in all activity titles.\n\n' + errorMessages.join('\n'));
+        return false;
+      }
+    });
+
+    // Remove validation on input (delegated + scoped so it only ever
+    // touches real activity cards inside #activitiesContainer)
+    $(document).on('input', '#activitiesContainer .activity-card input[id$="title"]', function() {
+      if ($(this).val() && $(this).val().trim() !== '') {
+        $(this).removeClass('is-invalid');
+      }
+    });
+
+  });
+})(jQuery);
+</script>
+
+{% endblock injectjs %}

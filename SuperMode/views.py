@@ -7,13 +7,28 @@ from Invoices.models import Invoice
 from django.db.models import Sum
 from decimal import Decimal
 from django.db import models
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from Invoices.forms import InvoiceForm
 from datetime import date, timedelta
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Q
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
+from django.core.exceptions import ValidationError
+from .models import ItineraryBuilder
+from .forms import ItineraryBuilderForm
+from Accomodations.models import AccomodationsImage
+from Places.models import Destinations
+from django.forms import ModelMultipleChoiceField
+from django.db import transaction
+
+from .forms import ItineraryBuilderForm, ItineraryActivityForm
+from .models import ItineraryBuilder, ItineraryActivity
+from django.forms import formset_factory, modelformset_factory
+from collections import defaultdict
 
 class AdminDashboardView(ListView):
     template_name = 'Dashboard/index.html'
@@ -1084,3 +1099,347 @@ class HoteslListView(ListView):
     template_name = 'Hotels/hotels.html'
     context_object_name = 'hotels'
     paginate_by = 10
+
+
+from .models import ItineraryBuilder
+class ItineraryListView(LoginRequiredMixin, ListView):
+    """View for listing all itineraries with pagination"""
+
+    model = ItineraryBuilder
+    template_name = 'Itineraries/itinerary_list.html'
+    context_object_name = 'itineraries'
+    paginate_by = 10
+    ordering = ['-created_at']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Add search functionality
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            queryset = queryset.filter(
+                models.Q(title__icontains=search_query) |
+                models.Q(client_name__icontains=search_query) |
+                models.Q(description__icontains=search_query)
+            )
+
+        # Add filter by date range
+        date_from = self.request.GET.get('date_from', '')
+        date_to = self.request.GET.get('date_to', '')
+        if date_from:
+            queryset = queryset.filter(created_at__gte=date_from)
+        if date_to:
+            queryset = queryset.filter(created_at__lte=date_to)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_itineraries'] = self.get_queryset().count()
+        context['search_query'] = self.request.GET.get('search', '')
+
+        # Add statistics
+        total_price = self.get_queryset().aggregate(total=models.Sum('price'))['total'] or 0
+        context['total_price'] = total_price
+        context['avg_days'] = self.get_queryset().aggregate(avg=models.Avg('days_spent'))['avg'] or 0
+
+        return context
+
+class ItineraryCreateView(LoginRequiredMixin, CreateView):
+    """View for creating a new itinerary with dynamic activities"""
+
+    model = ItineraryBuilder
+    form_class = ItineraryBuilderForm
+    template_name = 'Itineraries/itinerary_form.html'
+    success_url = reverse_lazy('itinerary_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Create New Itinerary'
+        context['button_text'] = 'Create Itinerary'
+        context['is_create'] = True
+
+        # Get all available images for selection
+        context['all_hotel_images'] = AccomodationsImage.objects.select_related('accomodation').all()
+        context['all_destinations'] = Destinations.objects.select_related('category').all()
+
+        # Get days from GET parameter or form data (clamped to a sane range)
+        if self.request.POST:
+            raw_days = self.request.POST.get('days_spent', 10)
+        else:
+            raw_days = self.request.GET.get('days', 10)
+        try:
+            days = max(1, min(90, int(raw_days)))
+        except (TypeError, ValueError):
+            days = 10
+
+        # Create Activity Formset.
+        # IMPORTANT: for an *unbound* ModelFormSet, Django computes
+        # initial_form_count() from the queryset (0, since we use
+        # ItineraryActivity.objects.none()) -- it ignores the `initial=`
+        # list for that purpose. So the number of forms actually rendered
+        # is `extra`, not len(initial). extra must equal `days` or the
+        # activity cards silently render as an empty list on first load.
+        ActivityFormSet = modelformset_factory(
+            ItineraryActivity,
+            form=ItineraryActivityForm,
+            extra=days,
+            can_delete=True
+        )
+
+        initial_data = []
+        for i in range(1, days + 1):
+            initial_data.append({
+                'day_number': i,
+                'title': f'Day {i} - Activity',
+            })
+
+        if self.request.POST:
+            context['activity_formset'] = ActivityFormSet(
+                self.request.POST,
+                queryset=ItineraryActivity.objects.none(),
+                initial=initial_data,
+                prefix='activities'
+            )
+        else:
+            context['activity_formset'] = ActivityFormSet(
+                queryset=ItineraryActivity.objects.none(),
+                initial=initial_data,
+                prefix='activities'
+            )
+
+        context['initial_days'] = days
+        return context
+
+    def form_valid(self, form):
+        """Handle successful form submission with activities"""
+        try:
+            with transaction.atomic():
+                # Save the itinerary first
+                self.object = form.save()
+
+                # Now handle the activities
+                ActivityFormSet = modelformset_factory(
+                    ItineraryActivity,
+                    form=ItineraryActivityForm,
+                    extra=0,
+                    can_delete=True
+                )
+
+                activity_formset = ActivityFormSet(
+                    self.request.POST,
+                    queryset=ItineraryActivity.objects.none(),
+                    prefix='activities'
+                )
+
+                if activity_formset.is_valid():
+                    for activity_form in activity_formset:
+                        if activity_form.cleaned_data and not activity_form.cleaned_data.get('DELETE', False):
+                            activity = activity_form.save(commit=False)
+                            activity.itinerary = self.object
+                            # Ensure day_number is set
+                            if not activity.day_number:
+                                activity.day_number = activity_form.cleaned_data.get('day_number', 1)
+                            activity.save()
+                else:
+                    # If activities are invalid, re-render the form with errors
+                    return self.render_to_response({
+                        'form': form,
+                        'activity_formset': activity_formset,
+                        **self.get_context_data()
+                    })
+
+                messages.success(
+                    self.request,
+                    f'Itinerary "{self.object.title}" created successfully with {self.object.activities.count()} activities!'
+                )
+                return redirect(self.success_url)
+
+        except Exception as e:
+            messages.error(self.request, f'Error creating itinerary: {str(e)}')
+            return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        """Handle invalid form submission"""
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f'{field}: {error}')
+
+        # If we have activity formset errors, display them too
+        if hasattr(self.request, 'POST'):
+            ActivityFormSet = modelformset_factory(
+                ItineraryActivity,
+                form=ItineraryActivityForm,
+                extra=0,
+                can_delete=True
+            )
+            activity_formset = ActivityFormSet(
+                self.request.POST,
+                queryset=ItineraryActivity.objects.none(),
+                prefix='activities'
+            )
+            if activity_formset.errors:
+                for error in activity_formset.errors:
+                    for field, field_errors in error.items():
+                        for field_error in field_errors:
+                            messages.error(self.request, f'Activity {field}: {field_error}')
+
+        return super().form_invalid(form)
+
+
+class ItineraryUpdateView(LoginRequiredMixin, UpdateView):
+    """View for updating an existing itinerary"""
+
+    model = ItineraryBuilder
+    form_class = ItineraryBuilderForm
+    template_name = 'Itineraries/itinerary_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('itinerary_detail', kwargs={'slug': self.object.slug})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Edit Itinerary: {self.object.title}'
+        context['button_text'] = 'Update Itinerary'
+        context['is_create'] = False
+        context['itinerary'] = self.object
+
+        # Get all available images for selection
+        context['all_hotel_images'] = AccomodationsImage.objects.select_related('accomodation').all()
+        context['all_destinations'] = Destinations.objects.select_related('category').all()
+
+        return context
+
+    def form_valid(self, form):
+        """Handle successful form submission"""
+        try:
+            with transaction.atomic():
+                response = super().form_valid(form)
+                messages.success(self.request, f'Itinerary "{self.object.title}" updated successfully!')
+                return response
+        except ValidationError as e:
+            messages.error(self.request, str(e))
+            return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        """Handle invalid form submission"""
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f'{field}: {error}')
+        return super().form_invalid(form)
+
+
+class ItineraryDetailView(LoginRequiredMixin, DetailView):
+    """View for displaying a single itinerary"""
+
+    model = ItineraryBuilder
+    template_name = 'Itineraries/itinerary_detail.html'
+    context_object_name = 'itinerary'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['hotel_images'] = self.object.hotel_images.select_related('accomodation').all()
+        context['destination_images'] = self.object.destination_images.all()
+        context['share_link'] = self.object.shareable_link
+        context['day_slides'] = self._build_day_slides()
+
+        # Generate share link if not exists
+        if not self.object.share_link:
+            self.object.share_link = self.object._generate_share_link()
+            self.object.save()
+
+        return context
+
+    def _build_day_slides(self):
+        """Group activities by day so each slide maps 1:1 to a day of the trip."""
+        activities_by_day = defaultdict(list)
+        for activity in self.object.activities.all():
+            activities_by_day[activity.day_number].append(activity)
+
+        return [
+            {'day_number': day, 'activities': activities_by_day.get(day, [])}
+            for day in range(1, (self.object.days_spent or 0) + 1)
+        ]
+
+class ItineraryDeleteView(LoginRequiredMixin, DeleteView):
+    """View for deleting an itinerary"""
+
+    model = ItineraryBuilder
+    template_name = 'Itineraries/itinerary_confirm_delete.html'
+    success_url = reverse_lazy('itinerary_list')
+    context_object_name = 'itinerary'
+
+    def delete(self, request, *args, **kwargs):
+        """Handle delete with success message"""
+        self.object = self.get_object()
+        title = self.object.title
+        response = super().delete(request, *args, **kwargs)
+        messages.success(request, f'Itinerary "{title}" deleted successfully!')
+        return response
+
+
+class GenerateShareLinkView(LoginRequiredMixin, DetailView):
+    """View for generating a share link for an itinerary"""
+
+    model = ItineraryBuilder
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        # Generate share link
+        if not self.object.share_link:
+            self.object.share_link = self.object._generate_share_link()
+            self.object.save()
+            messages.success(request, f'Share link generated successfully for "{self.object.title}"!')
+        else:
+            messages.info(request, f'Share link already exists for "{self.object.title}"')
+
+        return redirect('itinerary_detail', slug=self.object.slug)
+
+
+class PublicItineraryView(DetailView):
+    """Public view for viewing a shared itinerary without login"""
+
+    model = ItineraryBuilder
+    template_name = 'Itineraries/public_itinerary_detail.html'
+    context_object_name = 'itinerary'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['hotel_images'] = self.object.hotel_images.select_related('accomodation').all()
+        context['destination_images'] = self.object.destination_images.all()
+
+        activities_by_day = defaultdict(list)
+        for activity in self.object.activities.all():
+            activities_by_day[activity.day_number].append(activity)
+
+        context['day_slides'] = [
+            {'day_number': day, 'activities': activities_by_day.get(day, [])}
+            for day in range(1, (self.object.days_spent or 0) + 1)
+        ]
+
+        return context
+
+
+# AJAX view for dynamic image loading
+def get_hotel_images(request):
+    """AJAX view to get hotel images for a specific accommodation"""
+    accommodation_id = request.GET.get('accommodation_id')
+    if accommodation_id:
+        images = AccomodationsImage.objects.filter(
+            accomodation_id=accommodation_id
+        ).select_related('accomodation')
+        data = [{
+            'id': img.id,
+            'image_url': img.image.url if img.image else '',
+            'caption': img.caption,
+            'accommodation': img.accomodation.name
+        } for img in images]
+        return JsonResponse({'images': data})
+    return JsonResponse({'images': []})

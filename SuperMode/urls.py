@@ -42,4 +42,18 @@ urlpatterns = [
 
     # hotels
     path('hotels/', HoteslListView.as_view(), name='hotels_list'),
+
+    # itineraries
+    path('itinerary/', ItineraryListView.as_view(), name='itinerary_list'),
+    path('create-Itinerary/', ItineraryCreateView.as_view(), name='create_itinerary'),
+    path('<slug:slug>/', ItineraryDetailView.as_view(), name='itinerary_detail'),
+    path('<slug:slug>/edit/', ItineraryUpdateView.as_view(), name='edit_itinerary'),
+    path('<slug:slug>/delete/', ItineraryDeleteView.as_view(), name='delete_itinerary'),
+
+    # Share link URLs
+    path('<slug:slug>/generate-link/', GenerateShareLinkView.as_view(), name='generate_itinerary_link'),
+    path('share/<slug:slug>/', PublicItineraryView.as_view(), name='public_itinerary'),
+
+    # AJAX URLs
+    path('ajax/hotel-images/', get_hotel_images, name='get_hotel_images'),
 ]

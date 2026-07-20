@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ itinerary.title }} - Itinerary</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #5a1233;
+            --secondary-color: #8b1a4e;
+            --accent-color: #e8c9d8;
+            --text-dark: #2d2d2d;
+            --text-light: #6c757d;
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .itinerary-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .itinerary-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .itinerary-header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .itinerary-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            margin-bottom: 1rem;
+        }
+
+        .itinerary-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .itinerary-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .meta-item i {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Card Styles */
+        .card-custom {
+            background: white;
+            border-radius: 16px;
+            border: none;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-custom .card-header {
+            background: white;
+            border-bottom: 2px solid var(--accent-color);
+            padding: 1.25rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .card-custom .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Image Gallery */
+        .gallery-section {
+            padding: 3rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: #f0f0f0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .gallery-item .overlay p {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            transition: background 0.3s ease;
+        }
+
+        .lightbox .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox .prev-btn {
+            left: 20px;
+        }
+
+        .lightbox .next-btn {
+            right: 20px;
+        }
+
+        /* Description Section */
+        .description-section {
+            padding: 2rem 0;
+        }
+
+        .description-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 2rem 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-box .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-box .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Share Section */
+        .share-section {
+            padding: 2rem 0;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0.3rem;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: white;
+        }
+
+        .share-btn.facebook { background: #1877f2; }
+        .share-btn.twitter { background: #000000; }
+        .share-btn.whatsapp { background: #25d366; }
+        .share-btn.linkedin { background: #0a66c2; }
+        .share-btn.email { background: #ea4335; }
+        .share-btn.copy { background: var(--primary-color); }
+
+        /* Footer */
+        .itinerary-footer {
+            background: var(--text-dark);
+            color: rgba(255,255,255,0.7);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .itinerary-footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .itinerary-footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Day-by-Day Slider */
+        .day-slider-section {
+            padding: 3rem 0;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        .day-slider-wrapper {
+            position: relative;
+        }
+
+        .day-slider-track {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.5rem 5% 1.5rem;
+            scrollbar-width: none;
+            outline: none;
+        }
+
+        .day-slider-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .day-slide {
+            flex: 0 0 90%;
+            max-width: 90%;
+            scroll-snap-align: center;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid #f0e6ec;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .day-slide-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #fff;
+            padding: 1.25rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .day-slide-eyebrow {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.85;
+            margin-bottom: 0.25rem;
+        }
+
+        .day-slide-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .day-slide-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .day-slide-body {
+            padding: 1.5rem 1.75rem;
+            flex: 1;
+        }
+
+        .day-activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f3edf1;
+        }
+
+        .day-activity-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .day-activity-item:first-child {
+            padding-top: 0;
+        }
+
+        .day-activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .day-activity-content h6 {
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .day-activity-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .day-activity-empty {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-light);
+        }
+
+        .day-slide-gallery {
+            display: flex;
+            gap: 0.6rem;
+            overflow-x: auto;
+            padding: 0 1.75rem 1.5rem;
+        }
+
+        .day-slide-gallery img {
+            width: 88px;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .day-slider-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .day-slider-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-color);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .day-slider-btn:hover:not(:disabled) {
+            transform: scale(1.08);
+        }
+
+        .day-slider-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .day-slider-dots {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 70%;
+        }
+
+        .day-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #e2d3db;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .day-dot.active {
+            background: var(--primary-color);
+            width: 26px;
+            border-radius: 6px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .itinerary-title {
+                font-size: 2rem;
+            }
+
+            .meta-info {
+                gap: 1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .lightbox .nav-btn {
+                padding: 0.5rem 1rem;
+                font-size: 1.5rem;
+            }
+
+            .lightbox .prev-btn {
+                left: 10px;
+            }
+
+            .lightbox .next-btn {
+                right: 10px;
+            }
+
+            .day-slide {
+                flex-basis: 92%;
+                max-width: 92%;
+            }
+
+            .day-slider-track {
+                padding: 0.5rem 4% 1.5rem;
+                gap: 1rem;
+            }
+
+            .day-slide-header {
+                padding: 1rem 1.25rem;
+            }
+
+            .day-slide-title {
+                font-size: 1.1rem;
+            }
+
+            .day-slide-body {
+                padding: 1.25rem;
+            }
+
+            .day-slide-gallery {
+                padding: 0 1.25rem 1.25rem;
+            }
+
+            .day-slider-dots {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="itinerary-header">
+        <div class="container header-content">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="itinerary-badge">
+                        <i class="fas fa-calendar-alt me-2"></i>
+                        Itinerary
+                    </div>
+                    <h1 class="itinerary-title">{{ itinerary.title }}</h1>
+                    <p class="itinerary-subtitle">
+                        <i class="fas fa-user me-2"></i>
+                        {{ itinerary.client_name|default:"Client" }}
+                    </p>
+
+                    <div class="meta-info">
+                        <span class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>{{ itinerary.days_spent }} Days</span>
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-tag"></i>
+                            <span>Ksh {{ itinerary.price|floatformat:2 }}</span>
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-calendar-plus"></i>
+                            <span>Created: {{ itinerary.created_at|date:"M d, Y" }}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0">
+                    <a href="#share" class="btn btn-light btn-lg rounded-pill px-4">
+                        <i class="fas fa-share-alt me-2"></i> Share
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <div class="stat-number">{{ itinerary.hotel_images.count }}</div>
+                        <div class="stat-label">Hotel Images</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <div class="stat-number">{{ itinerary.destination_images.count }}</div>
+                        <div class="stat-label">Destination Images</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <div class="stat-number">{{ itinerary.days_spent }}</div>
+                        <div class="stat-label">Total Days</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <div class="stat-number">Ksh {{ itinerary.price|floatformat:0 }}</div>
+                        <div class="stat-label">Total Price</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Description Section -->
+    <section class="description-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card-custom">
+                        <div class="card-header">
+                            <i class="fas fa-info-circle me-2" style="color: var(--primary-color);"></i>
+                            Itinerary Overview
+                        </div>
+                        <div class="card-body">
+                            {% if itinerary.description %}
+                                <p class="description-text">{{ itinerary.description|linebreaks }}</p>
+                            {% else %}
+                                <p class="text-muted text-center py-3">
+                                    <i class="fas fa-file-alt me-2"></i>
+                                    No description provided.
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day-by-Day Itinerary Slider -->
+    {% if day_slides %}
+    <section class="day-slider-section" id="itinerary">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="h3 mb-1">
+                        <i class="fas fa-map-signs me-2" style="color: var(--primary-color);"></i>
+                        Day-by-Day Itinerary
+                    </h2>
+                    <p class="text-muted mb-0">Swipe or use the arrows to explore each day of the trip</p>
+                </div>
+            </div>
+
+            <div class="day-slider-wrapper">
+                <div class="day-slider-track" id="daySliderTrack">
+                    {% for day in day_slides %}
+                    <div class="day-slide">
+                        <div class="day-slide-header">
+                            <div>
+                                <span class="day-slide-eyebrow">Day {{ day.day_number }} of {{ itinerary.days_spent }}</span>
+                                <h3 class="day-slide-title">
+                                    {% with first_activity=day.activities.0 %}
+                                        {% if first_activity %}{{ first_activity.title }}{% else %}Free / Flexible Day{% endif %}
+                                    {% endwith %}
+                                </h3>
+                            </div>
+                            <div class="day-slide-badge">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                        </div>
+
+                        <div class="day-slide-body">
+                            {% if day.activities %}
+                                {% for activity in day.activities %}
+                                <div class="day-activity-item">
+                                    <div class="day-activity-icon"><i class="fas fa-map-pin"></i></div>
+                                    <div class="day-activity-content">
+                                        <h6>{{ activity.title }}</h6>
+                                        {% if activity.location or activity.duration %}
+                                        <div class="day-activity-meta">
+                                            {% if activity.location %}<span><i class="fas fa-location-dot me-1"></i>{{ activity.location }}</span>{% endif %}
+                                            {% if activity.duration %}<span><i class="fas fa-clock me-1"></i>{{ activity.duration }}</span>{% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if activity.description %}
+                                            <p class="mb-0 small text-muted">{{ activity.description }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="day-activity-empty">
+                                    <i class="fas fa-mug-hot fa-2x mb-2"></i>
+                                    <p class="mb-0">No activities added for this day yet — a relaxed day to explore at your own pace.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if itinerary.hotel_images.exists or itinerary.destination_images.exists %}
+                        <div class="day-slide-gallery">
+                            {% for image in itinerary.hotel_images.all|slice:":6" %}
+                                <img src="{{ image.image.url }}" alt="{{ image.accomodation.name|default:'Hotel' }}" title="{{ image.accomodation.name|default:'Hotel' }}" loading="lazy">
+                            {% endfor %}
+                            {% for destination in itinerary.destination_images.all|slice:":6" %}
+                                {% if destination.image %}
+                                    <img src="{{ destination.image.url }}" alt="{{ destination.name }}" title="{{ destination.name }}" loading="lazy">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="day-slider-controls">
+                    <button type="button" class="day-slider-btn" id="daySliderPrev" aria-label="Previous day">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="day-slider-dots" id="daySliderDots">
+                        {% for day in day_slides %}
+                        <button type="button" class="day-dot{% if forloop.first %} active{% endif %}" aria-label="Go to day {{ day.day_number }}"></button>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="day-slider-btn" id="daySliderNext" aria-label="Next day">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Hotel Images Gallery -->
+    {% if itinerary.hotel_images.exists %}
+    <section class="gallery-section">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="h3 mb-0">
+                        <i class="fas fa-hotel me-2" style="color: var(--primary-color);"></i>
+                        Hotel Images
+                        <span class="badge bg-primary ms-2">{{ itinerary.hotel_images.count }}</span>
+                    </h2>
+                    <p class="text-muted">Click on any image to view in full screen</p>
+                </div>
+            </div>
+            <div class="gallery-grid" id="hotelGallery">
+                {% for image in itinerary.hotel_images.all %}
+                <div class="gallery-item" onclick="openLightbox('hotelGallery', {{ forloop.counter0 }})">
+                    <img src="{{ image.image.url }}" alt="{{ image.caption|default:image.accomodation.name }}">
+                    {% if image.caption %}
+                    <div class="overlay">
+                        <p><i class="fas fa-image me-2"></i>{{ image.caption }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Destination Images Gallery -->
+    {% if itinerary.destination_images.exists %}
+    <section class="gallery-section" style="padding-top: 0;">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="h3 mb-0">
+                        <i class="fas fa-map-marked-alt me-2" style="color: var(--primary-color);"></i>
+                        Destination Images
+                        <span class="badge bg-info ms-2">{{ itinerary.destination_images.count }}</span>
+                    </h2>
+                    <p class="text-muted">Click on any image to view in full screen</p>
+                </div>
+            </div>
+            <div class="gallery-grid" id="destinationGallery">
+                {% for destination in itinerary.destination_images.all %}
+                <div class="gallery-item" onclick="openLightbox('destinationGallery', {{ forloop.counter0 }})">
+                    {% if destination.image %}
+                        <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
+                    {% else %}
+                        <div class="d-flex align-items-center justify-content-center h-100 bg-light">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                    {% endif %}
+                    <div class="overlay">
+                        <p><i class="fas fa-location-dot me-2"></i>{{ destination.name }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- No Images Message -->
+    {% if not itinerary.hotel_images.exists and not itinerary.destination_images.exists %}
+    <section class="gallery-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-custom">
+                        <div class="card-body text-center py-5">
+                            <i class="fas fa-images fa-4x text-muted mb-3"></i>
+                            <h5 class="text-muted">No images available for this itinerary</h5>
+                            <p class="text-muted small">Check back later for visual highlights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Share Section -->
+    <section class="share-section" id="share">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h4 class="mb-3">
+                        <i class="fas fa-share-alt me-2" style="color: var(--primary-color);"></i>
+                        Share This Itinerary
+                    </h4>
+                    <p class="text-muted mb-3">Share this itinerary with friends and family</p>
+
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <!-- Share Links -->
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
+                           target="_blank" class="share-btn facebook">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?text={{ itinerary.title }}&url={{ request.build_absolute_uri|urlencode }}"
+                           target="_blank" class="share-btn twitter">
+                            <i class="fab fa-x-twitter"></i> Twitter
+                        </a>
+                        <a href="https://wa.me/?text={{ itinerary.title }}%20-%20{{ request.build_absolute_uri|urlencode }}"
+                           target="_blank" class="share-btn whatsapp">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}"
+                           target="_blank" class="share-btn linkedin">
+                            <i class="fab fa-linkedin-in"></i> LinkedIn
+                        </a>
+                        <a href="mailto:?subject={{ itinerary.title }}&body=Check%20out%20this%20itinerary:%20{{ request.build_absolute_uri|urlencode }}"
+                           class="share-btn email">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                        <button onclick="copyLink()" class="share-btn copy">
+                            <i class="fas fa-copy"></i> Copy Link
+                        </button>
+                    </div>
+
+                    <div class="mt-3">
+                        <input type="text" id="shareLink" value="{{ request.build_absolute_uri }}"
+                               class="form-control d-inline-block" style="max-width: 400px; cursor: pointer;"
+                               readonly onclick="this.select(); document.execCommand('copy');">
+                        <span class="text-muted small d-block mt-1">Click to copy link</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="close-btn" onclick="closeLightbox(event)">&times;</button>
+        <button class="nav-btn prev-btn" onclick="changeImage(-1, event)">&#10094;</button>
+        <img id="lightboxImage" src="" alt="Enlarged view">
+        <button class="nav-btn next-btn" onclick="changeImage(1, event)">&#10095;</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="itinerary-footer">
+        <div class="container">
+            <p class="mb-0">
+                &copy; {% now "Y" %} Day Safari. All rights reserved.
+                <br>
+                <small>
+                    <i class="fas fa-route me-1"></i>
+                    Itinerary: {{ itinerary.title }}
+                </small>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Gallery Data
+        var galleryData = {
+            hotel: [
+                {% for image in itinerary.hotel_images.all %}
+                {
+                    url: "{{ image.image.url }}",
+                    caption: "{{ image.caption|default:''|escapejs }}",
+                    alt: "{{ image.accomodation.name|default:'Hotel Image'|escapejs }}"
+                }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ],
+            destination: [
+                {% for destination in itinerary.destination_images.all %}
+                {
+                    url: "{% if destination.image %}{{ destination.image.url }}{% else %}{% endif %}",
+                    caption: "{{ destination.name|escapejs }}",
+                    alt: "{{ destination.name|escapejs }}"
+                }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]
+        };
+
+        var currentGallery = [];
+        var currentIndex = 0;
+        var lightboxOpen = false;
+
+        function openLightbox(galleryId, index) {
+            var gallery = document.getElementById(galleryId);
+            var images = galleryId === 'hotelGallery' ? galleryData.hotel : galleryData.destination;
+
+            if (images.length === 0) return;
+
+            currentGallery = images;
+            currentIndex = index;
+            lightboxOpen = true;
+
+            var lightbox = document.getElementById('lightbox');
+            var img = document.getElementById('lightboxImage');
+
+            img.src = currentGallery[currentIndex].url;
+            img.alt = currentGallery[currentIndex].alt || 'Image';
+
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Show/hide navigation buttons based on image count
+            document.querySelector('.prev-btn').style.display = currentGallery.length > 1 ? 'block' : 'none';
+            document.querySelector('.next-btn').style.display = currentGallery.length > 1 ? 'block' : 'none';
+
+            // Update caption if available
+            if (currentGallery[currentIndex].caption) {
+                img.title = currentGallery[currentIndex].caption;
+            }
+        }
+
+        function closeLightbox(event) {
+            if (event.target === document.getElementById('lightbox') ||
+                event.target.classList.contains('close-btn')) {
+                document.getElementById('lightbox').classList.remove('active');
+                document.body.style.overflow = 'auto';
+                lightboxOpen = false;
+            }
+        }
+
+        function changeImage(direction, event) {
+            event.stopPropagation();
+
+            if (!lightboxOpen || currentGallery.length === 0) return;
+
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = currentGallery.length - 1;
+            if (currentIndex >= currentGallery.length) currentIndex = 0;
+
+            var img = document.getElementById('lightboxImage');
+            img.src = currentGallery[currentIndex].url;
+            img.alt = currentGallery[currentIndex].alt || 'Image';
+
+            if (currentGallery[currentIndex].caption) {
+                img.title = currentGallery[currentIndex].caption;
+            }
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', function(event) {
+            if (!lightboxOpen) return;
+
+            if (event.key === 'Escape') {
+                document.getElementById('lightbox').classList.remove('active');
+                document.body.style.overflow = 'auto';
+                lightboxOpen = false;
+            } else if (event.key === 'ArrowLeft') {
+                changeImage(-1, event);
+            } else if (event.key === 'ArrowRight') {
+                changeImage(1, event);
+            }
+        });
+
+        // Copy Link Function
+        function copyLink() {
+            var linkInput = document.getElementById('shareLink');
+            linkInput.select();
+            document.execCommand('copy');
+
+            // Show feedback
+            var copyBtn = document.querySelector('.share-btn.copy');
+            var originalHtml = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(function() {
+                copyBtn.innerHTML = originalHtml;
+            }, 2000);
+        }
+
+        // Auto-select link on click
+        document.getElementById('shareLink').addEventListener('click', function() {
+            this.select();
+            document.execCommand('copy');
+
+            // Show feedback
+            var copyBtn = document.querySelector('.share-btn.copy');
+            var originalHtml = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(function() {
+                copyBtn.innerHTML = originalHtml;
+            }, 2000);
+        });
+
+        // Day-by-Day Itinerary Slider (90%-width centered peek carousel)
+        (function() {
+            var track = document.getElementById('daySliderTrack');
+            if (!track) return;
+
+            var slides = Array.prototype.slice.call(track.querySelectorAll('.day-slide'));
+            var dots = Array.prototype.slice.call(document.querySelectorAll('#daySliderDots .day-dot'));
+            var prevBtn = document.getElementById('daySliderPrev');
+            var nextBtn = document.getElementById('daySliderNext');
+            var activeIndex = 0;
+
+            function setActive(index) {
+                activeIndex = index;
+                dots.forEach(function(dot, i) {
+                    dot.classList.toggle('active', i === index);
+                });
+                if (prevBtn) prevBtn.disabled = index === 0;
+                if (nextBtn) nextBtn.disabled = index === slides.length - 1;
+            }
+
+            function goTo(index) {
+                index = Math.max(0, Math.min(slides.length - 1, index));
+                slides[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+
+            dots.forEach(function(dot, i) {
+                dot.addEventListener('click', function() { goTo(i); });
+            });
+
+            if (prevBtn) prevBtn.addEventListener('click', function() { goTo(activeIndex - 1); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { goTo(activeIndex + 1); });
+
+            // Keep the dots/arrows in sync while the user swipes or drags the track
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+                            setActive(slides.indexOf(entry.target));
+                        }
+                    });
+                }, { root: track, threshold: [0.6] });
+
+                slides.forEach(function(slide) { observer.observe(slide); });
+            }
+
+            // Keyboard navigation when the slider has focus
+            track.setAttribute('tabindex', '0');
+            track.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') goTo(activeIndex + 1);
+                if (e.key === 'ArrowLeft') goTo(activeIndex - 1);
+            });
+
+            setActive(0);
+        })();
+    </script>
+</body>
+</html>
