@@ -22,6 +22,7 @@ ALLOWED_HOSTS = [
     "www.daysafarisadventures.co.ke",
     "localhost",
     "127.0.0.1",
+    "10.5.12.133",
 ]
 
 # ========== APPLICATION DEFINITION ==========
@@ -53,9 +54,28 @@ INSTALLED_APPS = [
 ]
 
 # ========== MIDDLEWARE ==========
+# WhiteNoiseMiddleware MUST sit above (before) GZipMiddleware here. Middleware
+# order = wrapping order: entries earlier in this list wrap entries later in
+# it. With GZip listed before WhiteNoise, every response WhiteNoise serves
+# for a static file (including these mp4s) used to still pass back up
+# through GZipMiddleware.process_response(). GZipMiddleware compresses ANY
+# response with no existing Content-Encoding -- it doesn't check status code
+# or content type -- so it was re-gzipping already-served video streams and,
+# for the Range/partial-content requests browsers issue for <video>
+# scrubbing/streaming, colliding with WhiteNoise's own Content-Range/
+# Content-Length handling. That collision is the 500. It's DEBUG-shaped
+# (rather than a plain, consistent failure) because request handling paths
+# for range/conditional GETs differ subtly enough between the two that one
+# happens to dodge it and the other doesn't -- the actual bug is this
+# ordering, not DEBUG itself.
+# With WhiteNoise listed first, it returns its response immediately without
+# ever calling down into GZipMiddleware, so static/video responses skip
+# GZip entirely (which is correct anyway: WhiteNoise already does its own,
+# smarter compression for static files).
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.gzip.GZipMiddleware',  # compresses HTML/CSS/JS/JSON responses (dynamic views only, now that WhiteNoise is above it)
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -129,10 +149,17 @@ DATABASES = {
 # }
 
 # CACHE
+# NOTE: LocMemCache is ISOLATED PER WORKER PROCESS. On Passenger/gunicorn
+# with more than one worker, a save in the admin only clears the cache in
+# whichever process handled that request -- every other process keeps a
+# stale copy indefinitely (edits appear to randomly "not take"). FileBasedCache
+# is shared across all processes on the same machine, at no extra hosting
+# cost. Swap for Redis/Memcached if available for better performance at
+# higher traffic -- same "shared across processes" requirement either way.
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': str(BASE_DIR / 'var' / 'django_cache'),
         'TIMEOUT': 300,  # 5 minutes default
         'OPTIONS': {
             'MAX_ENTRIES': 1000,
@@ -224,6 +251,23 @@ mimetypes.add_type("video/x-msvideo", ".avi", True)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Whether Django itself serves /media/ uploads (via django.views.static.serve,
+# wired explicitly in urls.py). Defaults to True so uploads work out of the box
+# on shared/Passenger/cPanel hosting with NO extra web-server config, in BOTH
+# DEBUG=True and DEBUG=False.
+#
+# Set to False ONLY once your web server (nginx/Apache) or a CDN is confirmed
+# to serve MEDIA_ROOT directly — that's more efficient at scale, but uploads
+# will 404 again if you flip this off before that's actually in place.
+SERVE_MEDIA_VIA_DJANGO = config('SERVE_MEDIA_VIA_DJANGO', default=True, cast=bool)
+
+# ========== UPLOAD SIZE LIMITS ==========
+# Django enforces this BEFORE any per-field/form validator ever runs, so it
+# must be >= the largest per-field limit used anywhere in the project
+# (see Home/validators.py) or uploads get rejected with no useful error.
+FILE_UPLOAD_MAX_MEMORY_SIZE = 64 * 1024 * 1024   # 64MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 64 * 1024 * 1024   # 64MB
+
 # ========== CKEDITOR 5 (rich text for Blog/Package/Destination content) ==========
 # Using CKEditor 5 (django-ckeditor-5) instead of the legacy CKEditor 4 bundled
 # with django-ckeditor, which is end-of-life and has unfixed security issues.
@@ -298,3 +342,43 @@ MPESA_SHORTCODE_TYPE = config("MPESA_SHORTCODE_TYPE", default='paybill')
 MPESA_PASSKEY = config("MPESA_PASSKEY", default='')
 MPESA_INITIATOR_USERNAME = config("MPESA_INITIATOR_USERNAME", default='')
 MPESA_INITIATOR_SECURITY_CREDENTIAL = config("MPESA_INITIATOR_SECURITY_CREDENTIAL", default='')
+
+# ========== ERROR LOGGING ==========
+# With DEBUG=False and no handler500/500.html previously defined, unhandled
+# exceptions were falling through to Django's bare hardcoded error page
+# (the plain "text/html; charset=iso-8859-1" response with no details) and
+# the actual traceback was going nowhere visible. This writes every 500
+# traceback to a file so it can actually be read after a failed request.
+LOG_DIR = BASE_DIR / 'logs'
+LOG_DIR.mkdir(exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} {levelname} {name} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': LOG_DIR / 'django-error.log',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['error_file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['error_file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

@@ -4,7 +4,7 @@ from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
     BlogComments, Blogs, Brochure, ItineraryTreking,
-    Trekking, TrekkingBooking, Ad
+    Trekking, TrekkingBooking, Ad, AboutImage, HeroSlide
 )
 
 
@@ -426,6 +426,61 @@ class AdAdmin(admin.ModelAdmin):
         return "No Image"
     image_preview.short_description = 'Image Preview'
     image_preview.allow_tags = True
+
+
+@admin.register(AboutImage)
+class AboutImageAdmin(admin.ModelAdmin):
+    list_display = ['id', 'caption', 'order', 'is_active', 'image_preview', 'created_at']
+    list_filter = ['is_active']
+    list_editable = ['order', 'is_active']
+    ordering = ['order', '-created_at']
+    list_per_page = 20
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="70" height="50" style="object-fit: cover; border-radius: 4px;" />',
+                obj.image.url
+            )
+        return "No Image"
+    image_preview.short_description = 'Preview'
+
+
+@admin.register(HeroSlide)
+class HeroSlideAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'media_type', 'order', 'is_active', 'preview', 'created_at']
+    list_filter = ['media_type', 'is_active']
+    list_editable = ['order', 'is_active']
+    ordering = ['order', '-created_at']
+    list_per_page = 20
+    fieldsets = (
+        ('Media', {
+            'fields': ('media_type', 'image', 'video', 'fallback_image'),
+            'description': 'Pick Image or Video, then upload the matching file. '
+                           'For Video, also add a fallback image in case it fails to load.',
+        }),
+        ('Slide Text', {
+            'fields': ('eyebrow_text', 'title', 'subtitle', 'button_text', 'button_url'),
+        }),
+        ('Display', {
+            'fields': ('order', 'is_active'),
+        }),
+    )
+
+    def preview(self, obj):
+        if obj.media_type == HeroSlide.MEDIA_VIDEO and obj.video:
+            return format_html(
+                '<video src="{}" width="90" height="50" style="object-fit: cover; '
+                'border-radius: 4px;" muted></video>',
+                obj.video.url
+            )
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="90" height="50" style="object-fit: cover; border-radius: 4px;" />',
+                obj.image.url
+            )
+        return "No preview"
+    preview.short_description = 'Preview'
 
 
 # Admin site headers

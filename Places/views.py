@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
+from collections import defaultdict
 from .models import (
     Destinations, AwesomePackages, DestinationsCategory, IncluisiveExcluisive
 )
@@ -10,6 +11,22 @@ from EmailSetup.utils import send_package_payment_email
 from .forms import PackagePurchaseForm
 from datetime import date
 from django.db.models import Prefetch
+
+
+def group_destinations_by_category(categories):
+    """Fetch ALL destinations in a single query and bucket them by category
+    in Python. Replaces the old pattern of running one Destinations query
+    PER category (an N+1 query per page load) used across the tour views
+    below."""
+    all_destinations = Destinations.objects.select_related('category').only(
+        'id', 'name', 'image', 'price', 'category__id', 'category__category'
+    )
+    grouped = defaultdict(list)
+    for destination in all_destinations:
+        grouped[destination.category_id].append(destination)
+    # Ensure every category key exists (even if empty) so templates that
+    # look up a category id that has no destinations yet don't KeyError.
+    return {category.id: grouped.get(category.id, []) for category in categories}
 
 
 # Create your views here.
@@ -65,17 +82,9 @@ class AfricaTourView(ListView):
         )[:9]
         context['all_destinations'] = all_destinations
 
-        # Organize destinations by category for filtering
-        destinations_by_category = {}
-        for category in categories:
-            category_destinations = Destinations.objects.filter(
-                category=category
-            ).select_related('category').only(
-                'id', 'name', 'image', 'price', 'category__id', 'category__category'
-            )
-            destinations_by_category[category.id] = category_destinations
-
-        context['destinations_by_category'] = destinations_by_category
+        # Organize destinations by category for filtering (single query,
+        # grouped in Python -- see group_destinations_by_category above)
+        context['destinations_by_category'] = group_destinations_by_category(categories)
 
         return context
 
@@ -103,17 +112,9 @@ class EastAfricaTourView(ListView):
         )[:9]
         context['all_destinations'] = all_destinations
 
-        # Organize destinations by category for filtering
-        destinations_by_category = {}
-        for category in categories:
-            category_destinations = Destinations.objects.filter(
-                category=category
-            ).select_related('category').only(
-                'id', 'name', 'image', 'price', 'category__id', 'category__category'
-            )
-            destinations_by_category[category.id] = category_destinations
-
-        context['destinations_by_category'] = destinations_by_category
+        # Organize destinations by category for filtering (single query,
+        # grouped in Python -- see group_destinations_by_category above)
+        context['destinations_by_category'] = group_destinations_by_category(categories)
 
         return context
 
@@ -141,17 +142,9 @@ class SouthAfricaTourView(ListView):
         )[:9]
         context['all_destinations'] = all_destinations
 
-        # Organize destinations by category for filtering
-        destinations_by_category = {}
-        for category in categories:
-            category_destinations = Destinations.objects.filter(
-                category=category
-            ).select_related('category').only(
-                'id', 'name', 'image', 'price', 'category__id', 'category__category'
-            )
-            destinations_by_category[category.id] = category_destinations
-
-        context['destinations_by_category'] = destinations_by_category
+        # Organize destinations by category for filtering (single query,
+        # grouped in Python -- see group_destinations_by_category above)
+        context['destinations_by_category'] = group_destinations_by_category(categories)
 
         return context
 
@@ -179,17 +172,9 @@ class WestAfricaTourView(ListView):
         )[:9]
         context['all_destinations'] = all_destinations
 
-        # Organize destinations by category for filtering
-        destinations_by_category = {}
-        for category in categories:
-            category_destinations = Destinations.objects.filter(
-                category=category
-            ).select_related('category').only(
-                'id', 'name', 'image', 'price', 'category__id', 'category__category'
-            )
-            destinations_by_category[category.id] = category_destinations
-
-        context['destinations_by_category'] = destinations_by_category
+        # Organize destinations by category for filtering (single query,
+        # grouped in Python -- see group_destinations_by_category above)
+        context['destinations_by_category'] = group_destinations_by_category(categories)
 
         return context
 
@@ -217,17 +202,9 @@ class InternationalAfricaTourView(ListView):
         )[:9]
         context['all_destinations'] = all_destinations
 
-        # Organize destinations by category for filtering
-        destinations_by_category = {}
-        for category in categories:
-            category_destinations = Destinations.objects.filter(
-                category=category
-            ).select_related('category').only(
-                'id', 'name', 'image', 'price', 'category__id', 'category__category'
-            )
-            destinations_by_category[category.id] = category_destinations
-
-        context['destinations_by_category'] = destinations_by_category
+        # Organize destinations by category for filtering (single query,
+        # grouped in Python -- see group_destinations_by_category above)
+        context['destinations_by_category'] = group_destinations_by_category(categories)
 
         return context
 

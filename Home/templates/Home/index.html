@@ -10,18 +10,67 @@
 
 {% block meta_keywords %}kenya safari packages, masai mara safari packages, safari from nairobi, kilimanjaro trekking packages, east africa safari, gorilla trekking uganda{% endblock %}
 
+{% block og_title %}Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours{% endblock %}
+{% block og_description %}Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets.{% endblock %}
+{% block twitter_title %}Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours{% endblock %}
+{% block twitter_description %}Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets.{% endblock %}
+
 {% block carousel %}
 
 <div class="carousel-header">
     <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
+            {% if hero_slides %}
+                {% for slide in hero_slides %}
+                <li data-bs-target="#carouselId" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                {% endfor %}
+            {% else %}
             <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active"></li>
             <li data-bs-target="#carouselId" data-bs-slide-to="1"></li>
             <li data-bs-target="#carouselId" data-bs-slide-to="2"></li>
             <li data-bs-target="#carouselId" data-bs-slide-to="3"></li>
             <li data-bs-target="#carouselId" data-bs-slide-to="4"></li>
+            {% endif %}
         </ol>
         <div class="carousel-inner" role="listbox">
+            {% if hero_slides %}
+            <!-- Dynamic slides, uploaded via Django Admin > Hero Slides -->
+            {% for slide in hero_slides %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                {% if slide.media_type == 'video' and slide.video %}
+                <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
+                    <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
+                            <source src="{{ slide.video.url }}" type="video/mp4">
+                            {% if slide.fallback_image %}
+                            <img src="{{ slide.fallback_image.url }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ slide.title }}">
+                            {% endif %}
+                        </video>
+                    </div>
+                </div>
+                {% else %}
+                <img src="{{ slide.image.url }}" class="img-fluid" alt="{{ slide.title }}">
+                {% endif %}
+                <div class="carousel-caption">
+                    <div class="p-3" style="max-width: 900px;">
+                        {% if slide.eyebrow_text %}
+                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{{ slide.eyebrow_text }}</h4>
+                        {% endif %}
+                        <h1 class="display-2 text-capitalize text-white mb-4">{{ slide.title }}</h1>
+                        {% if slide.subtitle %}
+                        <p class="mb-5 fs-5">{{ slide.subtitle }}</p>
+                        {% endif %}
+                        {% if slide.button_text %}
+                        <div class="d-flex align-items-center justify-content-center">
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{{ slide.button_url|default:'#' }}">{{ slide.button_text }}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <!-- Fallback static slides - shown only if no Hero Slides are uploaded in admin -->
             <!-- Existing Image Slides -->
             <div class="carousel-item active">
                 <img src="{% static "img/carousel-2.jpg" %}" class="img-fluid" alt="Image">
@@ -133,6 +182,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
             <span class="carousel-control-prev-icon btn bg-primary" aria-hidden="false"></span>
@@ -166,8 +216,17 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/about-img.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'About Day Safaris' %}">
+                    <img id="aboutLoopImage"
+                         src="{% if about_images %}{{ about_images.0.image.url }}{% else %}{% static 'img/about-img.jpg' %}{% endif %}"
+                         class="img-fluid w-100 h-100 about-loop-img"
+                         alt="{% if about_images %}{{ about_images.0.caption|default:_('About Day Safaris') }}{% else %}{% trans 'About Day Safaris' %}{% endif %}"
+                         width="600" height="600" loading="eager">
                 </div>
+                {% if about_images|length > 1 %}
+                <script id="about-loop-data" type="application/json">
+                    [{% for img in about_images %}{"src": "{{ img.image.url|escapejs }}", "alt": "{{ img.caption|default:'About Day Safaris'|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]
+                </script>
+                {% endif %}
             </div>
             <div class="col-lg-7">
                 <h5 class="section-about-title pe-3">{% trans "Welcome To Day Safaris Adventures" %}</h5>
