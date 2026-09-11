@@ -11,7 +11,7 @@ from django.core.cache import cache
 from .models import (
     Brochure, Services, GalleryCategory, Gallery,
     Testimonials, Blogs, Trekking, ItineraryTreking,
-    Ad
+    Ad, AboutImage, HeroSlide
 )
 from Places.models import Destinations, DestinationsCategory, AwesomePackages, IncluisiveExcluisive
 from ClientRequests.forms import BookingsForm
@@ -144,13 +144,28 @@ class HomeView(ListView):
             'id', 'title', 'image', 'published_date', 'author', 'slug'
         ).order_by('-published_date')[:3]
 
+        # About section images (looping slideshow) - falls back to the
+        # static default image in the template if none are uploaded yet
+        context['about_images'] = AboutImage.objects.filter(
+            is_active=True
+        ).only('id', 'image', 'caption')[:8]
+
+        # Hero carousel slides - falls back to the hardcoded static
+        # slides in the template if none are uploaded yet
+        context['hero_slides'] = HeroSlide.objects.filter(
+            is_active=True
+        ).only(
+            'id', 'media_type', 'image', 'video', 'fallback_image',
+            'eyebrow_text', 'title', 'subtitle', 'button_text', 'button_url'
+        )[:10]
+
         # Cache data for 15 minutes (only for non-authenticated users)
         if not self.request.user.is_authenticated:
             cache_data = {
                 k: v for k, v in context.items()
                 if k in ['services1', 'services2', 'categories',
                        'tab_destinations', 'awesome_packages',
-                       'testimonials', 'blogs']
+                       'testimonials', 'blogs', 'about_images', 'hero_slides']
             }
             cache.set(cache_key, cache_data, 900)
 
@@ -217,6 +232,17 @@ class AboutView(ListView):
         services = self.object_list
         context['services1'] = services[:3]
         context['services2'] = services[3:]
+
+        cache_key = 'about_context_data'
+        cached = cache.get(cache_key)
+        if cached is None:
+            cached = {
+                'about_images': list(
+                    AboutImage.objects.filter(is_active=True).only('id', 'image', 'caption')[:8]
+                ),
+            }
+            cache.set(cache_key, cached, 900)
+        context.update(cached)
         return context
 
 
@@ -356,7 +382,7 @@ class TrekkingListView(ListView):
 
     def get_queryset(self):
         return Trekking.objects.only(
-            'id', 'name', 'image', 'price', 'days', 'category', 'location' 
+            'id', 'name', 'image', 'price', 'days', 'category', 'location'
         ).all()
 
 class KenyaTrekking(TemplateView):

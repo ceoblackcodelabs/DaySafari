@@ -5,6 +5,7 @@ from django.core.cache import cache
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from Places.models import Destinations
+from .validators import validate_image_10mb, validate_document_20mb, validate_video_50mb
 import logging
 logger = logging.getLogger(__name__)
 
@@ -40,7 +41,7 @@ class GalleryCategory(models.Model):
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(GalleryCategory, on_delete=models.CASCADE, related_name='galleries')
-    image = models.ImageField(upload_to='gallery_images/')
+    image = models.ImageField(upload_to='gallery_images/', validators=[validate_image_10mb])
 
     class Meta:
         verbose_name = 'Gallery Image'
@@ -52,6 +53,104 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class AboutImage(models.Model):
+    """Images that loop/rotate in the 'About' section on the homepage and
+    about page. Add as many as you like; only active ones are shown, in
+    'order' then newest-first."""
+    image = models.ImageField(upload_to='about_images/', validators=[validate_image_10mb])
+    caption = models.CharField(max_length=150, blank=True, help_text="Optional alt text / caption")
+    order = models.PositiveIntegerField(default=0, help_text="Lower numbers show first")
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'About Section Image'
+        verbose_name_plural = 'About Section Images'
+        ordering = ['order', '-created_at']
+        indexes = [
+            models.Index(fields=['is_active', 'order']),
+        ]
+
+    def __str__(self):
+        return self.caption or f"About image #{self.pk}"
+
+
+class HeroSlide(models.Model):
+    """Slides shown in the homepage hero carousel at the top of the page.
+    Add as many as you like; only active ones are shown, in 'order'.
+    Each slide is either an Image or a Video - upload the matching file
+    for whichever media_type you pick. A video slide should also get a
+    fallback_image, which is shown if the browser can't play the video."""
+
+    MEDIA_IMAGE = 'image'
+    MEDIA_VIDEO = 'video'
+    MEDIA_TYPE_CHOICES = [
+        (MEDIA_IMAGE, 'Image'),
+        (MEDIA_VIDEO, 'Video'),
+    ]
+
+    media_type = models.CharField(
+        max_length=10, choices=MEDIA_TYPE_CHOICES, default=MEDIA_IMAGE,
+        help_text="Choose Image or Video, then upload the matching file below."
+    )
+    image = models.ImageField(
+        upload_to='hero_slides/images/', blank=True, null=True,
+        validators=[validate_image_10mb],
+        help_text="Required when Media type = Image."
+    )
+    video = models.FileField(
+        upload_to='hero_slides/videos/', blank=True, null=True,
+        validators=[validate_video_50mb],
+        help_text="Required when Media type = Video. MP4 recommended, max 50MB."
+    )
+    fallback_image = models.ImageField(
+        upload_to='hero_slides/fallback/', blank=True, null=True,
+        validators=[validate_image_10mb],
+        help_text="Shown if the video can't load. Recommended for Video slides."
+    )
+
+    eyebrow_text = models.CharField(
+        max_length=100, blank=True,
+        help_text="Small uppercase line above the title, e.g. 'Explore The World'"
+    )
+    title = models.CharField(
+        max_length=200,
+        help_text="Main heading, e.g. 'Kenya Safari Tours & East Africa Packages'"
+    )
+    subtitle = models.CharField(
+        max_length=200, blank=True,
+        help_text="Line under the title, e.g. \"Adventure Awaits - Let's Go\""
+    )
+
+    button_text = models.CharField(max_length=50, blank=True, default='Discover Now')
+    button_url = models.CharField(
+        max_length=200, blank=True, default='/about/',
+        help_text="Where the button links to, e.g. /about/ or /packages/"
+    )
+
+    order = models.PositiveIntegerField(default=0, help_text="Lower numbers show first")
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Hero Slide'
+        verbose_name_plural = 'Hero Slides'
+        ordering = ['order', '-created_at']
+        indexes = [
+            models.Index(fields=['is_active', 'order']),
+        ]
+
+    def __str__(self):
+        return self.title
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.media_type == self.MEDIA_IMAGE and not self.image:
+            raise ValidationError({'image': "Please upload an image, or switch Media type to Video."})
+        if self.media_type == self.MEDIA_VIDEO and not self.video:
+            raise ValidationError({'video': "Please upload a video, or switch Media type to Image."})
 
 
 class Testimonials(models.Model):
@@ -67,7 +166,7 @@ class Testimonials(models.Model):
     location = models.CharField(max_length=100)
     feedback = models.TextField()
     star_rating = models.IntegerField(choices=STAR_CHOICES, default=5)
-    image = models.ImageField(upload_to='testimonials/', blank=True, null=True)
+    image = models.ImageField(upload_to='testimonials/', blank=True, null=True, validators=[validate_image_10mb])
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -127,7 +226,7 @@ class Blogs(models.Model):
     likes = models.IntegerField(default=0)
     comments = models.ManyToManyField(BlogComments, blank=True)
     published_date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(default='blog_images/default.jpg', upload_to='blog_images/', blank=True, null=True)
+    image = models.ImageField(default='blog_images/default.jpg', upload_to='blog_images/', blank=True, null=True, validators=[validate_image_10mb])
 
     class Meta:
         verbose_name = 'Blog'
@@ -157,8 +256,8 @@ class Blogs(models.Model):
 
 class Brochure(models.Model):
     title = models.CharField(max_length=200, db_index=True)
-    pdf_file = models.FileField(upload_to='brochures/')
-    image = models.ImageField(upload_to='brochure_images/', blank=True, null=True)
+    pdf_file = models.FileField(upload_to='brochures/', validators=[validate_document_20mb])
+    image = models.ImageField(upload_to='brochure_images/', blank=True, null=True, validators=[validate_image_10mb])
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -190,7 +289,7 @@ class ItineraryTreking(models.Model):
     activities = models.TextField(help_text="List activities for this day, separated by commas", blank=True)
     accommodation = models.CharField(max_length=200, blank=True)
     meals = models.CharField(max_length=100, choices=MEAL_CHOICES, default='Full Board')
-    image = models.ImageField(upload_to='itinerary_trekking_images/', blank=True, null=True)
+    image = models.ImageField(upload_to='itinerary_trekking_images/', blank=True, null=True, validators=[validate_image_10mb])
 
     class Meta:
         ordering = ['day_number']
@@ -228,7 +327,7 @@ class Trekking(models.Model):
     persons = models.IntegerField()
     description = models.TextField()
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, db_index=True)
-    image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
+    image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/', validators=[validate_image_10mb])
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -303,7 +402,7 @@ class Ad(models.Model):
     package = models.ForeignKey('Places.AwesomePackages', on_delete=models.CASCADE, related_name='ads', null=True, blank=True)
     trekking_package = models.ForeignKey('Home.Trekking', on_delete=models.CASCADE, related_name='ads', null=True, blank=True)
 
-    image = models.ImageField(upload_to='ads/', help_text="Main advertisement image")
+    image = models.ImageField(upload_to='ads/', help_text="Main advertisement image", validators=[validate_image_10mb])
     description = models.TextField(blank=True, help_text="Short description for the ad")
 
     discount_percentage = models.IntegerField(default=0, help_text="Discount percentage (0-100)")
@@ -396,6 +495,7 @@ class Ad(models.Model):
 @receiver([post_save, post_delete], sender=Destinations)
 @receiver([post_save, post_delete], sender=Testimonials)
 @receiver([post_save, post_delete], sender=Blogs)
+@receiver([post_save, post_delete], sender=AboutImage)
 def clear_home_cache(sender, **kwargs):
     """Clear homepage cache when any of these models change"""
     try:
@@ -405,7 +505,7 @@ def clear_home_cache(sender, **kwargs):
             cache.delete_pattern('home_context_data_*')
         else:
             # Fallback to deleting specific keys
-            keys_to_delete = ['home_context_data_True', 'home_context_data_False']
+            keys_to_delete = ['home_context_data_True', 'home_context_data_False', 'about_context_data']
             for key in keys_to_delete:
                 try:
                     cache.delete(key)

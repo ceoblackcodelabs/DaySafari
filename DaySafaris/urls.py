@@ -14,12 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import re
 import django
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, re_path, include
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
-from django.conf.urls.static import static
+from django.views.static import serve as serve_static_file
+from django.contrib.staticfiles.views import serve as serve_staticfiles
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),  # Language switcher endpoint
@@ -43,7 +45,49 @@ urlpatterns += i18n_patterns(
     path('SudoSu/', include('SuperMode.urls')),
 )
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# NOTE: django.conf.urls.static.static() is NOT used for MEDIA_URL. It has
+# `elif not settings.DEBUG or urlsplit(prefix).netloc: return []` hard-coded
+# inside it, so it silently registers NO url pattern at all whenever
+# DEBUG=False -- no error, the /media/ route just quietly doesn't exist. That
+# is the #1 cause of "images work on localhost but 404 in production".
+#
+# Instead we wire django.views.static.serve directly, gated by an explicit,
+# toggleable settings flag (SERVE_MEDIA_VIA_DJANGO, defined in settings.py),
+# so uploads work the same way in both DEBUG=True and DEBUG=False.
+if getattr(settings, "SERVE_MEDIA_VIA_DJANGO", True):
+    _media_url_path = settings.MEDIA_URL.lstrip("/")
+    urlpatterns += [
+        re_path(
+            r"^%s(?P<path>.*)$" % re.escape(_media_url_path),
+            serve_static_file,
+            {"document_root": settings.MEDIA_ROOT},
+        ),
+    ]
+
+# STATIC_URL fallback used to be DEBUG-only (`if settings.DEBUG: urlpatterns +=
+# static(...)`), which is exactly why videos/images "work with DEBUG=True,
+# break with DEBUG=False": WhiteNoiseMiddleware only serves what it indexed
+# in memory at process start (WHITENOISE_AUTOREFRESH=False), built from
+# STATIC_ROOT + finders. If a file was added to Home/static after the last
+# `collectstatic`/app restart, or the manifest is stale, WhiteNoise's __call__
+# falls through to get_response() -- and with DEBUG=False there used to be NO
+# matching urlconf entry at all, so Django's own exception/404 handling took
+# over instead of ever serving the file.
+#
+# Wiring this unconditionally (same pattern as the MEDIA_URL fix above) means
+# WhiteNoise still serves the fast path when its index is warm, and this is
+# only ever reached as a fallback -- but that fallback now exists in BOTH
+# DEBUG=True and DEBUG=False. It uses staticfiles' own `serve()` view with
+# insecure=True, which resolves through the STATICFILES_FINDERS (i.e. looks
+# directly in Home/static, not just the collected/hashed STATIC_ROOT copy),
+# so newly added video files work even before the next `collectstatic` run.
+urlpatterns += [
+    re_path(
+        r"^%s(?P<path>.*)$" % re.escape(settings.STATIC_URL.lstrip("/")),
+        serve_staticfiles,
+        kwargs={"insecure": True},
+    ),
+]
 
 handler404 = "DaySafaris.views.custom_404"
+handler500 = "DaySafaris.views.custom_500"
