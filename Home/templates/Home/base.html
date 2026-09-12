@@ -22,14 +22,14 @@
         <meta property="og:title" content="{% block og_title %}{% trans "Day Safaris Adventures | Premier Safari & Travel Company in Kenya" %}{% endblock og_title %}">
         <meta property="og:description" content="{% block og_description %}{% trans "Day Safaris Adventures is a premier destination management company in Nairobi, Kenya, offering tailor-made African safaris, trekking, cruises and travel services across East, West, South and International destinations." %}{% endblock og_description %}">
         <meta property="og:url" content="{% block og_url %}https://daysafarisadventures.co.ke{{ request.path }}{% endblock og_url %}">
-        <meta property="og:image" content="{% block og_image %}https://daysafarisadventures.co.ke{% static 'img/about-img.jpg' %}{% endblock og_image %}">
+        <meta property="og:image" content="{% block og_image %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endblock og_image %}">
         <meta property="og:site_name" content="Day Safaris Adventures">
 
         {# Twitter card #}
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="{% block twitter_title %}{% trans "Day Safaris Adventures | Premier Safari & Travel Company in Kenya" %}{% endblock twitter_title %}">
         <meta name="twitter:description" content="{% block twitter_description %}{% trans "Day Safaris Adventures is a premier destination management company in Nairobi, Kenya, offering tailor-made African safaris, trekking, cruises and travel services across East, West, South and International destinations." %}{% endblock twitter_description %}">
-        <meta name="twitter:image" content="{% block twitter_image %}https://daysafarisadventures.co.ke{% static 'img/about-img.jpg' %}{% endblock twitter_image %}">
+        <meta name="twitter:image" content="{% block twitter_image %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endblock twitter_image %}">
 
         {% block extra_head %}{% endblock extra_head %}
 
@@ -46,7 +46,12 @@
         <link href="{% static "lib/owlcarousel/assets/owl.carousel.min.css" %}" rel="stylesheet">
         <link href="{% static "lib/lightbox/css/lightbox.min.css" %}" rel="stylesheet">
 
-        <link rel="icon" type="image/x-icon" href="{% static "img/favicon.ico" %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static "img/favicon-32x32.png" %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static "img/favicon-16x16.png" %}">
+        <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static "img/apple-touch-icon.png" %}">
+        <link rel="manifest" href="{% static "img/site.webmanifest" %}">
+        <meta name="theme-color" content="#f7941d">
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
@@ -521,7 +526,7 @@
             "@type": "TravelAgency",
             "name": "Day Safaris Adventures",
             "url": "https://daysafarisadventures.co.ke{{ request.path }}",
-            "logo": "https://daysafarisadventures.co.ke{% static 'img/favicon.ico' %}",
+            "logo": "https://daysafarisadventures.co.ke{% static 'img/android-chrome-512x512.png' %}",
             "image": "https://daysafarisadventures.co.ke{% static 'img/about-img.jpg' %}",
             "telephone": "+254759379600",
             "email": "info@daysafarisadventures.com",
@@ -721,7 +726,7 @@
         <div class="container-fluid position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-3 px-lg-5 py-2 py-lg-0">
                 <a href="{% url 'home' %}" class="navbar-brand p-0">
-                    <img src="{% static "img/logo2.jpg" %}" alt="Logo">
+                    <img src="{% static "img/logo-nav.png" %}" alt="Days Safaris Adventures logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars"></span>
@@ -1079,6 +1084,8 @@
 
         <!-- Chatbot JavaScript -->
         <script src="{% static "js/chatbot.js" %}"></script>
+
+        {% block extra_js %}{% endblock extra_js %}
     </body>
 
 </html>
