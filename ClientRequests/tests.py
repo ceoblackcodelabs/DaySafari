@@ -168,7 +168,8 @@ class SiteHealthTests(TestCase):
                   'booking_create', 'airbnb', 'cruises', 'airline', 'east_africa_tours', 'south_africa_tours',
                   'west_africa_tours', 'international_tours', 'african_wildlife_tours',
                   'holiday_tailor_made_tours', 'airport_transfers', 'travel_partnerships', 'trekking_kenya',
-                  'trekking_kilimanjaro', 'trekking_meru', 'trekking_longonot', 'trekking_suswa']
+                  'trekking_kilimanjaro', 'trekking_meru', 'trekking_longonot', 'trekking_suswa',
+                  'legal_notice', 'privacy_policy', 'terms_and_conditions', 'cookie_policy', 'sitemap_page']
         urls = [reverse(n) for n in static]
         urls += [self.package.get_absolute_url(), reverse('destination_detail', args=[self.dest.pk]),
                  reverse('kili_detail', args=[self.trek.pk]), reverse('bnb_detail', args=[self.bnb.pk]),

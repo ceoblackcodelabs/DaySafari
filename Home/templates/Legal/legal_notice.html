@@ -1,0 +1,37 @@
+{% extends "Legal/legal_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Legal Notice - Day Safaris Adventures" %}{% endblock title %}
+{% block meta_description %}Legal notice for Day Safaris Adventures Ltd, Nairobi, Kenya: who we are, how to contact us, website ownership and liability.{% endblock meta_description %}
+{% block og_description %}Legal notice for Day Safaris Adventures Ltd, Nairobi, Kenya.{% endblock og_description %}
+{% block twitter_description %}Legal notice for Day Safaris Adventures Ltd, Nairobi, Kenya.{% endblock twitter_description %}
+{% block legal_heading %}{% trans "Legal Notice" %}{% endblock %}
+{% block legal_crumb %}{% trans "Legal Notice" %}{% endblock %}
+
+{% block legal_content %}
+<h2 class="h4">1. {% trans "Website owner" %}</h2>
+<p>This website, <strong>daysafarisadventures.co.ke</strong>, is operated by <strong>Day Safaris Adventures Ltd</strong> (“Day Safaris”, “we”, “us”), a tour and destination management company based in Nairobi, Kenya.</p>
+<ul>
+    <li><strong>Address:</strong> 00200 Street RailWays, Nairobi, Kenya</li>
+    <li><strong>Email:</strong> <a href="mailto:info@daysafarisadventures.com">info@daysafarisadventures.com</a> / <a href="mailto:sales@daysafarisadventures.com">sales@daysafarisadventures.com</a></li>
+    <li><strong>Phone / WhatsApp:</strong> +254 759 379 600, +254 734 962 965, +254 782 390 295 (hotline)</li>
+    <li><strong>Contact form:</strong> <a href="{% url 'contact' %}">{% trans "Contact us" %}</a></li>
+</ul>
+
+<h2 class="h4 mt-4">2. {% trans "Purpose of the website" %}</h2>
+<p>The website presents our safari, trekking, cruise, accommodation and travel services and lets visitors send enquiries and booking requests. Information on the site is for general guidance; prices, availability and itineraries are confirmed in writing in your quotation or booking confirmation.</p>
+
+<h2 class="h4 mt-4">3. {% trans "Intellectual property" %}</h2>
+<p>The text, photographs, videos, logos, graphics and layout of this website are owned by or licensed to Day Safaris Adventures and are protected by copyright and trademark law. You may view and print pages for personal, non-commercial planning of a trip. Any other copying, reproduction or distribution requires our prior written permission.</p>
+
+<h2 class="h4 mt-4">4. {% trans "Liability" %}</h2>
+<p>We take care to keep the information on this website accurate and up to date, but we do not guarantee that it is complete or free of error. Travel conditions (weather, wildlife movement, park rules, entry requirements, transport schedules) change, and we are not liable for loss arising from reliance on general website content. Nothing in this notice excludes liability that cannot be excluded under Kenyan law.</p>
+
+<h2 class="h4 mt-4">5. {% trans "External links and third-party services" %}</h2>
+<p>The site links to or embeds third-party services (for example Google Maps, social networks and payment providers). We do not control these services and are not responsible for their content or practices. See our <a href="{% url 'privacy_policy' %}">Privacy Policy</a> and <a href="{% url 'cookie_policy' %}">Cookie Policy</a>.</p>
+
+<h2 class="h4 mt-4">6. {% trans "Governing law" %}</h2>
+<p>This notice and your use of the website are governed by the laws of Kenya. The courts of Kenya have jurisdiction, without limiting any mandatory consumer rights you may have in your country of residence.</p>
+
+<h2 class="h4 mt-4">7. {% trans "Related documents" %}</h2>
+<p><a href="{% url 'privacy_policy' %}">Privacy Policy</a> · <a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a> · <a href="{% url 'cookie_policy' %}">Cookie Policy</a></p>
+{% endblock legal_content %}
