@@ -551,3 +551,23 @@ class AirportTransfersView(TemplateView):
 
 class AirLineView(TemplateView):
     template_name = 'Home/airline.html'
+
+
+# ---- Legal / support pages -------------------------------------------------
+class LegalPageView(TemplateView):
+    """Static legal pages (legal notice, privacy, terms, cookies)."""
+
+
+class SitemapPageView(TemplateView):
+    """Human-readable sitemap linking every public page."""
+    template_name = 'Legal/sitemap.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['packages'] = AwesomePackages.objects.exclude(slug__isnull=True).exclude(slug='').only('name', 'slug', 'category').order_by('category', 'name')
+        context['destinations'] = Destinations.objects.only('id', 'name').order_by('name')
+        context['trekking'] = Trekking.objects.only('id', 'name').order_by('name')
+        context['blogs'] = Blogs.objects.exclude(slug__isnull=True).exclude(slug='').only('title', 'slug').order_by('-published_date')[:30]
+        from Accomodations.models import AirBNB
+        context['stays'] = AirBNB.objects.only('id', 'title', 'location')
+        return context

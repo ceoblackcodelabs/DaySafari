@@ -1,0 +1,47 @@
+{% extends "Legal/legal_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Cookie Policy - Day Safaris Adventures" %}{% endblock title %}
+{% block meta_description %}Which cookies and similar technologies daysafarisadventures.co.ke uses, why, and how you can control them.{% endblock meta_description %}
+{% block og_description %}Which cookies daysafarisadventures.co.ke uses and how to control them.{% endblock og_description %}
+{% block twitter_description %}Which cookies daysafarisadventures.co.ke uses and how to control them.{% endblock twitter_description %}
+{% block legal_heading %}{% trans "Cookie Policy" %}{% endblock %}
+{% block legal_crumb %}{% trans "Cookie Policy" %}{% endblock %}
+
+{% block legal_content %}
+<p>Cookies are small text files stored on your device when you visit a website. This page explains the cookies used on <strong>daysafarisadventures.co.ke</strong>. See our <a href="{% url 'privacy_policy' %}">Privacy Policy</a> for how we handle personal data generally.</p>
+
+<h2 class="h4 mt-4">1. {% trans "Cookies we use" %}</h2>
+<div class="table-responsive">
+<table class="table table-bordered align-middle">
+    <thead><tr><th>Cookie</th><th>Purpose</th><th>Type</th><th>Duration</th></tr></thead>
+    <tbody>
+        <tr><td><code>csrftoken</code></td><td>Protects forms (contact, booking, login) against cross-site request forgery.</td><td>Strictly necessary</td><td>Up to 1 year</td></tr>
+        <tr><td><code>sessionid</code></td><td>Keeps you signed in and remembers your session if you use an account.</td><td>Strictly necessary</td><td>Session / about 2 weeks</td></tr>
+        <tr><td><code>django_language</code></td><td>Remembers the language you selected.</td><td>Functional</td><td>Up to 1 year</td></tr>
+    </tbody>
+</table>
+</div>
+<p>These cookies are needed for the site to work or to remember a choice you made, so they are set without a consent banner. We do not use advertising or cross-site tracking cookies of our own.</p>
+
+<h2 class="h4 mt-4">2. {% trans "Third-party content" %}</h2>
+<p>Some pages load content from other providers, which may set their own cookies or collect technical data such as your IP address when your browser requests the content:</p>
+<ul>
+    <li><strong>Google Maps</strong> on the contact page (embedded map).</li>
+    <li><strong>Google Fonts</strong> and <strong>Font Awesome / jsDelivr / Google-hosted libraries</strong> for fonts, icons and scripts.</li>
+    <li><strong>Social and sharing links</strong> (Facebook, Instagram, X, LinkedIn, YouTube) if you click through to them.</li>
+    <li><strong>Payment providers</strong> (for example Stripe or M-Pesa) on payment pages.</li>
+</ul>
+<p>Please see those providers’ own privacy and cookie policies for details.</p>
+
+<h2 class="h4 mt-4">3. {% trans "Local storage" %}</h2>
+<p>The site briefly stores short notification messages (for example “message sent”) in your browser’s local storage so they can be shown after a page reload, then removes them. This data stays on your device.</p>
+
+<h2 class="h4 mt-4">4. {% trans "Managing cookies" %}</h2>
+<p>You can delete or block cookies in your browser settings (Chrome, Firefox, Safari and Edge all provide this). If you block strictly necessary cookies, forms and sign-in will not work. You can change language at any time with the language selector at the top of the site.</p>
+
+<h2 class="h4 mt-4">5. {% trans "Changes" %}</h2>
+<p>If we add analytics or marketing cookies in future we will update this page and ask for your consent where required.</p>
+
+<h2 class="h4 mt-4">6. {% trans "Contact" %}</h2>
+<p>Questions: <a href="mailto:info@daysafarisadventures.com">info@daysafarisadventures.com</a>.</p>
+{% endblock legal_content %}

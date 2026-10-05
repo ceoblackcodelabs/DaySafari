@@ -100,6 +100,7 @@
                         </div>
                         <div class="col-12">
                             <button class="btn btn-primary w-100 py-3" type="submit">{% trans "Send Message" %} <i class="fa fa-paper-plane ms-2"></i></button>
+                            <p class="small mt-3 mb-0 text-center">{% trans "By submitting this form you agree to our" %} <a href="{% url 'privacy_policy' %}" class="">{% trans "Privacy Policy" %}</a> {% trans "and" %} <a href="{% url 'terms_and_conditions' %}" class="">{% trans "Terms and Conditions" %}</a>.</p>
                         </div>
                     </div>
                 </form>

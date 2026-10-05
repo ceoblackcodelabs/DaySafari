@@ -19,7 +19,7 @@ class StaticPagesSitemap(_Base):
     names = ['home', 'about', 'services', 'packages', 'east_africa_tours', 'south_africa_tours',
              'west_africa_tours', 'international_tours', 'african_wildlife_tours', 'holiday_tailor_made_tours',
              'airport_transfers', 'travel_partnerships', 'cruises', 'airline', 'gallary', 'blog', 'brochures',
-             'faq', 'contact', 'booking_create', 'airbnb', 'trekking_kenya', 'trekking_kilimanjaro',
+             'faq', 'contact', 'legal_notice', 'privacy_policy', 'terms_and_conditions', 'cookie_policy', 'sitemap_page', 'booking_create', 'airbnb', 'trekking_kenya', 'trekking_kilimanjaro',
              'trekking_meru', 'trekking_longonot', 'trekking_suswa']
 
     def items(self):

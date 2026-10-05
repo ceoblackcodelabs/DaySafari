@@ -1,0 +1,67 @@
+{% extends "Legal/legal_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Privacy Policy - Day Safaris Adventures" %}{% endblock title %}
+{% block meta_description %}How Day Safaris Adventures collects, uses and protects your personal data when you enquire or book, and your rights under the Kenya Data Protection Act.{% endblock meta_description %}
+{% block og_description %}How Day Safaris Adventures collects, uses and protects your personal data.{% endblock og_description %}
+{% block twitter_description %}How Day Safaris Adventures collects, uses and protects your personal data.{% endblock twitter_description %}
+{% block legal_heading %}{% trans "Privacy Policy" %}{% endblock %}
+{% block legal_crumb %}{% trans "Privacy Policy" %}{% endblock %}
+
+{% block legal_content %}
+<p>Day Safaris Adventures Ltd (“we”) respects your privacy. This policy explains what personal data we collect through <strong>daysafarisadventures.co.ke</strong>, why we use it, who we share it with and what rights you have under the <strong>Kenya Data Protection Act, 2019</strong> and, where it applies to you, the EU/UK GDPR.</p>
+
+<h2 class="h4 mt-4">1. {% trans "Who is responsible" %}</h2>
+<p>The data controller is Day Safaris Adventures Ltd, 00200 Street RailWays, Nairobi, Kenya. Contact: <a href="mailto:info@daysafarisadventures.com">info@daysafarisadventures.com</a>.</p>
+
+<h2 class="h4 mt-4">2. {% trans "What we collect" %}</h2>
+<ul>
+    <li><strong>Contact form:</strong> name, email address, subject and your message.</li>
+    <li><strong>Booking and enquiry forms (safari, trekking, Airbnb stays):</strong> name, email, phone number, destination or package, travel dates, number of travellers and any special requests you write (which may include dietary or accessibility needs).</li>
+    <li><strong>Account (if you register):</strong> name, email and password (stored hashed), saved destinations and your booking history.</li>
+    <li><strong>Payments:</strong> payment status and references. Card, M-Pesa and bank details are handled by the payment provider you choose; we do not store full card numbers.</li>
+    <li><strong>Chatbot:</strong> the messages you type into the website assistant.</li>
+    <li><strong>Technical data:</strong> IP address, browser type, pages visited and security logs, used to run and protect the site.</li>
+</ul>
+
+<h2 class="h4 mt-4">3. {% trans "Why we use your data" %}</h2>
+<ul>
+    <li>To answer your enquiries and prepare quotations (necessary to take steps at your request).</li>
+    <li>To process and manage bookings, arrange suppliers, send confirmations, invoices and payment links (performance of a contract).</li>
+    <li>To protect the website against spam, abuse and fraud, including rate-limiting by IP address (our legitimate interest).</li>
+    <li>To meet legal, tax and accounting obligations.</li>
+    <li>To send marketing or newsletters only if you have asked for them; you can unsubscribe at any time.</li>
+</ul>
+
+<h2 class="h4 mt-4">4. {% trans "Who we share it with" %}</h2>
+<p>We share data only as needed to deliver your trip and run the site:</p>
+<ul>
+    <li><strong>Travel suppliers</strong> such as lodges, camps, drivers, guides, airlines and park authorities, limited to what they need (for example traveller names and dates).</li>
+    <li><strong>Email delivery:</strong> Brevo (Sendinblue), which sends our confirmations and replies.</li>
+    <li><strong>Payment providers:</strong> Safaricom M-Pesa, Stripe, banks and crypto payment services, depending on the method you use.</li>
+    <li><strong>AI assistant provider:</strong> chatbot messages are sent to a third-party AI service to generate replies. Please do not enter sensitive personal information in the chat.</li>
+    <li><strong>Hosting and infrastructure</strong> providers that store the website and its data.</li>
+    <li><strong>Authorities</strong> when required by law.</li>
+</ul>
+<p>We do not sell your personal data.</p>
+
+<h2 class="h4 mt-4">5. {% trans "International transfers" %}</h2>
+<p>Some of the providers above are located outside Kenya. Where we transfer personal data abroad we do so only where the Data Protection Act permits it, for example to providers that apply appropriate safeguards.</p>
+
+<h2 class="h4 mt-4">6. {% trans "How long we keep it" %}</h2>
+<p>Enquiries that do not lead to a booking are kept for up to 24 months. Booking and payment records are kept for the period required by Kenyan tax and accounting law (generally seven years). Spam and security logs are kept only as long as needed to protect the site.</p>
+
+<h2 class="h4 mt-4">7. {% trans "Your rights" %}</h2>
+<p>You have the right to be informed, to access your data, to object to or restrict processing, to correct inaccurate data, to have it deleted where there is no lawful reason to keep it, and to data portability. To use any of these rights, email <a href="mailto:info@daysafarisadventures.com">info@daysafarisadventures.com</a>; we will respond within the time required by law. You may also complain to the Office of the Data Protection Commissioner of Kenya (<a href="https://www.odpc.go.ke" target="_blank" rel="noopener">www.odpc.go.ke</a>).</p>
+
+<h2 class="h4 mt-4">8. {% trans "Security" %}</h2>
+<p>We use HTTPS, access controls, spam and abuse protection and hashed passwords. No online service can be completely secure; please tell us immediately if you suspect misuse of your account.</p>
+
+<h2 class="h4 mt-4">9. {% trans "Children" %}</h2>
+<p>Our website is for adults. Bookings that include children must be made by a parent or guardian.</p>
+
+<h2 class="h4 mt-4">10. {% trans "Cookies" %}</h2>
+<p>See our <a href="{% url 'cookie_policy' %}">Cookie Policy</a>.</p>
+
+<h2 class="h4 mt-4">11. {% trans "Changes to this policy" %}</h2>
+<p>We may update this policy; the “last updated” date above shows the current version.</p>
+{% endblock legal_content %}

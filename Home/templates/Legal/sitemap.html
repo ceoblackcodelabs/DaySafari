@@ -1,0 +1,91 @@
+{% extends "Legal/legal_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Sitemap - Day Safaris Adventures" %}{% endblock title %}
+{% block meta_description %}Browse every page of Day Safaris Adventures: safari packages, destinations, trekking, cruises, Airbnb stays, services, blog and support pages.{% endblock meta_description %}
+{% block og_description %}Browse every page of Day Safaris Adventures.{% endblock og_description %}
+{% block twitter_description %}Browse every page of Day Safaris Adventures.{% endblock twitter_description %}
+{% block legal_heading %}{% trans "Sitemap" %}{% endblock %}
+{% block legal_crumb %}{% trans "Sitemap" %}{% endblock %}
+{% block legal_updated %}{% endblock legal_updated %}
+
+{% block legal_content %}
+<div class="row g-4">
+    <div class="col-md-6">
+        <h2 class="h4">{% trans "Main pages" %}</h2>
+        <ul class="list-unstyled lh-lg">
+            <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li><a href="{% url 'about' %}">{% trans "About us" %}</a></li>
+            <li><a href="{% url 'services' %}">{% trans "Services" %}</a></li>
+            <li><a href="{% url 'packages' %}">{% trans "All safari packages" %}</a></li>
+            <li><a href="{% url 'booking_create' %}">{% trans "Book online" %}</a></li>
+            <li><a href="{% url 'gallary' %}">{% trans "Gallery" %}</a></li>
+            <li><a href="{% url 'brochures' %}">{% trans "Brochures" %}</a></li>
+            <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
+            <li><a href="{% url 'blog' %}">{% trans "Blog" %}</a></li>
+            <li><a href="{% url 'contact' %}">{% trans "Contact" %}</a></li>
+        </ul>
+
+        <h2 class="h4 mt-4">{% trans "Tours by region" %}</h2>
+        <ul class="list-unstyled lh-lg">
+            <li><a href="{% url 'east_africa_tours' %}">{% trans "East Africa tours" %}</a></li>
+            <li><a href="{% url 'south_africa_tours' %}">{% trans "South Africa tours" %}</a></li>
+            <li><a href="{% url 'west_africa_tours' %}">{% trans "West Africa tours" %}</a></li>
+            <li><a href="{% url 'international_tours' %}">{% trans "International tours" %}</a></li>
+            <li><a href="{% url 'cruises' %}">{% trans "Cruises" %}</a></li>
+            <li><a href="{% url 'african_wildlife_tours' %}">{% trans "African wildlife tours" %}</a></li>
+            <li><a href="{% url 'holiday_tailor_made_tours' %}">{% trans "Tailor-made holidays" %}</a></li>
+        </ul>
+
+        <h2 class="h4 mt-4">{% trans "Trekking" %}</h2>
+        <ul class="list-unstyled lh-lg">
+            <li><a href="{% url 'trekking_kenya' %}">{% trans "Mount Kenya" %}</a></li>
+            <li><a href="{% url 'trekking_kilimanjaro' %}">{% trans "Mount Kilimanjaro" %}</a></li>
+            <li><a href="{% url 'trekking_meru' %}">{% trans "Mount Meru" %}</a></li>
+            <li><a href="{% url 'trekking_longonot' %}">{% trans "Mount Longonot" %}</a></li>
+            <li><a href="{% url 'trekking_suswa' %}">{% trans "Mount Suswa" %}</a></li>
+            {% for trek in trekking %}<li><a href="{% url 'kili_detail' trek.id %}">{{ trek.name }}</a></li>{% endfor %}
+        </ul>
+
+        <h2 class="h4 mt-4">{% trans "Other services" %}</h2>
+        <ul class="list-unstyled lh-lg">
+            <li><a href="{% url 'airport_transfers' %}">{% trans "Airport transfers" %}</a></li>
+            <li><a href="{% url 'airline' %}">{% trans "Flights" %}</a></li>
+            <li><a href="{% url 'travel_partnerships' %}">{% trans "Travel partnerships" %}</a></li>
+            <li><a href="{% url 'airbnb' %}">{% trans "Airbnb stays" %}</a></li>
+            {% for stay in stays %}<li><a href="{% url 'bnb_detail' stay.id %}">{{ stay.title|default:stay.location }}</a></li>{% endfor %}
+        </ul>
+
+        <h2 class="h4 mt-4">{% trans "Support" %}</h2>
+        <ul class="list-unstyled lh-lg">
+            <li><a href="{% url 'legal_notice' %}">{% trans "Legal Notice" %}</a></li>
+            <li><a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}</a></li>
+            <li><a href="{% url 'terms_and_conditions' %}">{% trans "Terms and Conditions" %}</a></li>
+            <li><a href="{% url 'cookie_policy' %}">{% trans "Cookie policy" %}</a></li>
+            <li><a href="{% url 'sitemap_page' %}">{% trans "Sitemap" %}</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-6">
+        <h2 class="h4">{% trans "Safari packages" %}</h2>
+        <ul class="list-unstyled lh-lg">
+            {% regroup packages by category as groups %}
+            {% for group in groups %}
+            <li class="fw-bold mt-2">{{ group.grouper }}</li>
+            {% for package in group.list %}<li><a href="{% url 'package_detail' package.slug %}">{{ package.name }}</a></li>{% endfor %}
+            {% endfor %}
+        </ul>
+
+        <h2 class="h4 mt-4">{% trans "Destinations" %}</h2>
+        <ul class="list-unstyled lh-lg">
+            {% for destination in destinations %}<li><a href="{% url 'destination_detail' destination.id %}">{{ destination.name }}</a></li>{% endfor %}
+        </ul>
+
+        {% if blogs %}
+        <h2 class="h4 mt-4">{% trans "Latest articles" %}</h2>
+        <ul class="list-unstyled lh-lg">
+            {% for blog in blogs %}<li><a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a></li>{% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock legal_content %}

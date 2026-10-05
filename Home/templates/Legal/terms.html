@@ -1,0 +1,59 @@
+{% extends "Legal/legal_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Terms and Conditions - Day Safaris Adventures" %}{% endblock title %}
+{% block meta_description %}Terms and conditions for booking safaris, treks, cruises and stays with Day Safaris Adventures: quotations, payments, changes, cancellations and responsibilities.{% endblock meta_description %}
+{% block og_description %}Terms and conditions for booking with Day Safaris Adventures.{% endblock og_description %}
+{% block twitter_description %}Terms and conditions for booking with Day Safaris Adventures.{% endblock twitter_description %}
+{% block legal_heading %}{% trans "Terms and Conditions" %}{% endblock %}
+{% block legal_crumb %}{% trans "Terms and Conditions" %}{% endblock %}
+
+{% block legal_content %}
+<p>These terms apply to your use of <strong>daysafarisadventures.co.ke</strong> and to services you book with Day Safaris Adventures Ltd (“Day Safaris”, “we”). By sending a booking request or paying a deposit you confirm that you have read and accepted them. Your written quotation or booking confirmation forms part of the agreement; if it differs from these terms, the confirmation applies.</p>
+
+<h2 class="h4 mt-4">1. {% trans "Enquiries, quotations and booking" %}</h2>
+<ul>
+    <li>Submitting an online booking or contact form is a <em>request</em>, not a confirmed booking.</li>
+    <li>A booking is confirmed only when we send a written confirmation and receive the deposit or payment stated in it.</li>
+    <li>Quotations are based on the dates, group size, accommodation and park fees at the time of quoting and are valid for the period stated in them. Park fees, taxes, fuel and supplier rates can change.</li>
+</ul>
+
+<h2 class="h4 mt-4">2. {% trans "Prices and payment" %}</h2>
+<ul>
+    <li>Prices are quoted in the currency stated in your quotation (usually US dollars). Website “from” prices are guides only.</li>
+    <li>The deposit, balance amounts and due dates are set out in your confirmation. We accept the payment methods offered on our payment pages (for example M-Pesa, card, bank transfer and crypto). Any bank or transfer charges are paid by the sender.</li>
+    <li>If the balance is not received by its due date we may treat the booking as cancelled.</li>
+</ul>
+
+<h2 class="h4 mt-4">3. {% trans "What is included" %}</h2>
+<p>Each package page lists “What’s Included” and “What’s Not Included”. Unless your confirmation says otherwise, international flights, visas, travel and medical insurance, tips and personal expenses are not included.</p>
+
+<h2 class="h4 mt-4">4. {% trans "Changes by you" %}</h2>
+<p>Please contact us as early as possible to change dates, travellers or services. We will try to accommodate changes, but they depend on supplier availability and may change the price. Supplier charges that we cannot recover are passed on to you.</p>
+
+<h2 class="h4 mt-4">5. {% trans "Cancellation by you and refunds" %}</h2>
+<p>Cancellations must be made in writing. Cancellation charges depend on how close to departure you cancel and on the non-refundable amounts already committed to lodges, parks, permits and transport; the applicable scale is stated in your quotation or booking confirmation. Gorilla and chimpanzee permits, flights and some peak-season lodges are often non-refundable once purchased. Refunds, where due, are paid using the original payment method within a reasonable time.</p>
+
+<h2 class="h4 mt-4">6. {% trans "Changes or cancellation by us" %}</h2>
+<p>We may need to change an itinerary because of weather, park closures, safety, road conditions or supplier problems. We will offer a suitable alternative of similar standard or, if you do not accept it, a refund of the part of the price attributable to services not provided. We may cancel a trip for safety reasons or if the minimum group size is not met, in which case we will refund amounts you have paid for it.</p>
+
+<h2 class="h4 mt-4">7. {% trans "Travel documents, health and insurance" %}</h2>
+<p>You are responsible for valid passports, visas or e-visas, vaccinations (for example yellow fever where required) and for being fit to take part in your trip. We strongly recommend comprehensive travel insurance covering medical costs, evacuation, cancellation and baggage. Please tell us in advance about medical conditions, allergies and mobility needs.</p>
+
+<h2 class="h4 mt-4">8. {% trans "Safety and conduct" %}</h2>
+<p>Wildlife and remote travel involve inherent risks. Please follow the instructions of your guide and park rules. We may refuse to continue a service for a traveller whose behaviour endangers others, without refund.</p>
+
+<h2 class="h4 mt-4">9. {% trans "Our responsibility" %}</h2>
+<p>We will arrange your services with reasonable skill and care. Many services are provided by independent suppliers (lodges, airlines, park authorities); we are not liable for their acts beyond what the law requires, and we are not liable for events outside our control (force majeure) such as natural disasters, strikes, epidemics or government action. Our liability for any claim is limited to the amount you paid us for the affected service, except where the law does not allow such a limit. Complaints should be raised with your guide immediately and then in writing within 30 days of the end of your trip so that we can put things right.</p>
+
+<h2 class="h4 mt-4">10. {% trans "Photography" %}</h2>
+<p>We may use photographs and videos taken on our trips in our marketing; tell your guide or email us if you do not want to appear.</p>
+
+<h2 class="h4 mt-4">11. {% trans "Website use" %}</h2>
+<p>You agree not to misuse the website, including sending automated or spam submissions, attempting to probe or disrupt it, or scraping it. We may block access for such activity. See also our <a href="{% url 'legal_notice' %}">Legal Notice</a> and <a href="{% url 'privacy_policy' %}">Privacy Policy</a>.</p>
+
+<h2 class="h4 mt-4">12. {% trans "Governing law and disputes" %}</h2>
+<p>These terms are governed by the laws of Kenya and the courts of Kenya have jurisdiction. We will first try to resolve any dispute by good-faith discussion.</p>
+
+<h2 class="h4 mt-4">13. {% trans "Contact" %}</h2>
+<p>Questions about these terms: <a href="mailto:info@daysafarisadventures.com">info@daysafarisadventures.com</a> or <a href="{% url 'contact' %}">our contact page</a>.</p>
+{% endblock legal_content %}
