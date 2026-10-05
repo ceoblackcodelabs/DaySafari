@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
-from EmailSetup.utils import send_contact_response, send_booking_confirmation, send_booking_verification
+from EmailSetup.utils import send_contact_response, send_booking_confirmation, notify_staff_of_lead
 from Places.models import AwesomePackages, Destinations
 from django.utils import timezone
 from time import sleep
@@ -13,16 +13,16 @@ from Home.models import Brochure
 from .forms import (
     BookingsForm, ContactForm
 )
+from .antispam import AntiSpamViewMixin
 import threading
 
 def send_emails_async(booking):
-    """Send emails in background thread"""
+    """Confirmation to the client (notify_staff_of_lead has its own thread)."""
     send_booking_confirmation(booking)
-    sleep(10)
-    send_booking_verification(booking)
 
 # Create your views here.
-class BookingCreateView(CreateView):
+class BookingCreateView(AntiSpamViewMixin, CreateView):
+    antispam_scope = 'booking'
     model = Bookings
     form_class = BookingsForm
     template_name = 'Requests/booking.html'
@@ -42,6 +42,7 @@ class BookingCreateView(CreateView):
         )
 
         # Send emails in background thread (non-blocking)
+        notify_staff_of_lead(self.object)
         thread = threading.Thread(target=send_emails_async, args=(self.object,))
         thread.daemon = True
         thread.start()
@@ -49,6 +50,8 @@ class BookingCreateView(CreateView):
         return response
 
     def form_invalid(self, form):
+        if form.spam_detected:
+            return super().form_invalid(form)  # AntiSpamViewMixin: strike + 400
         # Add error message
         messages.error(self.request,
             "There was an error with your booking. Please check the form and try again."
@@ -61,8 +64,9 @@ class BookingCreateView(CreateView):
         context['destinations'] = Destinations.objects.all()[:5]
         context['packages'] = AwesomePackages.objects.all()[:3]
 
-        # Pre-fill form for logged-in users
-        if self.request.user.is_authenticated:
+        # Pre-fill form for logged-in users (never replace a submitted form,
+        # or its validation errors would be lost)
+        if self.request.user.is_authenticated and not self.request.POST:
             initial = {
                 'name': f"{self.request.user.first_name} {self.request.user.last_name}".strip() or self.request.user.username,
                 'email': self.request.user.email,
@@ -77,7 +81,8 @@ class BookingDetailView(DetailView):
     template_name = 'bookings/booking_detail.html'
 
 # contact views
-class ContactView(FormView):
+class ContactView(AntiSpamViewMixin, FormView):
+    antispam_scope = 'contact'
     template_name = 'Requests/contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('contact')
@@ -101,10 +106,11 @@ class ContactView(FormView):
         else:
             contact.user = None
 
-        send_contact_response(contact)  # Send email response to user
-
-        # Save to database
+        # Save first: the lead must never be lost because an email failed
         contact.save()
+
+        notify_staff_of_lead(contact)
+        threading.Thread(target=send_contact_response, args=(contact,), daemon=True).start()
 
         # Add success message
         messages.success(self.request,
@@ -118,6 +124,8 @@ class ContactView(FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        if form.spam_detected:
+            return super().form_invalid(form)  # AntiSpamViewMixin: strike + 400
         for field, errors in form.errors.items():
             for error in errors:
                 messages.error(self.request, f"{field}: {error}")

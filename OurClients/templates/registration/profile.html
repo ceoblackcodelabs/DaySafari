@@ -1,5 +1,5 @@
 {% extends "Home/base.html" %}
-{% load static %}
+{% load static image_tags %}
 
 {% block title %}My Profile - Day Safaris Adventures{% endblock title %}
 
@@ -27,7 +27,7 @@
                 <div class="bg-light rounded p-4 text-center">
                     <div class="mb-4 position-relative">
                         {% if user.profile_image %}
-                        <img src="{{ user.profile_image.url }}" alt="{{ user.username }}" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                        <img src="{{ user.profile_image.url }}" alt="{{ user.username }}" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;" loading="lazy" decoding="async">
                         {% else %}
                         <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 120px; height: 120px;">
                             <i class="fa fa-user fa-4x text-white"></i>
@@ -138,7 +138,7 @@
 <div class="container-fluid blog py-5 bg-light">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3"><i class="fa fa-clock me-2"></i>Current Bookings</h5>
+            <p class="h5 section-title px-3"><i class="fa fa-clock me-2"></i>Current Bookings</p>
             <h1 class="mb-4">Your Upcoming Safaris</h1>
             <p class="mb-0">Track and manage your upcoming safari adventures. Get ready for an unforgettable experience with Day Safaris!</p>
         </div>
@@ -151,12 +151,12 @@
                     <div class="blog-img">
                         <div class="blog-img-inner">
                             {% if booking.image %}
-                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image.url }}" alt="{{ booking.name }}">
+                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image|thumb:640 }}" alt="{{ booking.name }}" loading="lazy" decoding="async">
                             {% else %}
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-1.jpg' %}" alt="{{ blog.title }}">
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-1.webp' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="#" class="my-auto" aria-label="Open" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
@@ -192,7 +192,7 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3"><i class="fa fa-history me-2"></i>Past Bookings</h5>
+            <p class="h5 section-title px-3"><i class="fa fa-history me-2"></i>Past Bookings</p>
             <h1 class="mb-4">Your Safari Memories</h1>
             <p class="mb-0">Relive your past safari experiences and share your stories with us. Write a review and inspire other travelers!</p>
         </div>
@@ -205,12 +205,12 @@
                     <div class="blog-img">
                         <div class="blog-img-inner">
                             {% if booking.image %}
-                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image.url }}" alt="{{ booking.name }}">
+                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image|thumb:640 }}" alt="{{ booking.name }}" loading="lazy" decoding="async">
                             {% else %}
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-1.jpg' %}" alt="{{ blog.title }}">
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-1.webp' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="#" class="my-auto" aria-label="Open" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
@@ -243,7 +243,7 @@
 <div class="container-fluid packages py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3"><i class="fa fa-star me-2"></i>Recommended For You</h5>
+            <p class="h5 section-title px-3"><i class="fa fa-star me-2"></i>Recommended For You</p>
             <h1 class="mb-4">Based on Your Interests</h1>
             <p class="mb-0">Discover personalized safari recommendations tailored to your travel preferences and past adventures.</p>
         </div>
@@ -254,9 +254,9 @@
             <div class="packages-item">
                 <div class="packages-img">
                     {% if package.image %}
-                    <img src="{{ package.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    <img src="{{ package.image|thumb:640 }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}" loading="lazy" decoding="async">
                     {% else %}
-                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}" loading="lazy" decoding="async">
                     {% endif %}
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
@@ -267,7 +267,7 @@
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
-                        <h5 class="mb-0">{{ package.name }}</h5>
+                        <h2 class="h5 mb-0">{{ package.name }}</h2>
                         <small class="text-uppercase">{{ package.package_type|default:"Safari Package" }}</small>
                         <div class="mb-3">
                             {% for i in ""|ljust:package.starRating %}

@@ -1,7 +1,13 @@
 {% extends "Home/base.html" %}
-{% load static i18n %}
+{% load static i18n image_tags %}
 
 {% block title %}{{ bnb.title|default:bnb.location }} - {% trans "Day Safaris Adventures" %}{% endblock title %}
+
+{% block meta_description %}Book {{ bnb.title|default:bnb.location }} in {{ bnb.location }}: sleeps up to {{ bnb.max_guests }} guests. {{ bnb.description|striptags|truncatechars:100 }}{% endblock meta_description %}
+{% block og_title %}{{ bnb.title|default:bnb.location }} - Day Safaris Adventures{% endblock og_title %}
+{% block og_description %}Book {{ bnb.title|default:bnb.location }} in {{ bnb.location }}: sleeps up to {{ bnb.max_guests }} guests. {{ bnb.description|striptags|truncatechars:100 }}{% endblock og_description %}
+{% block twitter_title %}{{ bnb.title|default:bnb.location }} - Day Safaris Adventures{% endblock twitter_title %}
+{% block twitter_description %}Book {{ bnb.title|default:bnb.location }} in {{ bnb.location }}: sleeps up to {{ bnb.max_guests }} guests. {{ bnb.description|striptags|truncatechars:100 }}{% endblock twitter_description %}
 
 {% block body %}
 
@@ -26,17 +32,17 @@
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
                     {% with main_image=bnb.images.filter.is_featured.first %}
                         {% if main_image %}
-                        <img src="{{ main_image.image.url }}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}" style="object-fit: cover;">
+                        <img src="{{ main_image.image|thumb:640 }}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}" style="object-fit: cover;" loading="lazy" decoding="async">
                         {% elif bnb.images.first %}
-                        <img src="{{ bnb.images.first.image.url }}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}" style="object-fit: cover;">
+                        <img src="{{ bnb.images.first.image|thumb:640 }}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}" style="object-fit: cover;" loading="lazy" decoding="async">
                         {% else %}
-                        <img src="{% static 'img/placeholder-bnb.jpg' %}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}">
+                        <img src="{% static 'img/placeholder-bnb.jpg' %}" class="img-fluid w-100 h-100" alt="{{ bnb.title|default:bnb.location }}" loading="lazy" decoding="async">
                         {% endif %}
                     {% endwith %}
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">{% trans "Premium Accommodation" %}</h5>
+                <p class="h5 section-about-title pe-3">{% trans "Premium Accommodation" %}</p>
                 <h1 class="mb-4">{{ bnb.title|default:bnb.location }}</h1>
                 <div class="d-flex align-items-center mb-3">
                     <div class="me-3">
@@ -98,11 +104,11 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <h5 class="section-booking-title pe-3">{% trans "Booking" %}</h5>
+                <p class="h5 section-booking-title pe-3">{% trans "Booking" %}</p>
                 <h1 class="text-white mb-4">{% trans "Book Your Stay Today" %}</h1>
                 <p class="text-white mb-4">{% trans "Experience comfort and luxury at its finest. Book your stay with Day Safaris Adventures and enjoy a memorable African getaway." %}</p>
                 <p class="text-white mb-4">{% trans "Take advantage of our early bird discounts and long-stay offers. All our properties are carefully selected to ensure you have the best experience." %}</p>
-                <a href="{% url 'about' %}" class="btn btn-light text-primary rounded-pill py-3 px-5 mt-2">{% trans "Learn More" %}</a>
+                <a href="{% url 'about' %}" class="btn btn-light text-primary rounded-pill py-3 px-5 mt-2">{% trans "Learn More" %}<span class="visually-hidden"> {% trans "about Day Safaris Adventures" %}</span></a>
             </div>
             <div class="col-lg-6">
                 <h1 class="text-white mb-3">{% trans "Book This Property" %}</h1>
@@ -121,40 +127,50 @@
                 <!-- Booking Form -->
                 <form method="post">
                     {% csrf_token %}
+                    {{ booking_form.website }}{{ booking_form.form_ts }}
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                {{ booking_form.guest_name }}
+                                {{ booking_form.name }}
                                 <label>{% trans "Your Name" %}</label>
-                                {% if booking_form.guest_name.errors %}
-                                    <div class="text-danger small mt-1">{{ booking_form.guest_name.errors.0 }}</div>
+                                {% if booking_form.name.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.name.errors.0 }}</div>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                {{ booking_form.guest_email }}
+                                {{ booking_form.email }}
                                 <label>{% trans "Your Email" %}</label>
-                                {% if booking_form.guest_email.errors %}
-                                    <div class="text-danger small mt-1">{{ booking_form.guest_email.errors.0 }}</div>
+                                {% if booking_form.email.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.email.errors.0 }}</div>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                {{ booking_form.guests }}
+                                {{ booking_form.phone }}
+                                <label>{% trans "Phone / WhatsApp" %}</label>
+                                {% if booking_form.phone.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.phone.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ booking_form.persons }}
                                 <label>{% trans "Number of Guests" %}</label>
-                                {% if booking_form.guests.errors %}
-                                    <div class="text-danger small mt-1">{{ booking_form.guests.errors.0 }}</div>
+                                {% if booking_form.persons.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.persons.errors.0 }}</div>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                {{ booking_form.check_in }}
+                                {{ booking_form.date }}
                                 <label>{% trans "Check-in Date" %}</label>
-                                {% if booking_form.check_in.errors %}
-                                    <div class="text-danger small mt-1">{{ booking_form.check_in.errors.0 }}</div>
+                                {% if booking_form.date.errors %}
+                                    <div class="text-danger small mt-1">{{ booking_form.date.errors.0 }}</div>
                                 {% endif %}
                             </div>
                         </div>
@@ -187,7 +203,7 @@
 <div class="container-fluid py-5 bg-light">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Amenities" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Amenities" %}</p>
             <h1 class="mb-0">{% trans "What This Property Offers" %}</h1>
         </div>
         <div class="row g-4">
@@ -195,56 +211,56 @@
                 <div class="feature-icon mb-3">
                     <i class="fa fa-wifi fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Free WiFi" %}</h5>
+                <h2 class="h5">{% trans "Free WiFi" %}</h2>
                 <p class="small">{% trans "High-speed internet available throughout" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-snowflake fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Air Conditioning" %}</h5>
+                <h2 class="h5">{% trans "Air Conditioning" %}</h2>
                 <p class="small">{% trans "Fully air-conditioned rooms" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-utensils fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Kitchen" %}</h5>
+                <h2 class="h5">{% trans "Kitchen" %}</h2>
                 <p class="small">{% trans "Fully equipped kitchen available" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-tv fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Smart TV" %}</h5>
+                <h2 class="h5">{% trans "Smart TV" %}</h2>
                 <p class="small">{% trans "Flat-screen TV with streaming services" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-car fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Free Parking" %}</h5>
+                <h2 class="h5">{% trans "Free Parking" %}</h2>
                 <p class="small">{% trans "On-site parking available" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-shield-alt fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "24/7 Security" %}</h5>
+                <h2 class="h5">{% trans "24/7 Security" %}</h2>
                 <p class="small">{% trans "Round-the-clock security service" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-swimming-pool fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Swimming Pool" %}</h5>
+                <h2 class="h5">{% trans "Swimming Pool" %}</h2>
                 <p class="small">{% trans "Access to swimming pool" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-dumbbell fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Fitness Center" %}</h5>
+                <h2 class="h5">{% trans "Fitness Center" %}</h2>
                 <p class="small">{% trans "Gym facilities available" %}</p>
             </div>
         </div>
@@ -255,7 +271,7 @@
 <div class="container-fluid destination py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Property Gallery" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Property Gallery" %}</p>
             <h1 class="mb-0">{% trans "Explore" %} {{ bnb.title|default:bnb.location }}</h1>
             <p class="mt-2">{% trans "Take a visual tour of this beautiful accommodation" %}</p>
         </div>
@@ -267,15 +283,15 @@
                         {% for image in all_images %}
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
-                                <img class="img-fluid rounded w-100" src="{{ image.image.url }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{{ image.image|thumb:640 }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Photo" %} {{ forloop.counter }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h2>
                                     <p class="text-white small mb-2">{{ image.caption|default:_("Beautiful view of the property") }}</p>
-                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery" aria-label="View photo">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-all"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-all" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -295,15 +311,15 @@
                         {% if "exterior" in image.caption|lower or forloop.counter <= 2 %}
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
-                                <img class="img-fluid rounded w-100" src="{{ image.image.url }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{{ image.image|thumb:640 }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Exterior" %}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h2>
                                     <p class="text-white small mb-2">{% trans "Property exterior view" %}</p>
-                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-exterior">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-exterior" aria-label="View photo">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-exterior"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-exterior" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -319,15 +335,15 @@
                         {% if forloop.counter >= 3 and forloop.counter <= 5 %}
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
-                                <img class="img-fluid rounded w-100" src="{{ image.image.url }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{{ image.image|thumb:640 }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Interior" %}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h2>
                                     <p class="text-white small mb-2">{% trans "Beautiful interior design" %}</p>
-                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-interior">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-interior" aria-label="View photo">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-interior"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-interior" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -341,43 +357,43 @@
                     <div class="row g-4">
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
-                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-pool.jpg' %}" alt="{% trans 'Swimming Pool' %}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-pool.jpg' %}" alt="{% trans 'Swimming Pool' %}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Amenity" %}</a>
-                                    <h4 class="text-white mb-2 mt-3">{% trans "Swimming Pool" %}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{% trans "Swimming Pool" %}</h2>
                                     <p class="text-white small mb-2">{% trans "Relax and unwind" %}</p>
                                     <a href="#" class="btn-hover text-white">{% trans "View Details" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{% static 'img/amenity-pool.jpg' %}" data-lightbox="property-amenities"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{% static 'img/amenity-pool.jpg' %}" data-lightbox="property-amenities" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
-                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-gym.jpg' %}" alt="{% trans 'Fitness Center' %}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-gym.jpg' %}" alt="{% trans 'Fitness Center' %}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Amenity" %}</a>
-                                    <h4 class="text-white mb-2 mt-3">{% trans "Fitness Center" %}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{% trans "Fitness Center" %}</h2>
                                     <p class="text-white small mb-2">{% trans "Stay fit while traveling" %}</p>
                                     <a href="#" class="btn-hover text-white">{% trans "View Details" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{% static 'img/amenity-gym.jpg' %}" data-lightbox="property-amenities"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{% static 'img/amenity-gym.jpg' %}" data-lightbox="property-amenities" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
-                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-kitchen.jpg' %}" alt="{% trans 'Kitchen' %}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/amenity-kitchen.jpg' %}" alt="{% trans 'Kitchen' %}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Amenity" %}</a>
-                                    <h4 class="text-white mb-2 mt-3">{% trans "Modern Kitchen" %}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{% trans "Modern Kitchen" %}</h2>
                                     <p class="text-white small mb-2">{% trans "Fully equipped" %}</p>
                                     <a href="#" class="btn-hover text-white">{% trans "View Details" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{% static 'img/amenity-kitchen.jpg' %}" data-lightbox="property-amenities"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{% static 'img/amenity-kitchen.jpg' %}" data-lightbox="property-amenities" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -390,15 +406,15 @@
                         {% for image in all_images|slice:":3" %}
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
-                                <img class="img-fluid rounded w-100" src="{{ image.image.url }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{{ image.image|thumb:640 }}" alt="{{ image.caption|default:bnb.title }}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Location" %}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ bnb.location }}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{{ bnb.location }}</h2>
                                     <p class="text-white small mb-2">{% trans "Beautiful surroundings" %}</p>
-                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-surroundings">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-surroundings" aria-label="View photo">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{{ image.image.url }}" data-lightbox="property-surroundings"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ image.image.url }}" data-lightbox="property-surroundings" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -417,7 +433,7 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <h5 class="section-title px-3">{% trans "Location" %}</h5>
+                <p class="h5 section-title px-3">{% trans "Location" %}</p>
                 <h1 class="mb-4">{% trans "Perfectly Situated in" %} {{ bnb.location }}</h1>
                 <p class="mb-4">{% trans "This property is ideally located in the heart of" %} {{ bnb.location }}, {% trans "offering easy access to local attractions, restaurants, and shopping areas. Whether you're here for business or leisure, you'll find everything you need within close proximity." %}</p>
                 <div class="row gy-2 gx-4 mb-4">
@@ -439,7 +455,7 @@
             <div class="col-lg-6">
                 <div class="bg-light rounded p-4 text-center">
                     <i class="fa fa-map-marker-alt fa-4x text-primary mb-3"></i>
-                    <h4>{{ bnb.location }}</h4>
+                    <h2 class="h4">{{ bnb.location }}</h2>
                     <p class="mb-0">{% trans "Exact location details provided upon booking confirmation" %}</p>
                 </div>
             </div>

@@ -11,6 +11,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
 from decimal import Decimal
+import threading
+from ClientRequests.antispam import AntiSpamViewMixin
+from EmailSetup.utils import send_booking_confirmation, notify_staff_of_lead
 
 # Create your views here.
 #  AirBNB
@@ -19,7 +22,8 @@ class AirBNBView(ListView):
     context_object_name = 'bnbs'
     template_name = 'BNB/bnbs.html'
     
-class AirBNBDetailView(DetailView):
+class AirBNBDetailView(AntiSpamViewMixin, DetailView):
+    antispam_scope = 'airbnb'
     model = AirBNB
     context_object_name = 'bnb'
     template_name = "BNB/bnbs_detail.html"
@@ -46,37 +50,25 @@ class AirBNBDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = BNBbookingsForm(request.POST)
-        
-        if form.is_valid():
-            # Save the booking
-            booking = form.save(commit=False)
-            booking.airbnb = self.object
-            
-            # Calculate number of nights and total amount
-            nights = (booking.check_out - booking.check_in).days
-            if self.object.price_per_night:
-                total_amount = self.object.price_per_night * nights
-                booking.amount_paid = total_amount
-            else:
-                booking.amount_paid = Decimal('0.00')
-            
-            if request.user.is_authenticated:
-                booking.user = request.user
-            
-            booking.save()
-            
-            # Send payment email to customer (you can integrate with your email system)
-            messages.success(request, f'Successfully booked {self.object.title or self.object.location}! A confirmation has been sent to your email.')
-            
-            # Redirect to payment page or booking confirmation
-            return redirect(reverse('bnb_detail', kwargs={'pk': booking.airbnb.id}))
-        else:
-            # Form has errors
+
+        if not form.is_valid():
+            if form.spam_detected:
+                return self.form_invalid(form)  # AntiSpamViewMixin: strike + 400
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f'{field}: {error}')
-        
-        # Render the page with form errors
-        return self.render_to_response(self.get_context_data(booking_form=form))
-    
+            return self.render_to_response(self.get_context_data(booking_form=form))
 
+        booking = form.save(commit=False)
+        booking.booking_type = 'airbnb'
+        booking.airbnb = self.object
+        if request.user.is_authenticated:
+            booking.client = request.user
+        booking.save()
+
+        notify_staff_of_lead(booking)
+        threading.Thread(target=send_booking_confirmation, args=(booking,), daemon=True).start()
+        messages.success(request, f'Thank you {booking.name}! Your request for '
+                                  f'{self.object.title or self.object.location} was received. '
+                                  'We will contact you shortly to confirm availability.')
+        return redirect(reverse('bnb_detail', kwargs={'pk': self.object.id}))

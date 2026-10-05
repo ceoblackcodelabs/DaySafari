@@ -103,24 +103,6 @@ class Destinations(models.Model):
         return images
 
 
-class MustVisit(models.Model):
-    SIZE_CHOICES = [
-        ('landscape', 'Landscape'),
-        ('portrait', 'Portrait')
-    ]
-
-    name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='must_visit_images/')
-    size = models.CharField(max_length=50, choices=SIZE_CHOICES, default='landscape')
-    order = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ['order', 'name']
-
-    def __str__(self):
-        return self.name
-
-
 class IncluisiveExcluisive(models.Model):
     package = models.ForeignKey('AwesomePackages', on_delete=models.CASCADE, related_name='inclusions')
     name = models.CharField(max_length=100)

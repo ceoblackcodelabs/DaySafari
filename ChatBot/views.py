@@ -10,6 +10,8 @@ from django.conf import settings
 import logging
 from django.http import JsonResponse
 from pathlib import Path
+from django.contrib.admin.views.decorators import staff_member_required
+from ClientRequests.antispam import rate_limited
 
 logger = logging.getLogger(__name__)
 
@@ -187,6 +189,7 @@ def generate_mock_response(user_message):
 
 @csrf_exempt
 @require_http_methods(["POST"])
+@rate_limited('chatbot', [(8, 60), (40, 3600), (150, 86400)])
 def response_api(request):
     """API endpoint for chatbot"""
     try:
@@ -205,6 +208,7 @@ def response_api(request):
                 'success': False,
                 'error': 'No message provided'
             }, status=400)
+        user_message = user_message[:600]  # bound what each (paid) AI call can cost
 
         logger.info(f"Processing message: {user_message[:50]}...")
 
@@ -226,6 +230,7 @@ def response_api(request):
         }, status=500)
 
 
+@staff_member_required
 def test_chatbot(request):
     """Test view to check if chatbot is working"""
     # Test the GitHub API connection
@@ -248,6 +253,7 @@ def test_chatbot(request):
     })
 
 
+@staff_member_required
 def test_github_api(request):
     """Test view to check GitHub API connectivity"""
     api_key = config('github', default=None)

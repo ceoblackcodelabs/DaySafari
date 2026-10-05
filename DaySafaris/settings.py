@@ -12,10 +12,13 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ========== SECURITY SETTINGS ==========
-SECRET_KEY = 'django-insecure-i9#fnbul=t8lgg$(zv1x^uq0y!+so2rq*&7*p4rph$iai!q&xl'
+# Set SECRET_KEY in the server's .env; the fallback keeps existing setups working.
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-i9#fnbul=t8lgg$(zv1x^uq0y!+so2rq*&7*p4rph$iai!q&xl')
 
-# SECURITY WARNING:
-DEBUG = True
+# SECURITY WARNING: never run with DEBUG=True in production; it also makes
+# Django keep every SQL query in memory and render slow debug pages.
+# Local development: put DEBUG=True in your .env.
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
     "daysafarisadventures.co.ke",
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'django_daraja',
     'Home',
     'OurClients',
@@ -49,7 +53,6 @@ INSTALLED_APPS = [
     'StripePayment',
     'CryptoTransfer',
     'BankTransfer',
-    'SuperMode',
     'django_ckeditor_5',
 ]
 
@@ -74,8 +77,10 @@ INSTALLED_APPS = [
 # smarter compression for static files).
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # SmartGZip wraps WhiteNoise so static CSS/JS are compressed too, but only
+    # compresses text-like 200 responses (never videos or Range/206 replies).
+    'DaySafaris.middleware.SmartGZipMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.gzip.GZipMiddleware',  # compresses HTML/CSS/JS/JSON responses (dynamic views only, now that WhiteNoise is above it)
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -109,7 +114,7 @@ WSGI_APPLICATION = 'DaySafaris.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': config('DB_PATH', default=str(BASE_DIR / 'db.sqlite3')),
     }
 }
 
@@ -216,8 +221,13 @@ STATICFILES_DIRS = [
     BASE_DIR / 'Home' / 'static',  # Your app's static folder with videos
 ]
 
-# Storage for static files (using WhiteNoise)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Storages (Django 5.1+ ignores STATICFILES_STORAGE; STORAGES is the setting).
+# Static keeps the plain storage (works with or without `collectstatic`);
+# uploads are auto-optimised by DaySafaris.storage.OptimizedMediaStorage.
+STORAGES = {
+    'default': {'BACKEND': 'DaySafaris.storage.OptimizedMediaStorage'},
+    'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
+}
 
 # ========== WHITENOISE CONFIGURATION ==========
 # These settings help serve video files properly
@@ -382,3 +392,17 @@ LOGGING = {
         },
     },
 }
+
+# ========== PRODUCTION SECURITY (active when DEBUG is off) ==========
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS', default=31536000, cast=int)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+    # Opt in once you've confirmed the host forwards X-Forwarded-Proto
+    # (otherwise a redirect loop is possible):
+    SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
+    if config('TRUST_PROXY_SSL_HEADER', default=False, cast=bool):
+        SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

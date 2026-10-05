@@ -1,9 +1,13 @@
 {% extends "Home/base.html" %}
-{% load static %}
+{% load static image_tags %}
 {% load i18n %}
 {% load custom_filters %}
 
 {% block title %}{% trans "FAQ - Days Safaris Adventures" %}{% endblock title %}
+
+{% block meta_description %}Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures.{% endblock meta_description %}
+{% block og_description %}Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures.{% endblock og_description %}
+{% block twitter_description %}Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures.{% endblock twitter_description %}
 
 {% block body %}
 
@@ -25,7 +29,7 @@
 <div class="container-fluid bg-light py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">FAQ</h5>
+            <p class="h5 section-title px-3">FAQ</p>
             <h1 class="mb-0">Frequently Asked Questions</h1>
         </div>
 
@@ -38,7 +42,7 @@
                     <div class="col-12">
                         <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
                             <div class="service-content text-end">
-                                <h5 class="mb-3">What does Day Safaris Adventures specialize in?</h5>
+                                <h2 class="h5 mb-3">What does Day Safaris Adventures specialize in?</h2>
                                 <p class="mb-0">
                                     We specialize in African wildlife safaris, tailor-made tours, beach holidays, mountain adventures, cultural experiences, airport transfers, hotel bookings, visa assistance, and international travel packages.
                                 </p>
@@ -52,7 +56,7 @@
                     <div class="col-12">
                         <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
                             <div class="service-content text-end">
-                                <h5 class="mb-3">Where are you located?</h5>
+                                <h2 class="h5 mb-3">Where are you located?</h2>
                                 <p class="mb-0">
                                     Our head office is conveniently located at <strong>Nairobi Railways Museum, Nairobi, Kenya (00200)</strong>, making it easy for clients to visit us for travel consultations and bookings.
                                 </p>
@@ -66,7 +70,7 @@
                     <div class="col-12">
                         <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
                             <div class="service-content text-end">
-                                <h5 class="mb-3">What are your business hours?</h5>
+                                <h2 class="h5 mb-3">What are your business hours?</h2>
                                 <p class="mb-0">
                                     We are open <strong>Monday to Sunday</strong> from <strong>8:00 AM to 8:00 PM</strong>. Our customer support team is available throughout these hours to assist with bookings and travel inquiries.
                                 </p>
@@ -90,7 +94,7 @@
                                 <i class="fas fa-phone-alt fa-4x text-primary"></i>
                             </div>
                             <div class="service-content">
-                                <h5 class="mb-3">How can I contact Day Safaris Adventures?</h5>
+                                <h2 class="h5 mb-3">How can I contact Day Safaris Adventures?</h2>
                                 <p class="mb-0">
                                     You can reach us via email at <strong>info@daysafarisadventures.com</strong> or call us on <strong>+254 759 379 600</strong>.  off - office number is <strong>+254 734 962 965</strong>. You may also visit our office during business hours.
                                 </p>
@@ -104,7 +108,7 @@
                                 <i class="fas fa-passport fa-4x text-primary"></i>
                             </div>
                             <div class="service-content">
-                                <h5 class="mb-3">Can you help with visa processing?</h5>
+                                <h2 class="h5 mb-3">Can you help with visa processing?</h2>
                                 <p class="mb-0">
                                     Yes. We provide professional visa processing assistance, helping clients prepare documents, complete applications, and track their visa status for various destinations.
                                 </p>
@@ -118,7 +122,7 @@
                                 <i class="fas fa-calendar-check fa-4x text-primary"></i>
                             </div>
                             <div class="service-content">
-                                <h5 class="mb-3">How do I book a safari?</h5>
+                                <h2 class="h5 mb-3">How do I book a safari?</h2>
                                 <p class="mb-0">
                                     Booking is easy. Simply fill out our online booking form, call our travel consultants, or send us an email. We'll help you choose the perfect package and customize your adventure to suit your budget and preferences.
                                 </p>
@@ -139,7 +143,7 @@
 <div class="container-fluid testimonial py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Testimonial" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Testimonial" %}</p>
             <h1 class="mb-0">{% trans "What Our Clients Say About Us" %}</h1>
         </div>
         <div class="testimonial-carousel owl-carousel">
@@ -150,13 +154,13 @@
                 </div>
                 <div class="testimonial-img p-1">
                     {% if testimonial.image %}
-                    <img src="{{ testimonial.image.url }}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}">
+                    <img src="{{ testimonial.image|thumb:200 }}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}" width="100" height="100" loading="lazy" decoding="async">
                     {% else %}
-                    <img src="{% static 'img/avatar-placeholder.jpg' %}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}">
+                    <img src="{% static 'img/avatar-placeholder.jpg' %}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}" width="100" height="100" loading="lazy" decoding="async">
                     {% endif %}
                 </div>
                 <div style="margin-top: -35px;">
-                    <h5 class="mb-0">{{ testimonial.name }}</h5>
+                    <h2 class="h5 mb-0">{{ testimonial.name }}</h2>
                     <p class="mb-0">{{ testimonial.location }}</p>
                     <div class="d-flex justify-content-center">
                         {% for i in ""|ljust:testimonial.starRating %}

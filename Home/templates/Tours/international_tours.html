@@ -1,8 +1,13 @@
 {% extends "Home/base.html" %}
+{% load i18n %}
 
-{% load static custom_filters %}
+{% load static custom_filters image_tags %}
 
 {% block title %}International Tours - Days Safaris Adventures{% endblock title %}
+
+{% block meta_description %}International tour packages beyond Africa, arranged by Day Safaris Adventures, Nairobi.{% endblock meta_description %}
+{% block og_description %}International tour packages beyond Africa, arranged by Day Safaris Adventures, Nairobi.{% endblock og_description %}
+{% block twitter_description %}International tour packages beyond Africa, arranged by Day Safaris Adventures, Nairobi.{% endblock twitter_description %}
 
 {% block body %}
 
@@ -23,7 +28,7 @@
 <div class="container-fluid destination py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Other Tour Gallery</h5>
+            <p class="h5 section-title px-3">Other Tour Gallery</p>
             <h1 class="mb-0">Experience Breathtaking Moments AnyWhere</h1>
         </div>
         <div class="tab-class text-center">
@@ -49,21 +54,21 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
                                 {% if destination.image %}
-                                <img class="img-fluid rounded w-100" src="{{ destination.image.url }}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{{ destination.image|thumb:640 }}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-destination.jpg' %}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-destination.jpg' %}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ destination.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ destination.name }}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{{ destination.name }}</h2>
                                     <p class="text-white small mb-2">{{ destination.location }}</p>
                                     <a href="{% url 'destination_detail' destination.id %}" class="btn-hover text-white">View Details <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if destination.image %}
-                                    <a href="{{ destination.image.url }}" data-lightbox="destination-{{ destination.id }}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ destination.image.url }}" data-lightbox="destination-{{ destination.id }}" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     {% else %}
-                                    <a href="{% static 'img/placeholder-destination.jpg' %}" data-lightbox="destination-{{ destination.id }}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{% static 'img/placeholder-destination.jpg' %}" data-lightbox="destination-{{ destination.id }}" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -86,21 +91,21 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="destination-img">
                                 {% if destination.image %}
-                                <img class="img-fluid rounded w-100" src="{{ destination.image.url }}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{{ destination.image|thumb:640 }}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 {% else %}
-                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-destination.jpg' %}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;">
+                                <img class="img-fluid rounded w-100" src="{% static 'img/placeholder-destination.jpg' %}" alt="{{ destination.name }}" style="height: 300px; object-fit: cover;" loading="lazy" decoding="async">
                                 {% endif %}
                                 <div class="destination-overlay p-4">
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{{ destination.category.category }}</a>
-                                    <h4 class="text-white mb-2 mt-3">{{ destination.name }}</h4>
+                                    <h2 class="h4 text-white mb-2 mt-3">{{ destination.name }}</h2>
                                     <p class="text-white small mb-2">{{ destination.location|default:"East Africa" }}</p>
                                     <a href="{% url 'destination_detail' destination.id %}" class="btn-hover text-white">View Details <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
                                     {% if destination.image %}
-                                    <a href="{{ destination.image.url }}" data-lightbox="dest-{{ category.id }}-{{ destination.id }}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ destination.image.url }}" data-lightbox="dest-{{ category.id }}-{{ destination.id }}" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     {% else %}
-                                    <a href="{% static 'img/placeholder-destination.jpg' %}" data-lightbox="dest-{{ category.id }}-{{ destination.id }}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{% static 'img/placeholder-destination.jpg' %}" data-lightbox="dest-{{ category.id }}-{{ destination.id }}" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -125,7 +130,7 @@
 <div class="container-fluid packages py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Packages</h5>
+            <p class="h5 section-title px-3">Packages</p>
             <h1 class="mb-0">Awesome International Tour Packages</h1>
         </div>
         <div class="packages-carousel owl-carousel">
@@ -133,9 +138,9 @@
             <div class="packages-item">
                 <div class="packages-img">
                     {% if package.image %}
-                    <img src="{{ package.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    <img src="{{ package.image|thumb:640 }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}" loading="lazy" decoding="async">
                     {% else %}
-                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}" loading="lazy" decoding="async">
                     {% endif %}
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
@@ -146,7 +151,7 @@
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
-                        <h5 class="mb-0">{{ package.name }}</h5>
+                        <h2 class="h5 mb-0">{{ package.name }}</h2>
                         <small class="text-uppercase">{{ package.package_type|default:"Safari Package" }}</small>
                         <div class="mb-3">
                             {% for i in ""|ljust:package.starRating %}
@@ -162,7 +167,7 @@
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">
-                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about" %} {{ package.name }}</span></a>
                         </div>
                         <div class="col-6 text-end px-0">
                             <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">Book Now</a>

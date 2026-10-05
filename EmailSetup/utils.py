@@ -6,7 +6,9 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMultiAlternatives
 from decouple import config
-from .models import CompanyProfile
+from django.utils.html import escape
+import threading
+from .models import CompanyProfile, EmailLog
 
 # Remove this line - it's causing the error
 # company = get_object_or_404(CompanyProfile, pk=1)
@@ -44,11 +46,53 @@ def send_transactional_email(to_email, to_name, subject, html_content):
 
         api_response = api_instance.send_transac_email(send_smtp_email)
         print(f"Email sent successfully! Message ID: {api_response.message_id}")
+        _log_email(to_email, subject, 'sent')
         return True
 
-    except ApiException as e:
+    except Exception as e:  # ApiException, network errors, bad config...
         print(f"Exception when sending email: {e}")
+        _log_email(to_email, subject, f'failed: {e}'[:50])
         return False
+
+
+def _log_email(recipient, subject, status):
+    """Record every send attempt so a failed email is never silent."""
+    try:
+        EmailLog.objects.create(recipient=recipient[:254], subject=subject[:255], status=status)
+    except Exception:
+        logger.exception("Could not write EmailLog")
+
+
+def notify_staff_of_lead(lead):
+    """Email the team the moment a lead (Bookings or Contact) arrives.
+
+    Runs in a background thread so the visitor never waits on Brevo. Failures
+    are logged in EmailLog and the lead itself is already saved.
+    """
+    def _send():
+        try:
+            company = get_company()
+            to_email = company.booking_confirmation_email if company else 'info@daysafarisadventures.com'
+            is_booking = hasattr(lead, 'booking_type')
+            if is_booking:
+                title = f"New {lead.get_booking_type_display()} booking lead: {lead.item_name}"
+                rows = [('Name', lead.name), ('Email', lead.email), ('Phone', lead.phone),
+                        ('Interest', lead.item_name), ('Persons', lead.persons),
+                        ('Date / check-in', lead.date), ('Check-out', lead.check_out or '-'),
+                        ('Message', lead.message or '-')]
+            else:
+                title = f"New contact message: {lead.subject}"
+                rows = [('Name', lead.name), ('Email', lead.email), ('Subject', lead.subject),
+                        ('Message', lead.message)]
+            body = ''.join(f"<tr><td style='padding:4px 12px 4px 0'><b>{escape(k)}</b></td>"
+                           f"<td>{escape(str(v)).replace(chr(10), '<br>')}</td></tr>" for k, v in rows)
+            html = (f"<h3>{escape(title)}</h3><table>{body}</table>"
+                    f"<p>Reply to the customer promptly: <a href='mailto:{escape(lead.email)}'>{escape(lead.email)}</a></p>")
+            send_transactional_email(to_email, 'Day Safaris Team', title, html)
+        except Exception:
+            logger.exception("Lead notification failed for %r", lead)
+
+    threading.Thread(target=_send, daemon=True).start()
 
 
 def send_welcome_email(name="", email=""):
@@ -101,6 +145,8 @@ def send_booking_verification(booking):
 
         print(f"Preparing to send booking Verification email to {company.booking_confirmation_email if company else 'info@daysafarisadventures.com'} for booking ID {booking.id}...")
         mpesa_payment_link = f"{company.mpesa_payment_link if company else 'https://daysafarisadventures.co.ke'}/payment/from-bookings/{booking.id}/"
+        price = booking.destination.price if booking.destination else 0
+        total = booking.persons * (price or 0)
         context = {
             'payment_link': mpesa_payment_link,
             'booking': booking,
@@ -111,12 +157,12 @@ def send_booking_verification(booking):
 
             # more
             'booking': booking,
-            'total_price': booking.persons * booking.destination.price,
-            'deposit_amount': (booking.persons * booking.destination.price) * int(0.3),
-            'balance_amount': (booking.persons * booking.destination.price) * int(0.3),
+            'total_price': total,
+            'deposit_amount': total * 0.3,
+            'balance_amount': total * 0.7,
             'tax_amount': 0.00,
             'discount_amount': 0.00,
-            'grand_total': booking.persons * booking.destination.price,
+            'grand_total': total,
         }
         html_content = render_to_string('Emails/bookings_verification.html', context)
 

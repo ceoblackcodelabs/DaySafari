@@ -1,7 +1,23 @@
 {% extends "Home/base.html" %}
-{% load static i18n %}
+{% load static i18n image_tags %}
 
 {% block title %}{{ package.name }} - {% trans "Day Safaris Adventures" %}{% endblock title %}
+
+{% block meta_description %}{{ package.name }}: {{ package.days }}-day safari in {{ package.location }} from Day Safaris Adventures, Nairobi. {{ package.description|striptags|truncatechars:110 }}{% endblock meta_description %}
+{% block og_title %}{{ package.name }} - Day Safaris Adventures{% endblock og_title %}
+{% block og_description %}{{ package.name }}: {{ package.days }}-day safari in {{ package.location }} from Day Safaris Adventures, Nairobi. {{ package.description|striptags|truncatechars:110 }}{% endblock og_description %}
+{% block twitter_title %}{{ package.name }} - Day Safaris Adventures{% endblock twitter_title %}
+{% block twitter_description %}{{ package.name }}: {{ package.days }}-day safari in {{ package.location }} from Day Safaris Adventures, Nairobi. {{ package.description|striptags|truncatechars:110 }}{% endblock twitter_description %}
+{% block og_image %}{% if package.image %}https://daysafarisadventures.co.ke{{ package.image.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock og_image %}
+{% block twitter_image %}{% if package.image %}https://daysafarisadventures.co.ke{{ package.image.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock twitter_image %}
+{% block structured_data %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TouristTrip","name":"{{ package.name|escapejs }}",
+"description":"{{ package.description|striptags|truncatechars:300|escapejs }}",
+"touristType":"Safari","provider":{"@type":"TravelAgency","name":"Day Safaris Adventures","url":"https://daysafarisadventures.co.ke"}{% if package.price %},
+"offers":{"@type":"Offer","price":"{{ package.price|stringformat:"s" }}","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://daysafarisadventures.co.ke{{ request.path }}"}{% endif %}}
+</script>
+{% endblock structured_data %}
 
 {% block body %}
 
@@ -25,16 +41,16 @@
             <div class="col-lg-6">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
                     {% if package.image %}
-                    <img src="{{ package.image.url }}" class="img-fluid w-100 h-100" alt="{{ package.name }}" style="object-fit: cover;">
+                    <img src="{{ package.image|thumb:640 }}" class="img-fluid w-100 h-100" alt="{{ package.name }}" style="object-fit: cover;" loading="lazy" decoding="async">
                     {% else %}
-                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 h-100" alt="{{ package.name }}" style="object-fit: cover;">
+                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 h-100" alt="{{ package.name }}" style="object-fit: cover;" loading="lazy" decoding="async">
                     {% endif %}
                 </div>
             </div>
             <div class="col-lg-6" >
                 <div class="p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h5 class="section-about-title pe-3">{{ package.package_type|default:_("Safari Package") }}</h5>
+                        <p class="h5 section-about-title pe-3">{{ package.package_type|default:_("Safari Package") }}</p>
                         <div class="packages-price bg-primary text-white rounded-pill py-2 px-4">
                             {% trans "Days Offer" %}
                         </div>
@@ -46,21 +62,21 @@
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-calendar-alt fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">{{ package.days }} {% trans "Days" %}</h6>
+                                <h2 class="h6 mb-0">{{ package.days }} {% trans "Days" %}</h2>
                                 <small class="text-muted">{% trans "Duration" %}</small>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-map-marker-alt fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">{{ package.location|truncatechars:15 }}</h6>
+                                <h2 class="h6 mb-0">{{ package.location|truncatechars:15 }}</h2>
                                 <small class="text-muted">{% trans "Location" %}</small>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-user fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">{{ package.persons }} {% trans "Persons" %}</h6>
+                                <h2 class="h6 mb-0">{{ package.persons }} {% trans "Persons" %}</h2>
                                 <small class="text-muted">{% trans "Max Group" %}</small>
                             </div>
                         </div>
@@ -68,7 +84,7 @@
 
                     <!-- Star Rating -->
                     <div class="mb-4">
-                        <h6 class="d-inline-block me-2">{% trans "Rating:" %}</h6>
+                        <h2 class="h6 d-inline-block me-2">{% trans "Rating:" %}</h2>
                         {% for i in ""|ljust:package.starRating %}
                         <small class="fa fa-star text-primary"></small>
                         {% endfor %}
@@ -83,7 +99,7 @@
                     <div class="mb-4 package-description">{{ package.description|safe }}</div>
 
                     <!-- Features List -->
-                    <h5 class="mb-3">What’s Included</h5>
+                    <h2 class="h5 mb-3">What’s Included</h2>
 
                     <div class="row gy-2 gx-4 mb-4">
                         {% for item in inclusive %}
@@ -98,7 +114,7 @@
                         {% endfor %}
                     </div>
 
-                    <h5 class="mb-3">What’s Not Included</h5>
+                    <h2 class="h5 mb-3">What’s Not Included</h2>
 
                     {% comment %} not included {% endcomment %}
                     <div class="row gy-2 gx-4 mb-4">
@@ -129,7 +145,7 @@
 <div class="container-fluid bg-light py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">{% trans "Your Journey" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Your Journey" %}</p>
             <h1 class="mb-4">{{ package.days }}-{% trans "Day Safari Itinerary" %}</h1>
             <p class="mb-0">{% trans "Day-by-day breakdown of your" %} {{ package.name }} {% trans "adventure." %}</p>
         </div>
@@ -145,12 +161,12 @@
                             <span class="day-number">{{ itinerary.day_number }}</span>
                             {% if itinerary.image %}
                             <div class="day-thumb flex-shrink-0">
-                                <img src="{{ itinerary.image.url }}" alt="{{ itinerary.title }}">
+                                <img src="{{ itinerary.image|thumb:640 }}" alt="{{ itinerary.title }}" loading="lazy" decoding="async">
                             </div>
                             {% endif %}
                             <div class="flex-grow-1">
                                 <span class="day-label">{% trans "Day" %} {{ itinerary.day_number }}</span>
-                                <h5 class="mb-0">{{ itinerary.title }}</h5>
+                                <h2 class="h5 mb-0">{{ itinerary.title }}</h2>
                             </div>
                             <span class="badge bg-primary d-none d-sm-inline-block">{{ itinerary.meals }}</span>
                             <i class="fa fa-chevron-down itinerary-chevron"></i>
@@ -187,7 +203,7 @@
                             <span class="day-number">{{ forloop.counter }}</span>
                             <div class="flex-grow-1">
                                 <span class="day-label">{% trans "Day" %} {{ forloop.counter }}</span>
-                                <h5 class="mb-0">{% if forloop.counter == 1 %}{% trans "Arrival & Welcome" %}{% elif forloop.counter == package.days %}{% trans "Departure" %}{% else %}{% trans "Safari Experience" %}{% endif %}</h5>
+                                <h2 class="h5 mb-0">{% if forloop.counter == 1 %}{% trans "Arrival & Welcome" %}{% elif forloop.counter == package.days %}{% trans "Departure" %}{% else %}{% trans "Safari Experience" %}{% endif %}</h2>
                             </div>
                             <i class="fa fa-chevron-down itinerary-chevron"></i>
                         </div>
@@ -220,11 +236,11 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <h5 class="section-booking-title pe-3">{% trans "Booking" %}</h5>
+                <p class="h5 section-booking-title pe-3">{% trans "Booking" %}</p>
                 <h1 class="text-white mb-4">{{ object.name }}</h1>
                 <p class="text-white mb-4">{% trans "Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains." %}</p>
                 <p class="text-white mb-4">{% trans "Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!" %}</p>
-                <a href="#" class="btn btn-primary rounded-pill py-3 px-5 mt-2">{% trans "Learn More" %}</a>
+                <a href="#" class="btn btn-primary rounded-pill py-3 px-5 mt-2">{% trans "Learn More" %}<span class="visually-hidden"> {% trans "about" %} {{ object.name }}</span></a>
             </div>
             <div class="col-lg-6">
                 <h1 class="text-white mb-3">{% trans "Book A Tour Deals" %}</h1>
@@ -291,7 +307,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control bg-white border-0" value="{{ package.name }}" disabled>
+                                <input type="text" class="form-control bg-white border-0" value="{{ package.name }}" aria-label="{% trans "Package" %}" disabled>
                                 <label>{% trans "Package" %}</label>
                             </div>
                         </div>
@@ -329,7 +345,7 @@
 <div class="container-fluid py-5 bg-light">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">{% trans "You May Also Like" %}</h5>
+            <p class="h5 section-title px-3">{% trans "You May Also Like" %}</p>
             <h1 class="mb-4">{% trans "Similar Safari Packages" %}</h1>
             <p class="mb-0">{% trans "Explore other amazing safari experiences we offer." %}</p>
         </div>
@@ -339,14 +355,14 @@
                 <div class="packages-item">
                     <div class="packages-img">
                         {% if similar.image %}
-                        <img src="{{ similar.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;">
+                        <img src="{{ similar.image|thumb:640 }}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;" loading="lazy" decoding="async">
                         {% else %}
-                        <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;">
+                        <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;" loading="lazy" decoding="async">
                         {% endif %}
                         <div class="packages-price py-2 px-4">${{ similar.price|floatformat:2 }}</div>
                     </div>
                     <div class="packages-content bg-white rounded-bottom p-4">
-                        <h5>{{ similar.name }}</h5>
+                        <h2 class="h5">{{ similar.name }}</h2>
                         <div class="mb-3">
                             <small class="fa fa-map-marker-alt me-1 text-primary"></small>
                             <small>{{ similar.location }}</small>
@@ -370,7 +386,7 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">{% trans "Package Highlights" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Package Highlights" %}</p>
             <h1 class="mb-4">{% trans "What's Included in Your Safari" %}</h1>
             <p class="mb-0">{% trans "Everything you need for an unforgettable African adventure is included in your package." %}</p>
         </div>
@@ -380,7 +396,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-car fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">{% trans "Comfortable Transport" %}</h5>
+                    <h2 class="h5 mb-3">{% trans "Comfortable Transport" %}</h2>
                     <p class="mb-0">{% trans "Travel in style in our modern 4x4 safari vehicles with pop-up roofs for optimal wildlife viewing and photography." %}</p>
                 </div>
             </div>
@@ -389,7 +405,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-bed fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">{% trans "Premium Accommodation" %}</h5>
+                    <h2 class="h5 mb-3">{% trans "Premium Accommodation" %}</h2>
                     <p class="mb-0">{% trans "Stay in carefully selected lodges and tented camps that offer comfort, safety, and authentic African experiences." %}</p>
                 </div>
             </div>
@@ -398,7 +414,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-utensils fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">{% trans "Delicious Meals" %}</h5>
+                    <h2 class="h5 mb-3">{% trans "Delicious Meals" %}</h2>
                     <p class="mb-0">{% trans "Enjoy a variety of local and international cuisine prepared by expert chefs, including special dietary requirements." %}</p>
                 </div>
             </div>
@@ -407,7 +423,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-binoculars fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">{% trans "Expert Safari Guides" %}</h5>
+                    <h2 class="h5 mb-3">{% trans "Expert Safari Guides" %}</h2>
                     <p class="mb-0">{% trans "Our knowledgeable guides have years of experience and will ensure you don't miss any wildlife sightings." %}</p>
                 </div>
             </div>
@@ -416,7 +432,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-camera fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">{% trans "Photography Tips" %}</h5>
+                    <h2 class="h5 mb-3">{% trans "Photography Tips" %}</h2>
                     <p class="mb-0">{% trans "Get professional photography guidance to capture stunning wildlife moments during your safari." %}</p>
                 </div>
             </div>
@@ -425,7 +441,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-headset fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">{% trans "24/7 Support" %}</h5>
+                    <h2 class="h5 mb-3">{% trans "24/7 Support" %}</h2>
                     <p class="mb-0">{% trans "Our dedicated support team is available around the clock to assist you before and during your safari." %}</p>
                 </div>
             </div>

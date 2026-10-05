@@ -21,9 +21,34 @@ from django.urls import path, re_path, include
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.views.static import serve as serve_static_file
+from django.views.decorators.cache import cache_control
 from django.contrib.staticfiles.views import serve as serve_staticfiles
 
+from django.contrib.sitemaps.views import sitemap
+from django.http import HttpResponse
+from django.views.decorators.cache import cache_page
+from django.views.generic import RedirectView
+from Home.sitemaps import sitemaps
+from DaySafaris.media import serve_media_with_range
+
+ROBOTS_TXT = """User-agent: *
+Allow: /
+Disallow: /*/admin/
+Disallow: /*/Mpesa/
+Disallow: /*/Stripe/
+Disallow: /*/Crypto/
+Disallow: /*/Bank/
+Disallow: /*/payment/
+Disallow: /ckeditor5/
+Disallow: /i18n/
+
+Sitemap: https://daysafarisadventures.co.ke/sitemap.xml
+"""
+
 urlpatterns = [
+    path('favicon.ico', RedirectView.as_view(url='/static/img/favicon.ico', permanent=True)),
+    path('robots.txt', lambda request: HttpResponse(ROBOTS_TXT, content_type='text/plain')),
+    path('sitemap.xml', cache_page(3600)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('i18n/', include('django.conf.urls.i18n')),  # Language switcher endpoint
     path('ckeditor5/', include('django_ckeditor_5.urls')),
 ]
@@ -42,7 +67,6 @@ urlpatterns += i18n_patterns(
     path('Stripe/', include('StripePayment.urls')),
     path('Crypto/', include('CryptoTransfer.urls')),
     path('Bank/', include('BankTransfer.urls')),
-    path('SudoSu/', include('SuperMode.urls')),
 )
 
 # NOTE: django.conf.urls.static.static() is NOT used for MEDIA_URL. It has
@@ -59,7 +83,9 @@ if getattr(settings, "SERVE_MEDIA_VIA_DJANGO", True):
     urlpatterns += [
         re_path(
             r"^%s(?P<path>.*)$" % re.escape(_media_url_path),
-            serve_static_file,
+            # Uploads rarely change: let browsers/CDNs cache them for 30 days
+            # (django.views.static.serve already answers If-Modified-Since with 304).
+            cache_control(public=True, max_age=60 * 60 * 24 * 365)(serve_media_with_range),
             {"document_root": settings.MEDIA_ROOT},
         ),
     ]

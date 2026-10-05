@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import RedirectView, ListView, DetailView, TemplateView
 from collections import defaultdict
 from .models import (
     Destinations, AwesomePackages, DestinationsCategory, IncluisiveExcluisive
@@ -55,8 +55,10 @@ class DestinationDetailView(DetailView):
 
 
 # tours
-class TourView(TemplateView):
-    template_name = 'Home/tours.html'
+class TourView(RedirectView):
+    """/tours/ has no page of its own; send visitors to the main tours listing."""
+    pattern_name = 'east_africa_tours'
+    permanent = False
 
 
 class AfricaTourView(ListView):

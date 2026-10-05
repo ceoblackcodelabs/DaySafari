@@ -1,5 +1,5 @@
 {% extends "Home/base.html" %}
-{% load static %}
+{% load static image_tags %}
 
 {% block title %}{{ title }}{% endblock title %}
 
@@ -28,9 +28,9 @@
                 <div class="favorite-card rounded overflow-hidden h-100">
                     <div class="favorite-card-img position-relative">
                         {% if saved.destination.image %}
-                        <img src="{{ saved.destination.image.url }}" class="img-fluid w-100" alt="{{ saved.destination.name }}">
+                        <img src="{{ saved.destination.image|thumb:640 }}" class="img-fluid w-100" alt="{{ saved.destination.name }}" loading="lazy" decoding="async">
                         {% else %}
-                        <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100" alt="{{ saved.destination.name }}">
+                        <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100" alt="{{ saved.destination.name }}" loading="lazy" decoding="async">
                         {% endif %}
                         <form method="post" action="{% url 'toggle_favorite' saved.destination.id %}" class="position-absolute top-0 end-0 m-2">
                             {% csrf_token %}

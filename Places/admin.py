@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (
     DestinationsCategory, Destinations, Itinerary,
-    MustVisit, AwesomePackages, PackagePurchase,
+    AwesomePackages, PackagePurchase,
     IncluisiveExcluisive, DestinationImage
 )
 from django.utils.html import format_html
@@ -21,21 +21,6 @@ class ItineraryAdmin(admin.ModelAdmin):
     list_filter = ['package']
     search_fields = ['package__name', 'title', 'description']
     ordering = ['package', 'day_number']
-
-
-@admin.register(MustVisit)
-class MustVisitAdmin(admin.ModelAdmin):
-    list_display = ['name', 'size', 'order', 'image_preview']
-    search_fields = ['name']
-    list_filter = ['size']
-    ordering = ['order', 'name']
-    list_editable = ['order', 'size']
-
-    def image_preview(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover; border-radius: 4px;" />', obj.image.url)
-        return "No Image"
-    image_preview.short_description = 'Image'
 
 
 @admin.register(IncluisiveExcluisive)

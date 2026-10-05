@@ -1,9 +1,13 @@
 {% extends "Home/base.html" %}
 
-{% load static %}
+{% load static image_tags %}
 {% load i18n %}
 
 {% block title %}Our Safari Packages - Days Safaris Adventures{% endblock title %}
+
+{% block meta_description %}Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices.{% endblock meta_description %}
+{% block og_description %}Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices.{% endblock og_description %}
+{% block twitter_description %}Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices.{% endblock twitter_description %}
 
 {% block body %}
 
@@ -34,7 +38,7 @@
                     <!-- Category -->
                     <div class="col-md-2">
                         <label class="form-label fw-bold">{% trans "Category" %}</label>
-                        <select name="category" class="form-select">
+                        <select name="category" class="form-select" aria-label="Category">
                             <option value="">{% trans "All Categories" %}</option>
                             {% for category in categories %}
                             <option value="{{ category }}" {% if current_filters.category == category %}selected{% endif %}>
@@ -47,7 +51,7 @@
                     <!-- Location -->
                     <div class="col-md-2">
                         <label class="form-label fw-bold">{% trans "Location" %}</label>
-                        <select name="location" class="form-select">
+                        <select name="location" class="form-select" aria-label="Location">
                             <option value="">{% trans "All Locations" %}</option>
                             {% for location in locations %}
                             <option value="{{ location }}" {% if current_filters.location == location %}selected{% endif %}>
@@ -76,7 +80,7 @@
                     <!-- Sort -->
                     <div class="col-md-2">
                         <label class="form-label fw-bold">{% trans "Sort By" %}</label>
-                        <select name="sort" class="form-select">
+                        <select name="sort" class="form-select" aria-label="Sort packages">
                             <option value="">{% trans "Default" %}</option>
                             <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>{% trans "Price: Low to High" %}</option>
                             <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>{% trans "Price: High to Low" %}</option>
@@ -105,7 +109,7 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Our Packages" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Our Packages" %}</p>
             <h1 class="mb-4">{% trans "Discover Amazing Safari Adventures" %}</h1>
             <p class="mb-0">{% trans "Explore our curated selection of safari packages across East Africa. From luxury wildlife safaris to budget-friendly adventures, we have the perfect journey for you." %}</p>
         </div>
@@ -127,12 +131,12 @@
                     <div class="blog-img">
                         <div class="blog-img-inner">
                             {% if package.image %}
-                            <img class="img-fluid w-100 rounded-top" src="{{ package.image.url }}" alt="{{ package.name }}" style="height: 250px; object-fit: cover;">
+                            <img class="img-fluid w-100 rounded-top" src="{{ package.image|thumb:640 }}" alt="{{ package.name }}" loading="lazy" decoding="async">
                             {% else %}
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/package-placeholder.jpg' %}" alt="{{ package.name }}" style="height: 250px; object-fit: cover;">
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/package-placeholder.jpg' %}" alt="{{ package.name }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="{% url 'package_detail' package.slug %}" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="{% url 'package_detail' package.slug %}" class="my-auto" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">

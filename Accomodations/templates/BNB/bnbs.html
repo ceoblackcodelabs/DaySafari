@@ -1,7 +1,11 @@
 {% extends "Home/base.html" %}
-{% load static i18n %}
+{% load static i18n image_tags %}
 
 {% block title %}{% trans "AirBNB - Days Safaris Adventures" %}{% endblock title %}
+
+{% block meta_description %}Airbnb-style stays and apartments in Nairobi and across Kenya, booked through Day Safaris Adventures.{% endblock meta_description %}
+{% block og_description %}Airbnb-style stays and apartments in Nairobi and across Kenya, booked through Day Safaris Adventures.{% endblock og_description %}
+{% block twitter_description %}Airbnb-style stays and apartments in Nairobi and across Kenya, booked through Day Safaris Adventures.{% endblock twitter_description %}
 
 {% block body %}
 
@@ -22,7 +26,7 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Premium Stays" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Premium Stays" %}</p>
             <h1 class="mb-4">{% trans "Experience Luxury Accommodations Across Africa" %}</h1>
             <p class="mb-0">{% trans "Handpicked Airbnb properties for your perfect African getaway" %}</p>
         </div>
@@ -34,15 +38,15 @@
                         <div class="blog-img-inner">
                             {% with main_image=bnb.images.filter.is_featured.first %}
                                 {% if main_image %}
-                                <img class="img-fluid w-100 rounded-top" src="{{ main_image.image.url }}" alt="{{ bnb.title|default:bnb.location }}" style="height: 250px; object-fit: cover;">
+                                <img class="img-fluid w-100 rounded-top" src="{{ main_image.image|thumb:640 }}" alt="{{ bnb.title|default:bnb.location }}" loading="lazy" decoding="async">
                                 {% elif bnb.images.first %}
-                                <img class="img-fluid w-100 rounded-top" src="{{ bnb.images.first.image.url }}" alt="{{ bnb.title|default:bnb.location }}" style="height: 250px; object-fit: cover;">
+                                <img class="img-fluid w-100 rounded-top" src="{{ bnb.images.first.image|thumb:640 }}" alt="{{ bnb.title|default:bnb.location }}" loading="lazy" decoding="async">
                                 {% else %}
-                                <img class="img-fluid w-100 rounded-top" src="{% static 'img/placeholder-bnb.jpg' %}" alt="{{ bnb.title|default:bnb.location }}" style="height: 250px; object-fit: cover;">
+                                <img class="img-fluid w-100 rounded-top" src="{% static 'img/placeholder-bnb.jpg' %}" alt="{{ bnb.title|default:bnb.location }}" loading="lazy" decoding="async">
                                 {% endif %}
                             {% endwith %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-home fa-2x text-white"></i></a>
+                                <a href="#" class="my-auto" aria-label="View details"><i class="fas fa-home fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
@@ -108,28 +112,28 @@
                 <div class="feature-icon mb-3">
                     <i class="fa fa-shield-alt fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Verified Properties" %}</h5>
+                <h2 class="h5">{% trans "Verified Properties" %}</h2>
                 <p class="small">{% trans "All properties are handpicked and verified" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-headset fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "24/7 Support" %}</h5>
+                <h2 class="h5">{% trans "24/7 Support" %}</h2>
                 <p class="small">{% trans "Round-the-clock customer assistance" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-credit-card fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Secure Payments" %}</h5>
+                <h2 class="h5">{% trans "Secure Payments" %}</h2>
                 <p class="small">{% trans "Safe and encrypted transactions" %}</p>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="feature-icon mb-3">
                     <i class="fa fa-map-marked-alt fa-3x text-primary"></i>
                 </div>
-                <h5>{% trans "Best Locations" %}</h5>
+                <h2 class="h5">{% trans "Best Locations" %}</h2>
                 <p class="small">{% trans "Prime locations across East Africa" %}</p>
             </div>
         </div>

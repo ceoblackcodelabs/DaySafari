@@ -1,8 +1,12 @@
 {% extends "Home/base.html" %}
 
-{% load static %}
+{% load static image_tags %}
 
 {% block title %}Brochures - Day Safari Adventures{% endblock title %}
+
+{% block meta_description %}Download safari brochures, itineraries and travel guides for East Africa from Day Safaris Adventures.{% endblock meta_description %}
+{% block og_description %}Download safari brochures, itineraries and travel guides for East Africa from Day Safaris Adventures.{% endblock og_description %}
+{% block twitter_description %}Download safari brochures, itineraries and travel guides for East Africa from Day Safaris Adventures.{% endblock twitter_description %}
 
 {% block body %}
 
@@ -23,7 +27,7 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Our Brochures</h5>
+            <p class="h5 section-title px-3">Our Brochures</p>
             <h1 class="mb-4">Download Safari Brochures & Travel Guides</h1>
             <p class="mb-0">Explore our collection of detailed brochures featuring safari packages, tour itineraries, accommodation options, and travel tips for East Africa. Download PDF guides to plan your perfect African adventure.</p>
         </div>
@@ -34,12 +38,12 @@
                     <div class="blog-img">
                         <div class="blog-img-inner">
                             {% if brochure.image %}
-                            <img class="img-fluid w-100 rounded-top" src="{{ brochure.image.url }}" alt="{{ brochure.title }}">
+                            <img class="img-fluid w-100 rounded-top" src="{{ brochure.image|thumb:640 }}" alt="{{ brochure.title }}" loading="lazy" decoding="async">
                             {% else %}
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/brochure-placeholder.jpg' %}" alt="{{ brochure.title }}">
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/brochure-placeholder.jpg' %}" alt="{{ brochure.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="{{ brochure.pdf_file.url }}" target="_blank" class="my-auto"><i class="fas fa-download fa-2x text-white"></i></a>
+                                <a href="{{ brochure.pdf_file.url }}" target="_blank" class="my-auto" aria-label="View details"><i class="fas fa-download fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">

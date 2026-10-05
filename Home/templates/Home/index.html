@@ -1,6 +1,6 @@
 {% extends "Home/base.html" %}
 
-{% load static %}
+{% load static image_tags %}
 {% load i18n %}
 {% load custom_filters %}
 
@@ -32,7 +32,7 @@
             <li data-bs-target="#carouselId" data-bs-slide-to="4"></li>
             {% endif %}
         </ol>
-        <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner">
             {% if hero_slides %}
             <!-- Dynamic slides, uploaded via Django Admin > Hero Slides -->
             {% for slide in hero_slides %}
@@ -40,7 +40,7 @@
                 {% if slide.media_type == 'video' and slide.video %}
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
                             <source src="{{ slide.video.url }}" type="video/mp4">
                             {% if slide.fallback_image %}
                             <img src="{{ slide.fallback_image.url }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ slide.title }}">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 {% else %}
-                <img src="{{ slide.image.url }}" class="img-fluid" alt="{{ slide.title }}">
+                <img src="{{ slide.image|thumb:1200 }}" srcset="{{ slide.image|thumb:640 }} 640w, {{ slide.image|thumb:800 }} 800w, {{ slide.image|thumb:1200 }} 1200w, {{ slide.image|thumb:1600 }} 1600w" sizes="100vw" class="img-fluid" alt="{{ slide.title }}" decoding="async"{% if forloop.first %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
                 {% endif %}
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
@@ -73,7 +73,7 @@
             <!-- Fallback static slides - shown only if no Hero Slides are uploaded in admin -->
             <!-- Existing Image Slides -->
             <div class="carousel-item active">
-                <img src="{% static "img/carousel-2.jpg" %}" class="img-fluid" alt="Image">
+                <img src="{% static "img/carousel-2.webp" %}" class="img-fluid" alt="Image" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
                         <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Explore The World" %}</h4>
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static "img/carousel-1.jpg" %}" class="img-fluid" alt="Image">
+                <img src="{% static "img/carousel-1.webp" %}" class="img-fluid" alt="Image" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
                         <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Days Safaris Adventures" %}</h4>
@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static "img/carousel-3.jpg" %}" class="img-fluid" alt="Image">
+                <img src="{% static "img/carousel-3.webp" %}" class="img-fluid" alt="Image" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
                         <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Sail Into Serenity" %}</h4>
@@ -117,7 +117,7 @@
             <div class="carousel-item">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
                             <source src="{% static 'videos/giraffe.mp4' %}" type="video/mp4">
                             <source src="{% static 'videos/giraffe.mp4' %}" type="video/mp4">
                             <!-- Fallback image if video doesn't load -->
@@ -141,7 +141,7 @@
             <div class="carousel-item">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
                             <source src="{% static 'videos/elephant.mp4' %}" type="video/mp4">
                             <source src="{% static 'videos/elephant.mp4' %}" type="video/mp4">
                             <img src="{% static 'img/fallback-video-2.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Video Fallback">
@@ -164,7 +164,7 @@
             <div class="carousel-item">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
                             <source src="{% static 'videos/ostrich.mp4' %}" type="video/mp4">
                             <source src="{% static 'videos/ostrich.mp4' %}" type="video/mp4">
                             <img src="{% static 'img/fallback-video-3.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Video Fallback">
@@ -177,7 +177,7 @@
                         <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Luxury Safari Adventures Await" %}</h1>
                         <p class="mb-5 fs-5">{% trans "Discover the Best of African Wildlife and Culture" %}</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Learn More" %}</a>
+                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Learn More" %}<span class="visually-hidden"> {% trans "about Day Safaris Adventures" %}</span></a>
                         </div>
                     </div>
                 </div>
@@ -217,7 +217,7 @@
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
                     <img id="aboutLoopImage"
-                         src="{% if about_images %}{{ about_images.0.image.url }}{% else %}{% static 'img/about-img.jpg' %}{% endif %}"
+                         src="{% if about_images %}{{ about_images.0.image|thumb:900 }}{% else %}{% static 'img/about-img.webp' %}{% endif %}"
                          class="img-fluid w-100 h-100 about-loop-img"
                          alt="{% if about_images %}{{ about_images.0.caption|default:_('About Day Safaris') }}{% else %}{% trans 'About Day Safaris' %}{% endif %}"
                          width="600" height="600" loading="eager">
@@ -229,7 +229,7 @@
                 {% endif %}
             </div>
             <div class="col-lg-7">
-                <h5 class="section-about-title pe-3">{% trans "Welcome To Day Safaris Adventures" %}</h5>
+                <p class="h5 section-about-title pe-3">{% trans "Welcome To Day Safaris Adventures" %}</p>
                 <h1 class="mb-4">{% trans "WHO WE ARE" %}</h1>
                 <p class="mb-4">{% trans "We are a premier destination management company headquartered in Nairobi, Kenya, dedicated to creating unforgettable travel experiences across Africa and beyond. Our team of experienced, informative, friendly, and professional guides ensures every client enjoys safe, reliable, personalized, and budget-friendly journeys." %}</p>
                 <p class="mb-4">{% trans "We specialize in both inbound and outbound travel services, offering a diverse range of tailor-made tours that showcase Africa’s breathtaking wildlife, stunning landscapes, rich cultural heritage, and iconic attractions, alongside exciting destinations across Europe, America, and Asia." %}</p>
@@ -254,7 +254,7 @@
                         <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "24/7 Customer Support" %}</p>
                     </div>
                 </div>
-                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'about' %}">{% trans "Read More" %}</a>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'about' %}">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about Day Safaris Adventures" %}</span></a>
             </div>
         </div>
     </div>
@@ -266,7 +266,7 @@
 <div class="container-fluid bg-light service py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Services" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Services" %}</p>
             <h1 class="mb-0">{% trans "Our Services" %}</h1>
         </div>
         <div class="row g-4">
@@ -276,7 +276,7 @@
                     <div class="col-12">
                         <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
                             <div class="service-content text-end">
-                                <h5 class="mb-4">{{ service.name }}</h5>
+                                <h2 class="h5 mb-4">{{ service.name }}</h2>
                                 <p class="mb-0">{{ service.description }}</p>
                             </div>
                             <div class="service-icon p-4">
@@ -296,7 +296,7 @@
                                 <i class="{{ service.icon }} fa-4x text-primary"></i>
                             </div>
                             <div class="service-content">
-                                <h5 class="mb-4">{{ service.name }}</h5>
+                                <h2 class="h5 mb-4">{{ service.name }}</h2>
                                 <p class="mb-0">{{ service.description }}</p>
                             </div>
                         </div>
@@ -318,7 +318,7 @@
 <div class="container-fluid packages py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Packages" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Packages" %}</p>
             <h1 class="mb-0">{% trans "Awesome Safari Packages" %}</h1>
         </div>
         <div class="packages-carousel owl-carousel">
@@ -326,9 +326,9 @@
             <div class="packages-item">
                 <div class="packages-img">
                     {% if package.image %}
-                    <img src="{{ package.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    <img src="{{ package.image|thumb:640 }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}" loading="lazy" decoding="async">
                     {% else %}
-                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}" loading="lazy" decoding="async">
                     {% endif %}
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
@@ -338,7 +338,7 @@
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
-                        <h5 class="mb-0">{{ package.name }}</h5>
+                        <h2 class="h5 mb-0">{{ package.name }}</h2>
                         <small class="text-uppercase">{{ package.package_type|default:_("Safari Package") }}</small>
                         <div class="mb-3">
                             {% for i in ""|ljust:package.starRating %}
@@ -354,7 +354,7 @@
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">
-                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Read More" %}</a>
+                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about" %} {{ package.name }}</span></a>
                         </div>
                         <div class="col-6 text-end px-0">
                             <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Book Now" %}</a>
@@ -378,7 +378,7 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <h5 class="section-booking-title pe-3">{% trans "Booking" %}</h5>
+                <p class="h5 section-booking-title pe-3">{% trans "Booking" %}</p>
                 <h1 class="text-white mb-4">{% trans "Book Your Safari Adventure" %}</h1>
                 <p class="text-white mb-4">{% trans "Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains." %}</p>
                 <p class="text-white mb-4">{% trans "Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!" %}</p>
@@ -401,6 +401,7 @@
                 <!-- Booking Form -->
                 <form method="post" action="{% url 'home' %}">
                     {% csrf_token %}
+                    {{ booking_form.website }}{{ booking_form.form_ts }}
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
@@ -480,7 +481,7 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Our Blog" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Our Blog" %}</p>
             <h1 class="mb-4">{% trans "Popular Travel Blogs & Safari Tips" %}</h1>
             <p class="mb-0">{% trans "Discover expert travel advice, safari planning guides, and inspiring stories from our adventures across East Africa. Learn about the best times to visit, wildlife photography tips, and hidden gems off the beaten path." %}</p>
         </div>
@@ -491,12 +492,12 @@
                     <div class="blog-img">
                         <div class="blog-img-inner">
                             {% if blog.image %}
-                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image|thumb:640 }}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% else %}
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-placeholder.jpg' %}" alt="{{ blog.title }}">
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-placeholder.jpg' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="{% url 'blog_detail' blog.slug %}" class="my-auto" aria-label="{% trans "Read article" %}: {{ blog.title }}" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
@@ -507,9 +508,9 @@
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
                         <p class="mb-3">{% trans "Posted By:" %} {{ blog.author }}</p>
-                        <a href="{% url 'blog_detail' blog.id %}" class="h4">{{ blog.title }}</a>
+                        <a href="{% url 'blog_detail' blog.slug %}" class="h4">{{ blog.title }}</a>
                         <p class="my-3">{{ blog.content|striptags|truncatewords:30 }}</p>
-                        <a href="{% url 'blog_detail' blog.slug %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Read More" %}</a>
+                        <a href="{% url 'blog_detail' blog.slug %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about" %} {{ blog.title }}</span></a>
                     </div>
                 </div>
             </div>
@@ -528,7 +529,7 @@
 <div class="container-fluid bg-light testimonial py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Testimonial" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Testimonial" %}</p>
             <h1 class="mb-0">{% trans "What Our Clients Say About Us" %}</h1>
         </div>
         <div class="testimonial-carousel owl-carousel">
@@ -539,13 +540,13 @@
                 </div>
                 <div class="testimonial-img p-1">
                     {% if testimonial.image %}
-                    <img src="{{ testimonial.image.url }}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}">
+                    <img src="{{ testimonial.image|thumb:200 }}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}" width="100" height="100" loading="lazy" decoding="async">
                     {% else %}
-                    <img src="{% static 'img/avatar-placeholder.jpg' %}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}">
+                    <img src="{% static 'img/avatar-placeholder.jpg' %}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}" width="100" height="100" loading="lazy" decoding="async">
                     {% endif %}
                 </div>
                 <div style="margin-top: -35px;">
-                    <h5 class="mb-0">{{ testimonial.name }}</h5>
+                    <h2 class="h5 mb-0">{{ testimonial.name }}</h2>
                     <p class="mb-0">{{ testimonial.location }}</p>
                     <div class="d-flex justify-content-center">
                         {% for i in ""|ljust:testimonial.starRating %}
@@ -571,3 +572,25 @@
 <!-- Testimonial End -->
 
 {% endblock body %}
+
+{% block lcp_preload %}{% endblock lcp_preload %}
+
+{% block extra_js %}
+<script>
+/* Hero videos: only the visible slide downloads/plays (saves ~1.7 MB on first load). */
+(function () {
+    var carousel = document.getElementById('carouselId');
+    if (!carousel) return;
+    function sync() {
+        carousel.querySelectorAll('.carousel-item').forEach(function (item) {
+            var video = item.querySelector('video[data-hero-video]');
+            if (!video) return;
+            if (item.classList.contains('active')) { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+            else { video.pause(); }
+        });
+    }
+    carousel.addEventListener('slid.bs.carousel', sync);
+    window.addEventListener('load', sync);
+})();
+</script>
+{% endblock extra_js %}

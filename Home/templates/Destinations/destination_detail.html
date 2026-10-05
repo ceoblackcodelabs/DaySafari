@@ -1,8 +1,16 @@
 {% extends "Home/base.html" %}
 
-{% load static %}
+{% load static image_tags %}
 
 {% block title %}{{ destination.name }} - Day Safaris Adventures{% endblock title %}
+
+{% block meta_description %}Visit {{ destination.name }} with Day Safaris Adventures. {{ destination.description|striptags|truncatechars:130 }}{% endblock meta_description %}
+{% block og_title %}{{ destination.name }} - Day Safaris Adventures{% endblock og_title %}
+{% block og_description %}Visit {{ destination.name }} with Day Safaris Adventures. {{ destination.description|striptags|truncatechars:130 }}{% endblock og_description %}
+{% block twitter_title %}{{ destination.name }} - Day Safaris Adventures{% endblock twitter_title %}
+{% block twitter_description %}Visit {{ destination.name }} with Day Safaris Adventures. {{ destination.description|striptags|truncatechars:130 }}{% endblock twitter_description %}
+{% block og_image %}{% if destination.image %}https://daysafarisadventures.co.ke{{ destination.image.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock og_image %}
+{% block twitter_image %}{% if destination.image %}https://daysafarisadventures.co.ke{{ destination.image.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock twitter_image %}
 
 {% block body %}
 
@@ -26,16 +34,16 @@
             <div class="col-lg-6">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
                     {% if destination.image %}
-                    <img src="{{ destination.image.url }}" class="img-fluid w-100 h-100" alt="{{ destination.name }}" style="object-fit: cover;">
+                    <img src="{{ destination.image|thumb:640 }}" class="img-fluid w-100 h-100" alt="{{ destination.name }}" style="object-fit: cover;" loading="lazy" decoding="async">
                     {% else %}
-                    <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100 h-100" alt="{{ destination.name }}" style="object-fit: cover;">
+                    <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100 h-100" alt="{{ destination.name }}" style="object-fit: cover;" loading="lazy" decoding="async">
                     {% endif %}
                 </div>
             </div>
             <div class="col-lg-6" >
                 <div class="p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h5 class="section-about-title pe-3">{{ destination.category.category }}</h5>
+                        <p class="h5 section-about-title pe-3">{{ destination.category.category }}</p>
                         <div class="packages-price bg-primary text-white rounded-pill py-2 px-4">
                             {{ destination.category.location }}
                         </div>
@@ -62,21 +70,21 @@
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-tag fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">{{ destination.category.category }}</h6>
+                                <h2 class="h6 mb-0">{{ destination.category.category }}</h2>
                                 <small class="text-muted">Category</small>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-map-marker-alt fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">{{ destination.category.location|truncatechars:15 }}</h6>
+                                <h2 class="h6 mb-0">{{ destination.category.location|truncatechars:15 }}</h2>
                                 <small class="text-muted">Location</small>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="bg-light rounded text-center p-3">
                                 <i class="fa fa-dollar-sign fa-2x text-primary mb-2"></i>
-                                <h6 class="mb-0">${{ destination.price|floatformat:2 }}</h6>
+                                <h2 class="h6 mb-0">${{ destination.price|floatformat:2 }}</h2>
                                 <small class="text-muted">Price</small>
                             </div>
                         </div>
@@ -84,7 +92,7 @@
 
                     <!-- Category Badge -->
                     <div class="mb-4">
-                        <h6 class="d-inline-block me-2">Category:</h6>
+                        <h2 class="h6 d-inline-block me-2">Category:</h2>
                         <span class="badge bg-primary rounded-pill px-3 py-2">{{ destination.category.category }}</span>
                         <span class="badge bg-info rounded-pill px-3 py-2 ms-2">{{ destination.category.location }}</span>
                     </div>
@@ -127,21 +135,21 @@
 <div class="container-fluid bg-light py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">Plan Your Trip</h5>
+            <p class="h5 section-title px-3">Plan Your Trip</p>
             <h1 class="mb-4">Best Time to Visit {{ destination.name }}</h1>
             <p class="mb-0">Choose the perfect season for your adventure based on wildlife viewing, weather, and crowds.</p>
         </div>
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="bg-white rounded p-4 h-100">
-                    <h4><i class="fa fa-sun text-primary me-2"></i> Peak Season</h4>
+                    <h2 class="h4"><i class="fa fa-sun text-primary me-2"></i> Peak Season</h2>
                     <p class="mb-2"><strong>July - October:</strong></p>
                     <p>Best for wildlife viewing, dry weather, and optimal safari conditions. Expect more visitors but incredible sightings.</p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="bg-white rounded p-4 h-100">
-                    <h4><i class="fa fa-leaf text-primary me-2"></i> Green Season</h4>
+                    <h2 class="h4"><i class="fa fa-leaf text-primary me-2"></i> Green Season</h2>
                     <p class="mb-2"><strong>November - December & March - May:</strong></p>
                     <p>Lush landscapes, fewer crowds, lower prices, and excellent bird watching opportunities.</p>
                 </div>
@@ -154,7 +162,7 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">Destination Highlights</h5>
+            <p class="h5 section-title px-3">Destination Highlights</p>
             <h1 class="mb-4">Why Visit {{ destination.name }}?</h1>
             <p class="mb-0">Discover what makes this destination special and why it should be on your bucket list.</p>
         </div>
@@ -164,7 +172,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-eye fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Breathtaking Views</h5>
+                    <h2 class="h5 mb-3">Breathtaking Views</h2>
                     <p class="mb-0">Experience stunning landscapes and panoramic views that will take your breath away.</p>
                 </div>
             </div>
@@ -173,7 +181,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-paw fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Incredible Wildlife</h5>
+                    <h2 class="h5 mb-3">Incredible Wildlife</h2>
                     <p class="mb-0">Spot diverse wildlife including the Big Five and unique species native to this region.</p>
                 </div>
             </div>
@@ -182,7 +190,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-users fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Rich Culture</h5>
+                    <h2 class="h5 mb-3">Rich Culture</h2>
                     <p class="mb-0">Immerse yourself in local traditions and authentic cultural experiences.</p>
                 </div>
             </div>
@@ -191,7 +199,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-camera fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Photo Opportunities</h5>
+                    <h2 class="h5 mb-3">Photo Opportunities</h2>
                     <p class="mb-0">Capture stunning images of wildlife, landscapes, and cultural moments.</p>
                 </div>
             </div>
@@ -200,7 +208,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-sun fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Perfect Climate</h5>
+                    <h2 class="h5 mb-3">Perfect Climate</h2>
                     <p class="mb-0">Enjoy favorable weather conditions for year-round travel and activities.</p>
                 </div>
             </div>
@@ -209,7 +217,7 @@
                     <div class="service-icon mb-4">
                         <i class="fa fa-shield-alt fa-3x text-primary"></i>
                     </div>
-                    <h5 class="mb-3">Safe Travel</h5>
+                    <h2 class="h5 mb-3">Safe Travel</h2>
                     <p class="mb-0">Well-maintained facilities and professional guides ensure your safety.</p>
                 </div>
             </div>
@@ -236,7 +244,7 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="section-title px-3">You May Also Like</h5>
+            <p class="h5 section-title px-3">You May Also Like</p>
             <h1 class="mb-4">Similar Destinations</h1>
             <p class="mb-0">Explore other amazing destinations in the same region.</p>
         </div>
@@ -246,14 +254,14 @@
                 <div class="packages-item">
                     <div class="packages-img">
                         {% if similar.image %}
-                        <img src="{{ similar.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;">
+                        <img src="{{ similar.image|thumb:640 }}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;" loading="lazy" decoding="async">
                         {% else %}
-                        <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;">
+                        <img src="{% static 'img/placeholder-destination.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;" loading="lazy" decoding="async">
                         {% endif %}
                         <div class="packages-price py-2 px-4">{{ similar.category.category }}</div>
                     </div>
                     <div class="packages-content bg-white rounded-bottom p-4">
-                        <h5>{{ similar.name }}</h5>
+                        <h2 class="h5">{{ similar.name }}</h2>
                         <div class="mb-3">
                             <small class="fa fa-map-marker-alt me-1 text-primary"></small>
                             <small>{{ similar.category.location }}</small>

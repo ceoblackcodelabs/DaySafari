@@ -215,7 +215,7 @@
                 <div class="bg-light rounded p-3 p-md-4 text-center sticky-lg-top" style="top: 20px;">
                     <div class="mb-4 position-relative d-inline-block">
                         {% if user.profile_image %}
-                        <img src="{{ user.profile_image.url }}" alt="{{ user.username }}" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                        <img src="{{ user.profile_image.url }}" alt="{{ user.username }}" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy" decoding="async">
                         {% else %}
                         <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
                             <i class="fa fa-user fa-3x text-white"></i>

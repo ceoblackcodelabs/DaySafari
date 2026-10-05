@@ -1,7 +1,24 @@
 {% extends "Home/base.html" %}
-{% load static i18n %}
+{% load static i18n image_tags %}
 
 {% block title %}{{ blog.seo_title|default:blog.title }} - {% trans "Days Safaris Adventures" %}{% endblock title %}
+
+{% block meta_description %}{{ blog.seo_description|default:blog.content|striptags|truncatechars:155 }}{% endblock meta_description %}
+{% block og_title %}{{ blog.seo_title|default:blog.title }} - Day Safaris Adventures{% endblock og_title %}
+{% block og_description %}{{ blog.seo_description|default:blog.content|striptags|truncatechars:155 }}{% endblock og_description %}
+{% block twitter_title %}{{ blog.seo_title|default:blog.title }} - Day Safaris Adventures{% endblock twitter_title %}
+{% block twitter_description %}{{ blog.seo_description|default:blog.content|striptags|truncatechars:155 }}{% endblock twitter_description %}
+{% block og_type %}article{% endblock og_type %}
+{% block og_image %}{% if blog.image %}https://daysafarisadventures.co.ke{{ blog.image.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock og_image %}
+{% block twitter_image %}{% if blog.image %}https://daysafarisadventures.co.ke{{ blog.image.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock twitter_image %}
+{% block structured_data %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"{{ blog.title|escapejs }}",
+"datePublished":"{{ blog.published_date|date:'c' }}","author":{"@type":"Person","name":"{{ blog.author|default:'Day Safaris Adventures'|escapejs }}"},
+"publisher":{"@type":"Organization","name":"Day Safaris Adventures"}{% if blog.image %},"image":"https://daysafarisadventures.co.ke{{ blog.image.url }}"{% endif %},
+"mainEntityOfPage":"https://daysafarisadventures.co.ke{{ request.path }}"}
+</script>
+{% endblock structured_data %}
 
 {% block body %}
 
@@ -29,7 +46,7 @@
 
                     {% if blog.image %}
                     <div class="blog-featured-img mb-4">
-                        <img src="{{ blog.image.url }}" class="img-fluid w-100" alt="{{ blog.title }}">
+                        <img src="{{ blog.image|thumb:1000 }}" srcset="{{ blog.image|thumb:480 }} 480w, {{ blog.image|thumb:1000 }} 1000w" sizes="(max-width: 768px) 100vw, 800px" width="1000" height="600" class="img-fluid w-100" alt="{{ blog.title }}" loading="lazy" decoding="async">
                     </div>
                     {% endif %}
 
@@ -64,19 +81,19 @@
                     <div class="d-flex flex-wrap align-items-center gap-3 mt-5 pt-4 border-top">
                         <strong class="me-2">{% trans "Share this:" %}</strong>
                         <a class="share-btn" target="_blank" rel="noopener"
-                           href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}">
+                           href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" aria-label="Share on Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                         <a class="share-btn" target="_blank" rel="noopener"
-                           href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ blog.title|urlencode }}">
+                           href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ blog.title|urlencode }}" aria-label="Share on X (Twitter)">
                             <i class="fab fa-twitter"></i>
                         </a>
                         <a class="share-btn" target="_blank" rel="noopener"
-                           href="https://wa.me/?text={{ blog.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}">
+                           href="https://wa.me/?text={{ blog.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" aria-label="Share on WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                         <a class="share-btn" target="_blank" rel="noopener"
-                           href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}">
+                           href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}" aria-label="Share on LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
@@ -85,7 +102,7 @@
                     <div class="author-box d-flex align-items-center gap-4 mt-4 p-4 rounded">
                         <div class="author-avatar"><i class="fa fa-user"></i></div>
                         <div>
-                            <h6 class="mb-1">{% trans "Written by" %} {{ blog.author }}</h6>
+                            <h2 class="h6 mb-1">{% trans "Written by" %} {{ blog.author }}</h2>
                             <p class="mb-0 text-muted">{% trans "Storyteller at Day Safaris Adventures, sharing tips, guides and adventures from across East Africa." %}</p>
                         </div>
                     </div>
@@ -104,25 +121,25 @@
 
                     <!-- Book a Safari CTA -->
                     <div class="sidebar-widget cta-widget rounded p-4 mb-4 text-white">
-                        <h5 class="text-white mb-3">{% trans "Ready for an adventure?" %}</h5>
+                        <h2 class="h5 text-white mb-3">{% trans "Ready for an adventure?" %}</h2>
                         <p class="mb-4">{% trans "Turn inspiration into an itinerary. Let's plan your next safari." %}</p>
                         <a href="{% url 'home' %}" class="btn btn-light rounded-pill py-2 px-4 w-100">{% trans "Book a Safari" %}</a>
                     </div>
 
                     <!-- Recent Posts -->
                     <div class="sidebar-widget rounded p-4 mb-4">
-                        <h5 class="sidebar-widget-title mb-4">{% trans "Recent Posts" %}</h5>
+                        <h2 class="h5 sidebar-widget-title mb-4">{% trans "Recent Posts" %}</h2>
                         {% for post in recent_posts %}
                         <a href="{% url 'blog_detail' post.slug %}" class="recent-post-item d-flex gap-3 mb-3 text-decoration-none">
                             <div class="recent-post-img flex-shrink-0">
                                 {% if post.image %}
-                                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                                <img src="{{ post.image|thumb:640 }}" alt="{{ post.title }}" loading="lazy" decoding="async">
                                 {% else %}
-                                <img src="{% static 'img/about-img.jpg' %}" alt="{{ post.title }}">
+                                <img src="{% static 'img/about-img.webp' %}" alt="{{ post.title }}" loading="lazy" decoding="async">
                                 {% endif %}
                             </div>
                             <div>
-                                <h6 class="recent-post-title mb-1">{{ post.title|truncatechars:55 }}</h6>
+                                <h2 class="h6 recent-post-title mb-1">{{ post.title|truncatechars:55 }}</h2>
                                 <small class="text-muted"><i class="fa fa-calendar-alt me-1"></i>{{ post.published_date|date:"M d, Y" }}</small>
                             </div>
                         </a>
@@ -134,7 +151,7 @@
                     <!-- Contact / Help Widget -->
                     <div class="sidebar-widget rounded p-4 text-center">
                         <i class="fa fa-headset fa-2x text-primary mb-3"></i>
-                        <h6 class="mb-2">{% trans "Need help planning?" %}</h6>
+                        <h2 class="h6 mb-2">{% trans "Need help planning?" %}</h2>
                         <p class="text-muted mb-3">{% trans "Our safari experts are ready to help you plan the perfect trip." %}</p>
                         <a href="{% url 'home' %}" class="btn btn-outline-primary rounded-pill py-2 px-4 w-100">{% trans "Contact Us" %}</a>
                     </div>
