@@ -1,8 +1,12 @@
 {% extends "Home/base.html" %}
-{% load static %}
+{% load static image_tags %}
 {% load i18n %}
 
 {% block title %}{% trans "Cruses - Days Safaris Adventures" %}{% endblock title %}
+
+{% block meta_description %}Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi.{% endblock meta_description %}
+{% block og_description %}Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi.{% endblock og_description %}
+{% block twitter_description %}Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi.{% endblock twitter_description %}
 
 {% block carousel %}
 
@@ -14,11 +18,11 @@
             <li data-bs-target="#carouselId" data-bs-slide-to="2"></li>
         </ol>
 
-        <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner">
             {% for cc in cruise_carousels %}
 
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ cc.image.url }}" class="img-fluid" alt="Cruise Image">
+                <img src="{{ cc.image|thumb:640 }}" class="img-fluid" alt="Cruise Image" decoding="async">
 
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
@@ -103,11 +107,11 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/crusabout.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'East Africa Tours' %}">
+                    <img src="{% static 'img/crusabout.webp' %}" class="img-fluid w-100 h-100" alt="{% trans 'East Africa Tours' %}" loading="lazy" decoding="async">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">{% trans "Our Cruises" %}</h5>
+                <p class="h5 section-about-title pe-3">{% trans "Our Cruises" %}</p>
                 <h1 class="mb-4">{% trans "Experience Luxury Cruise Packages with Us" %}</h1>
                 <p class="mb-4">
                     {% trans "Experience the luxury and excitement of unforgettable cruise journeys across stunning coastlines, tropical islands, and vibrant destinations with world-class entertainment, fine dining, and relaxing ocean adventures." %}
@@ -148,7 +152,7 @@
 <div class="container-fluid bg-light packages py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Cruise Packages" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Cruise Packages" %}</p>
             <h1 class="mb-0">{% trans "Awesome Cruise Packages" %}</h1>
         </div>
         <div class="packages-carousel owl-carousel">
@@ -156,9 +160,9 @@
             <div class="packages-item">
                 <div class="packages-img">
                     {% if package.image %}
-                    <img src="{{ package.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    <img src="{{ package.image|thumb:640 }}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}" loading="lazy" decoding="async">
                     {% else %}
-                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}">
+                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ package.name }}" loading="lazy" decoding="async">
                     {% endif %}
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
@@ -168,7 +172,7 @@
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
-                        <h5 class="mb-0">{{ package.name }}</h5>
+                        <h2 class="h5 mb-0">{{ package.name }}</h2>
                         <small class="text-uppercase">{{ package.package_type|default:_("Safari Package") }}</small>
                         <div class="mb-3">
                             {% for i in ""|ljust:package.starRating %}
@@ -184,7 +188,7 @@
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">
-                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Read More" %}</a>
+                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about" %} {{ package.name }}</span></a>
                         </div>
                         <div class="col-6 text-end px-0">
                             <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Book Now" %}</a>
@@ -208,7 +212,7 @@
 <div class="container-fluid bg-light guide py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Travel Guide" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Travel Guide" %}</p>
             <h1 class="mb-0">{% trans "Meet Our Guides" %}</h1>
         </div>
         <div class="row g-4">
@@ -216,7 +220,7 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="{% static 'img/guide-1.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
+                            <img src="{% static 'img/guide-1.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}" loading="lazy" decoding="async">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
                             <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -237,7 +241,7 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="{% static 'img/guide-2.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
+                            <img src="{% static 'img/guide-2.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}" loading="lazy" decoding="async">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
                             <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -258,7 +262,7 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="{% static 'img/guide-3.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
+                            <img src="{% static 'img/guide-3.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}" loading="lazy" decoding="async">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
                             <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -279,7 +283,7 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="{% static 'img/guide-4.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
+                            <img src="{% static 'img/guide-4.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}" loading="lazy" decoding="async">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
                             <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>

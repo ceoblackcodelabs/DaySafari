@@ -350,52 +350,6 @@ class Trekking(models.Model):
         return self.star_rating
 
 
-class TrekkingBooking(models.Model):
-    BOOKING_STATUS = [
-        ('pending', 'Pending'),
-        ('confirmed', 'Confirmed'),
-        ('cancelled', 'Cancelled'),
-        ('completed', 'Completed'),
-    ]
-
-    booking_reference = models.CharField(max_length=20, unique=True, editable=False, db_index=True)
-    package = models.ForeignKey('Trekking', on_delete=models.CASCADE, related_name='bookings')
-    full_name = models.CharField(max_length=200, db_index=True)
-    email = models.EmailField(db_index=True)
-    phone_number = models.CharField(max_length=20)
-    number_of_persons = models.IntegerField()
-    travel_date = models.DateField(db_index=True)
-    total_price = models.DecimalField(max_digits=12, decimal_places=2)
-    special_requests = models.TextField(blank=True)
-    booking_status = models.CharField(max_length=20, choices=BOOKING_STATUS, default='pending', db_index=True)
-    booking_date = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ['-booking_date']
-        verbose_name = "Trekking Booking"
-        verbose_name_plural = "Trekking Bookings"
-        indexes = [
-            models.Index(fields=['booking_reference']),
-            models.Index(fields=['email']),
-            models.Index(fields=['booking_status']),
-            models.Index(fields=['travel_date']),
-        ]
-
-    def save(self, *args, **kwargs):
-        if not self.booking_reference:
-            import random
-            import string
-            from datetime import date
-            date_str = date.today().strftime('%Y%m%d')
-            random_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
-            self.booking_reference = f"TREK-{date_str}-{random_str}"
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.booking_reference} - {self.full_name}"
-
-
 class Ad(models.Model):
     """Popup advertisement model"""
     title = models.CharField(max_length=200)

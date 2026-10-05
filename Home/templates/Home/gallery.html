@@ -1,7 +1,11 @@
 {% extends "Home/base.html" %}
-{% load static i18n custom_filters %}
+{% load static i18n custom_filters image_tags %}
 
 {% block title %}{% trans "Gallery - Days Safaris Adventures" %}{% endblock title %}
+
+{% block meta_description %}Photo gallery of safari game drives, wildlife, lodges and travellers from Day Safaris Adventures tours across East Africa.{% endblock meta_description %}
+{% block og_description %}Photo gallery of safari game drives, wildlife, lodges and travellers from Day Safaris Adventures tours across East Africa.{% endblock og_description %}
+{% block twitter_description %}Photo gallery of safari game drives, wildlife, lodges and travellers from Day Safaris Adventures tours across East Africa.{% endblock twitter_description %}
 
 {% block body %}
 
@@ -21,7 +25,7 @@
 <!-- Gallery Start -->
 <div class="container-fluid gallery py-5 my-5">
     <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-        <h5 class="section-title px-3">{% trans "Our Gallery" %}</h5>
+        <p class="h5 section-title px-3">{% trans "Our Gallery" %}</p>
         <h1 class="mb-4">{% trans "Unforgettable Safari Moments Captured" %}</h1>
         <p class="mb-0">{% trans "Explore stunning images from our recent safaris across East Africa. From breathtaking wildlife encounters to beautiful landscapes and cultural experiences, our gallery showcases the magic of African adventures." %}</p>
     </div>
@@ -47,15 +51,15 @@
                     {% for gallery in all_galleries %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                         <div class="gallery-item h-100">
-                            <img src="{{ gallery.image.url }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;">
+                            <img src="{{ gallery.image|thumb:640 }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;" loading="lazy" decoding="async">
                             <div class="gallery-content">
                                 <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">{{ gallery.name }}</h5>
+                                    <h2 class="h5 text-white text-uppercase mb-2">{{ gallery.name }}</h2>
                                     <a href="#" class="btn-hover text-white">{% trans "View Gallery" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                             </div>
                             <div class="gallery-plus-icon">
-                                <a href="{{ gallery.image.url }}" data-lightbox="gallery-{{ gallery.id }}" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                <a href="{{ gallery.image.url }}" data-lightbox="gallery-{{ gallery.id }}" class="my-auto" aria-label="View details"><i class="fas fa-plus fa-2x text-white"></i></a>
                             </div>
                         </div>
                     </div>
@@ -76,15 +80,15 @@
                     {% for gallery in galleries %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                         <div class="gallery-item h-100">
-                            <img src="{{ gallery.image.url }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;">
+                            <img src="{{ gallery.image|thumb:640 }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;" loading="lazy" decoding="async">
                             <div class="gallery-content">
                                 <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">{{ gallery.name }}</h5>
+                                    <h2 class="h5 text-white text-uppercase mb-2">{{ gallery.name }}</h2>
                                     <a href="#" class="btn-hover text-white">{% trans "View Gallery" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                             </div>
                             <div class="gallery-plus-icon">
-                                <a href="{{ gallery.image.url }}" data-lightbox="gallery-{{ gallery.id }}" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                <a href="{{ gallery.image.url }}" data-lightbox="gallery-{{ gallery.id }}" class="my-auto" aria-label="View details"><i class="fas fa-plus fa-2x text-white"></i></a>
                             </div>
                         </div>
                     </div>

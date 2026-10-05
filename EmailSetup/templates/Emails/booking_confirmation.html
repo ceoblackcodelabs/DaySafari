@@ -8,7 +8,7 @@
 <p>Your safari booking is confirmed and is waiting for approval. Once approved, you will receive a confirmation email with your itinerary. Use the link below to make payment.</p>
 
 <div class="box">
-    <p><strong>Booking ID:</strong> #{{ booking.id }}</p>
+    <p><strong>Booking:</strong> {{ booking.item_name }}</p>
     <p><strong>Destination:</strong> {{ booking.destination.name|default:"TBD" }}</p>
     <p><strong>Travel Date:</strong> {{ booking.date }}</p>
     <p><strong>Persons:</strong> {{ booking.persons }}</p>
@@ -19,7 +19,6 @@
 {% comment %} <div class="box">
     <p><strong>💰 Payment Details:</strong></p>
     <p><strong>Total Amount:</strong> ${{ booking.destination.price|default:"0.00" }}</p>
-    {% comment %} <p><strong>Deposit Required (30%):</strong> ${{ deposit_amount|default:"0.00" }}</p> {% endcomment %}
 </div> {% endcomment %}
 
 {% comment %} <div style="text-align: center; margin: 30px 0;">

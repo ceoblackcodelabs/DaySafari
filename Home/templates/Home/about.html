@@ -32,11 +32,11 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/SA.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'South Africa Tours' %}">
+                    <img src="{% static 'img/SA.webp' %}" class="img-fluid w-100 h-100" alt="{% trans 'South Africa Tours' %}" loading="lazy" decoding="async">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">{% trans "Discover South Africa" %}</h5>
+                <p class="h5 section-about-title pe-3">{% trans "Discover South Africa" %}</p>
                 <h1 class="mb-4">{% trans "Experience the Beauty & Luxury of South Africa" %}</h1>
                 <p class="mb-4">
                     {% trans "Discover breathtaking landscapes, vibrant cities, and unforgettable wildlife adventures across South Africa. From the stunning coastlines of Cape Town to thrilling safaris in Kruger National Park, every journey is designed to create lasting memories." %}
@@ -79,11 +79,11 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/WA.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'West Africa Tours' %}">
+                    <img src="{% static 'img/WA.webp' %}" class="img-fluid w-100 h-100" alt="{% trans 'West Africa Tours' %}" loading="lazy" decoding="async">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">{% trans "Explore West Africa" %}</h5>
+                <p class="h5 section-about-title pe-3">{% trans "Explore West Africa" %}</p>
                 <h1 class="mb-4">{% trans "Discover Culture, History & Adventure" %}</h1>
                 <p class="mb-4">
                     {% trans "Experience the rich traditions, colorful cultures, and vibrant destinations of West Africa. From historical landmarks and bustling cities to tropical beaches and wildlife reserves, every destination offers something unique." %}
@@ -126,11 +126,11 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/Inter.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'International Tours' %}">
+                    <img src="{% static 'img/Inter.webp' %}" class="img-fluid w-100 h-100" alt="{% trans 'International Tours' %}" loading="lazy" decoding="async">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">{% trans "International Tours" %}</h5>
+                <p class="h5 section-about-title pe-3">{% trans "International Tours" %}</p>
                 <h1 class="mb-4">{% trans "Travel Beyond Borders & Create Memories" %}</h1>
                 <p class="mb-4">
                     {% trans "Explore iconic destinations around the world with carefully planned international travel experiences. Whether you dream of luxury vacations, romantic escapes, or adventure-filled journeys, we make global travel seamless and exciting." %}
@@ -173,11 +173,11 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
                 <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    <img src="{% static 'img/EA.jpg' %}" class="img-fluid w-100 h-100" alt="{% trans 'East Africa Tours' %}">
+                    <img src="{% static 'img/EA.webp' %}" class="img-fluid w-100 h-100" alt="{% trans 'East Africa Tours' %}" loading="lazy" decoding="async">
                 </div>
             </div>
             <div class="col-lg-7" >
-                <h5 class="section-about-title pe-3">{% trans "Explore East Africa" %}</h5>
+                <p class="h5 section-about-title pe-3">{% trans "Explore East Africa" %}</p>
                 <h1 class="mb-4">{% trans "Witness Africa's Greatest Safari Adventures" %}</h1>
                 <p class="mb-4">
                     {% trans "Discover the breathtaking beauty of East Africa through unforgettable safaris, wildlife encounters, mountain adventures, and relaxing beach holidays across Kenya, Tanzania, Uganda, and Rwanda." %}
@@ -218,7 +218,7 @@
 <div class="container-fluid service py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Services" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Services" %}</p>
             <h1 class="mb-0">{% trans "Our Services" %}</h1>
         </div>
         <div class="row g-4">
@@ -228,7 +228,7 @@
                     <div class="col-12">
                         <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
                             <div class="service-content text-end">
-                                <h5 class="mb-4">{{ service.name }}</h5>
+                                <h2 class="h5 mb-4">{{ service.name }}</h2>
                                 <p class="mb-0">{{ service.description }}</p>
                             </div>
                             <div class="service-icon p-4">
@@ -248,7 +248,7 @@
                                 <i class="{{ service.icon }} fa-4x text-primary"></i>
                             </div>
                             <div class="service-content">
-                                <h5 class="mb-4">{{ service.name }}</h5>
+                                <h2 class="h5 mb-4">{{ service.name }}</h2>
                                 <p class="mb-0">{{ service.description }}</p>
                             </div>
                         </div>
@@ -270,7 +270,7 @@
 <div class="container-fluid bg-light guide py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Travel Guide" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Travel Guide" %}</p>
             <h1 class="mb-0">{% trans "Meet Our Guides" %}</h1>
         </div>
         <div class="row g-4">
@@ -278,7 +278,7 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="{% static 'img/guide-1.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
+                            <img src="{% static 'img/guide-1.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}" loading="lazy" decoding="async">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
                             <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -299,7 +299,7 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="{% static 'img/guide-2.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
+                            <img src="{% static 'img/guide-2.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}" loading="lazy" decoding="async">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
                             <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -320,7 +320,7 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="{% static 'img/guide-3.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
+                            <img src="{% static 'img/guide-3.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}" loading="lazy" decoding="async">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
                             <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -341,7 +341,7 @@
                 <div class="guide-item">
                     <div class="guide-img">
                         <div class="guide-img-efects">
-                            <img src="{% static 'img/guide-4.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}">
+                            <img src="{% static 'img/guide-4.jpg' %}" class="img-fluid w-100 rounded-top" alt="{% trans 'Travel Guide' %}" loading="lazy" decoding="async">
                         </div>
                         <div class="guide-icon rounded-pill p-2">
                             <a class="btn btn-square btn-primary rounded-circle mx-1" href="#"><i class="fab fa-facebook-f"></i></a>

@@ -15,8 +15,10 @@ from .models import (
 )
 from Places.models import Destinations, DestinationsCategory, AwesomePackages, IncluisiveExcluisive
 from ClientRequests.forms import BookingsForm
+from ClientRequests.antispam import AntiSpamViewMixin
 from .forms import TrekkingBookingForm
-from EmailSetup.utils import send_booking_confirmation
+from EmailSetup.utils import send_booking_confirmation, notify_staff_of_lead
+import threading
 from colorama import Fore, Style
 
 import logging
@@ -24,8 +26,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class HomeView(ListView):
+class HomeView(AntiSpamViewMixin, ListView):
     """Homepage with optimized queries and caching"""
+    antispam_scope = 'home-booking'
     model = Services
     context_object_name = 'services'
     template_name = 'Home/index.html'
@@ -55,6 +58,9 @@ class HomeView(ListView):
     def post(self, request, *args, **kwargs):
         form = BookingsForm(request.POST)
 
+        if not form.is_valid() and form.spam_detected:
+            return self.form_invalid(form)  # AntiSpamViewMixin: strike + 400
+
         if form.is_valid():
             booking = form.save(commit=False)
 
@@ -69,10 +75,8 @@ class HomeView(ListView):
 
             booking.save()
 
-            try:
-                send_booking_confirmation(booking)
-            except Exception as e:
-                logger.error(f"Email sending failed: {e}")
+            notify_staff_of_lead(booking)
+            threading.Thread(target=send_booking_confirmation, args=(booking,), daemon=True).start()
 
             messages.success(
                 request,
@@ -463,7 +467,8 @@ class TrekkingCategoryView(TrekkingListView):
         return context
 
 
-class TrekkingDetailView(DetailView):
+class TrekkingDetailView(AntiSpamViewMixin, DetailView):
+    antispam_scope = 'trekking'
     model = Trekking
     context_object_name = "package"
     template_name = "Trekking/trekking_detail.html"
@@ -501,8 +506,30 @@ class TrekkingDetailView(DetailView):
             if hasattr(user, 'phone'):
                 initial_data['phone_number'] = user.phone
 
-        context['form'] = TrekkingBookingForm(initial=initial_data, package=package)
+        if 'form' not in context:
+            context['form'] = TrekkingBookingForm(initial=initial_data, package=package)
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = package = self.get_object()
+        form = TrekkingBookingForm(request.POST, package=package)
+        if not form.is_valid():
+            if form.spam_detected:
+                return self.form_invalid(form)  # AntiSpamViewMixin: strike + 400
+            return self.render_to_response(self.get_context_data(form=form))
+
+        booking = form.save(commit=False)
+        booking.booking_type = 'trekking'
+        booking.trekking_package = package
+        if request.user.is_authenticated:
+            booking.client = request.user
+        booking.save()
+
+        notify_staff_of_lead(booking)
+        threading.Thread(target=send_booking_confirmation, args=(booking,), daemon=True).start()
+        messages.success(request, f"Thank you {booking.name}! Your trekking request for {package.name} "
+                                  "has been received. We will contact you within 24 hours.")
+        return redirect(request.path)
 
 
 # Simple Template Views

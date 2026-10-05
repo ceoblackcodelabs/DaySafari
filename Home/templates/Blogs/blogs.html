@@ -1,9 +1,13 @@
 {% extends "Home/base.html" %}
 
-{% load static %}
+{% load static image_tags %}
 {% load i18n %}
 
 {% block title %}Blogs - Days Safaris Adventures{% endblock title %}
+
+{% block meta_description %}Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi.{% endblock meta_description %}
+{% block og_description %}Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi.{% endblock og_description %}
+{% block twitter_description %}Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi.{% endblock twitter_description %}
 
 {% block body %}
 
@@ -24,7 +28,7 @@
 <div class="container-fluid blog py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">{% trans "Our Blog" %}</h5>
+            <p class="h5 section-title px-3">{% trans "Our Blog" %}</p>
             <h1 class="mb-4">{% trans "Popular Travel Blogs & Safari Tips" %}</h1>
             <p class="mb-0">{% trans "Discover expert travel advice, safari planning guides, and inspiring stories from our adventures across East Africa. Learn about the best times to visit, wildlife photography tips, and hidden gems off the beaten path." %}</p>
         </div>
@@ -35,12 +39,12 @@
                     <div class="blog-img">
                         <div class="blog-img-inner">
                             {% if blog.image %}
-                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                            <img class="img-fluid w-100 rounded-top" src="{{ blog.image|thumb:640 }}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% else %}
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-placeholder.jpg' %}" alt="{{ blog.title }}">
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-placeholder.jpg' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="#" class="my-auto" aria-label="Open" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
@@ -53,7 +57,7 @@
                         <p class="mb-3">{% trans "Posted By:" %} {{ blog.author }}</p>
                         <a href="{% url 'blog_detail' blog.slug %}" class="h4">{{ blog.title }}</a>
                         <p class="my-3">{{ blog.content|striptags|truncatewords:30 }}</p>
-                        <a href="{% url 'blog_detail' blog.slug %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Read More" %}</a>
+                        <a href="{% url 'blog_detail' blog.slug %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about" %} {{ blog.title }}</span></a>
                     </div>
                 </div>
             </div>

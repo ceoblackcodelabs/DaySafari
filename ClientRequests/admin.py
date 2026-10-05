@@ -6,18 +6,22 @@ from .models import (
 # contact
 @admin.register(Bookings)
 class BookingsAdmin(admin.ModelAdmin):
-    list_display = ('client', 'pk', 'name', 'email', 'phone', 'destination', 'persons', 'date')
-    search_fields = ('client', 'name', 'email', 'destination')
-    list_filter = ('date', 'destination')
-    readonly_fields = ('name', 'email', 'phone', 'destination', 'persons', 'date', 'message')
-    
-    
+    list_display = ('pk', 'created_at', 'booking_type', 'name', 'email', 'phone', 'item_name', 'persons',
+                    'date', 'status')
+    list_editable = ('status',)
+    search_fields = ('name', 'email', 'phone', 'message')
+    list_filter = ('status', 'booking_type', 'date', 'destination')
+    date_hierarchy = 'created_at'
+    readonly_fields = ('created_at',)
+    list_per_page = 50
+
+
 # contact
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['client', 'name', 'email', 'subject', 'created_at', 'status']
+    list_display = ['name', 'email', 'subject', 'created_at', 'status']
     list_filter = ['status', 'created_at']
-    search_fields = ['client', 'name', 'email', 'subject', 'message']
+    search_fields = ['name', 'email', 'subject', 'message']
     readonly_fields = ['created_at']
     list_editable = ['status']
     

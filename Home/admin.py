@@ -4,7 +4,7 @@ from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
     BlogComments, Blogs, Brochure, ItineraryTreking,
-    Trekking, TrekkingBooking, Ad, AboutImage, HeroSlide
+    Trekking, Ad, AboutImage, HeroSlide
 )
 
 
@@ -276,96 +276,6 @@ class TrekkingAdmin(admin.ModelAdmin):
         return f"${obj.price:,.2f}"
     price_formatted.short_description = 'Price'
     price_formatted.admin_order_field = 'price'
-
-
-@admin.register(TrekkingBooking)
-class TrekkingBookingAdmin(admin.ModelAdmin):
-    list_display = [
-        'booking_reference', 'full_name', 'package', 'number_of_persons',
-        'total_price_formatted', 'travel_date', 'booking_status', 'booking_status_badge',  # Added 'booking_status'
-        'booking_date'
-    ]
-    list_filter = ['booking_status', 'package', 'travel_date', 'booking_date']
-    search_fields = ['booking_reference', 'full_name', 'email', 'phone_number']
-    readonly_fields = ['booking_reference', 'booking_date', 'updated_at']
-    list_per_page = 20
-    date_hierarchy = 'travel_date'
-    list_editable = ['booking_status']  # Now 'booking_status' is in list_display
-    autocomplete_fields = ['package']
-
-    fieldsets = (
-        ('Booking Reference', {
-            'fields': ('booking_reference',)
-        }),
-        ('Customer Information', {
-            'fields': ('full_name', 'email', 'phone_number')
-        }),
-        ('Package Details', {
-            'fields': ('package', 'number_of_persons', 'travel_date')
-        }),
-        ('Pricing', {
-            'fields': ('total_price',)
-        }),
-        ('Additional Information', {
-            'fields': ('special_requests',)
-        }),
-        ('Status', {
-            'fields': ('booking_status',)
-        }),
-        ('Timestamps', {
-            'fields': ('booking_date', 'updated_at'),
-            'classes': ('collapse',)
-        }),
-    )
-
-    def total_price_formatted(self, obj):
-        """Display formatted total price"""
-        return f"${obj.total_price:,.2f}"
-    total_price_formatted.short_description = 'Total Price'
-    total_price_formatted.admin_order_field = 'total_price'
-
-    def booking_status_badge(self, obj):
-        """Display booking status as colored badge"""
-        colors = {
-            'pending': '#ffc107',    # Yellow
-            'confirmed': '#28a745',  # Green
-            'cancelled': '#dc3545',  # Red
-            'completed': '#17a2b8',  # Teal
-        }
-        color = colors.get(obj.booking_status, '#6c757d')
-        status_labels = {
-            'pending': 'Pending',
-            'confirmed': 'Confirmed',
-            'cancelled': 'Cancelled',
-            'completed': 'Completed',
-        }
-        label = status_labels.get(obj.booking_status, obj.booking_status)
-        return format_html(
-            '<span style="background-color: {}; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;">{}</span>',
-            color, label
-        )
-    booking_status_badge.short_description = 'Status'
-    booking_status_badge.allow_tags = True
-
-    actions = ['mark_as_confirmed', 'mark_as_cancelled', 'mark_as_completed']
-
-    def mark_as_confirmed(self, request, queryset):
-        """Bulk action to mark as confirmed"""
-        updated = queryset.update(booking_status='confirmed')
-        self.message_user(request, f"✅ {updated} booking(s) marked as confirmed.", messages.SUCCESS)
-    mark_as_confirmed.short_description = "Mark as Confirmed"
-
-    def mark_as_cancelled(self, request, queryset):
-        """Bulk action to mark as cancelled"""
-        updated = queryset.update(booking_status='cancelled')
-        self.message_user(request, f"❌ {updated} booking(s) marked as cancelled.", messages.WARNING)
-    mark_as_cancelled.short_description = "Mark as Cancelled"
-
-    def mark_as_completed(self, request, queryset):
-        """Bulk action to mark as completed"""
-        updated = queryset.update(booking_status='completed')
-        self.message_user(request, f"✅ {updated} booking(s) marked as completed.", messages.SUCCESS)
-    mark_as_completed.short_description = "Mark as Completed"
 
 
 @admin.register(Ad)

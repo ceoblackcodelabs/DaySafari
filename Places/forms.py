@@ -56,6 +56,8 @@ class PackagePurchaseForm(forms.ModelForm):
         self.fields['email'].label = False
         self.fields['phone_number'].label = False
         self.fields['number_of_persons'].label = False
+        for _name, _field in self.fields.items():   # placeholder-only fields still need an accessible name
+            _field.widget.attrs.setdefault('aria-label', _name.replace('_', ' ').capitalize())
         self.fields['travel_date'].label = False
         self.fields['special_requests'].label = False
     
