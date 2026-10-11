@@ -13,7 +13,7 @@ from django.urls import reverse
 from decimal import Decimal
 import threading
 from ClientRequests.antispam import AntiSpamViewMixin
-from EmailSetup.utils import send_booking_confirmation, notify_staff_of_lead
+from EmailSetup.utils import send_booking_confirmation, handle_new_lead
 
 # Create your views here.
 #  AirBNB
@@ -66,8 +66,7 @@ class AirBNBDetailView(AntiSpamViewMixin, DetailView):
             booking.client = request.user
         booking.save()
 
-        notify_staff_of_lead(booking)
-        threading.Thread(target=send_booking_confirmation, args=(booking,), daemon=True).start()
+        handle_new_lead(booking, send_booking_confirmation)
         messages.success(request, f'Thank you {booking.name}! Your request for '
                                   f'{self.object.title or self.object.location} was received. '
                                   'We will contact you shortly to confirm availability.')

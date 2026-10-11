@@ -170,7 +170,7 @@ _PHONE_RE = re.compile(r'^\+?[\d\s\-().]{9,20}$')
 _JUNK_EMAIL_DOMAINS = {'example.com', 'example.org', 'example.net', 'test.com', 'mailinator.com'}
 # Throwaway-mail families seen in the cleaned-up spam.
 _JUNK_EMAIL_PATTERNS = re.compile(r'(notboxletters|notlettersmail|belettersmail|nolettersbox|'
-                                  r'firstmailmorty|microversemail|glorzomail|hypercubemail)', re.I)
+                                  r'firstmailmorty|microversemail|glorzomail|hypercubemail|seo|backlink|casino|escort|crypto)', re.I)
 
 
 class AntiSpamFormMixin(forms.Form):

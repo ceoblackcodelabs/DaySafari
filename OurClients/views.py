@@ -22,6 +22,8 @@ from django.http import HttpResponseRedirect
 from django.utils.http import url_has_allowed_host_and_scheme
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from EmailSetup.utils import send_welcome_email, send_new_user_alert_to_admin
+from ClientRequests.antispam import AntiSpamViewMixin
+from ClientRequests.spamfilter import can_email_customer
 import threading
 from time import sleep
 
@@ -31,7 +33,8 @@ def send_registration_emails_async(email, name, user):
     def send():
         try:
             # Send welcome email to user
-            send_welcome_email(email=email, name=name)
+            if can_email_customer(email):   # never mail arbitrary addresses repeatedly
+                send_welcome_email(email=email, name=name)
             sleep(10)
             # Send alert email to admin
             send_new_user_alert_to_admin(user)
@@ -97,14 +100,15 @@ class CustomLogoutView(LogoutView):
         return response
 
 
-class RegisterView(CreateView):
+class RegisterView(AntiSpamViewMixin, CreateView):
+    antispam_scope = 'register'
     template_name = 'registration/register.html'
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
         """Handle valid registration form"""
-        response = super().form_valid(response)
+        response = super().form_valid(form)
 
         messages.success(self.request,
             f"Account created successfully! Welcome {form.cleaned_data.get('username')}! 🎉 "
@@ -120,6 +124,8 @@ class RegisterView(CreateView):
 
     def form_invalid(self, form):
         """Handle invalid registration form"""
+        if form.spam_detected:
+            return super().form_invalid(form)  # AntiSpamViewMixin: strike + 400
         for field, errors in form.errors.items():
             for error in errors:
                 messages.error(self.request, f"{field}: {error}")

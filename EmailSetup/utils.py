@@ -63,6 +63,28 @@ def _log_email(recipient, subject, status):
         logger.exception("Could not write EmailLog")
 
 
+def handle_new_lead(lead, customer_email=None):
+    """Single entry point after any public form is saved.
+
+    1. Spam-classify the lead. Spam is quarantined (status Spam) and nobody is emailed.
+    2. Otherwise notify staff, and optionally send the customer a confirmation, but
+       only if the address passes the outbound-email caps (never mail arbitrary people).
+    Returns True for a genuine lead, False for quarantined spam.
+    """
+    from ClientRequests.spamfilter import spam_reasons, can_email_customer
+    reasons = spam_reasons(name=getattr(lead, 'name', ''), email=getattr(lead, 'email', ''),
+                           subject=getattr(lead, 'subject', ''), message=getattr(lead, 'message', '') or '')
+    if reasons:
+        lead.status = 'Spam' if hasattr(lead, 'subject') else 'spam'
+        lead.save(update_fields=['status'])
+        logger.warning("Quarantined %s #%s as spam: %s", type(lead).__name__, lead.pk, ', '.join(reasons))
+        return False
+    notify_staff_of_lead(lead)
+    if customer_email and can_email_customer(lead.email):
+        threading.Thread(target=customer_email, args=(lead,), daemon=True).start()
+    return True
+
+
 def notify_staff_of_lead(lead):
     """Email the team the moment a lead (Bookings or Contact) arrives.
 

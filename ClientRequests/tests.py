@@ -38,12 +38,9 @@ class LeadFormTests(TestCase):
 
     def setUp(self):
         cache.clear()  # rate-limit/ban state must not leak between tests
-        self.notify = mock.patch('ClientRequests.views.notify_staff_of_lead').start()
-        mock.patch('Home.views.notify_staff_of_lead', self.notify).start()
-        mock.patch('Accomodations.views.notify_staff_of_lead', self.notify).start()
-        for target in ('ClientRequests.views.send_booking_confirmation', 'ClientRequests.views.send_contact_response',
-                       'Home.views.send_booking_confirmation', 'Accomodations.views.send_booking_confirmation'):
-            mock.patch(target).start()
+        self.notify = mock.patch('ClientRequests.views.handle_new_lead').start()
+        mock.patch('Home.views.handle_new_lead', self.notify).start()
+        mock.patch('Accomodations.views.handle_new_lead', self.notify).start()
         self.addCleanup(mock.patch.stopall)
 
     def person(self, **extra):
@@ -218,3 +215,99 @@ class SiteHealthTests(TestCase):
                      for _ in range(10)]
         self.assertEqual(codes[:8], [200] * 8)
         self.assertEqual(codes[8], 429)
+
+
+
+@override_settings(CACHES=LOCMEM, ALLOWED_HOSTS=['*'])
+class SpamProtectionTests(TestCase):
+    """Rotating-IP bots: content/campaign filtering and outbound-email safety."""
+
+    BOT = dict(name='mussymync', email='orrw8102@gmail.com', subject='I promised.',
+               message='Photos for my escort application are uploaded. Let me know if they work.')
+
+    def setUp(self):
+        cache.clear()
+
+    def test_classifier_flags_known_bot_campaigns(self):
+        from ClientRequests.spamfilter import spam_reasons
+        samples = [
+            self.BOT,
+            dict(name='BillyRaw', email='a@b.com', subject='Hello! YOUR_BALANCE_86810.86_USD_GET www',
+                 message='TOKENS CREDITED WITHOUT YOUR INVOLVEMENT'),
+            dict(name='Ivan', email='i@mail.ru', subject='Ваш билет неизрасходован', message='Новейший тираж'),
+            dict(name='Marco', email='m@gmail.com', subject='Quick note about your site',
+                 message='Our SEO services can rank your website higher'),
+        ]
+        for sample in samples:
+            with self.subTest(sample['name']):
+                self.assertTrue(spam_reasons(count_campaign=False, **sample))
+
+    def test_classifier_keeps_real_enquiries(self):
+        from ClientRequests.spamfilter import spam_reasons
+        real = [
+            dict(name='Patricia', email='patricia.omedo@busara.global', subject='Request for Quote',
+                 message='I would like a quote for 6 people traveling to Arusha, Tanzania for two nights.'),
+            dict(name='john', email='john@gmail.com', subject='Safari question',
+                 message='How much is a 3 day Masai Mara trip for two?'),
+            dict(name='Amina Yusuf', email='amina@gmail.com', subject='Group trip',
+                 message='We saw https://example.org/trek and want 4 places in December'),
+        ]
+        for sample in real:
+            with self.subTest(sample['name']):
+                self.assertEqual(spam_reasons(count_campaign=False, **sample), [])
+
+    def test_repeated_identical_text_is_a_campaign(self):
+        from ClientRequests.spamfilter import spam_reasons
+        msg = dict(name='Sam Jones', email='sam@gmail.com', subject='Offer', message='Please call me about a special deal')
+        self.assertEqual(spam_reasons(**msg), [])
+        self.assertEqual(spam_reasons(**{**msg, 'email': 'b@gmail.com'}), [])
+        self.assertTrue(spam_reasons(**{**msg, 'email': 'c@gmail.com'}))     # third copy => campaign
+
+    def test_spam_is_quarantined_and_nobody_is_emailed(self):
+        from EmailSetup import utils
+        contact = Contact.objects.create(name=self.BOT['name'], email=self.BOT['email'],
+                                         subject=self.BOT['subject'], message=self.BOT['message'])
+        with mock.patch.object(utils, 'notify_staff_of_lead') as notify, \
+                mock.patch.object(utils.threading, 'Thread') as thread:
+            self.assertFalse(utils.handle_new_lead(contact, customer_email=lambda lead: None))
+        contact.refresh_from_db()
+        self.assertEqual(contact.status, 'Spam')
+        notify.assert_not_called()
+        thread.assert_not_called()
+
+    def test_genuine_lead_notifies_staff_and_emails_customer_once(self):
+        from EmailSetup import utils
+        booking = Bookings.objects.create(name='Jane Doe', email='jane@gmail.com', phone='0712345678',
+                                          message='Two adults, December')
+        with mock.patch.object(utils, 'notify_staff_of_lead') as notify, \
+                mock.patch.object(utils.threading, 'Thread') as thread:
+            self.assertTrue(utils.handle_new_lead(booking, customer_email=lambda lead: None))
+            self.assertTrue(utils.handle_new_lead(booking, customer_email=lambda lead: None))
+        self.assertEqual(notify.call_count, 2)           # staff always hear about real leads
+        self.assertEqual(thread.call_count, 1)           # the customer is emailed only once per day
+
+    def test_customer_email_site_wide_cap(self):
+        from ClientRequests.spamfilter import can_email_customer, CUSTOMER_EMAILS_PER_HOUR
+        results = [can_email_customer(f'user{i}@gmail.com') for i in range(CUSTOMER_EMAILS_PER_HOUR + 5)]
+        self.assertEqual(sum(results), CUSTOMER_EMAILS_PER_HOUR)
+
+    def test_contact_form_never_auto_replies_to_submitter(self):
+        import inspect
+        from ClientRequests import views
+        self.assertNotIn('send_contact_response', inspect.getsource(views))
+
+    def test_registration_has_bot_traps_and_works_for_humans(self):
+        url = reverse('register')
+        data = {'username': 'janedoe77', 'first_name': 'Jane', 'last_name': 'Doe', 'email': 'jane77@gmail.com',
+                'password1': 'Str0ng!Passw0rd', 'password2': 'Str0ng!Passw0rd'}
+        bot = self.client.post(url, {**data, 'form_ts': stamp(), 'website': 'x'}, REMOTE_ADDR='5.5.5.5')
+        self.assertEqual(bot.status_code, 400)
+        seo = self.client.post(url, {**data, 'username': 'seoguy', 'email': 'x@rockstarseo.net', 'form_ts': stamp()},
+                               REMOTE_ADDR='5.5.5.6')
+        self.assertEqual(seo.status_code, 200)
+        from django.contrib.auth.models import User
+        self.assertFalse(User.objects.filter(username='seoguy').exists())
+        with mock.patch('OurClients.views.send_registration_emails_async'):
+            ok = self.client.post(url, {**data, 'form_ts': stamp()}, REMOTE_ADDR='5.5.5.7')
+        self.assertEqual(ok.status_code, 302)
+        self.assertTrue(User.objects.filter(username='janedoe77').exists())

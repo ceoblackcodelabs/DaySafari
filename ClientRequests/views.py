@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
-from EmailSetup.utils import send_contact_response, send_booking_confirmation, notify_staff_of_lead
+from EmailSetup.utils import send_booking_confirmation, handle_new_lead
 from Places.models import AwesomePackages, Destinations
 from django.utils import timezone
 from time import sleep
@@ -42,10 +42,7 @@ class BookingCreateView(AntiSpamViewMixin, CreateView):
         )
 
         # Send emails in background thread (non-blocking)
-        notify_staff_of_lead(self.object)
-        thread = threading.Thread(target=send_emails_async, args=(self.object,))
-        thread.daemon = True
-        thread.start()
+        handle_new_lead(self.object, send_booking_confirmation)
 
         return response
 
@@ -109,8 +106,8 @@ class ContactView(AntiSpamViewMixin, FormView):
         # Save first: the lead must never be lost because an email failed
         contact.save()
 
-        notify_staff_of_lead(contact)
-        threading.Thread(target=send_contact_response, args=(contact,), daemon=True).start()
+        # No automatic reply to the submitted address (it is unverified; bots abuse it).
+        handle_new_lead(contact)
 
         # Add success message
         messages.success(self.request,

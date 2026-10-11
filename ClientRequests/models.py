@@ -8,7 +8,7 @@ class Bookings(models.Model):
     """Every booking lead on the site: safari, trekking and Airbnb enquiries."""
     TYPE_CHOICES = [('safari', 'Safari'), ('trekking', 'Trekking'), ('airbnb', 'Airbnb')]
     STATUS_CHOICES = [('new', 'New'), ('contacted', 'Contacted'), ('confirmed', 'Confirmed'),
-                      ('cancelled', 'Cancelled')]
+                      ('cancelled', 'Cancelled'), ('spam', 'Spam')]
 
     client = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     booking_type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='safari', db_index=True)
@@ -47,7 +47,7 @@ class Contact(models.Model):
     subject = models.CharField(max_length=200)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, default='New', choices=[('New', 'New'), ('Read', 'Read'), ('Closed', 'Closed')])
+    status = models.CharField(max_length=20, default='New', choices=[('New', 'New'), ('Read', 'Read'), ('Closed', 'Closed'), ('Spam', 'Spam')])
     
     class Meta:
         ordering = ['-created_at']

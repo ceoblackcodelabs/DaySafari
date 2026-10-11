@@ -17,7 +17,7 @@ from Places.models import Destinations, DestinationsCategory, AwesomePackages, I
 from ClientRequests.forms import BookingsForm
 from ClientRequests.antispam import AntiSpamViewMixin
 from .forms import TrekkingBookingForm
-from EmailSetup.utils import send_booking_confirmation, notify_staff_of_lead
+from EmailSetup.utils import send_booking_confirmation, handle_new_lead
 import threading
 from colorama import Fore, Style
 
@@ -75,8 +75,7 @@ class HomeView(AntiSpamViewMixin, ListView):
 
             booking.save()
 
-            notify_staff_of_lead(booking)
-            threading.Thread(target=send_booking_confirmation, args=(booking,), daemon=True).start()
+            handle_new_lead(booking, send_booking_confirmation)
 
             messages.success(
                 request,
@@ -525,8 +524,7 @@ class TrekkingDetailView(AntiSpamViewMixin, DetailView):
             booking.client = request.user
         booking.save()
 
-        notify_staff_of_lead(booking)
-        threading.Thread(target=send_booking_confirmation, args=(booking,), daemon=True).start()
+        handle_new_lead(booking, send_booking_confirmation)
         messages.success(request, f"Thank you {booking.name}! Your trekking request for {package.name} "
                                   "has been received. We will contact you within 24 hours.")
         return redirect(request.path)

@@ -3,8 +3,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import re
+from ClientRequests.antispam import AntiSpamFormMixin
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(AntiSpamFormMixin, UserCreationForm):
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={
@@ -55,8 +56,8 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password1'].help_text = None
     
     def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
+        email = super().clean_email()          # junk / throwaway / spam-domain check
+        if User.objects.filter(email__iexact=email).exists():
             raise ValidationError("A user with this email already exists.")
         return email
     
