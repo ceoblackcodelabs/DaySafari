@@ -51,6 +51,8 @@
             <li><a href="{% url 'airport_transfers' %}">{% trans "Airport transfers" %}</a></li>
             <li><a href="{% url 'airline' %}">{% trans "Flights" %}</a></li>
             <li><a href="{% url 'travel_partnerships' %}">{% trans "Travel partnerships" %}</a></li>
+            <li><a href="{% url 'hotels' %}">{% trans "Hotels" %}</a></li>
+            {% for hotel in hotels %}<li class="ms-3"><a href="{% url 'hotel_detail' hotel.slug %}">{{ hotel.name }}</a></li>{% endfor %}
             <li><a href="{% url 'airbnb' %}">{% trans "Airbnb stays" %}</a></li>
             {% for stay in stays %}<li><a href="{% url 'bnb_detail' stay.id %}">{{ stay.title|default:stay.location }}</a></li>{% endfor %}
         </ul>

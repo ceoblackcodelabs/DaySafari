@@ -1,0 +1,155 @@
+{% extends "Home/base.html" %}
+{% load static i18n image_tags %}
+
+{% block title %}{% trans "Hotels & Lodges in East Africa - Day Safaris Adventures" %}{% endblock title %}
+{% block meta_description %}Browse hand-picked hotels, safari lodges, camps and beach villas in Kenya, Tanzania, Uganda and Rwanda. Compare prices and book with Day Safaris Adventures.{% endblock meta_description %}
+{% block og_description %}Hand-picked hotels, safari lodges, camps and beach villas in Kenya, Tanzania, Uganda and Rwanda.{% endblock og_description %}
+{% block twitter_description %}Hand-picked hotels, safari lodges, camps and beach villas in East Africa.{% endblock twitter_description %}
+
+{% block body %}
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">{% trans "Hotels" %}</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Hotels" %}</li>
+        </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Hotels Start -->
+<div class="container-fluid blog hotels-page py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <p class="h5 section-title px-3">{% trans "Where to stay" %}</p>
+            <h1 class="mb-4">{% trans "Hotels, Lodges & Beach Villas" %}</h1>
+            <p class="mb-0">{% trans "Hand-picked places to stay across East Africa, from safari camps on the edge of the Mara to beach villas on the Indian Ocean. Pick a country, compare, and send us your dates. We confirm availability and rates within 24 hours." %}</p>
+        </div>
+
+        <!-- Country filter: same pill style as the gallery -->
+        <ul class="nav nav-pills hotel-filters d-flex justify-content-center mb-3 flex-wrap" aria-label="{% trans 'Filter by country' %}">
+            <li class="nav-item">
+                <a class="d-flex mx-2 mb-2 py-2 border border-primary bg-light rounded-pill {% if not sel_country %}active{% endif %}" href="{% url 'hotels' %}{% if sel_type %}?type={{ sel_type }}{% endif %}">
+                    <span class="text-dark text-center" style="width: 150px;">{% trans "All Hotels" %} ({{ total_all }})</span>
+                </a>
+            </li>
+            {% for c in countries %}
+            <li class="nav-item">
+                <a class="d-flex mx-2 mb-2 py-2 border border-primary bg-light rounded-pill {% if sel_country|lower == c.country|lower %}active{% endif %}" href="?country={{ c.country|urlencode }}{% if sel_type %}&type={{ sel_type }}{% endif %}">
+                    <span class="text-dark text-center" style="width: 150px;">{{ c.country }} ({{ c.n }})</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Property type filter -->
+        <ul class="nav nav-pills hotel-filters d-flex justify-content-center mb-4 flex-wrap" aria-label="{% trans 'Filter by type' %}">
+            {% for t in types %}
+            <li class="nav-item">
+                <a class="d-flex mx-1 mb-2 py-1 px-3 border rounded-pill small {% if sel_type == t.key %}bg-primary text-dark active{% else %}bg-white text-dark{% endif %}" href="?type={{ t.key }}{% if sel_country %}&country={{ sel_country|urlencode }}{% endif %}" {% if sel_type == t.key %}aria-current="true"{% endif %}>
+                    {{ t.label }} ({{ t.n }})
+                </a>
+            </li>
+            {% endfor %}
+            {% if sel_type %}
+            <li class="nav-item"><a class="d-flex mx-1 mb-2 py-1 px-3 rounded-pill small text-dark" href="{% if sel_country %}?country={{ sel_country|urlencode }}{% else %}{% url 'hotels' %}{% endif %}"><i class="fa fa-times me-1"></i>{% trans "Clear type" %}</a></li>
+            {% endif %}
+        </ul>
+
+        <!-- Search + sort -->
+        <form method="get" class="row g-2 justify-content-center align-items-end mb-4">
+            {% if sel_country %}<input type="hidden" name="country" value="{{ sel_country }}">{% endif %}
+            {% if sel_type %}<input type="hidden" name="type" value="{{ sel_type }}">{% endif %}
+            <div class="col-md-5">
+                <label class="form-label fw-bold" for="hotel-q">{% trans "Search" %}</label>
+                <input id="hotel-q" type="search" name="q" class="form-control" placeholder="{% trans 'Hotel name or place...' %}" value="{{ query }}" maxlength="80">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-bold" for="hotel-sort">{% trans "Sort by" %}</label>
+                <select id="hotel-sort" name="sort" class="form-select" onchange="this.form.submit()">
+                    {% for key, label in sorts %}<option value="{{ key }}" {% if sel_sort == key %}selected{% endif %}>{{ label }}</option>{% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2 d-grid">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-search me-1"></i>{% trans "Search" %}</button>
+            </div>
+        </form>
+
+        <p class="text-center mb-4">
+            {% blocktrans with n=paginator.count %}Showing {{ n }} hotels{% endblocktrans %}
+            {% if sel_country or sel_type or query %}· <a href="{% url 'hotels' %}">{% trans "Reset filters" %}</a>{% endif %}
+        </p>
+
+        <div class="row g-4 justify-content-center">
+            {% for hotel in hotels %}
+            {% with photo=hotel.main_image %}
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item">
+                    <div class="blog-img">
+                        <div class="blog-img-inner">
+                            {% if photo %}
+                            <img class="img-fluid w-100 rounded-top" src="{{ photo.image|thumb:640 }}" alt="{{ hotel.name }}" width="640" height="480" loading="lazy" decoding="async">
+                            {% else %}
+                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/hotel-placeholder.jpg' %}" alt="{{ hotel.name }}" width="640" height="480" loading="lazy" decoding="async">
+                            {% endif %}
+                            <div class="blog-icon">
+                                <a href="{{ hotel.get_absolute_url }}" class="my-auto" aria-label="{{ hotel.name }}"><i class="fas fa-link fa-2x text-white"></i></a>
+                            </div>
+                        </div>
+                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ hotel.location|truncatechars:14 }}</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-star text-primary me-2"></i>{{ hotel.star_rating }} {% trans "Star" %}</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>{{ hotel.max_guests }} {% trans "Guests" %}</small>
+                        </div>
+                    </div>
+                    <div class="blog-content border border-top-0 rounded-bottom p-4">
+                        <p class="mb-2">
+                            <span class="badge bg-primary">{{ hotel.get_property_type_display }}</span>
+                            <span class="badge bg-light text-dark border">{{ hotel.country }}</span>
+                        </p>
+                        <a href="{{ hotel.get_absolute_url }}" class="h4">{{ hotel.name|truncatechars:50 }}</a>
+                        <p class="my-3">{{ hotel.card_summary }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <a href="{{ hotel.get_absolute_url }}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "View Hotel" %}<span class="visually-hidden"> {{ hotel.name }}</span></a>
+                            {% if hotel.price_per_night %}<span class="text-dark"><small>{% trans "from" %}</small> <strong class="h5 mb-0">${{ hotel.price_per_night|floatformat:"-2" }}</strong><small>/{% trans "night" %}</small></span>{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-hotel fa-4x text-muted mb-3"></i>
+                <h2 class="h3">{% trans "No hotels match your filters" %}</h2>
+                <p>{% trans "Try another country or type, or" %} <a href="{% url 'hotels' %}">{% trans "see all hotels" %}</a>. {% trans "Can't find what you need? We'll find the right place for you:" %} <a href="{% url 'contact' %}">{% trans "contact us" %}</a>.</p>
+            </div>
+            {% endfor %}
+
+            {% if is_paginated %}
+            <div class="col-12">
+                <nav aria-label="{% trans 'Page navigation' %}">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link rounded-circle" href="?page={{ page_obj.previous_page_number }}{% if keep_params %}&{{ keep_params }}{% endif %}" aria-label="{% trans 'Previous page' %}"><i class="fas fa-angle-left"></i></a></li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <li class="page-item active"><span class="page-link rounded-circle">{{ num }}</span></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link rounded-circle" href="?page={{ num }}{% if keep_params %}&{{ keep_params }}{% endif %}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link rounded-circle" href="?page={{ page_obj.next_page_number }}{% if keep_params %}&{{ keep_params }}{% endif %}" aria-label="{% trans 'Next page' %}"><i class="fas fa-angle-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- Hotels End -->
+{% endblock body %}

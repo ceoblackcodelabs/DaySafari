@@ -565,6 +565,7 @@ class SitemapPageView(TemplateView):
         context['destinations'] = Destinations.objects.only('id', 'name').order_by('name')
         context['trekking'] = Trekking.objects.only('id', 'name').order_by('name')
         context['blogs'] = Blogs.objects.exclude(slug__isnull=True).exclude(slug='').only('title', 'slug').order_by('-published_date')[:30]
-        from Accomodations.models import AirBNB
+        from Hotels.models import AirBNB, Hotel
+        context['hotels'] = Hotel.objects.filter(is_published=True).only('name', 'slug', 'location')
         context['stays'] = AirBNB.objects.only('id', 'title', 'location')
         return context

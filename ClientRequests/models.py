@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Bookings(models.Model):
     """Every booking lead on the site: safari, trekking and Airbnb enquiries."""
-    TYPE_CHOICES = [('safari', 'Safari'), ('trekking', 'Trekking'), ('airbnb', 'Airbnb')]
+    TYPE_CHOICES = [('safari', 'Safari'), ('trekking', 'Trekking'), ('airbnb', 'Airbnb'), ('hotel', 'Hotel')]
     STATUS_CHOICES = [('new', 'New'), ('contacted', 'Contacted'), ('confirmed', 'Confirmed'),
                       ('cancelled', 'Cancelled'), ('spam', 'Spam')]
 
@@ -18,8 +18,10 @@ class Bookings(models.Model):
     destination = models.ForeignKey(Destinations, on_delete=models.CASCADE, blank=True, null=True)
     trekking_package = models.ForeignKey('Home.Trekking', on_delete=models.SET_NULL, blank=True, null=True,
                                          related_name='bookings')
-    airbnb = models.ForeignKey('Accomodations.AirBNB', on_delete=models.SET_NULL, blank=True, null=True,
+    airbnb = models.ForeignKey('Hotels.AirBNB', on_delete=models.SET_NULL, blank=True, null=True,
                                related_name='bookings')
+    hotel = models.ForeignKey('Hotels.Hotel', on_delete=models.SET_NULL, blank=True, null=True,
+                              related_name='enquiries')
     persons = models.IntegerField(default=1)
     date = models.DateField(default=timezone.now)          # travel date / check-in
     check_out = models.DateField(null=True, blank=True)    # Airbnb only
@@ -33,7 +35,7 @@ class Bookings(models.Model):
     @property
     def item_name(self):
         """What was booked, whichever type it is."""
-        item = self.destination or self.trekking_package or self.airbnb
+        item = self.destination or self.trekking_package or self.hotel or self.airbnb
         return str(item) if item else 'General enquiry'
 
     def __str__(self):

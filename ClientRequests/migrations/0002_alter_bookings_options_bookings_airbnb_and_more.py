@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Accomodations', '0004_delete_airbnbbooking'),
+        ('Hotels', '0001_initial'),
         ('ClientRequests', '0001_initial'),
         ('Home', '0017_heroslide_delete_trekkingbooking'),
     ]
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bookings',
             name='airbnb',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='bookings', to='Accomodations.airbnb'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='bookings', to='Hotels.airbnb'),
         ),
         migrations.AddField(
             model_name='bookings',

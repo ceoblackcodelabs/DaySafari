@@ -1,0 +1,202 @@
+{% extends "Home/base.html" %}
+{% load static i18n image_tags %}
+
+{% block title %}{{ hotel.name }}, {{ hotel.location }} - {% trans "Day Safaris Adventures" %}{% endblock title %}
+{% block meta_description %}{{ hotel.name }} in {{ hotel.location }}, {{ hotel.country }}: {{ hotel.star_rating }}-star {{ hotel.get_property_type_display|lower }}{% if hotel.price_per_night %} from ${{ hotel.price_per_night|floatformat:"-2" }} per night{% endif %}. {{ hotel.card_summary|truncatechars:90 }}{% endblock meta_description %}
+{% block og_title %}{{ hotel.name }}, {{ hotel.location }}{% endblock og_title %}
+{% block og_description %}{{ hotel.card_summary }}{% endblock og_description %}
+{% block twitter_title %}{{ hotel.name }}, {{ hotel.location }}{% endblock twitter_title %}
+{% block twitter_description %}{{ hotel.card_summary }}{% endblock twitter_description %}
+{% block og_image %}{% if main_image %}https://daysafarisadventures.co.ke{{ main_image.image|thumb:1200 }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock og_image %}
+{% block twitter_image %}{% if main_image %}https://daysafarisadventures.co.ke{{ main_image.image|thumb:1200 }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock twitter_image %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Hotel","name":"{{ hotel.name|escapejs }}",
+"description":"{{ hotel.card_summary|escapejs }}","url":"https://daysafarisadventures.co.ke{{ request.path }}",
+{% if main_image %}"image":"https://daysafarisadventures.co.ke{{ main_image.image|thumb:1200 }}",{% endif %}
+"address":{"@type":"PostalAddress","addressLocality":"{{ hotel.location|escapejs }}","addressCountry":"{{ hotel.country|escapejs }}"},
+"starRating":{"@type":"Rating","ratingValue":"{{ hotel.star_rating }}"}{% if hotel.price_per_night %},
+"priceRange":"From ${{ hotel.price_per_night|floatformat:'-2' }} per night"{% endif %}}
+</script>
+{% endblock structured_data %}
+
+{% block body %}
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">{{ hotel.name }}</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'hotels' %}">{% trans "Hotels" %}</a></li>
+            <li class="breadcrumb-item active text-white">{{ hotel.name }}</li>
+        </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+<div class="container-fluid bg-light py-5">
+    <div class="container py-4">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row g-5">
+            <!-- ============ left column ============ -->
+            <div class="col-lg-8">
+                <!-- Gallery -->
+                <div class="mb-4">
+                    {% if images %}
+                    <a href="{{ main_image.image.url }}" data-lightbox="hotel-gallery" aria-label="{% trans 'View photo' %}: {{ hotel.name }}">
+                        <img class="hotel-gallery-main rounded" src="{{ main_image.image|thumb:1200 }}" srcset="{{ main_image.image|thumb:640 }} 640w, {{ main_image.image|thumb:1200 }} 1200w" sizes="(max-width: 992px) 100vw, 800px" alt="{{ hotel.name }}" width="1200" height="750" fetchpriority="high">
+                    </a>
+                    {% if images|length > 1 %}
+                    <div class="row g-2 mt-1">
+                        {% for image in images %}{% if image != main_image %}
+                        <div class="col-3">
+                            <a href="{{ image.image.url }}" data-lightbox="hotel-gallery" aria-label="{% trans 'View photo' %}"><img class="hotel-gallery-thumb rounded" src="{{ image.image|thumb:200 }}" alt="{{ image.caption|default:hotel.name }}" width="200" height="150" loading="lazy"></a>
+                        </div>
+                        {% endif %}{% endfor %}
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <img class="hotel-gallery-main rounded" src="{% static 'img/hotel-placeholder.jpg' %}" alt="{{ hotel.name }}" width="800" height="500">
+                    {% endif %}
+                </div>
+
+                <!-- Title block -->
+                <div class="d-flex flex-wrap justify-content-between align-items-start mb-3">
+                    <div>
+                        <span class="badge bg-primary">{{ hotel.get_property_type_display }}</span>
+                        <span class="ms-1" aria-label="{{ hotel.star_rating }} {% trans 'star rating' %}">{% for i in hotel.stars %}<i class="fa fa-star text-primary"></i>{% endfor %}{% for i in hotel.empty_stars %}<i class="fa fa-star text-muted"></i>{% endfor %}</span>
+                        <h1 class="h2 mt-2 mb-1">{{ hotel.name }}</h1>
+                        <p class="mb-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ hotel.location }}, {{ hotel.country }}
+                            · <a href="https://www.google.com/maps/search/?api=1&query={{ hotel.name|urlencode }}+{{ hotel.location|urlencode }}+{{ hotel.country|urlencode }}" target="_blank" rel="noopener">{% trans "View on map" %}</a></p>
+                    </div>
+                </div>
+
+                <!-- Key facts -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-user-friends"></i><div class="fw-bold text-dark">{{ hotel.max_guests }}</div><small>{% trans "Max guests" %}</small></div></div>
+                    {% if hotel.rooms %}<div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-bed"></i><div class="fw-bold text-dark">{{ hotel.get_rooms_display }}</div><small>{% trans "Accommodation" %}</small></div></div>{% endif %}
+                    {% if hotel.meal_plan %}<div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-utensils"></i><div class="fw-bold text-dark">{{ hotel.get_meal_plan_display }}</div><small>{% trans "Meals" %}</small></div></div>{% endif %}
+                    <div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-star"></i><div class="fw-bold text-dark">{{ hotel.star_rating }} {% trans "Star" %}</div><small>{% trans "Rating" %}</small></div></div>
+                </div>
+
+                <!-- About -->
+                {% if hotel.description %}
+                <h2 class="h4">{% trans "About this hotel" %}</h2>
+                <p class="mb-4">{{ hotel.description|linebreaksbr }}</p>
+                {% endif %}
+
+                {% if hotel.amenity_list %}
+                <h2 class="h4">{% trans "Amenities" %}</h2>
+                <ul class="list-unstyled row hotel-amenities mb-4">
+                    {% for amenity in hotel.amenity_list %}<li class="col-sm-6"><i class="fa fa-check"></i>{{ amenity }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+
+                {% if hotel.child_policy %}
+                <h2 class="h4">{% trans "Children policy" %}</h2>
+                <p class="mb-4">{{ hotel.child_policy|linebreaksbr }}</p>
+                {% endif %}
+
+                <div class="rounded bg-white p-4 border">
+                    <h2 class="h5">{% trans "Good to know" %}</h2>
+                    <ul class="mb-0">
+                        <li>{% trans "Prices are per night, starting rates in US dollars, and change by season and room type." %}</li>
+                        <li>{% trans "Send an enquiry with your dates and we confirm availability and your exact rate within 24 hours." %}</li>
+                        <li>{% trans "We can combine this stay with a safari or tour. Just mention it in your message." %}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ============ right column: enquiry ============ -->
+            <div class="col-lg-4">
+                <div class="hotel-enquiry bg-white rounded p-4 border">
+                    {% if hotel.price_per_night %}
+                    <p class="mb-1"><small>{% trans "From" %}</small></p>
+                    <p class="h2 text-dark mb-3">${{ hotel.price_per_night|floatformat:"-2" }} <small class="fs-6">/ {% trans "night" %}</small></p>
+                    {% endif %}
+                    <h2 class="h5 mb-3">{% trans "Check availability" %}</h2>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form.website }}{{ form.form_ts }}
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <label class="form-label small mb-1" for="{{ form.name.id_for_label }}">{% trans "Full name" %}</label>{{ form.name }}
+                                {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small mb-1" for="{{ form.email.id_for_label }}">{% trans "Email" %}</label>{{ form.email }}
+                                {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small mb-1" for="{{ form.phone.id_for_label }}">{% trans "Phone / WhatsApp" %}</label>{{ form.phone }}
+                                {% if form.phone.errors %}<div class="text-danger small">{{ form.phone.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small mb-1" for="{{ form.date.id_for_label }}">{% trans "Check-in" %}</label>{{ form.date }}
+                                {% if form.date.errors %}<div class="text-danger small">{{ form.date.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small mb-1" for="{{ form.check_out.id_for_label }}">{% trans "Check-out" %}</label>{{ form.check_out }}
+                                {% if form.check_out.errors %}<div class="text-danger small">{{ form.check_out.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small mb-1" for="{{ form.persons.id_for_label }}">{% trans "Guests" %} ({% trans "max" %} {{ hotel.max_guests }})</label>{{ form.persons }}
+                                {% if form.persons.errors %}<div class="text-danger small">{{ form.persons.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small mb-1" for="{{ form.message.id_for_label }}">{% trans "Message (optional)" %}</label>{{ form.message }}
+                                {% if form.message.errors %}<div class="text-danger small">{{ form.message.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-12 d-grid mt-2">
+                                <button class="btn btn-primary py-3" type="submit"><i class="fa fa-paper-plane me-2"></i>{% trans "Send enquiry" %}</button>
+                            </div>
+                        </div>
+                        <p class="small mt-3 mb-0 text-center">{% trans "By submitting you agree to our" %} <a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}</a> {% trans "and" %} <a href="{% url 'terms_and_conditions' %}">{% trans "Terms and Conditions" %}</a>.</p>
+                    </form>
+                    <hr>
+                    <p class="small mb-0 text-center"><i class="fa fa-phone-alt me-1"></i>{% trans "Prefer to talk?" %} <a href="https://wa.me/254759379600" target="_blank" rel="noopener">WhatsApp +254 759 379 600</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Similar hotels -->
+        {% if similar_hotels %}
+        <div class="mt-5 blog hotels-page">
+            <h2 class="h3 text-center mb-4">{% trans "More places to stay" %}</h2>
+            <div class="row g-4 justify-content-center">
+                {% for other in similar_hotels %}{% with photo=other.main_image %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item">
+                        <div class="blog-img">
+                            <div class="blog-img-inner">
+                                <img class="img-fluid w-100 rounded-top" src="{% if photo %}{{ photo.image|thumb:640 }}{% else %}{% static 'img/hotel-placeholder.jpg' %}{% endif %}" alt="{{ other.name }}" width="640" height="480" loading="lazy" decoding="async">
+                                <div class="blog-icon"><a href="{{ other.get_absolute_url }}" class="my-auto" aria-label="{{ other.name }}"><i class="fas fa-link fa-2x text-white"></i></a></div>
+                            </div>
+                            <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
+                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ other.location|truncatechars:14 }}</small>
+                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-star text-primary me-2"></i>{{ other.star_rating }} {% trans "Star" %}</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>{{ other.max_guests }}</small>
+                            </div>
+                        </div>
+                        <div class="blog-content border border-top-0 rounded-bottom p-4">
+                            <a href="{{ other.get_absolute_url }}" class="h4">{{ other.name|truncatechars:50 }}</a>
+                            <p class="my-3">{{ other.card_summary }}</p>
+                            <a href="{{ other.get_absolute_url }}" class="btn btn-primary rounded-pill py-2 px-4 mt-auto align-self-start">{% trans "View Hotel" %}<span class="visually-hidden"> {{ other.name }}</span></a>
+                        </div>
+                    </div>
+                </div>
+                {% endwith %}{% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

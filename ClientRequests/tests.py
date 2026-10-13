@@ -8,7 +8,7 @@ from django.core.cache import cache
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from Accomodations.models import AirBNB
+from Hotels.models import AirBNB, Hotel
 from ClientRequests import antispam
 from ClientRequests.models import Bookings, Contact
 from Home.models import Blogs, Trekking
@@ -40,7 +40,7 @@ class LeadFormTests(TestCase):
         cache.clear()  # rate-limit/ban state must not leak between tests
         self.notify = mock.patch('ClientRequests.views.handle_new_lead').start()
         mock.patch('Home.views.handle_new_lead', self.notify).start()
-        mock.patch('Accomodations.views.handle_new_lead', self.notify).start()
+        mock.patch('Hotels.views.handle_new_lead', self.notify).start()
         self.addCleanup(mock.patch.stopall)
 
     def person(self, **extra):
@@ -155,6 +155,8 @@ class SiteHealthTests(TestCase):
         cls.trek = Trekking.objects.create(name='Mt Kenya', location='Kenya', days=4, price=500, persons=6,
                                            description='d', category='Mt-Kenya')
         cls.bnb = AirBNB.objects.create(location='Nairobi', title='Flat')
+        cls.hotel = Hotel.objects.create(name='Test Lodge', country='Kenya', location='Amboseli', summary='A lodge.',
+                                         description='Nice place.', price_per_night=200, max_guests=4)
         cls.blog = Blogs.objects.create(title='Tips', author='Mr Days', content='<p>Body</p>')
 
     def setUp(self):
@@ -165,11 +167,12 @@ class SiteHealthTests(TestCase):
                   'booking_create', 'airbnb', 'cruises', 'airline', 'east_africa_tours', 'south_africa_tours',
                   'west_africa_tours', 'international_tours', 'african_wildlife_tours',
                   'holiday_tailor_made_tours', 'airport_transfers', 'travel_partnerships', 'trekking_kenya',
-                  'trekking_kilimanjaro', 'trekking_meru', 'trekking_longonot', 'trekking_suswa',
+                  'trekking_kilimanjaro', 'trekking_meru', 'trekking_longonot', 'trekking_suswa', 'hotels',
                   'legal_notice', 'privacy_policy', 'terms_and_conditions', 'cookie_policy', 'sitemap_page']
         urls = [reverse(n) for n in static]
         urls += [self.package.get_absolute_url(), reverse('destination_detail', args=[self.dest.pk]),
                  reverse('kili_detail', args=[self.trek.pk]), reverse('bnb_detail', args=[self.bnb.pk]),
+                 self.hotel.get_absolute_url(),
                  reverse('blog_detail', args=[self.blog.slug])]
         return urls
 
@@ -311,3 +314,121 @@ class SpamProtectionTests(TestCase):
             ok = self.client.post(url, {**data, 'form_ts': stamp()}, REMOTE_ADDR='5.5.5.7')
         self.assertEqual(ok.status_code, 302)
         self.assertTrue(User.objects.filter(username='janedoe77').exists())
+
+
+
+@override_settings(CACHES=LOCMEM, ALLOWED_HOSTS=['*'])
+class HotelsTests(TestCase):
+    """The Hotels app: listing + filters, detail page, enquiry leads, header and footer gallery."""
+
+    @classmethod
+    def setUpTestData(cls):
+        mk = Hotel.objects.create
+        cls.lodge = mk(name='Amboseli Lodge', country='Kenya', location='Amboseli', property_type='lodge',
+                       star_rating=5, price_per_night=400, max_guests=4, summary='Views of Kilimanjaro.',
+                       description='Full description here.', amenities='Swimming pool\nFree Wi-Fi',
+                       child_policy='Children welcome.', contact_person='SECRET Manager',
+                       email='secret-internal@lodge.example', remarks='INTERNAL CONTRACT NOTE')
+        cls.villa = mk(name='Diani Villa', country='Kenya', location='Diani', property_type='villa',
+                       star_rating=4, price_per_night=250, max_guests=6, summary='Beachfront.')
+        cls.camp = mk(name='Zanzibar Camp', country='Tanzania', location='Zanzibar', property_type='camp',
+                      star_rating=3, price_per_night=120, max_guests=2, summary='Tented.')
+        cls.hidden = mk(name='Hidden Draft', country='Kenya', location='Nowhere', is_published=False)
+
+    def setUp(self):
+        cache.clear()
+        self.notify = mock.patch('Hotels.views.handle_new_lead').start()
+        self.addCleanup(mock.patch.stopall)
+
+    def names(self, response):
+        return [h.name for h in response.context['hotels']]
+
+    # ---- listing -----------------------------------------------------------
+    def test_listing_shows_published_hotels_only(self):
+        r = self.client.get(reverse('hotels'))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(set(self.names(r)), {'Amboseli Lodge', 'Diani Villa', 'Zanzibar Camp'})
+        self.assertNotContains(r, 'Hidden Draft')
+
+    def test_filter_by_country_type_and_search(self):
+        url = reverse('hotels')
+        self.assertEqual(set(self.names(self.client.get(url, {'country': 'Tanzania'}))), {'Zanzibar Camp'})
+        self.assertEqual(set(self.names(self.client.get(url, {'country': 'kenya'}))), {'Amboseli Lodge', 'Diani Villa'})
+        self.assertEqual(self.names(self.client.get(url, {'type': 'villa'})), ['Diani Villa'])
+        self.assertEqual(self.names(self.client.get(url, {'q': 'zanz'})), ['Zanzibar Camp'])
+        self.assertEqual(self.names(self.client.get(url, {'country': 'Kenya', 'type': 'camp'})), [])
+
+    def test_sorting(self):
+        url = reverse('hotels')
+        self.assertEqual(self.names(self.client.get(url, {'sort': 'price_low'})),
+                         ['Zanzibar Camp', 'Diani Villa', 'Amboseli Lodge'])
+        self.assertEqual(self.names(self.client.get(url, {'sort': 'price_high'}))[0], 'Amboseli Lodge')
+
+    def test_bad_filter_values_do_not_crash(self):
+        r = self.client.get(reverse('hotels'), {'country': "x' OR 1=1--", 'type': '<script>', 'sort': 'zzz', 'page': 'abc'})
+        self.assertIn(r.status_code, (200, 404))
+        self.assertEqual(self.client.get(reverse('hotels'), {'type': '<script>'}).status_code, 200)
+
+    def test_filter_pills_show_counts(self):
+        r = self.client.get(reverse('hotels'))
+        self.assertContains(r, 'All Hotels (3)')
+        self.assertContains(r, 'Kenya (2)')
+        self.assertContains(r, 'Tanzania (1)')
+
+    # ---- detail ------------------------------------------------------------
+    def test_detail_page_content_and_no_internal_data_leak(self):
+        r = self.client.get(self.lodge.get_absolute_url())
+        self.assertEqual(r.status_code, 200)
+        for text in ('Amboseli Lodge', 'Swimming pool', 'Free Wi-Fi', 'Children welcome.', 'Check availability'):
+            self.assertContains(r, text)
+        for secret in ('SECRET Manager', 'secret-internal@lodge.example', 'INTERNAL CONTRACT NOTE'):
+            self.assertNotContains(r, secret)
+        self.assertContains(r, '"@type":"Hotel"')
+
+    def test_unpublished_hotel_is_404(self):
+        self.assertEqual(self.client.get(self.hidden.get_absolute_url()).status_code, 404)
+
+    def test_amenities_section_hidden_when_empty(self):
+        self.assertNotContains(self.client.get(self.villa.get_absolute_url()), 'Amenities')
+
+    # ---- enquiry -> lead ---------------------------------------------------
+    def enquiry(self, **extra):
+        today = date.today()
+        data = {'name': 'Jane Doe', 'email': 'jane@gmail.com', 'phone': '+254 712 345 678', 'persons': 2,
+                'date': (today + timedelta(days=30)).isoformat(), 'check_out': (today + timedelta(days=33)).isoformat(),
+                'message': 'Sea view please', 'form_ts': stamp(), **extra}
+        return self.client.post(self.lodge.get_absolute_url(), data, REMOTE_ADDR='3.3.3.3')
+
+    def test_enquiry_creates_hotel_lead(self):
+        r = self.enquiry()
+        self.assertEqual(r.status_code, 302)
+        booking = Bookings.objects.get()
+        self.assertEqual((booking.booking_type, booking.hotel, booking.status), ('hotel', self.lodge, 'new'))
+        self.assertEqual(booking.item_name, str(self.lodge))
+        self.notify.assert_called_once()
+
+    def test_enquiry_validation(self):
+        self.assertEqual(self.enquiry(persons=9).status_code, 200)                      # more than max_guests
+        self.assertEqual(self.enquiry(check_out=date.today().isoformat()).status_code, 200)   # checkout before checkin
+        self.assertEqual(Bookings.objects.count(), 0)
+
+    def test_enquiry_bot_traps(self):
+        self.assertEqual(self.enquiry(website='http://spam').status_code, 400)
+        self.assertEqual(Bookings.objects.count(), 0)
+
+    # ---- header + footer ---------------------------------------------------
+    def test_header_has_hotels_and_no_gallery_link(self):
+        html = self.client.get(reverse('home')).content.decode()
+        nav = html[html.index('navbar-nav'):html.index('Book Now')]
+        self.assertIn(reverse('hotels'), nav)
+        self.assertNotIn(reverse('gallary'), nav)
+
+    def test_footer_gallery_six_photos_last_links_to_gallery(self):
+        from Home.models import Gallery, GalleryCategory
+        cat = GalleryCategory.objects.create(name='Wildlife')
+        for i in range(8):
+            Gallery.objects.create(name=f'Photo {i}', category=cat, image='gallery_images/x.jpg')
+        html = self.client.get(reverse('hotels')).content.decode()
+        self.assertEqual(html.count('data-lightbox="footer-gallery"'), 5)           # first five open the lightbox
+        self.assertEqual(html.count('footer-gallery-more"'), 1)                     # the sixth links onward
+        self.assertIn('href="%s" class="footer-gallery-more"' % reverse('gallary'), html)

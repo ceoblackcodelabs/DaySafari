@@ -78,3 +78,33 @@ body{color:#555}
 /* Phones: smaller banner and no fixed attachment (ignored on mobile, but forces repaints) */
 @media (max-width:768px){.bg-breadcrumb{background-image:linear-gradient(rgba(19,53,123,.5),rgba(19,53,123,.5)),url(../img/breadcrumb-bg-sm.webp);background-attachment:scroll}}
 .badge.bg-info{color:#052c35!important}
+
+/* Hotels: filter pills (same look as the gallery) and detail page */
+.hotel-filters .nav-item a.active{background:#f6c582!important;border-color:#f6c582!important}
+.hotel-filters .nav-item a.active span{color:#420d24!important;font-weight:600}
+.hotel-filters .nav-item a{transition:.3s}
+.hotel-filters .nav-item a:hover{background:#f6c582!important}
+.hotel-gallery-main{aspect-ratio:16/10;object-fit:cover;width:100%;height:auto}
+.hotel-gallery-thumb{aspect-ratio:4/3;object-fit:cover;width:100%;height:auto;cursor:zoom-in}
+.hotel-fact{background:#f2f2f2;border-radius:10px;padding:1rem;text-align:center;height:100%}
+.hotel-fact i{font-size:1.5rem;color:var(--bs-primary);margin-bottom:.4rem}
+.hotel-enquiry{position:sticky;top:90px}
+@media (max-width:991.98px){.hotel-enquiry{position:static}}
+.hotel-amenities li{padding:.35rem 0}
+.hotel-amenities i{color:#2e7d32;margin-right:.6rem}
+
+/* Footer gallery: 3x2 grid of small squares; the last one links to the full gallery */
+.footer-gallery a{display:block;position:relative;border-radius:6px;overflow:hidden}
+.footer-gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;transition:transform .3s}
+.footer-gallery a:hover img{transform:scale(1.08)}
+.footer-gallery-more img{filter:brightness(.45)}
+.footer-gallery-more-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;font-size:.8rem;font-weight:600;line-height:1.1;padding:.25rem}
+.footer-gallery-more:hover .footer-gallery-more-label{letter-spacing:normal}
+
+/* Hotel cards: readable info bar on any photo, no gap under short titles */
+.hotels-page .blog-info{background:rgba(20,20,31,.72)}
+.hotels-page .blog-item .blog-content>a.h4{min-height:0}
+.hotels-page .blog-img-inner img{aspect-ratio:4/3;object-fit:cover}
+.blog.hotels-page .blog-item .blog-img .blog-info{background:rgba(20,20,31,.78)}
+.blog.hotels-page .blog-item .blog-img .blog-info small,.blog.hotels-page .blog-item .blog-img .blog-info small i{color:#fff!important}
+.footer-gallery img{height:auto}
