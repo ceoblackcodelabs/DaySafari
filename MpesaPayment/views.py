@@ -4,14 +4,15 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views import View
 from django_daraja.mpesa.core import MpesaClient
-from httplib2 import Response
 from .models import MpesaTransaction
 import json
 from datetime import datetime
 import time
-from colorama import Fore, Style, Back
+import logging
 from django.conf import settings
 from decimal import Decimal
+
+logger = logging.getLogger(__name__)
 
 # transactions/views.py
 class InitiateSTKPush(View):
@@ -48,7 +49,7 @@ class InitiateSTKPush(View):
                 callback_url = 'https://6457-105-161-237-37.ngrok-free.app/Mpesa/callback/'
             else:
                 callback_url = request.build_absolute_uri('/Mpesa/callback/')
-            print(f"Using callback URL: {callback_url}")
+            logger.info(f"Using callback URL: {callback_url}")
 
             # Initiate STK push
             response = cl.stk_push(
@@ -60,12 +61,12 @@ class InitiateSTKPush(View):
             )
 
             # Debug: Print the actual response
-            print(f"{Back.GREEN}Raw M-Pesa Response:{Style.RESET_ALL} \n{Fore.CYAN}{response}{Style.RESET_ALL}")
-            print(f"{Back.CYAN}Response Type: {type(response)}{Style.RESET_ALL}")
+            logger.debug(f"Raw M-Pesa Response: \n{response}")
+            logger.info(f"Response Type: {type(response)}")
 
             # Convert response to serializable format
             response_dict = self._parse_mpesa_response(response)
-            print(f"{Back.GREEN}Parsed Response:{Style.RESET_ALL} \n{Fore.CYAN}{response_dict}{Style.RESET_ALL}")
+            logger.debug(f"Parsed Response: \n{response_dict}")
 
             # Check if request was successful
             if response_dict.get('success'):
@@ -103,7 +104,7 @@ class InitiateSTKPush(View):
                 }, status=400)
 
         except Exception as e:
-            print("Exception:", str(e))
+            logger.info("Exception:", str(e))
             import traceback
             traceback.print_exc()
 
@@ -163,7 +164,7 @@ class InitiateSTKPush(View):
                 }
 
         except Exception as e:
-            print(f"Error parsing response: {e}")
+            logger.info(f"Error parsing response: {e}")
             return {
                 'success': False,
                 'error_message': f'Error parsing response: {str(e)}',
@@ -180,7 +181,7 @@ def stk_push_callback(request):
         try:
             # Log the raw callback data for debugging
             raw_body = request.body
-            print(f"{Back.GREEN}Raw callback body type:{Style.RESET_ALL} {type(raw_body)}")
+            logger.debug(f"Raw callback body type: {type(raw_body)}")
 
             # Decode bytes to string if necessary
             if isinstance(raw_body, bytes):
@@ -188,7 +189,7 @@ def stk_push_callback(request):
             else:
                 raw_body_str = raw_body
 
-            print(f"{Back.GREEN}Raw callback data:{Style.RESET_ALL} \n{Back.CYAN}{raw_body_str}{Style.RESET_ALL}\n")
+            logger.debug(f"Raw callback data: \n{raw_body_str}\n")
 
             data = json.loads(raw_body_str)
 
@@ -196,7 +197,7 @@ def stk_push_callback(request):
             stk_callback = data.get('Body', {}).get('stkCallback', {})
 
             if not stk_callback:
-                print(f"{Back.RED}No stkCallback found in data{Style.RESET_ALL}")
+                logger.info(f"No stkCallback found in data")
                 return JsonResponse({'ResultCode': 1, 'ResultDesc': 'Invalid callback format'})
 
             # Extract basic info
@@ -205,7 +206,7 @@ def stk_push_callback(request):
             checkout_request_id = stk_callback.get('CheckoutRequestID')
             merchant_request_id = stk_callback.get('MerchantRequestID')
 
-            print(f"{Back.GREEN}Callback received - ResultCode:{Style.RESET_ALL} {Back.CYAN}{result_code}, CheckoutRequestID: {checkout_request_id}{Style.RESET_ALL}")
+            logger.info(f"Callback received - ResultCode: {result_code}, CheckoutRequestID: {checkout_request_id}")
 
             # Find transaction
             try:
@@ -227,9 +228,9 @@ def stk_push_callback(request):
 
                         if item_name == 'MpesaReceiptNumber':
                             transaction.mpesa_receipt_number = item_value
-                            print(f"{Back.GREEN}Receipt Number: {item_value}{Style.RESET_ALL}")
+                            logger.info(f"Receipt Number: {item_value}")
                         elif item_name == 'Amount':
-                            print(f"{Back.GREEN}Amount: {item_value}{Style.RESET_ALL}")
+                            logger.info(f"Amount: {item_value}")
                         elif item_name == 'TransactionDate':
                             try:
                                 transaction_date_str = str(item_value)
@@ -237,34 +238,34 @@ def stk_push_callback(request):
                                     transaction_date_str, '%Y%m%d%H%M%S'
                                 )
                             except ValueError as e:
-                                print(f"Failed to parse date: {item_value}, Error: {e}")
+                                logger.info(f"Failed to parse date: {item_value}, Error: {e}")
                         elif item_name == 'PhoneNumber':
-                            print(f"{Back.GREEN}Phone: {item_value}{Style.RESET_ALL}")
+                            logger.info(f"Phone: {item_value}")
 
                 else:
                     # Transaction failed
                     transaction.status = 'failed'
-                    print(f"\n{Back.RED}Transaction failed: {result_desc}{Style.RESET_ALL}\n")
+                    logger.info(f"\nTransaction failed: {result_desc}\n")
 
                 # Store the complete callback data
                 transaction.raw_response = data
                 transaction.save()
 
-                print(f"{Back.GREEN}Transaction {transaction.id} updated to status: {transaction.status}{Style.RESET_ALL}")
+                logger.info(f"Transaction {transaction.id} updated to status: {transaction.status}")
 
                 # Return success response to M-Pesa
                 return JsonResponse({'ResultCode': 0, 'ResultDesc': 'Success'})
 
             except MpesaTransaction.DoesNotExist:
-                print(f"{Back.RED}Transaction not found for CheckoutRequestID: {checkout_request_id}{Style.RESET_ALL}")
+                logger.info(f"Transaction not found for CheckoutRequestID: {checkout_request_id}")
                 # Still return success to M-Pesa to avoid repeated callbacks
                 return JsonResponse({'ResultCode': 0, 'ResultDesc': 'Transaction not found but acknowledged'})
 
         except json.JSONDecodeError as e:
-            print(f"{Back.RED}JSON decode error: {e}{Style.RESET_ALL}")
+            logger.info(f"JSON decode error: {e}")
             return JsonResponse({'ResultCode': 1, 'ResultDesc': 'Invalid JSON'}, status=400)
         except Exception as e:
-            print(f"{Back.RED}Callback processing error: {e}{Style.RESET_ALL}")
+            logger.info(f"Callback processing error: {e}")
             import traceback
             traceback.print_exc()
             return JsonResponse({'ResultCode': 1, 'ResultDesc': str(e)}, status=500)

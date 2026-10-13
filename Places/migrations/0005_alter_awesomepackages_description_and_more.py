@@ -1,5 +1,4 @@
-import ckeditor_uploader.fields
-from django.db import migrations
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -12,11 +11,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="awesomepackages",
             name="description",
-            field=ckeditor_uploader.fields.RichTextUploadingField(),
+            field=models.TextField(),
         ),
         migrations.AlterField(
             model_name="destinations",
             name="description",
-            field=ckeditor_uploader.fields.RichTextUploadingField(),
+            field=models.TextField(),
         ),
     ]

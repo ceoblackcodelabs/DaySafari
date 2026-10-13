@@ -43,16 +43,12 @@ INSTALLED_APPS = [
     'Places',
     'ClientRequests',
     'Accomodations',
-    'Office',
     'Invoices',
     'ChatBot',
     'EmailSetup',
     'FinanceManagement',
     'Payments',
     'MpesaPayment',
-    'StripePayment',
-    'CryptoTransfer',
-    'BankTransfer',
     'django_ckeditor_5',
 ]
 
@@ -119,39 +115,8 @@ DATABASES = {
 }
 
 
-# ========== PRODUCTION DATABASE ==========
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'daysafaris_daysafarisadventure',
-#         'USER': 'daysafaris_sudo',
-#         'PASSWORD': 'REMOVED_DB_PASSWORD',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-        #     'OPTIONS': {
-        #     'connect_timeout': 10,
-        #     'options': '-c statement_timeout=5000ms',
-        # },
-#     }
-# }
-
-# # ========== mysql DATABASE ==========
-# DATABASES = {
-#     'default': {
-#         'ENGINE': config('DB_ENGINE', default='django.db.backends.mysql'),
-#         'NAME': config('DB_NAME', default='daysafaris_daysafarisadventure'),
-#         'USER': config('DB_USER', default='daysafaris_sudo'),
-#         'PASSWORD': config('DB_PASSWORD', default=''),
-#         'HOST': config('DB_HOST', default='localhost'),
-#         'PORT': config('DB_PORT', default='3306'),
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#             'charset': 'utf8mb4',
-#         },
-#         'CONN_MAX_AGE': config('DB_CONN_MAX_AGE', default=600, cast=int),
-#         'ATOMIC_REQUESTS': config('DB_ATOMIC_REQUESTS', default=True, cast=bool),
-#     }
-# }
+# (To use PostgreSQL/MySQL instead of SQLite, define DATABASES from environment variables.
+#  Never put database passwords in this file.)
 
 # CACHE
 # NOTE: LocMemCache is ISOLATED PER WORKER PROCESS. On Passenger/gunicorn
@@ -318,6 +283,11 @@ LOGOUT_REDIRECT_URL = 'home'
 
 # ========== DEFAULT FIELD ==========
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# django-daraja's own migrations plus the AutoField->BigAutoField follow-up (0003) that was
+# originally generated inside site-packages. Keeping them in the project makes every
+# environment (fresh venv, new server) build the same schema.
+MIGRATION_MODULES = {'django_daraja': 'DaySafaris.daraja_migrations'}
 
 # ========== CSRF CONFIGURATION ==========
 CSRF_TRUSTED_ORIGINS = [

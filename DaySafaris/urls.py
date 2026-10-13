@@ -35,9 +35,6 @@ ROBOTS_TXT = """User-agent: *
 Allow: /
 Disallow: /*/admin/
 Disallow: /*/Mpesa/
-Disallow: /*/Stripe/
-Disallow: /*/Crypto/
-Disallow: /*/Bank/
 Disallow: /*/payment/
 Disallow: /ckeditor5/
 Disallow: /i18n/
@@ -61,12 +58,8 @@ urlpatterns += i18n_patterns(
     path('', include('ClientRequests.urls')),
     path('', include("Accomodations.urls")),
     path('', include('ChatBot.urls')),
-    # path('', include('FinanceManagement.urls')),
     path('', include('Payments.urls')),
     path('Mpesa/', include('MpesaPayment.urls')),
-    path('Stripe/', include('StripePayment.urls')),
-    path('Crypto/', include('CryptoTransfer.urls')),
-    path('Bank/', include('BankTransfer.urls')),
 )
 
 # NOTE: django.conf.urls.static.static() is NOT used for MEDIA_URL. It has

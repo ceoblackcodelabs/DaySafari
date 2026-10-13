@@ -45,12 +45,12 @@ def send_transactional_email(to_email, to_name, subject, html_content):
         )
 
         api_response = api_instance.send_transac_email(send_smtp_email)
-        print(f"Email sent successfully! Message ID: {api_response.message_id}")
+        logger.info(f"Email sent successfully! Message ID: {api_response.message_id}")
         _log_email(to_email, subject, 'sent')
         return True
 
     except Exception as e:  # ApiException, network errors, bad config...
-        print(f"Exception when sending email: {e}")
+        logger.info(f"Exception when sending email: {e}")
         _log_email(to_email, subject, f'failed: {e}'[:50])
         return False
 
@@ -120,11 +120,11 @@ def notify_staff_of_lead(lead):
 def send_welcome_email(name="", email=""):
     """Send welcome email using template"""
     try:
-        print(f"Preparing to send welcome email to {email}...")
+        logger.info(f"Preparing to send welcome email to {email}...")
         html_content = render_to_string('Emails/welcome.html', {'name': name})
         return send_transactional_email(email, name, f"Welcome to Day Safaris Adventures, {name}! 🦁", html_content)
     except Exception as e:
-        print(f"Error: {e}")
+        logger.info(f"Error: {e}")
         return False
 
 # confirmation sent to client
@@ -133,9 +133,9 @@ def send_booking_confirmation(booking):
     try:
         company = get_company()  # Get company here
         if not company:
-            print("Warning: Company profile not found, using default values")
+            logger.info("Warning: Company profile not found, using default values")
 
-        print(f"Preparing to send booking confirmation email to {booking.email} for booking ID {booking.id}...")
+        logger.info(f"Preparing to send booking confirmation email to {booking.email} for booking ID {booking.id}...")
         payment_link = f"{company.mpesa_payment_link if company else 'https://daysafarisadventures.co.ke'}/payment/from-bookings/{booking.id}/"
         context = {
             'payment_link': payment_link,
@@ -154,7 +154,7 @@ def send_booking_confirmation(booking):
             html_content
         )
     except Exception as e:
-        print(f"Error: {e}")
+        logger.info(f"Error: {e}")
         return False
 
 # booking confirmation sent to Days
@@ -163,9 +163,9 @@ def send_booking_verification(booking):
     try:
         company = get_company()  # Get company here
         if not company:
-            print("Warning: Company profile not found, using default values")
+            logger.info("Warning: Company profile not found, using default values")
 
-        print(f"Preparing to send booking Verification email to {company.booking_confirmation_email if company else 'info@daysafarisadventures.com'} for booking ID {booking.id}...")
+        logger.info(f"Preparing to send booking Verification email to {company.booking_confirmation_email if company else 'info@daysafarisadventures.com'} for booking ID {booking.id}...")
         mpesa_payment_link = f"{company.mpesa_payment_link if company else 'https://daysafarisadventures.co.ke'}/payment/from-bookings/{booking.id}/"
         price = booking.destination.price if booking.destination else 0
         total = booking.persons * (price or 0)
@@ -195,13 +195,13 @@ def send_booking_verification(booking):
             html_content
         )
     except Exception as e:
-        print(f"Error: {e}")
+        logger.info(f"Error: {e}")
         return False
 
 def send_contact_response(contact):
     """Send contact response using template"""
     try:
-        print(f"Preparing to send contact response email to {contact.email}...")
+        logger.info(f"Preparing to send contact response email to {contact.email}...")
         html_content = render_to_string('Emails/contact_response.html', {'contact': contact})
         return send_transactional_email(
             contact.email,
@@ -210,13 +210,13 @@ def send_contact_response(contact):
             html_content
         )
     except Exception as e:
-        print(f"Error: {e}")
+        logger.info(f"Error: {e}")
         return False
 
 def reply_contact_via_email_at_admin(contact):
     '''from admin reply to client'''
     try:
-        print(f"Preparing to send contact response email to {contact.email}...")
+        logger.info(f"Preparing to send contact response email to {contact.email}...")
         html_content = render_to_string('Emails/contact_response_admin.html', {'contact': contact})
         return send_transactional_email(
             contact.email,
@@ -225,7 +225,7 @@ def reply_contact_via_email_at_admin(contact):
             html_content
         )
     except Exception as e:
-        print(f"Error: {e}")
+        logger.info(f"Error: {e}")
         return False
 
 def send_test_email(email):
@@ -234,13 +234,13 @@ def send_test_email(email):
         html_content = render_to_string('Emails/test_email.html', {'email': email})
         return send_transactional_email(email, "Test User", "Test Email - Day Safaris Adventures", html_content)
     except Exception as e:
-        print(f"Error: {e}")
+        logger.info(f"Error: {e}")
         return False
 
 def send_booking_reminder(booking):
     """Send booking reminder using template"""
     try:
-        print(f"Preparing to send booking reminder email to {booking.email} for booking ID {booking.id}...")
+        logger.info(f"Preparing to send booking reminder email to {booking.email} for booking ID {booking.id}...")
         from datetime import date
         days_left = (booking.date - date.today()).days if booking.date else 0
         html_content = render_to_string('Emails/booking_reminder.html', {
@@ -254,13 +254,13 @@ def send_booking_reminder(booking):
             html_content
         )
     except Exception as e:
-        print(f"Error: {e}")
+        logger.info(f"Error: {e}")
         return False
 
 def send_package_payment_email(package_purchase):
     """Send payment notification email for package purchase"""
     try:
-        print(f"Preparing to send payment email to {package_purchase.email} for package {package_purchase.package.name}...")
+        logger.info(f"Preparing to send payment email to {package_purchase.email} for package {package_purchase.package.name}...")
 
         # Calculate amounts
         package = package_purchase.package
@@ -293,7 +293,7 @@ def send_package_payment_email(package_purchase):
             html_content
         )
     except Exception as e:
-        print(f"Error sending package payment email: {e}")
+        logger.info(f"Error sending package payment email: {e}")
         return False
 
 def send_new_user_alert_to_admin(user):
@@ -301,9 +301,9 @@ def send_new_user_alert_to_admin(user):
     try:
         company = get_company()  # Get company here
         if not company:
-            print("Warning: Company profile not found, using default values")
+            logger.info("Warning: Company profile not found, using default values")
 
-        print(f"Preparing to send new user alert to admin...")
+        logger.info(f"Preparing to send new user alert to admin...")
 
         # Get admin email from company profile or settings
         admin_email = company.booking_confirmation_email if company else 'info@daysafarisadventures.com'
@@ -331,5 +331,5 @@ def send_new_user_alert_to_admin(user):
             html_content
         )
     except Exception as e:
-        print(f"Error sending new user alert email: {e}")
+        logger.info(f"Error sending new user alert email: {e}")
         return False

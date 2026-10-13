@@ -19,7 +19,6 @@ from ClientRequests.antispam import AntiSpamViewMixin
 from .forms import TrekkingBookingForm
 from EmailSetup.utils import send_booking_confirmation, handle_new_lead
 import threading
-from colorama import Fore, Style
 
 import logging
 
