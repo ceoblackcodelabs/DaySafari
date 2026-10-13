@@ -349,3 +349,46 @@ class SeedHotelsTests(TestCase):
         self.seed()
         priced = dict(Hotel.objects.exclude(price_per_night=None).values_list('name', 'price_per_night'))
         self.assertEqual(list(priced), ['Medina Palms'])           # the one official published rate
+
+
+@override_settings(CACHES=LOCMEM, ALLOWED_HOSTS=['*'])
+class RemoveSampleHotelsTests(TestCase):
+    """Migration 0006 removes the invented sample hotels, and only them."""
+
+    def run_migration(self):
+        import importlib
+        from django.apps import apps
+        from django.db import connection
+        module = importlib.import_module('Hotels.migrations.0006_remove_sample_hotels')
+
+        class Editor:
+            pass
+        editor = Editor(); editor.connection = connection
+        with self.captureOnCommitCallbacks(execute=True):
+            module.forwards(apps, editor)
+
+    def test_removes_only_the_exact_sample_records(self):
+        sample = Hotel.objects.create(name='Serenity Beach Villa', country='Kenya', location='Diani Beach')
+        HotelImage.objects.create(hotel=sample, image='hotels/does-not-exist.jpg')
+        real = Hotel.objects.create(name='Medina Palms', country='Kenya', location='Watamu')
+        lookalike = Hotel.objects.create(name='Serenity Beach Villa', country='Kenya', location='Malindi')  # different place
+        self.run_migration()
+        self.assertFalse(Hotel.objects.filter(pk=sample.pk).exists())
+        self.assertEqual(HotelImage.objects.count(), 0)
+        self.assertTrue(Hotel.objects.filter(pk=real.pk).exists())
+        self.assertTrue(Hotel.objects.filter(pk=lookalike.pk).exists())
+
+    def test_a_sample_with_an_enquiry_is_unpublished_not_deleted(self):
+        from ClientRequests.models import Bookings
+        sample = Hotel.objects.create(name='Karen Luxury Loft', country='Kenya', location='Nairobi')
+        Bookings.objects.create(name='Jane', email='jane@gmail.com', phone='0712345678', booking_type='hotel', hotel=sample)
+        self.run_migration()
+        sample.refresh_from_db()
+        self.assertFalse(sample.is_published)
+        self.assertEqual(Bookings.objects.get().hotel, sample)        # the lead keeps its hotel
+
+    def test_is_safe_to_run_twice_and_on_an_empty_database(self):
+        self.run_migration()
+        Hotel.objects.create(name='Eka Hotel Eldoret', country='Kenya', location='Eldoret')
+        self.run_migration(); self.run_migration()
+        self.assertEqual(Hotel.objects.count(), 1)
