@@ -1,9 +1,12 @@
+import re
 from datetime import date
 
 from django import forms
 
 from ClientRequests.antispam import AntiSpamFormMixin
 from ClientRequests.models import Bookings
+
+_LINKISH = re.compile(r'https?|www|\.[a-z]{2,}', re.I)
 
 
 class BNBbookingsForm(AntiSpamFormMixin, forms.ModelForm):
@@ -54,9 +57,15 @@ class BNBbookingsForm(AntiSpamFormMixin, forms.ModelForm):
 class HotelEnquiryForm(AntiSpamFormMixin, forms.ModelForm):
     """Hotel enquiry; saved as a Bookings lead (booking_type='hotel')."""
 
+    traveling_with_children = forms.ChoiceField(
+        required=False, initial='no', label='Travelling with children?',
+        choices=[('no', 'No children'), ('yes', 'Yes, with children')],
+        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
+    )
+
     class Meta:
         model = Bookings
-        fields = ['name', 'email', 'phone', 'persons', 'date', 'check_out', 'message']
+        fields = ['name', 'email', 'phone', 'persons', 'date', 'check_out', 'children_count', 'children_ages', 'message']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your full name', 'required': 'required'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Your email', 'required': 'required'}),
@@ -66,6 +75,10 @@ class HotelEnquiryForm(AntiSpamFormMixin, forms.ModelForm):
                                            'min': date.today().isoformat()}),
             'check_out': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'required': 'required',
                                                 'min': date.today().isoformat()}),
+            'children_count': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10,
+                                                       'placeholder': 'How many?'}),
+            'children_ages': forms.TextInput(attrs={'class': 'form-control', 'maxlength': 60,
+                                                    'placeholder': 'Ages, e.g. 4, 7'}),
             'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 3,
                                              'placeholder': 'Room preferences, special requests…'}),
         }
@@ -77,7 +90,11 @@ class HotelEnquiryForm(AntiSpamFormMixin, forms.ModelForm):
         self.fields['check_out'].required = True
         self.fields['date'].label = 'Check-in'
         self.fields['check_out'].label = 'Check-out'
-        self.fields['persons'].label = 'Guests'
+        self.fields['persons'].label = 'Guests (including children)'
+        self.fields['children_count'].label = 'Number of children'
+        self.fields['children_ages'].label = "Children's ages"
+        self.fields['children_count'].required = False
+        self.fields['children_ages'].required = False
         if self.hotel:
             self.fields['persons'].widget.attrs['max'] = self.hotel.max_guests
 
@@ -90,6 +107,14 @@ class HotelEnquiryForm(AntiSpamFormMixin, forms.ModelForm):
                                         'For larger groups please contact us.')
         return persons
 
+    def clean_children_ages(self):
+        ages = (self.cleaned_data.get('children_ages') or '').strip()
+        if ages and not re.fullmatch(r"[0-9A-Za-z ,.\-/&]{1,60}", ages):
+            raise forms.ValidationError('Please enter ages as numbers, e.g. 4, 7.')
+        if _LINKISH.search(ages):
+            raise forms.ValidationError('Please enter ages as numbers, e.g. 4, 7.')
+        return ages
+
     def clean(self):
         cleaned = super().clean()
         check_in, check_out = cleaned.get('date'), cleaned.get('check_out')
@@ -97,4 +122,25 @@ class HotelEnquiryForm(AntiSpamFormMixin, forms.ModelForm):
             self.add_error('date', 'Check-in cannot be in the past.')
         if check_in and check_out and check_out <= check_in:
             self.add_error('check_out', 'Check-out must be after check-in.')
+
+        with_kids = cleaned.get('traveling_with_children') == 'yes'
+        count, persons = cleaned.get('children_count'), cleaned.get('persons')
+        if with_kids:
+            if not count or not 1 <= count <= 10:
+                self.add_error('children_count', 'Please tell us how many children (1 to 10).')
+            elif persons and count > persons:
+                self.add_error('children_count', 'Children cannot be more than the total number of guests.')
+        else:
+            cleaned['children_count'] = None
+            cleaned['children_ages'] = ''
+        self._with_kids = with_kids
         return cleaned
+
+    def save(self, commit=True):
+        booking = super().save(commit=False)
+        booking.has_children = bool(getattr(self, '_with_kids', False))
+        if not booking.has_children:
+            booking.children_count, booking.children_ages = None, ''
+        if commit:
+            booking.save()
+        return booking

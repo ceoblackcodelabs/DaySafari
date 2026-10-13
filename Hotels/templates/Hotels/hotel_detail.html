@@ -48,19 +48,22 @@
         <div class="row g-5">
             <!-- ============ left column ============ -->
             <div class="col-lg-8">
-                <!-- Gallery -->
-                <div class="mb-4">
+                <!-- Gallery: click (or hover) a thumbnail to change the main photo -->
+                <div class="mb-4" id="hotel-gallery">
                     {% if images %}
-                    <a href="{{ main_image.image.url }}" data-lightbox="hotel-gallery" aria-label="{% trans 'View photo' %}: {{ hotel.name }}">
-                        <img class="hotel-gallery-main rounded" src="{{ main_image.image|thumb:1200 }}" srcset="{{ main_image.image|thumb:640 }} 640w, {{ main_image.image|thumb:1200 }} 1200w" sizes="(max-width: 992px) 100vw, 800px" alt="{{ hotel.name }}" width="1200" height="750" fetchpriority="high">
+                    <a id="hotel-main-link" href="{{ main_image.image.url }}" data-lightbox="hotel-photo" aria-label="{% trans 'View photo' %}: {{ hotel.name }}">
+                        <img id="hotel-main-img" class="hotel-gallery-main rounded" src="{{ main_image.image|thumb:1200 }}" srcset="{{ main_image.image|thumb:640 }} 640w, {{ main_image.image|thumb:1200 }} 1200w" sizes="(max-width: 992px) 100vw, 800px" alt="{{ main_image.caption|default:hotel.name }}" width="1200" height="750" fetchpriority="high">
                     </a>
                     {% if images|length > 1 %}
-                    <div class="row g-2 mt-1">
-                        {% for image in images %}{% if image != main_image %}
-                        <div class="col-3">
-                            <a href="{{ image.image.url }}" data-lightbox="hotel-gallery" aria-label="{% trans 'View photo' %}"><img class="hotel-gallery-thumb rounded" src="{{ image.image|thumb:200 }}" alt="{{ image.caption|default:hotel.name }}" width="200" height="150" loading="lazy"></a>
-                        </div>
-                        {% endif %}{% endfor %}
+                    <div class="hotel-thumbs mt-2" role="list" aria-label="{% trans 'Hotel photos' %}">
+                        {% for image in images %}
+                        <button type="button" role="listitem" class="hotel-thumb{% if image == main_image %} active{% endif %}"
+                                data-src="{{ image.image|thumb:1200 }}" data-srcset="{{ image.image|thumb:640 }} 640w, {{ image.image|thumb:1200 }} 1200w"
+                                data-full="{{ image.image.url }}" data-alt="{{ image.caption|default:hotel.name }}"
+                                aria-label="{% trans 'Show photo' %} {{ forloop.counter }} / {{ images|length }}">
+                            <img src="{{ image.image|thumb:200 }}" alt="" width="200" height="150" loading="lazy">
+                        </button>
+                        {% endfor %}
                     </div>
                     {% endif %}
                     {% else %}
@@ -81,10 +84,10 @@
 
                 <!-- Key facts -->
                 <div class="row g-3 mb-4">
-                    <div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-user-friends"></i><div class="fw-bold text-dark">{{ hotel.max_guests }}</div><small>{% trans "Max guests" %}</small></div></div>
-                    {% if hotel.rooms %}<div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-bed"></i><div class="fw-bold text-dark">{{ hotel.get_rooms_display }}</div><small>{% trans "Accommodation" %}</small></div></div>{% endif %}
-                    {% if hotel.meal_plan %}<div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-utensils"></i><div class="fw-bold text-dark">{{ hotel.get_meal_plan_display }}</div><small>{% trans "Meals" %}</small></div></div>{% endif %}
-                    <div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-star"></i><div class="fw-bold text-dark">{{ hotel.star_rating }} {% trans "Star" %}</div><small>{% trans "Rating" %}</small></div></div>
+                    <div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-user-friends"></i><div class="fw-bold">{{ hotel.max_guests }}</div><small>{% trans "Max guests" %}</small></div></div>
+                    {% if hotel.rooms %}<div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-bed"></i><div class="fw-bold">{{ hotel.get_rooms_display }}</div><small>{% trans "Accommodation" %}</small></div></div>{% endif %}
+                    {% if hotel.meal_plan %}<div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-utensils"></i><div class="fw-bold">{{ hotel.get_meal_plan_display }}</div><small>{% trans "Meals" %}</small></div></div>{% endif %}
+                    <div class="col-6 col-md-3"><div class="hotel-fact"><i class="fa fa-star"></i><div class="fw-bold">{{ hotel.star_rating }} {% trans "Star" %}</div><small>{% trans "Rating" %}</small></div></div>
                 </div>
 
                 <!-- About -->
@@ -148,8 +151,28 @@
                                 {% if form.check_out.errors %}<div class="text-danger small">{{ form.check_out.errors.0 }}</div>{% endif %}
                             </div>
                             <div class="col-12">
-                                <label class="form-label small mb-1" for="{{ form.persons.id_for_label }}">{% trans "Guests" %} ({% trans "max" %} {{ hotel.max_guests }})</label>{{ form.persons }}
+                                <label class="form-label small mb-1" for="{{ form.persons.id_for_label }}">{% trans "Guests (including children)" %} ({% trans "max" %} {{ hotel.max_guests }})</label>{{ form.persons }}
                                 {% if form.persons.errors %}<div class="text-danger small">{{ form.persons.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-12">
+                                <span class="form-label small mb-1 d-block">{% trans "Travelling with children?" %}</span>
+                                <div class="d-flex gap-4 flex-wrap">
+                                    {% for radio in form.traveling_with_children %}
+                                    <div class="form-check">{{ radio.tag }}<label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label></div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-12" id="children-fields">
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label class="form-label small mb-1" for="{{ form.children_count.id_for_label }}">{% trans "Number of children" %}</label>{{ form.children_count }}
+                                        {% if form.children_count.errors %}<div class="text-danger small">{{ form.children_count.errors.0 }}</div>{% endif %}
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small mb-1" for="{{ form.children_ages.id_for_label }}">{% trans "Children's ages" %}</label>{{ form.children_ages }}
+                                        {% if form.children_ages.errors %}<div class="text-danger small">{{ form.children_ages.errors.0 }}</div>{% endif %}
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12">
                                 <label class="form-label small mb-1" for="{{ form.message.id_for_label }}">{% trans "Message (optional)" %}</label>{{ form.message }}
@@ -200,3 +223,35 @@
     </div>
 </div>
 {% endblock body %}
+
+{% block extra_js %}
+<script>
+(function () {
+    /* Thumbnails: change the main photo on click, or on hover for mouse users */
+    var main = document.getElementById('hotel-main-img'), link = document.getElementById('hotel-main-link');
+    var thumbs = document.querySelectorAll('.hotel-thumb');
+    function show(btn) {
+        if (!main || btn.classList.contains('active')) return;
+        main.src = btn.dataset.src; main.srcset = btn.dataset.srcset; main.alt = btn.dataset.alt;
+        if (link) link.href = btn.dataset.full;
+        thumbs.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+    }
+    var canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+    thumbs.forEach(function (btn) {
+        btn.addEventListener('click', function () { show(btn); });
+        if (canHover) btn.addEventListener('mouseenter', function () { show(btn); });
+    });
+
+    /* Children: show the details only when "Yes" is chosen (visible without JavaScript) */
+    var box = document.getElementById('children-fields');
+    var radios = document.querySelectorAll('input[name="traveling_with_children"]');
+    function sync() {
+        var chosen = document.querySelector('input[name="traveling_with_children"]:checked');
+        if (box) box.hidden = !(chosen && chosen.value === 'yes');
+    }
+    radios.forEach(function (r) { r.addEventListener('change', sync); });
+    sync();
+})();
+</script>
+{% endblock extra_js %}

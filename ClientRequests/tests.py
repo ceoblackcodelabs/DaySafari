@@ -8,7 +8,7 @@ from django.core.cache import cache
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from Hotels.models import AirBNB, Hotel
+from Hotels.models import AirBNB, Hotel, HotelImage
 from ClientRequests import antispam
 from ClientRequests.models import Bookings, Contact
 from Home.models import Blogs, Trekking
@@ -396,8 +396,9 @@ class HotelsTests(TestCase):
         today = date.today()
         data = {'name': 'Jane Doe', 'email': 'jane@gmail.com', 'phone': '+254 712 345 678', 'persons': 2,
                 'date': (today + timedelta(days=30)).isoformat(), 'check_out': (today + timedelta(days=33)).isoformat(),
-                'message': 'Sea view please', 'form_ts': stamp(), **extra}
-        return self.client.post(self.lodge.get_absolute_url(), data, REMOTE_ADDR='3.3.3.3')
+                'message': 'Sea view please', 'form_ts': stamp()}
+        ip = extra.pop('ip', '3.3.3.3') if 'ip' in extra else '3.3.3.3'
+        return self.client.post(self.lodge.get_absolute_url(), {**data, **extra}, REMOTE_ADDR=ip)
 
     def test_enquiry_creates_hotel_lead(self):
         r = self.enquiry()
@@ -432,3 +433,61 @@ class HotelsTests(TestCase):
         self.assertEqual(html.count('data-lightbox="footer-gallery"'), 5)           # first five open the lightbox
         self.assertEqual(html.count('footer-gallery-more"'), 1)                     # the sixth links onward
         self.assertIn('href="%s" class="footer-gallery-more"' % reverse('gallary'), html)
+
+
+    # ---- gallery strip + children section ------------------------------------
+    def test_photo_strip_appears_only_with_several_photos(self):
+        url = self.lodge.get_absolute_url()
+        self.assertNotContains(self.client.get(url), 'class="hotel-thumbs')
+        for i in (1, 2, 3):
+            HotelImage.objects.create(hotel=self.lodge, image=f'hotels/test-{i}.jpg', order=i,
+                                      is_featured=(i == 1))
+        r = self.client.get(url)
+        self.assertEqual(r.content.decode().count('class="hotel-thumb'), 4)       # strip + 3 thumbs
+        self.assertContains(r, 'id="hotel-main-img"')
+        self.assertContains(r, 'data-full="/media/hotels/test-2.jpg"')
+
+    def test_detail_page_has_children_question_and_brown_fact_boxes(self):
+        r = self.client.get(self.lodge.get_absolute_url())
+        self.assertContains(r, 'Travelling with children?')
+        self.assertContains(r, 'name="traveling_with_children"')
+        self.assertContains(r, 'id="children-fields"')
+        self.assertContains(r, 'class="hotel-fact"', count=2)                       # guests + rating (rooms not set)
+
+    def test_enquiry_without_children(self):
+        self.assertEqual(self.enquiry(traveling_with_children='no', children_count='3').status_code, 302)
+        booking = Bookings.objects.get()
+        self.assertIs(booking.has_children, False)
+        self.assertIsNone(booking.children_count)           # stray values are ignored when "no"
+        self.assertEqual(booking.children_summary, 'No children')
+
+    def test_enquiry_with_children_is_saved(self):
+        r = self.enquiry(persons=4, traveling_with_children='yes', children_count='2', children_ages='4, 7')
+        self.assertEqual(r.status_code, 302)
+        booking = Bookings.objects.get()
+        self.assertEqual((booking.has_children, booking.children_count, booking.children_ages), (True, 2, '4, 7'))
+        self.assertEqual(booking.children_summary, 'Yes, 2 children (ages 4, 7)')
+
+    def test_children_validation(self):
+        base = dict(persons=3, traveling_with_children='yes')
+        self.assertEqual(self.enquiry(**base, ip='7.0.0.1').status_code, 200)                                  # count missing
+        self.assertEqual(self.enquiry(**base, children_count='5', ip='7.0.0.2').status_code, 200)              # more kids than guests
+        self.assertEqual(self.enquiry(**base, children_count='1', children_ages='x.com', ip='7.0.0.3').status_code, 200)
+        self.assertEqual(self.enquiry(**base, children_count='1', children_ages='<b>5</b>', ip='7.0.0.4').status_code, 200)
+        self.assertEqual(Bookings.objects.count(), 0)
+
+    def test_old_clients_without_the_children_field_still_work(self):
+        r = self.enquiry()                                  # no traveling_with_children posted at all
+        self.assertEqual(r.status_code, 302)
+        self.assertIs(Bookings.objects.get().has_children, False)
+
+    def test_staff_alert_includes_children(self):
+        from EmailSetup import utils
+        booking = Bookings.objects.create(name='Jane Doe', email='jane@gmail.com', phone='0712345678',
+                                          booking_type='hotel', hotel=self.lodge, has_children=True,
+                                          children_count=2, children_ages='3, 6')
+        sent = {}
+        with mock.patch.object(utils, 'send_transactional_email', lambda to, name, subj, html: sent.update(html=html)), \
+                mock.patch.object(utils.threading, 'Thread', lambda target, daemon=None: type('T', (), {'start': lambda self: target()})()):
+            utils.notify_staff_of_lead(booking)
+        self.assertIn('Yes, 2 children (ages 3, 6)', sent['html'])

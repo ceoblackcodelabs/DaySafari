@@ -101,6 +101,7 @@ def notify_staff_of_lead(lead):
                 rows = [('Name', lead.name), ('Email', lead.email), ('Phone', lead.phone),
                         ('Interest', lead.item_name), ('Persons', lead.persons),
                         ('Date / check-in', lead.date), ('Check-out', lead.check_out or '-'),
+                        *([('Children', lead.children_summary)] if lead.children_summary else []),
                         ('Message', lead.message or '-')]
             else:
                 title = f"New contact message: {lead.subject}"

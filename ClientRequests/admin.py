@@ -7,13 +7,16 @@ from .models import (
 @admin.register(Bookings)
 class BookingsAdmin(admin.ModelAdmin):
     list_display = ('pk', 'created_at', 'booking_type', 'name', 'email', 'phone', 'item_name', 'persons',
-                    'date', 'status')
+                    'date', 'children', 'status')
     list_editable = ('status',)
     search_fields = ('name', 'email', 'phone', 'message')
     list_filter = ('status', 'booking_type', 'date', 'destination')
     date_hierarchy = 'created_at'
     readonly_fields = ('created_at',)
     list_per_page = 50
+
+    def children(self, obj):
+        return obj.children_summary or '-'
 
 
 # contact
