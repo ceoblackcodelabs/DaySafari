@@ -13,3 +13,4 @@ data.json
 full_data.json
 var/
 backups/
+logs/hotels-api.log

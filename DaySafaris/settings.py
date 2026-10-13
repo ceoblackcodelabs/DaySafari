@@ -349,8 +349,20 @@ LOGGING = {
             'filename': LOG_DIR / 'django-error.log',
             'formatter': 'verbose',
         },
+        # Audit trail of everything written through the hotels API (who/what/when)
+        'hotels_api_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': LOG_DIR / 'hotels-api.log',
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
+        'hotels.api': {
+            'handlers': ['hotels_api_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         'django.request': {
             'handlers': ['error_file'],
             'level': 'ERROR',

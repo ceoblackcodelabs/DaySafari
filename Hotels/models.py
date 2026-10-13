@@ -62,7 +62,12 @@ class Hotel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base = slugify(f'{self.name}-{self.location}') or slugify(self.name) or 'hotel'
+            name_slug = slugify(self.name)
+            name_words = set(name_slug.split('-'))
+            # add the place to the address, but skip words the name already contains
+            # ("Eka Hotel Eldoret" + "Eldoret" -> eka-hotel-eldoret)
+            extra = [w for w in slugify(self.location.split('(')[0]).split('-') if w and w not in name_words]
+            base = '-'.join([name_slug] + extra) or 'hotel'
             slug, n = base, 2
             while Hotel.objects.filter(slug=slug).exclude(pk=self.pk).exists():
                 slug, n = f'{base}-{n}', n + 1
@@ -153,3 +158,44 @@ class AirBNBImage(models.Model):
 
     def __str__(self):
         return f'Image for {self.airbnb.location}'
+
+
+class ApiKey(models.Model):
+    """Access token for the hotels API. Only a SHA-256 hash is stored; the token itself is shown once."""
+    name = models.CharField(max_length=80, help_text='Who/what uses this key, e.g. "Claude assistant"')
+    prefix = models.CharField(max_length=12, unique=True, editable=False)
+    key_hash = models.CharField(max_length=64, editable=False)
+    is_active = models.BooleanField(default=True, help_text='Untick to revoke the key immediately')
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_used_at = models.DateTimeField(null=True, blank=True, editable=False)
+
+    class Meta:
+        verbose_name = 'API key'
+
+    def __str__(self):
+        return f'{self.name} ({self.prefix}…) {"active" if self.is_active else "REVOKED"}'
+
+    @staticmethod
+    def hash_token(token):
+        import hashlib
+        return hashlib.sha256(token.encode()).hexdigest()
+
+    @classmethod
+    def create_key(cls, name):
+        """Create a key and return (instance, token). The token cannot be recovered later."""
+        import secrets
+        prefix = secrets.token_hex(4)
+        token = f'dsa_{prefix}_{secrets.token_urlsafe(32)}'
+        return cls.objects.create(name=name, prefix=prefix, key_hash=cls.hash_token(token)), token
+
+    @classmethod
+    def authenticate(cls, token):
+        """Return the active ApiKey for this token, or None. Constant-time hash comparison."""
+        import hmac
+        parts = (token or '').split('_', 2)
+        if len(parts) != 3 or parts[0] != 'dsa':
+            return None
+        key = cls.objects.filter(prefix=parts[1], is_active=True).first()
+        if key and hmac.compare_digest(key.key_hash, cls.hash_token(token)):
+            return key
+        return None

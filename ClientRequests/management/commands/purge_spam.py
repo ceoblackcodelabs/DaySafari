@@ -43,14 +43,19 @@ class Command(BaseCommand):
     def handle(self, *args, **opts):
         for label, model, fields in (('contact messages', Contact, ('name', 'email', 'subject', 'message')),
                                      ('bookings', Bookings, ('name', 'email', 'message'))):
+            quarantined = model.objects.filter(status__in=('Spam', 'spam'))
             qs = list(model.objects.exclude(status__in=('Spam', 'spam')))
             spam, real = self.classify(qs, fields)
-            self.stdout.write(f'\n{label}: {len(qs)} checked, {len(spam)} spam, {len(real)} look genuine')
+            self.stdout.write(f'\n{label}: {len(qs)} checked, {len(spam)} spam, {len(real)} look genuine; '
+                              f'{quarantined.count()} already quarantined as Spam')
             for obj, reasons in real[:25]:
                 self.stdout.write(f'   keep  #{obj.pk} {obj.name[:25]!r} <{obj.email[:35]}> {getattr(obj, "subject", "")[:40]!r}')
             if opts['delete']:
+                # new spam found now + everything already quarantined by the live filter
+                total = quarantined.count() + len(spam)
                 model.objects.filter(pk__in=[o.pk for o, _ in spam]).delete()
-                self.stdout.write(self.style.SUCCESS(f'   deleted {len(spam)} spam {label}'))
+                quarantined.delete()
+                self.stdout.write(self.style.SUCCESS(f'   deleted {total} spam {label} (genuine ones untouched)'))
             elif opts['quarantine']:
                 status = 'Spam' if model is Contact else 'spam'
                 model.objects.filter(pk__in=[o.pk for o, _ in spam]).update(status=status)

@@ -37,12 +37,14 @@ Disallow: /*/admin/
 Disallow: /*/Mpesa/
 Disallow: /*/payment/
 Disallow: /ckeditor5/
+Disallow: /api/
 Disallow: /i18n/
 
 Sitemap: https://daysafarisadventures.co.ke/sitemap.xml
 """
 
 urlpatterns = [
+    path('api/v1/', include('Hotels.api_urls')),
     path('favicon.ico', RedirectView.as_view(url='/static/img/favicon.ico', permanent=True)),
     path('robots.txt', lambda request: HttpResponse(ROBOTS_TXT, content_type='text/plain')),
     path('sitemap.xml', cache_page(3600)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),

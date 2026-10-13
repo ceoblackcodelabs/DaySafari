@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import AirBNB, AirBNBImage, Hotel, HotelImage
+from .models import AirBNB, AirBNBImage, ApiKey, Hotel, HotelImage
 
 
 class HotelImageInline(admin.TabularInline):
@@ -50,3 +50,15 @@ class AirBNBAdmin(admin.ModelAdmin):
     list_display = ['title', 'location', 'specification', 'price_per_night', 'max_guests', 'created_at']
     search_fields = ['title', 'location']
     inlines = [AirBNBImageInline]
+
+
+@admin.register(ApiKey)
+class ApiKeyAdmin(admin.ModelAdmin):
+    """Keys are created with `python manage.py create_api_key`; here you can see usage and revoke them."""
+    list_display = ['name', 'prefix', 'is_active', 'created_at', 'last_used_at']
+    list_filter = ['is_active']
+    readonly_fields = ['name', 'prefix', 'created_at', 'last_used_at']
+    fields = ['name', 'prefix', 'is_active', 'created_at', 'last_used_at']
+
+    def has_add_permission(self, request):
+        return False

@@ -491,3 +491,18 @@ class HotelsTests(TestCase):
                 mock.patch.object(utils.threading, 'Thread', lambda target, daemon=None: type('T', (), {'start': lambda self: target()})()):
             utils.notify_staff_of_lead(booking)
         self.assertIn('Yes, 2 children (ages 3, 6)', sent['html'])
+
+
+    def test_purge_spam_delete_also_clears_quarantined_rows(self):
+        from django.core.management import call_command
+        import io
+        real = Contact.objects.create(name='Patricia', email='p@busara.global', subject='Request for Quote',
+                                      message='I would like a quote for 6 people to Arusha for two nights.')
+        for i in range(3):
+            Contact.objects.create(name='mussymync', email=f'v{i}@gmail.com', subject='I promised.',
+                                   message='Photos for my escort application', status='Spam')
+        out = io.StringIO()
+        call_command('purge_spam', stdout=out)                                    # dry run
+        self.assertEqual(Contact.objects.count(), 4)
+        call_command('purge_spam', '--delete', stdout=out)
+        self.assertEqual(list(Contact.objects.values_list('pk', flat=True)), [real.pk])
