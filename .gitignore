@@ -3,3 +3,13 @@
 *.pyc
 *.zip
 media/thumbs/
+
+# Live data: never commit (customer data, password hashes, uploads cache)
+db.sqlite3
+db.sqlite3-journal
+db.sqlite3-wal
+db.sqlite3-shm
+data.json
+full_data.json
+var/
+backups/
