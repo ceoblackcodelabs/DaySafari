@@ -18,6 +18,8 @@
     <div class="container py-4">
         <div class="mx-auto bg-white rounded p-4 p-md-5 legal-page" style="max-width: 900px;">
             {% block legal_updated %}<p class="small mb-4">{% trans "Last updated:" %} 5 {% trans "October" %} 2026</p>{% endblock legal_updated %}
+            {% get_current_language as LEGAL_LANG %}
+            {% if LEGAL_LANG != 'en' %}<div class="alert alert-secondary small" role="note">{% trans "This legal text is provided in English. If a translation and the English text differ, the English text prevails." %}</div>{% endif %}
             {% block legal_content %}{% endblock legal_content %}
         </div>
     </div>

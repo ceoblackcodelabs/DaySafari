@@ -2,7 +2,7 @@
 {% load static i18n image_tags %}
 
 {% block title %}{{ hotel.name }}, {{ hotel.location }} - {% trans "Day Safaris Adventures" %}{% endblock title %}
-{% block meta_description %}{{ hotel.name }} in {{ hotel.location }}, {{ hotel.country }}: {{ hotel.star_rating }}-star {{ hotel.get_property_type_display|lower }}{% if hotel.price_per_night %} from ${{ hotel.price_per_night|floatformat:"-2" }} per night{% endif %}. {{ hotel.card_summary|truncatechars:90 }}{% endblock meta_description %}
+{% block meta_description %}{% blocktrans with name=hotel.name loc=hotel.location country=hotel.country stars=hotel.star_rating kind=hotel.get_property_type_display|lower %}{{ name }} in {{ loc }}, {{ country }}: {{ stars }}-star {{ kind }}{% endblocktrans %}{% if hotel.price_per_night %} {% blocktrans with p=hotel.price_per_night|floatformat:"-2" %}from ${{ p }} per night{% endblocktrans %}{% endif %}. {{ hotel.card_summary|truncatechars:90 }}{% endblock meta_description %}
 {% block og_title %}{{ hotel.name }}, {{ hotel.location }}{% endblock og_title %}
 {% block og_description %}{{ hotel.card_summary }}{% endblock og_description %}
 {% block twitter_title %}{{ hotel.name }}, {{ hotel.location }}{% endblock twitter_title %}
@@ -40,7 +40,7 @@
         {% if messages %}
             {% for message in messages %}
             <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-                {{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                {{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans "Close" %}"></button>
             </div>
             {% endfor %}
         {% endif %}
@@ -185,7 +185,7 @@
                         <p class="small mt-3 mb-0 text-center">{% trans "By submitting you agree to our" %} <a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}</a> {% trans "and" %} <a href="{% url 'terms_and_conditions' %}">{% trans "Terms and Conditions" %}</a>.</p>
                     </form>
                     <hr>
-                    <p class="small mb-0 text-center"><i class="fa fa-phone-alt me-1"></i>{% trans "Prefer to talk?" %} <a href="https://wa.me/254759379600" target="_blank" rel="noopener">WhatsApp +254 759 379 600</a></p>
+                    <p class="small mb-0 text-center"><i class="fa fa-phone-alt me-1"></i>{% trans "Prefer to talk?" %} <a href="https://wa.me/254759379600" target="_blank" rel="noopener">{% trans "WhatsApp +254 759 379 600" %}</a></p>
                 </div>
             </div>
         </div>

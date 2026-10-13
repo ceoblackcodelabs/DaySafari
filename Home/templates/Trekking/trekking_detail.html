@@ -3,11 +3,11 @@
 
 {% block title %}{{ package.name }} - {% trans "Day Safaris Adventures" %}{% endblock title %}
 
-{% block meta_description %}{{ package.name }}: {{ package.days }}-day trek in {{ package.location }}. Guided by Day Safaris Adventures. {{ package.description|striptags|truncatechars:110 }}{% endblock meta_description %}
+{% block meta_description %}{% blocktrans with name=package.name days=package.days loc=package.location desc=package.description|striptags|truncatechars:110 %}{{ name }}: {{ days }}-day trek in {{ loc }}. Guided by Day Safaris Adventures. {{ desc }}{% endblocktrans %}{% endblock meta_description %}
 {% block og_title %}{{ package.name }} - Day Safaris Adventures{% endblock og_title %}
-{% block og_description %}{{ package.name }}: {{ package.days }}-day trek in {{ package.location }}. Guided by Day Safaris Adventures. {{ package.description|striptags|truncatechars:110 }}{% endblock og_description %}
+{% block og_description %}{% blocktrans with name=package.name days=package.days loc=package.location desc=package.description|striptags|truncatechars:110 %}{{ name }}: {{ days }}-day trek in {{ loc }}. Guided by Day Safaris Adventures. {{ desc }}{% endblocktrans %}{% endblock og_description %}
 {% block twitter_title %}{{ package.name }} - Day Safaris Adventures{% endblock twitter_title %}
-{% block twitter_description %}{{ package.name }}: {{ package.days }}-day trek in {{ package.location }}. Guided by Day Safaris Adventures. {{ package.description|striptags|truncatechars:110 }}{% endblock twitter_description %}
+{% block twitter_description %}{% blocktrans with name=package.name days=package.days loc=package.location desc=package.description|striptags|truncatechars:110 %}{{ name }}: {{ days }}-day trek in {{ loc }}. Guided by Day Safaris Adventures. {{ desc }}{% endblocktrans %}{% endblock twitter_description %}
 {% block og_image %}{% if package.image %}https://daysafarisadventures.co.ke{{ package.image.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock og_image %}
 {% block twitter_image %}{% if package.image %}https://daysafarisadventures.co.ke{{ package.image.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock twitter_image %}
 {% block structured_data %}
@@ -228,7 +228,7 @@
                     {% for message in messages %}
                         <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
                             {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans "Close" %}"></button>
                         </div>
                     {% endfor %}
                 {% endif %}

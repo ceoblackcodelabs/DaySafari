@@ -4,16 +4,16 @@
 {% load i18n %}
 {% load custom_filters %}
 
-{% block title %}Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours — Days Safaris Adventures{% endblock title %}
+{% block title %}{% trans "Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours — Days Safaris Adventures" %}{% endblock title %}
 
-{% block meta_description %}Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets. Get a free quote today!{% endblock %}
+{% block meta_description %}{% trans "Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets. Get a free quote today!" %}{% endblock %}
 
 {% block meta_keywords %}kenya safari packages, masai mara safari packages, safari from nairobi, kilimanjaro trekking packages, east africa safari, gorilla trekking uganda{% endblock %}
 
-{% block og_title %}Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours{% endblock %}
-{% block og_description %}Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets.{% endblock %}
-{% block twitter_title %}Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours{% endblock %}
-{% block twitter_description %}Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets.{% endblock %}
+{% block og_title %}{% trans "Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours" %}{% endblock %}
+{% block og_description %}{% trans "Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets." %}{% endblock %}
+{% block twitter_title %}{% trans "Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours" %}{% endblock %}
+{% block twitter_description %}{% trans "Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets." %}{% endblock %}
 
 {% block carousel %}
 
@@ -73,7 +73,7 @@
             <!-- Fallback static slides - shown only if no Hero Slides are uploaded in admin -->
             <!-- Existing Image Slides -->
             <div class="carousel-item active">
-                <img src="{% static "img/carousel-2.webp" %}" class="img-fluid" alt="Image" decoding="async">
+                <img src="{% static "img/carousel-2.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
                         <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Explore The World" %}</h4>
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static "img/carousel-1.webp" %}" class="img-fluid" alt="Image" decoding="async">
+                <img src="{% static "img/carousel-1.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
                         <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Days Safaris Adventures" %}</h4>
@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static "img/carousel-3.webp" %}" class="img-fluid" alt="Image" decoding="async">
+                <img src="{% static "img/carousel-3.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
                         <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Sail Into Serenity" %}</h4>
@@ -120,7 +120,7 @@
                         <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
                             <source src="{% static 'videos/gir.MP4' %}" type="video/mp4">
                             <!-- Fallback image if video doesn't load -->
-                            <img src="{% static 'img/fallback-video-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Video Fallback">
+                            <img src="{% static 'img/fallback-video-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="{% trans "Video Fallback" %}">
                         </video>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
                         <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
                             <source src="{% static 'videos/elephant.MP4' %}" type="video/mp4">
-                            <img src="{% static 'img/fallback-video-2.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Video Fallback">
+                            <img src="{% static 'img/fallback-video-2.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="{% trans "Video Fallback" %}">
                         </video>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
                         <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
                             <source src="{% static 'videos/ostrich.MP4' %}" type="video/mp4">
-                            <img src="{% static 'img/fallback-video-3.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Video Fallback">
+                            <img src="{% static 'img/fallback-video-3.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="{% trans "Video Fallback" %}">
                         </video>
                     </div>
                 </div>
@@ -390,7 +390,7 @@
                     {% for message in messages %}
                         <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
                             {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans "Close" %}"></button>
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -494,7 +494,7 @@
                             <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-placeholder.jpg' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="{% url 'blog_detail' blog.slug %}" class="my-auto" aria-label="{% trans "Read article" %}: {{ blog.title }}" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="{% url 'blog_detail' blog.slug %}" class="my-auto" aria-label="{% trans "Read article" %}: {{ blog.title }}" aria-label="{% trans "View details" %}"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">

@@ -2,6 +2,7 @@
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.urls import reverse
 from Places.models import PackagePurchase
 from ClientRequests.models import Bookings
@@ -85,5 +86,5 @@ class PayFromBookings(TemplateView):
         booking.is_paid = True
         booking.save()
         
-        messages.success(request, 'Payment successful!')
+        messages.success(request, _('Payment successful!'))
         return redirect(reverse('payment_success', kwargs={'purchase_id': booking.id}))

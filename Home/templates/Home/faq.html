@@ -5,9 +5,9 @@
 
 {% block title %}{% trans "FAQ - Days Safaris Adventures" %}{% endblock title %}
 
-{% block meta_description %}Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures.{% endblock meta_description %}
-{% block og_description %}Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures.{% endblock og_description %}
-{% block twitter_description %}Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures.{% endblock twitter_description %}
+{% block meta_description %}{% trans "Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures." %}{% endblock meta_description %}
+{% block og_description %}{% trans "Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures." %}{% endblock og_description %}
+{% block twitter_description %}{% trans "Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures." %}{% endblock twitter_description %}
 
 {% block body %}
 
@@ -29,8 +29,8 @@
 <div class="container-fluid bg-light py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3">FAQ</p>
-            <h1 class="mb-0">Frequently Asked Questions</h1>
+            <p class="h5 section-title px-3">{% trans "FAQ" %}</p>
+            <h1 class="mb-0">{% trans "Frequently Asked Questions" %}</h1>
         </div>
 
         <div class="row g-4">
@@ -42,9 +42,9 @@
                     <div class="col-12">
                         <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
                             <div class="service-content text-end">
-                                <h2 class="h5 mb-3">What does Day Safaris Adventures specialize in?</h2>
+                                <h2 class="h5 mb-3">{% trans "What does Day Safaris Adventures specialize in?" %}</h2>
                                 <p class="mb-0">
-                                    We specialize in African wildlife safaris, tailor-made tours, beach holidays, mountain adventures, cultural experiences, airport transfers, hotel bookings, visa assistance, and international travel packages.
+                                    {% trans "We specialize in African wildlife safaris, tailor-made tours, beach holidays, mountain adventures, cultural experiences, airport transfers, hotel bookings, visa assistance, and international travel packages." %}
                                 </p>
                             </div>
                             <div class="service-icon p-4">
@@ -56,9 +56,9 @@
                     <div class="col-12">
                         <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
                             <div class="service-content text-end">
-                                <h2 class="h5 mb-3">Where are you located?</h2>
+                                <h2 class="h5 mb-3">{% trans "Where are you located?" %}</h2>
                                 <p class="mb-0">
-                                    Our head office is conveniently located at <strong>Nairobi Railways Museum, Nairobi, Kenya (00200)</strong>, making it easy for clients to visit us for travel consultations and bookings.
+                                    {% trans "Our head office is conveniently located at" %} <strong>{% trans "Nairobi Railways Museum, Nairobi, Kenya (00200)" %}</strong>{% trans ", making it easy for clients to visit us for travel consultations and bookings." %}
                                 </p>
                             </div>
                             <div class="service-icon p-4">
@@ -70,9 +70,9 @@
                     <div class="col-12">
                         <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
                             <div class="service-content text-end">
-                                <h2 class="h5 mb-3">What are your business hours?</h2>
+                                <h2 class="h5 mb-3">{% trans "What are your business hours?" %}</h2>
                                 <p class="mb-0">
-                                    We are open <strong>Monday to Sunday</strong> from <strong>8:00 AM to 8:00 PM</strong>. Our customer support team is available throughout these hours to assist with bookings and travel inquiries.
+                                    {% trans "We are open" %} <strong>{% trans "Monday to Sunday" %}</strong> {% trans "from" %} <strong>8:00 AM to 8:00 PM</strong>{% trans ". Our customer support team is available throughout these hours to assist with bookings and travel inquiries." %}
                                 </p>
                             </div>
                             <div class="service-icon p-4">
@@ -94,9 +94,9 @@
                                 <i class="fas fa-phone-alt fa-4x text-primary"></i>
                             </div>
                             <div class="service-content">
-                                <h2 class="h5 mb-3">How can I contact Day Safaris Adventures?</h2>
+                                <h2 class="h5 mb-3">{% trans "How can I contact Day Safaris Adventures?" %}</h2>
                                 <p class="mb-0">
-                                    You can reach us via email at <strong>info@daysafarisadventures.com</strong> or call us on <strong>+254 759 379 600</strong>.  off - office number is <strong>+254 734 962 965</strong>. You may also visit our office during business hours.
+                                    {% trans "You can reach us via email at" %} <strong>info@daysafarisadventures.com</strong> {% trans "or call us on" %} <strong>+254 759 379 600</strong>{% trans ". off - office number is" %} <strong>+254 734 962 965</strong>{% trans ". You may also visit our office during business hours." %}
                                 </p>
                             </div>
                         </div>
@@ -108,9 +108,9 @@
                                 <i class="fas fa-passport fa-4x text-primary"></i>
                             </div>
                             <div class="service-content">
-                                <h2 class="h5 mb-3">Can you help with visa processing?</h2>
+                                <h2 class="h5 mb-3">{% trans "Can you help with visa processing?" %}</h2>
                                 <p class="mb-0">
-                                    Yes. We provide professional visa processing assistance, helping clients prepare documents, complete applications, and track their visa status for various destinations.
+                                    {% trans "Yes. We provide professional visa processing assistance, helping clients prepare documents, complete applications, and track their visa status for various destinations." %}
                                 </p>
                             </div>
                         </div>
@@ -122,9 +122,9 @@
                                 <i class="fas fa-calendar-check fa-4x text-primary"></i>
                             </div>
                             <div class="service-content">
-                                <h2 class="h5 mb-3">How do I book a safari?</h2>
+                                <h2 class="h5 mb-3">{% trans "How do I book a safari?" %}</h2>
                                 <p class="mb-0">
-                                    Booking is easy. Simply fill out our online booking form, call our travel consultants, or send us an email. We'll help you choose the perfect package and customize your adventure to suit your budget and preferences.
+                                    {% trans "Booking is easy. Simply fill out our online booking form, call our travel consultants, or send us an email. We'll help you choose the perfect package and customize your adventure to suit your budget and preferences." %}
                                 </p>
                             </div>
                         </div>

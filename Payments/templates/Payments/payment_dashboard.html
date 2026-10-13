@@ -1,4 +1,5 @@
 {% extends "Payments/base.html" %}
+{% load i18n %}
 
 {% load static %}
 
@@ -9,8 +10,8 @@
     <!-- Order Summary Section -->
     <div class="order-summary">
         <div class="summary-header">
-            <h2>Order Summary</h2>
-            <p>Review your booking details before payment</p>
+            <h2>{% trans "Order Summary" %}</h2>
+            <p>{% trans "Review your booking details before payment" %}</p>
         </div>
 
         <div class="package-details">
@@ -19,7 +20,7 @@
             </div>
             <div class="package-info">
                 <h3>{{ package.name }}</h3>
-                <p>{{ package.days }} days adventure • {{ package.location }}</p>
+                <p>{% blocktrans with d=package.days %}{{ d }} days adventure{% endblocktrans %} • {{ package.location }}</p>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -37,30 +38,30 @@
         <div class="divider"></div>
 
         <div class="customer-details">
-            <h4>Traveler Information</h4>
+            <h4>{% trans "Traveler Information" %}</h4>
             <div class="info-row">
-                <span>Full Name:</span>
+                <span>{% trans "Full Name:" %}</span>
                 <strong>{{ purchase.full_name }}</strong>
             </div>
             <div class="info-row">
-                <span>Email:</span>
+                <span>{% trans "Email:" %}</span>
                 <strong>{{ purchase.email }}</strong>
             </div>
             <div class="info-row">
-                <span>Phone:</span>
+                <span>{% trans "Phone:" %}</span>
                 <strong>{{ purchase.phone_number }}</strong>
             </div>
             <div class="info-row">
-                <span>Travel Date:</span>
+                <span>{% trans "Travel Date:" %}</span>
                 <strong>{{ purchase.travel_date|date:"F j, Y" }}</strong>
             </div>
             <div class="info-row">
-                <span>Number of Persons:</span>
+                <span>{% trans "Number of Persons:" %}</span>
                 <strong>{{ persons }}</strong>
             </div>
             {% if purchase.special_requests %}
             <div class="info-row">
-                <span>Special Requests:</span>
+                <span>{% trans "Special Requests:" %}</span>
                 <strong>{{ purchase.special_requests|truncatechars:50 }}</strong>
             </div>
             {% endif %}
@@ -70,37 +71,37 @@
 
         <div class="price-breakdown">
             <div class="price-row">
-                <span>Package Price (per person)</span>
+                <span>{% trans "Package Price (per person)" %}</span>
                 <span>${{ package.price|floatformat:2 }}</span>
             </div>
             <div class="price-row">
-                <span>Number of Persons</span>
+                <span>{% trans "Number of Persons" %}</span>
                 <span>x {{ persons }}</span>
             </div>
             <div class="price-row">
-                <span>Subtotal</span>
+                <span>{% trans "Subtotal" %}</span>
                 <span>${{ subtotal|floatformat:2 }}</span>
             </div>
             <div class="price-row">
-                <span>Tax (16% VAT)</span>
+                <span>{% trans "Tax (16% VAT)" %}</span>
                 <span>${{ tax|floatformat:2 }}</span>
             </div>
             <div class="price-row total">
-                <span>Total Amount</span>
+                <span>{% trans "Total Amount" %}</span>
                 <span>${{ total|floatformat:2 }}</span>
             </div>
         </div>
 
         <div class="booking-ref">
-            <small>Booking Reference: #{{ purchase.id }}</small>
+            <small>{% blocktrans with i=purchase.id %}Booking Reference: #{{ i }}{% endblocktrans %}</small>
         </div>
     </div>
 
     <!-- Payment Methods Section -->
     <div class="payment-methods">
         <div class="payment-header">
-            <h2>Select Payment Method</h2>
-            <p>Choose your preferred payment option</p>
+            <h2>{% trans "Select Payment Method" %}</h2>
+            <p>{% trans "Choose your preferred payment option" %}</p>
         </div>
 
         <div class="methods-grid">
@@ -110,7 +111,7 @@
                 </div>
                 <div class="method-info">
                     <h4>M-Pesa</h4>
-                    <p>Pay via M-Pesa - Instant confirmation</p>
+                    <p>{% trans "Pay via M-Pesa - Instant confirmation" %}</p>
                 </div>
                 <div class="method-select">
                     <i class="fas fa-chevron-right"></i>
@@ -122,8 +123,8 @@
                     <i class="fab fa-cc-visa" style="color: #6772e5;"></i>
                 </div>
                 <div class="method-info">
-                    <h4>Credit/Debit Card</h4>
-                    <p>Visa, Mastercard, Amex accepted</p>
+                    <h4>{% trans "Credit/Debit Card" %}</h4>
+                    <p>{% trans "Visa, Mastercard, Amex accepted" %}</p>
                 </div>
                 <div class="method-select">
                     <i class="fas fa-chevron-right"></i>
@@ -135,8 +136,8 @@
                     <i class="fas fa-university" style="color: #fd7e14;"></i>
                 </div>
                 <div class="method-info">
-                    <h4>Bank Transfer</h4>
-                    <p>Direct bank transfer</p>
+                    <h4>{% trans "Bank Transfer" %}</h4>
+                    <p>{% trans "Direct bank transfer" %}</p>
                 </div>
                 <div class="method-select">
                     <i class="fas fa-chevron-right"></i>
@@ -148,8 +149,8 @@
                     <i class="fab fa-bitcoin" style="color: #f7931a;"></i>
                 </div>
                 <div class="method-info">
-                    <h4>Cryptocurrency</h4>
-                    <p>Bitcoin, Ethereum, USDT & More</p>
+                    <h4>{% trans "Cryptocurrency" %}</h4>
+                    <p>{% trans "Bitcoin, Ethereum, USDT & More" %}</p>
                 </div>
                 <div class="method-select">
                     <i class="fas fa-chevron-right"></i>
@@ -159,7 +160,7 @@
 
         <div class="security-note">
             <i class="fas fa-shield-alt"></i>
-            <p>Your payment is secure and encrypted. We never store your payment information.</p>
+            <p>{% trans "Your payment is secure and encrypted. We never store your payment information." %}</p>
         </div>
     </div>
 </div>
@@ -168,7 +169,7 @@
 <div id="paymentModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3 id="modalTitle">Payment Details</h3>
+            <h3 id="modalTitle">{% trans "Payment Details" %}</h3>
             <span class="close">&times;</span>
         </div>
         <div class="modal-body" id="modalBody">
@@ -180,8 +181,8 @@
 <!-- Loading Overlay -->
 <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; flex-direction: column;">
     <div class="spinner" style="width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #28a745; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
-    <p style="color: white; font-size: 16px;">Processing payment...</p>
-    <p style="color: #ccc; font-size: 12px; margin-top: 10px;">Please check your phone for M-Pesa prompt</p>
+    <p style="color: white; font-size: 16px;">{% trans "Processing payment..." %}</p>
+    <p style="color: #ccc; font-size: 12px; margin-top: 10px;">{% trans "Please check your phone for M-Pesa prompt" %}</p>
 </div>
 
 <style>
@@ -652,20 +653,20 @@
                     if (data.status === 'successful') {
                         clearInterval(interval);
                         document.getElementById('loadingOverlay').style.display = 'none';
-                        alert('Payment successful! Redirecting...');
+                        alert('{% filter escapejs %}{% trans "Payment successful! Redirecting..." %}{% endfilter %}');
                         setTimeout(() => {
                             window.location.href = `/payment/${purchaseId}/success/`;
                         }, 2000);
                     } else if (data.status === 'failed') {
                         clearInterval(interval);
                         document.getElementById('loadingOverlay').style.display = 'none';
-                        alert('Payment failed. Please try again.');
+                        alert('{% filter escapejs %}{% trans "Payment failed. Please try again." %}{% endfilter %}');
                         hideModal();
                         showMPesaModal();
                     } else if (attempts >= maxAttempts) {
                         clearInterval(interval);
                         document.getElementById('loadingOverlay').style.display = 'none';
-                        alert('Payment still processing. You will receive confirmation via SMS.');
+                        alert('{% filter escapejs %}{% trans "Payment still processing. You will receive confirmation via SMS." %}{% endfilter %}');
                         setTimeout(() => {
                             window.location.href = `/payment/${purchaseId}/success/`;
                         }, 5000);
@@ -703,7 +704,7 @@
         const description = `Payment for Package #${purchaseId}`;
 
         if (!phoneNumber) {
-            alert('Please enter your M-Pesa phone number');
+            alert('{% filter escapejs %}{% trans "Please enter your M-Pesa phone number" %}{% endfilter %}');
             return;
         }
 
@@ -733,14 +734,14 @@
                 pollTransactionStatus(data.transaction_id, data.checkout_request_id);
             } else {
                 document.getElementById('loadingOverlay').style.display = 'none';
-                alert('Failed to initiate payment: ' + (data.error || 'Unknown error'));
+                alert('{% filter escapejs %}{% trans "Failed to initiate payment:" %}{% endfilter %} ' + (data.error || '{% filter escapejs %}{% trans "Unknown error" %}{% endfilter %}'));
                 showMPesaModal();
             }
         })
         .catch(error => {
             document.getElementById('loadingOverlay').style.display = 'none';
             console.error('Error:', error);
-            alert('Network error. Please try again.');
+            alert('{% filter escapejs %}{% trans "Network error. Please try again." %}{% endfilter %}');
             showMPesaModal();
         });
     }
@@ -799,7 +800,7 @@
             </div>
             <div class="form-group">
                 <label>Transaction Reference</label>
-                <input type="text" id="bank_ref" class="form-control" placeholder="Enter transaction reference">
+                <input type="text" id="bank_ref" class="form-control" placeholder="{% trans "Enter transaction reference" %}">
             </div>
             <button onclick="processBank()" class="btn btn-bank">Confirm Bank Transfer</button>
             <p style="font-size: 12px; color: #666; text-align: center; margin-top: 15px;">
@@ -840,7 +841,7 @@
             </div>
             <div class="form-group">
                 <label>Transaction Hash</label>
-                <input type="text" id="crypto_hash" class="form-control" placeholder="Enter transaction hash">
+                <input type="text" id="crypto_hash" class="form-control" placeholder="{% trans "Enter transaction hash" %}">
             </div>
             <button onclick="processCrypto()" class="btn btn-crypto">Confirm Crypto Payment</button>
             <p style="font-size: 12px; color: #666; text-align: center; margin-top: 15px;">
@@ -898,30 +899,30 @@
     function copyAddress() {
         const address = document.getElementById('crypto_address').innerText;
         navigator.clipboard.writeText(address);
-        alert('Address copied to clipboard!');
+        alert('{% filter escapejs %}{% trans "Address copied to clipboard!" %}{% endfilter %}');
     }
 
     function processStripe() {
-        alert("Stripe integration coming soon! For now, please use M-Pesa.");
+        alert("{% filter escapejs %}{% trans "Stripe integration coming soon! For now, please use M-Pesa." %}{% endfilter %}");
     }
 
     function processBank() {
         const ref = document.getElementById('bank_ref').value;
         if (!ref) {
-            alert('Please enter transaction reference');
+            alert('{% filter escapejs %}{% trans "Please enter transaction reference" %}{% endfilter %}');
             return;
         }
-        alert(`Bank transfer submitted!\nReference: ${ref}\nWe will verify within 24 hours.`);
+        alert('{% filter escapejs %}{% trans "Bank transfer submitted!" %}{% endfilter %}\n{% filter escapejs %}{% trans "Reference:" %}{% endfilter %} ' + ref + '\n{% filter escapejs %}{% trans "We will verify within 24 hours." %}{% endfilter %}');
         window.location.href = `/payment/${purchaseId}/success/`;
     }
 
     function processCrypto() {
         const hash = document.getElementById('crypto_hash').value;
         if (!hash) {
-            alert('Please enter transaction hash');
+            alert('{% filter escapejs %}{% trans "Please enter transaction hash" %}{% endfilter %}');
             return;
         }
-        alert(`Crypto payment submitted!\nTransaction Hash: ${hash}\nPayment will be confirmed within 30 minutes.`);
+        alert('{% filter escapejs %}{% trans "Crypto payment submitted!" %}{% endfilter %}\n{% filter escapejs %}{% trans "Transaction Hash:" %}{% endfilter %} ' + hash + '\n{% filter escapejs %}{% trans "Payment will be confirmed within 30 minutes." %}{% endfilter %}');
         window.location.href = `/payment/${purchaseId}/success/`;
     }
 

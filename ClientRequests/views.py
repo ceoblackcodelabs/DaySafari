@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from EmailSetup.utils import send_booking_confirmation, handle_new_lead
@@ -37,8 +38,8 @@ class BookingCreateView(AntiSpamViewMixin, CreateView):
 
         # Add success message
         messages.success(self.request,
-            f"Thank you {form.cleaned_data['name']}! Your booking request has been submitted successfully. "
-            f"We will contact you within 24 hours to confirm your safari."
+            _("Thank you %(name)s! Your booking request has been submitted successfully. "
+              "We will contact you within 24 hours to confirm your safari.") % {'name': form.cleaned_data['name']}
         )
 
         # Send emails in background thread (non-blocking)
@@ -51,7 +52,7 @@ class BookingCreateView(AntiSpamViewMixin, CreateView):
             return super().form_invalid(form)  # AntiSpamViewMixin: strike + 400
         # Add error message
         messages.error(self.request,
-            "There was an error with your booking. Please check the form and try again."
+            _("There was an error with your booking. Please check the form and try again.")
         )
         return super().form_invalid(form)
 
@@ -111,8 +112,8 @@ class ContactView(AntiSpamViewMixin, FormView):
 
         # Add success message
         messages.success(self.request,
-            f"Thank you {contact.name}! Your message has been sent successfully. "
-            "We will get back to you within 24 hours."
+            _("Thank you %(name)s! Your message has been sent successfully. "
+              "We will get back to you within 24 hours.") % {'name': contact.name}
         )
 
         # Optional: Send email notification

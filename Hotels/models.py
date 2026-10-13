@@ -1,27 +1,28 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 
 class Hotel(models.Model):
     """A hotel / lodge / camp / villa shown on the public Hotels pages."""
 
     TYPE_CHOICES = [
-        ('hotel', 'Hotel'),
-        ('lodge', 'Safari Lodge'),
-        ('camp', 'Tented Camp'),
-        ('resort', 'Beach Resort'),
-        ('villa', 'Villa'),
-        ('apartment', 'Apartment / Suite'),
-        ('cabin', 'Eco Cabin'),
+        ('hotel', _('Hotel')),
+        ('lodge', _('Safari Lodge')),
+        ('camp', _('Tented Camp')),
+        ('resort', _('Beach Resort')),
+        ('villa', _('Villa')),
+        ('apartment', _('Apartment / Suite')),
+        ('cabin', _('Eco Cabin')),
     ]
     ROOMS_CHOICES = [
-        ('Studio', 'Studio'), ('1b', '1 Bedroom'), ('2b', '2 Bedroom'),
-        ('3b', '3 Bedroom'), ('4b', '4 Bedroom'),
+        ('Studio', _('Studio')), ('1b', _('1 Bedroom')), ('2b', _('2 Bedroom')),
+        ('3b', _('3 Bedroom')), ('4b', _('4 Bedroom')),
     ]
     MEAL_CHOICES = [
-        ('', 'Not specified'), ('RO', 'Room only'), ('BB', 'Bed & Breakfast'),
-        ('HB', 'Half board'), ('FB', 'Full board'), ('AI', 'All inclusive'),
+        ('', _('Not specified')), ('RO', _('Room only')), ('BB', _('Bed & Breakfast')),
+        ('HB', _('Half board')), ('FB', _('Full board')), ('AI', _('All inclusive')),
     ]
     STAR_CHOICES = [(i, f'{i} Star') for i in range(1, 6)]
 

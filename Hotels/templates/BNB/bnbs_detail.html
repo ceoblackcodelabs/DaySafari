@@ -3,11 +3,11 @@
 
 {% block title %}{{ bnb.title|default:bnb.location }} - {% trans "Day Safaris Adventures" %}{% endblock title %}
 
-{% block meta_description %}Book {{ bnb.title|default:bnb.location }} in {{ bnb.location }}: sleeps up to {{ bnb.max_guests }} guests. {{ bnb.description|striptags|truncatechars:100 }}{% endblock meta_description %}
+{% block meta_description %}{% blocktrans with title=bnb.title|default:bnb.location loc=bnb.location n=bnb.max_guests desc=bnb.description|striptags|truncatechars:100 %}Book {{ title }} in {{ loc }}: sleeps up to {{ n }} guests. {{ desc }}{% endblocktrans %}{% endblock meta_description %}
 {% block og_title %}{{ bnb.title|default:bnb.location }} - Day Safaris Adventures{% endblock og_title %}
-{% block og_description %}Book {{ bnb.title|default:bnb.location }} in {{ bnb.location }}: sleeps up to {{ bnb.max_guests }} guests. {{ bnb.description|striptags|truncatechars:100 }}{% endblock og_description %}
+{% block og_description %}{% blocktrans with title=bnb.title|default:bnb.location loc=bnb.location n=bnb.max_guests desc=bnb.description|striptags|truncatechars:100 %}Book {{ title }} in {{ loc }}: sleeps up to {{ n }} guests. {{ desc }}{% endblocktrans %}{% endblock og_description %}
 {% block twitter_title %}{{ bnb.title|default:bnb.location }} - Day Safaris Adventures{% endblock twitter_title %}
-{% block twitter_description %}Book {{ bnb.title|default:bnb.location }} in {{ bnb.location }}: sleeps up to {{ bnb.max_guests }} guests. {{ bnb.description|striptags|truncatechars:100 }}{% endblock twitter_description %}
+{% block twitter_description %}{% blocktrans with title=bnb.title|default:bnb.location loc=bnb.location n=bnb.max_guests desc=bnb.description|striptags|truncatechars:100 %}Book {{ title }} in {{ loc }}: sleeps up to {{ n }} guests. {{ desc }}{% endblocktrans %}{% endblock twitter_description %}
 
 {% block body %}
 
@@ -119,7 +119,7 @@
                     {% for message in messages %}
                         <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
                             {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans "Close" %}"></button>
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -288,10 +288,10 @@
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Photo" %} {{ forloop.counter }}</a>
                                     <h2 class="h4 text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h2>
                                     <p class="text-white small mb-2">{{ image.caption|default:_("Beautiful view of the property") }}</p>
-                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery" aria-label="View photo">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery" aria-label="{% trans "View photo" %}">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-all" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-all" aria-label="{% trans "View photo" %}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -316,10 +316,10 @@
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Exterior" %}</a>
                                     <h2 class="h4 text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h2>
                                     <p class="text-white small mb-2">{% trans "Property exterior view" %}</p>
-                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-exterior" aria-label="View photo">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-exterior" aria-label="{% trans "View photo" %}">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-exterior" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-exterior" aria-label="{% trans "View photo" %}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -340,10 +340,10 @@
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Interior" %}</a>
                                     <h2 class="h4 text-white mb-2 mt-3">{{ bnb.title|default:bnb.location }}</h2>
                                     <p class="text-white small mb-2">{% trans "Beautiful interior design" %}</p>
-                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-interior" aria-label="View photo">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-gallery-interior" aria-label="{% trans "View photo" %}">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-interior" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ image.image.url }}" data-lightbox="property-gallery-interior" aria-label="{% trans "View photo" %}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -363,10 +363,10 @@
                                     <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">{% trans "Location" %}</a>
                                     <h2 class="h4 text-white mb-2 mt-3">{{ bnb.location }}</h2>
                                     <p class="text-white small mb-2">{% trans "Beautiful surroundings" %}</p>
-                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-surroundings" aria-label="View photo">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <a href="{{ image.image.url }}" class="btn-hover text-white" data-lightbox="property-surroundings" aria-label="{% trans "View photo" %}">{% trans "View Full Size" %} <i class="fa fa-arrow-right ms-2"></i></a>
                                 </div>
                                 <div class="search-icon">
-                                    <a href="{{ image.image.url }}" data-lightbox="property-surroundings" aria-label="View photo"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <a href="{{ image.image.url }}" data-lightbox="property-surroundings" aria-label="{% trans "View photo" %}"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -173,6 +173,17 @@ _JUNK_EMAIL_PATTERNS = re.compile(r'(notboxletters|notlettersmail|belettersmail|
                                   r'firstmailmorty|microversemail|glorzomail|hypercubemail|seo|backlink|casino|escort|crypto)', re.I)
 
 
+# Accessible names for fields that have no placeholder (translated per language)
+FIELD_LABELS = {
+    'destination': _('Destination'), 'persons': _('Persons'), 'number_of_persons': _('Number of persons'),
+    'full_name': _('Full name'), 'email': _('Email'), 'phone_number': _('Phone number'),
+    'travel_date': _('Travel date'), 'special_requests': _('Special requests'), 'date': _('Date'),
+    'check_out': _('Check out'), 'traveling_with_children': _('Traveling with children'),
+    'children_count': _('Number of children'), 'children_ages': _("Children's ages"),
+    'name': _('Name'), 'phone': _('Phone'), 'message': _('Message'), 'subject': _('Subject'),
+}
+
+
 class AntiSpamFormMixin(forms.Form):
     """Adds honeypot + time-trap fields and shared content validators.
 
@@ -203,7 +214,8 @@ class AntiSpamFormMixin(forms.Form):
         for name, field in self.fields.items():
             if name not in ('website', 'form_ts'):
                 field.widget.attrs.setdefault(
-                    'aria-label', field.widget.attrs.get('placeholder') or name.replace('_', ' ').capitalize())
+                    'aria-label', field.widget.attrs.get('placeholder') or FIELD_LABELS.get(name)
+                    or name.replace('_', ' ').capitalize())
 
     # -- bot traps (run first so spam never reaches field-level errors) -----
     def _flag(self, reason):

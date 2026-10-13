@@ -506,3 +506,61 @@ class HotelsTests(TestCase):
         self.assertEqual(Contact.objects.count(), 4)
         call_command('purge_spam', '--delete', stdout=out)
         self.assertEqual(list(Contact.objects.values_list('pk', flat=True)), [real.pk])
+
+
+@override_settings(CACHES=LOCMEM, ALLOWED_HOSTS=['*'])
+class I18nTests(SiteHealthTests):
+    """The site must work completely in every language (en, fr, sw, es, de, it)."""
+    # reuse the fixtures and URL list of SiteHealthTests but do not re-run its tests
+    test_every_public_page_renders_cleanly = None
+    test_pages_have_unique_meta_descriptions = None
+    LANGS = ['fr', 'sw', 'es', 'de', 'it']
+
+    def test_translation_files_are_complete(self):
+        """No untranslated or fuzzy entries (fuzzy entries are ignored by Django and are usually wrong)."""
+        from django.conf import settings
+        for lang in self.LANGS:
+            text = (settings.BASE_DIR / 'locale' / lang / 'LC_MESSAGES' / 'django.po').read_text(encoding='utf-8')
+            for block in text.split('\n\n'):
+                if 'msgid ""' in block.split('\n')[0:3] or 'msgid_plural' in block:
+                    continue
+                m = re.search(r'^msgid ((?:".*"\n?)+)msgstr ((?:".*"\n?)+)', block, re.M)
+                if not m or m.group(1).strip() == '""' and 'Project-Id-Version' in m.group(2):
+                    continue
+                self.assertNotIn('#, fuzzy', block, f'{lang}: fuzzy entry {m.group(1)[:60]}')
+                self.assertNotEqual(m.group(2).replace('"', '').strip(), '', f'{lang}: untranslated {m.group(1)[:60]}')
+
+    def test_every_public_page_works_in_every_language(self):
+        for lang in self.LANGS:
+            for url in self.urls():
+                path = '/' + lang + url[3:]
+                with self.subTest(url=path):
+                    r = self.client.get(path)
+                    self.assertEqual(r.status_code, 200)
+                    html = r.content.decode()
+                    self.assertIn(f'<html lang="{lang}"', html)
+                    self.assertNotRegex(html, r'\{%|%\}|\{\{', 'unrendered template code leaked into the page')
+
+    def test_navigation_and_forms_are_translated(self):
+        expect = {'fr': ('Hôtels', 'Contactez-nous'), 'de': ('Hotels', 'Kontakt'), 'es': ('Hoteles', 'Contacto'),
+                  'sw': ('Hoteli', 'Wasiliana'), 'it': ('Hotel', 'Contatti')}
+        for lang, words in expect.items():
+            html = self.client.get(f'/{lang}/contact/').content.decode()
+            for w in words:
+                self.assertIn(w, html, f'{lang}: expected {w!r} on the contact page')
+            self.assertNotIn('Get In Touch With Us', html)
+            self.assertNotIn('Send Us a Message', html)
+        # booking form placeholders come from forms.py
+        self.assertIn('Choisir une destination', self.client.get('/fr/booking/').content.decode())
+
+    def test_meta_description_is_translated(self):
+        fr = self.client.get('/fr/contact/').content.decode()
+        en = self.client.get('/en/contact/').content.decode()
+        d = lambda h: re.search(r'<meta name="description" content="([^"]*)"', h).group(1)
+        self.assertNotEqual(d(fr), d(en))
+
+    def test_form_messages_use_the_active_language(self):
+        from django.utils import translation
+        from ClientRequests.forms import BookingsForm
+        with translation.override('fr'):
+            self.assertEqual(str(BookingsForm().fields['destination'].empty_label), 'Choisir une destination')

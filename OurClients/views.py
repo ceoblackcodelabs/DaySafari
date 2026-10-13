@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Avg, Q, Sum
@@ -55,12 +56,12 @@ class CustomLoginView(LoginView):
 
     def form_valid(self, form):
         """Handle successful login"""
-        messages.success(self.request, f"Welcome back, {form.get_user().username}! 🦁")
+        messages.success(self.request, _("Welcome back, %(name)s! 🦁") % {'name': form.get_user().username})
         return super().form_valid(form)
 
     def form_invalid(self, form):
         """Handle failed login"""
-        messages.error(self.request, "Invalid username or password. Please try again.")
+        messages.error(self.request, _("Invalid username or password. Please try again."))
         return super().form_invalid(form)
 
     def get_success_url(self):
@@ -87,7 +88,7 @@ class CustomLogoutView(LogoutView):
             response['Pragma'] = 'no-cache'
             response['Expires'] = '0'
 
-            messages.info(request, "You have been successfully logged out. Come back soon! 🦁")
+            messages.info(request, _("You have been successfully logged out. Come back soon! 🦁"))
             return response
 
         response = super().dispatch(request, *args, **kwargs)
@@ -111,8 +112,8 @@ class RegisterView(AntiSpamViewMixin, CreateView):
         response = super().form_valid(form)
 
         messages.success(self.request,
-            f"Account created successfully! Welcome {form.cleaned_data.get('username')}! 🎉 "
-            "Please log in to continue."
+            _("Account created successfully! Welcome %(name)s! 🎉 Please log in to continue.")
+            % {'name': form.cleaned_data.get('username')}
         )
         # Send emails in background thread (non-blocking)
         send_registration_emails_async(
@@ -232,7 +233,7 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        messages.success(self.request, "Your profile has been updated successfully!")
+        messages.success(self.request, _("Your profile has been updated successfully!"))
         return super().form_valid(form)
 
 
@@ -246,17 +247,17 @@ class AccountSettingsView(LoginRequiredMixin, TemplateView):
         confirm_password = request.POST.get('confirm_password')
 
         if new_password != confirm_password:
-            messages.error(request, "New passwords do not match.")
+            messages.error(request, _("New passwords do not match."))
             return redirect('account_settings')
 
         if user.check_password(current_password):
             user.set_password(new_password)
             user.save()
             update_session_auth_hash(request, user)  # Keep user logged in
-            messages.success(request, "Your password has been updated successfully!")
+            messages.success(request, _("Your password has been updated successfully!"))
             return redirect('profile')
         else:
-            messages.error(request, "Current password is incorrect.")
+            messages.error(request, _("Current password is incorrect."))
             return redirect('account_settings')
 
     def get_context_data(self, **kwargs):
@@ -288,9 +289,9 @@ class CancelBookingView(LoginRequiredMixin, View):
 
         if days_until_travel >= 7:
             booking.delete()  # Or add a status field to Bookings model
-            messages.success(request, f"Booking #{booking.id} has been cancelled successfully.")
+            messages.success(request, _("Booking #%(id)s has been cancelled successfully.") % {'id': booking.id})
         else:
-            messages.error(request, "This booking cannot be cancelled as it's too close to the travel date.")
+            messages.error(request, _("This booking cannot be cancelled as it's too close to the travel date."))
 
         return redirect('profile')
 
@@ -349,7 +350,7 @@ class BookPackageView(LoginRequiredMixin, CreateView):
             defaults={'score': 1.0}
         )
 
-        messages.success(self.request, f"Booking confirmed for {self.package.name}! Your safari adventure awaits!")
+        messages.success(self.request, _("Booking confirmed for %(package)s! Your safari adventure awaits!") % {'package': self.package.name})
         return response
 
     def get_initial(self):
@@ -452,9 +453,9 @@ class ToggleFavoriteView(LoginRequiredMixin, View):
 
         if not created:
             favorite.delete()
-            messages.info(request, f"Removed {destination.name} from your saved destinations.")
+            messages.info(request, _("Removed %(name)s from your saved destinations.") % {'name': destination.name})
         else:
-            messages.success(request, f"Added {destination.name} to your saved destinations!")
+            messages.success(request, _("Added %(name)s to your saved destinations!") % {'name': destination.name})
 
         next_url = request.POST.get('next') or request.META.get('HTTP_REFERER')
 

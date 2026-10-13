@@ -100,6 +100,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'Home.context_processors.ads_context',
                 'Home.context_processors.footer_gallery',
+                'Home.context_processors.chat_i18n',
             ],
         },
     },

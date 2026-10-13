@@ -3,22 +3,22 @@
 
 {% load static custom_filters image_tags %}
 
-{% block title %}Mt Meru - Days Safaris Adventures{% endblock title %}
+{% block title %}{% trans "Mt Meru - Days Safaris Adventures" %}{% endblock title %}
 
-{% block meta_description %}Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures.{% endblock meta_description %}
-{% block og_description %}Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures.{% endblock og_description %}
-{% block twitter_description %}Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures.{% endblock twitter_description %}
+{% block meta_description %}{% trans "Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures." %}{% endblock meta_description %}
+{% block og_description %}{% trans "Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures." %}{% endblock og_description %}
+{% block twitter_description %}{% trans "Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures." %}{% endblock twitter_description %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Mt Meru Trekking</h1>
+        <h3 class="text-white display-3 mb-4">{% trans "Mt Meru Trekking" %}</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Category</li>
+            <li class="breadcrumb-item"><a href="index.html">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Category" %}</li>
         </ol>
     </div>
 </div>
@@ -28,8 +28,8 @@
 <div class="container-fluid packages py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3">Packages</p>
-            <h1 class="mb-0">Awesome Mt Meru Packages</h1>
+            <p class="h5 section-title px-3">{% trans "Packages" %}</p>
+            <h1 class="mb-0">{% trans "Awesome Mt Meru Packages" %}</h1>
         </div>
         <div class="packages-carousel owl-carousel">
             {% for package in packages %}
@@ -42,15 +42,15 @@
                     {% endif %}
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ package.days }} days</small>
-                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ package.persons }} Persons</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{% blocktrans with d=package.days %}{{ d }} days{% endblocktrans %}</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{% blocktrans with p=package.persons %}{{ p }} Persons{% endblocktrans %}</small>
                     </div>
                     {% comment %} <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div> {% endcomment %}
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
                         <h2 class="h5 mb-0">{{ package.name }}</h2>
-                        <small class="text-uppercase">{{ package.package_type|default:"Safari Package" }}</small>
+                        <small class="text-uppercase">{{ package.package_type|default:_("Safari Package") }}</small>
                         <div class="mb-3">
                             {% for i in ""|ljust:package.starRating %}
                             <small class="fa fa-star text-primary"></small>
@@ -68,15 +68,15 @@
                             <a href="{% url 'kili_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about" %} {{ package.name }}</span></a>
                         </div>
                         <div class="col-6 text-end px-0">
-                            <a href="{% url 'kili_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                            <a href="{% url 'kili_detail' package.id %}" class="btn-hover btn text-white py-2 px-4">{% trans "Book Now" %}</a>
                         </div>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <h3>No packages available at the moment</h3>
-                <p>Please check back later for exciting safari packages!</p>
+                <h3>{% trans "No packages available at the moment" %}</h3>
+                <p>{% trans "Please check back later for exciting safari packages!" %}</p>
             </div>
             {% endfor %}
         </div>

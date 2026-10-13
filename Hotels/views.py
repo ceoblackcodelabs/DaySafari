@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.db.models import Count, Q
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.generic import DetailView, ListView
 
 from ClientRequests.antispam import AntiSpamViewMixin
@@ -60,8 +61,8 @@ class HotelListView(ListView):
         context['sel_type'] = params.get('type', '')
         context['sel_sort'] = params.get('sort', 'featured')
         context['query'] = params.get('q', '')
-        context['sorts'] = [('featured', 'Featured'), ('price_low', 'Price: low to high'),
-                            ('price_high', 'Price: high to low'), ('rating', 'Star rating'), ('name', 'Name A-Z')]
+        context['sorts'] = [('featured', _('Featured')), ('price_low', _('Price: low to high')),
+                            ('price_high', _('Price: high to low')), ('rating', _('Star rating')), ('name', _('Name A-Z'))]
         keep = params.copy()
         keep.pop('page', None)
         context['keep_params'] = keep.urlencode()
@@ -107,8 +108,9 @@ class HotelDetailView(AntiSpamViewMixin, DetailView):
             booking.client = request.user
         booking.save()
         handle_new_lead(booking, send_booking_confirmation)
-        messages.success(request, f'Thank you {booking.name}! Your enquiry for {hotel.name} was received. '
-                                  'We will confirm availability and rates within 24 hours.')
+        messages.success(request, _('Thank you %(name)s! Your enquiry for %(hotel)s was received. '
+                                    'We will confirm availability and rates within 24 hours.')
+                         % {'name': booking.name, 'hotel': hotel.name})
         return redirect(hotel.get_absolute_url())
 
 
@@ -151,7 +153,7 @@ class AirBNBDetailView(AntiSpamViewMixin, DetailView):
             booking.client = request.user
         booking.save()
         handle_new_lead(booking, send_booking_confirmation)
-        messages.success(request, f'Thank you {booking.name}! Your request for '
-                                  f'{self.object.title or self.object.location} was received. '
-                                  'We will contact you shortly to confirm availability.')
+        messages.success(request, _('Thank you %(name)s! Your request for %(place)s was received. '
+                                    'We will contact you shortly to confirm availability.')
+                         % {'name': booking.name, 'place': self.object.title or self.object.location})
         return redirect(reverse('bnb_detail', kwargs={'pk': self.object.id}))

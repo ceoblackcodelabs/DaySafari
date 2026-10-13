@@ -1,18 +1,19 @@
 {% extends "Home/base.html" %}
+{% load i18n %}
 {% load static %}
 
-{% block title %}Edit Profile - Day Safaris Adventures{% endblock title %}
+{% block title %}{% trans "Edit Profile - Day Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start - KEPT ORIGINAL -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Edit Profile</h3>
+        <h3 class="text-white display-3 mb-4">{% trans "Edit Profile" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'profile' %}">My Profile</a></li>
-            <li class="breadcrumb-item active text-white">Edit Profile</li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'profile' %}">{% trans "My Profile" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Edit Profile" %}</li>
         </ol>    
     </div>
 </div>
@@ -225,10 +226,10 @@
                     <h3 class="h4 mb-1">{{ user.get_full_name|default:user.username }}</h3>
                     <p class="text-muted small">@{{ user.username }}</p>
                     <p class="mb-2 small"><i class="fa fa-envelope me-2"></i> {{ user.email }}</p>
-                    <p class="mb-3 small"><i class="fa fa-calendar me-2"></i> Member since {{ user.date_joined|date:"M Y" }}</p>
+                    <p class="mb-3 small"><i class="fa fa-calendar me-2"></i> {% blocktrans with dt=user.date_joined|date:"M Y" %}Member since {{ dt }}{% endblocktrans %}</p>
                     <div class="border-top pt-3 mt-2">
                         <a href="{% url 'profile' %}" class="btn btn-outline-primary w-100 btn-responsive">
-                            <i class="fa fa-arrow-left me-2"></i>Back to Profile
+                            <i class="fa fa-arrow-left me-2"></i>{% trans "Back to Profile" %}
                         </a>
                     </div>
                 </div>
@@ -238,8 +239,8 @@
             <div class="col-lg-8">
                 <!-- Section Title -->
                 <div class="mb-4">
-                    <h2 class="h2 mb-2">Edit Your Profile</h2>
-                    <p class="text-muted small">Update your personal information and account details</p>
+                    <h2 class="h2 mb-2">{% trans "Edit Your Profile" %}</h2>
+                    <p class="text-muted small">{% trans "Update your personal information and account details" %}</p>
                 </div>
 
                 <!-- Messages -->
@@ -248,7 +249,7 @@
                     <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
                         <i class="fa fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} me-2"></i>
                         {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans "Close" %}"></button>
                     </div>
                     {% endfor %}
                 {% endif %}
@@ -267,7 +268,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label fw-semibold mb-2 small">
-                                            <i class="fa fa-user text-primary me-2"></i>First Name
+                                            <i class="fa fa-user text-primary me-2"></i>{% trans "First Name" %}
                                         </label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light border-0 rounded-start-3">
@@ -278,7 +279,7 @@
                                                    id="first_name" 
                                                    name="first_name" 
                                                    value="{{ form.first_name.value|default:user.first_name }}"
-                                                   placeholder="Enter your first name"
+                                                   placeholder="{% trans "Enter your first name" %}"
                                                    style="border-radius: 0 12px 12px 0;">
                                         </div>
                                         {% if form.first_name.errors %}
@@ -295,7 +296,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label fw-semibold mb-2 small">
-                                            <i class="fa fa-user text-primary me-2"></i>Last Name
+                                            <i class="fa fa-user text-primary me-2"></i>{% trans "Last Name" %}
                                         </label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light border-0 rounded-start-3">
@@ -306,7 +307,7 @@
                                                    id="last_name" 
                                                    name="last_name" 
                                                    value="{{ form.last_name.value|default:user.last_name }}"
-                                                   placeholder="Enter your last name"
+                                                   placeholder="{% trans "Enter your last name" %}"
                                                    style="border-radius: 0 12px 12px 0;">
                                         </div>
                                         {% if form.last_name.errors %}
@@ -323,7 +324,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-label fw-semibold mb-2 small">
-                                            <i class="fa fa-user-circle text-primary me-2"></i>Username
+                                            <i class="fa fa-user-circle text-primary me-2"></i>{% trans "Username" %}
                                         </label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light border-0 rounded-start-3">
@@ -334,12 +335,12 @@
                                                    id="username" 
                                                    name="username" 
                                                    value="{{ form.username.value|default:user.username }}"
-                                                   placeholder="Choose a username"
+                                                   placeholder="{% trans "Choose a username" %}"
                                                    required
                                                    style="border-radius: 0 12px 12px 0;">
                                         </div>
                                         <small class="text-muted mt-2 d-block small">
-                                            <i class="fa fa-info-circle me-1"></i>Your username is unique and cannot be changed easily
+                                            <i class="fa fa-info-circle me-1"></i>{% trans "Your username is unique and cannot be changed easily" %}
                                         </small>
                                         <div id="username-feedback" class="mt-2"></div>
                                         {% if form.username.errors %}
@@ -356,7 +357,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-label fw-semibold mb-2 small">
-                                            <i class="fa fa-envelope text-primary me-2"></i>Email Address
+                                            <i class="fa fa-envelope text-primary me-2"></i>{% trans "Email Address" %}
                                         </label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light border-0 rounded-start-3">
@@ -367,12 +368,12 @@
                                                    id="email" 
                                                    name="email" 
                                                    value="{{ form.email.value|default:user.email }}"
-                                                   placeholder="Enter your email address"
+                                                   placeholder="{% trans "Enter your email address" %}"
                                                    required
                                                    style="border-radius: 0 12px 12px 0;">
                                         </div>
                                         <small class="text-muted mt-2 d-block small">
-                                            <i class="fa fa-shield-alt me-1"></i>We'll send booking confirmations and updates to this email
+                                            <i class="fa fa-shield-alt me-1"></i>{% trans "We'll send booking confirmations and updates to this email" %}
                                         </small>
                                         {% if form.email.errors %}
                                             <div class="invalid-feedback d-block small">
@@ -388,7 +389,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label fw-semibold mb-2 small">
-                                            <i class="fa fa-phone text-primary me-2"></i>Phone Number
+                                            <i class="fa fa-phone text-primary me-2"></i>{% trans "Phone Number" %}
                                         </label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light border-0 rounded-start-3">
@@ -402,7 +403,7 @@
                                                    placeholder="+254 XXX XXX XXX"
                                                    style="border-radius: 0 12px 12px 0;">
                                         </div>
-                                        <small class="text-muted small">For emergency contact and updates</small>
+                                        <small class="text-muted small">{% trans "For emergency contact and updates" %}</small>
                                     </div>
                                 </div>
                                 
@@ -410,7 +411,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label fw-semibold mb-2 small">
-                                            <i class="fa fa-map-marker-alt text-primary me-2"></i>Location
+                                            <i class="fa fa-map-marker-alt text-primary me-2"></i>{% trans "Location" %}
                                         </label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light border-0 rounded-start-3">
@@ -433,8 +434,8 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fa fa-key fa-2x me-3"></i>
                                     <div>
-                                        <strong>Want to change your password?</strong><br>
-                                        Go to <a href="{% url 'account_settings' %}" class="alert-link">Account Settings</a> to update your password and security preferences.
+                                        <strong>{% trans "Want to change your password?" %}</strong><br>
+                                        Go to <a href="{% url 'account_settings' %}" class="alert-link">{% trans "Account Settings" %}</a> {% trans "to update your password and security preferences." %}
                                     </div>
                                 </div>
                             </div>
@@ -442,10 +443,10 @@
                             <!-- Form Buttons - Responsive -->
                             <div class="d-flex justify-content-between gap-3 mt-4 pt-3 btn-group-responsive">
                                 <a href="{% url 'profile' %}" class="btn btn-outline-secondary rounded-pill btn-responsive">
-                                    <i class="fa fa-times me-2"></i>Cancel
+                                    <i class="fa fa-times me-2"></i>{% trans "Cancel" %}
                                 </a>
                                 <button type="submit" class="btn btn-primary rounded-pill btn-responsive" id="submitBtn">
-                                    <i class="fa fa-save me-2"></i>Save Changes
+                                    <i class="fa fa-save me-2"></i>{% trans "Save Changes" %}
                                 </button>
                             </div>
                         </form>
@@ -457,10 +458,9 @@
                     <div class="d-flex align-items-start">
                         <i class="fa fa-shield-alt fa-2x text-primary me-3"></i>
                         <div>
-                            <h6 class="mb-1 small fw-bold">Privacy & Security</h6>
+                            <h6 class="mb-1 small fw-bold">{% trans "Privacy & Security" %}</h6>
                             <p class="small text-muted mb-0">
-                                Your personal information is protected and will only be used for booking confirmations 
-                                and safari updates. We never share your data with third parties without your consent.
+                                {% trans "Your personal information is protected and will only be used for booking confirmations and safari updates. We never share your data with third parties without your consent." %}
                             </p>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ from .models import (
     Destinations, AwesomePackages, DestinationsCategory, IncluisiveExcluisive
 )
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.shortcuts import redirect
 from django.urls import reverse
 from EmailSetup.utils import send_package_payment_email
@@ -279,9 +280,9 @@ class PackagesDetailView(DetailView):
             email_sent = send_package_payment_email(purchase)
 
             if email_sent:
-                messages.success(request, f'Successfully booked {self.object.name}! A payment link has been sent to your email.')
+                messages.success(request, _('Successfully booked %(name)s! A payment link has been sent to your email.') % {'name': self.object.name})
             else:
-                messages.warning(request, f'Booking saved! However, we could not send the email. Please contact us to complete payment.')
+                messages.warning(request, _('Booking saved! However, we could not send the email. Please contact us to complete payment.'))
 
             # Redirect to payment page or home
             return redirect(reverse('payment_dashboard', kwargs={'purchase_id': purchase.id}))

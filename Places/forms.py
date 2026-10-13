@@ -1,5 +1,7 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from ClientRequests.antispam import FIELD_LABELS
 from .models import AwesomePackages, PackagePurchase
 from datetime import date
 
@@ -10,35 +12,35 @@ class PackagePurchaseForm(forms.ModelForm):
         widgets = {
             'full_name': forms.TextInput(attrs={
                 'class': 'form-control bg-white border-0',
-                'placeholder': 'Your Full Name',
+                'placeholder': _('Your Full Name'),
                 'required': 'required'
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control bg-white border-0',
-                'placeholder': 'Your Email',
+                'placeholder': _('Your Email'),
                 'required': 'required'
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control bg-white border-0',
-                'placeholder': 'Phone Number',
+                'placeholder': _('Phone Number'),
                 'required': 'required'
             }),
             'number_of_persons': forms.Select(attrs={
                 'class': 'form-select bg-white border-0',
                 'required': 'required'
-            }, choices=[(1, '1 Person'), (2, '2 Persons'), (3, '3 Persons'), (4, '4 Persons'), 
-                       (5, '5 Persons'), (6, '6 Persons'), (7, '7 Persons'), (8, '8 Persons'), 
-                       (9, '9 Persons'), (10, '10+ Persons')]),
+            }, choices=[(1, _('1 Person')), (2, _('2 Persons')), (3, _('3 Persons')), (4, _('4 Persons')), 
+                       (5, _('5 Persons')), (6, _('6 Persons')), (7, _('7 Persons')), (8, _('8 Persons')), 
+                       (9, _('9 Persons')), (10, _('10+ Persons'))]),
             'travel_date': forms.DateInput(attrs={
                 'class': 'form-control bg-white border-0',
                 'type': 'date',
                 'required': 'required',
                 'min': date.today().isoformat(),
-                'placeholder': 'Select Date'
+                'placeholder': _('Select Date')
             }),
             'special_requests': forms.Textarea(attrs={
                 'class': 'form-control bg-white border-0',
-                'placeholder': 'Special Requests (Dietary, Accessibility, etc.)',
+                'placeholder': _('Special Requests (Dietary, Accessibility, etc.)'),
                 'rows': 3,
                 'style': 'height: 100px'
             }),
@@ -57,14 +59,14 @@ class PackagePurchaseForm(forms.ModelForm):
         self.fields['phone_number'].label = False
         self.fields['number_of_persons'].label = False
         for _name, _field in self.fields.items():   # placeholder-only fields still need an accessible name
-            _field.widget.attrs.setdefault('aria-label', _name.replace('_', ' ').capitalize())
+            _field.widget.attrs.setdefault('aria-label', _field.widget.attrs.get('placeholder') or FIELD_LABELS.get(_name) or _name.replace('_', ' ').capitalize())
         self.fields['travel_date'].label = False
         self.fields['special_requests'].label = False
     
     def clean_number_of_persons(self):
         persons = self.cleaned_data.get('number_of_persons')
         if persons and persons < 1:
-            raise ValidationError("Number of persons must be at least 1.")
+            raise ValidationError(_("Number of persons must be at least 1."))
         
         # Check max persons for the package
         if self.package and persons > self.package.persons:
@@ -75,13 +77,13 @@ class PackagePurchaseForm(forms.ModelForm):
     def clean_travel_date(self):
         travel_date = self.cleaned_data.get('travel_date')
         if travel_date and travel_date < date.today():
-            raise ValidationError("Travel date cannot be in the past. Please select a future date.")
+            raise ValidationError(_("Travel date cannot be in the past. Please select a future date."))
         return travel_date
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if email and '@' not in email:
-            raise ValidationError("Please enter a valid email address.")
+            raise ValidationError(_("Please enter a valid email address."))
         return email
     
     def clean_phone_number(self):
@@ -90,5 +92,5 @@ class PackagePurchaseForm(forms.ModelForm):
             # Remove common separators
             cleaned_phone = phone.replace('+', '').replace('-', '').replace(' ', '').replace('(', '').replace(')', '')
             if len(cleaned_phone) < 10:
-                raise ValidationError("Please enter a valid phone number with at least 10 digits.")
+                raise ValidationError(_("Please enter a valid phone number with at least 10 digits."))
         return phone

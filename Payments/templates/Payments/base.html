@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -512,32 +513,32 @@
                     <i class="fas fa-safari"></i>
                 </div>
                 <div class="stat-value">1,284</div>
-                <div class="stat-label">Happy Travelers</div>
-                <div class="stat-change"><i class="fas fa-arrow-up"></i> +23% this month</div>
+                <div class="stat-label">{% trans "Happy Travelers" %}</div>
+                <div class="stat-change"><i class="fas fa-arrow-up"></i> {% trans "+23% this month" %}</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
                     <i class="fas fa-star"></i>
                 </div>
                 <div class="stat-value">4.9</div>
-                <div class="stat-label">Customer Rating</div>
-                <div class="stat-change"><i class="fas fa-star"></i> Based on 1,234 reviews</div>
+                <div class="stat-label">{% trans "Customer Rating" %}</div>
+                <div class="stat-change"><i class="fas fa-star"></i> {% trans "Based on 1,234 reviews" %}</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
                     <i class="fas fa-clock"></i>
                 </div>
                 <div class="stat-value">24/7</div>
-                <div class="stat-label">Support Available</div>
-                <div class="stat-change"><i class="fas fa-headset"></i> Instant assistance</div>
+                <div class="stat-label">{% trans "Support Available" %}</div>
+                <div class="stat-change"><i class="fas fa-headset"></i> {% trans "Instant assistance" %}</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
                 <div class="stat-value">100%</div>
-                <div class="stat-label">Secure Payments</div>
-                <div class="stat-change"><i class="fas fa-lock"></i> SSL Encrypted</div>
+                <div class="stat-label">{% trans "Secure Payments" %}</div>
+                <div class="stat-change"><i class="fas fa-lock"></i> {% trans "SSL Encrypted" %}</div>
             </div>
         </div>
 

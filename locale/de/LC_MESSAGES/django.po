@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-20 10:00+0000\n"
+"POT-Creation-Date: 2026-10-13 19:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,1726 +18,4472 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# ==================== BASE.HTML TRANSLATIONS ====================
+msgid "Destination"
+msgstr "Reiseziel"
 
-#: Home/templates/Home/base.html:72
-msgid "Register"
-msgstr "Registrieren"
+msgid "Persons"
+msgstr "Personen"
 
-#: Home/templates/Home/base.html:73
-msgid "Login"
-msgstr "Anmelden"
+msgid "Number of persons"
+msgstr "Anzahl der Personen"
 
-#: Home/templates/Home/base.html:75
-msgid "My Dashboard"
-msgstr "Mein Dashboard"
+msgid "Full name"
+msgstr "Vollständiger Name"
 
-#: Home/templates/Home/base.html:77
-msgid "My Profile"
-msgstr "Mein Profil"
+msgid "Email"
+msgstr "E-Mail"
 
-#: Home/templates/Home/base.html:78
-msgid "Inbox"
-msgstr "Posteingang"
+#| msgid "Phone Number"
+msgid "Phone number"
+msgstr "Telefonnummer"
 
-#: Home/templates/Home/base.html:79
-msgid "Account Settings"
-msgstr "Kontoeinstellungen"
+#| msgid "Travel Date"
+msgid "Travel date"
+msgstr "Reisedatum"
 
-#: Home/templates/Home/base.html:80
-msgid "Log Out"
-msgstr "Abmelden"
+#| msgid "Special Requests"
+msgid "Special requests"
+msgstr "Besondere Wünsche"
 
-#: Home/templates/Home/base.html:101
+msgid "Date"
+msgstr "Datum"
+
+#| msgid "Check-out"
+msgid "Check out"
+msgstr "Abreise"
+
+#| msgid "Travelling with children?"
+msgid "Traveling with children"
+msgstr "Reist mit Kindern"
+
+msgid "Number of children"
+msgstr "Anzahl der Kinder"
+
+msgid "Children's ages"
+msgstr "Alter der Kinder"
+
+#| msgid "Name A-Z"
+msgid "Name"
+msgstr "Name"
+
+#| msgid "Phone:"
+msgid "Phone"
+msgstr "Telefon"
+
+#| msgid "Message:"
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Subject"
+msgstr "Betreff"
+
+msgid "Invalid submission."
+msgstr "Ungültige Übermittlung."
+
+msgid "This form has expired. Please reload the page and try again."
+msgstr ""
+"Dieses Formular ist abgelaufen. Bitte laden Sie die Seite neu und versuchen "
+"Sie es erneut."
+
+msgid "Name must be at least 2 characters long."
+msgstr "Der Name muss mindestens 2 Zeichen lang sein."
+
+msgid ""
+"Please enter a valid name (letters, spaces, hyphens and apostrophes only)."
+msgstr ""
+"Bitte geben Sie einen gültigen Namen ein (nur Buchstaben, Leerzeichen, "
+"Bindestriche und Apostrophe)."
+
+msgid "Please use a real email address."
+msgstr "Bitte verwenden Sie eine echte E-Mail-Adresse."
+
+#, python-format
+msgid "Please keep this under %(n)d characters."
+msgstr "Bitte halten Sie den Text unter %(n)d Zeichen."
+
+msgid "HTML is not allowed."
+msgstr "HTML ist nicht erlaubt."
+
+msgid "Please remove the links from your message."
+msgstr "Bitte entfernen Sie die Links aus Ihrer Nachricht."
+
+msgid "Please enter a valid phone number."
+msgstr "Bitte geben Sie eine gültige Telefonnummer ein."
+
+msgid "Your Name"
+msgstr "Ihr Name"
+
+msgid "Your Email"
+msgstr "Ihre E-Mail"
+
+msgid "Phone Number"
+msgstr "Telefonnummer"
+
+msgid "1 Person"
+msgstr "1 Person"
+
+msgid "2 Persons"
+msgstr "2 Personen"
+
+msgid "3 Persons"
+msgstr "3 Personen"
+
+msgid "4 Persons"
+msgstr "4 Personen"
+
+msgid "5 Persons"
+msgstr "5 Personen"
+
+msgid "6+ Persons"
+msgstr "6+ Personen"
+
+msgid "Select Date"
+msgstr "Datum wählen"
+
+msgid "Special Requests (Dietary, Accessibility, etc.)"
+msgstr "Besondere Wünsche (Ernährung, Barrierefreiheit, usw.)"
+
+msgid "Select Destination"
+msgstr "Reiseziel wählen"
+
+msgid "Leave a message here"
+msgstr "Hinterlassen Sie hier eine Nachricht"
+
+# ==================== BOOKING.HTML TRANSLATIONS ====================
+msgid "Online Booking - Days Safaris"
+msgstr "Online-Buchung - Days Safaris"
+
+msgid ""
+"Book your Kenya or East Africa safari online with Day Safaris Adventures. "
+"Choose a destination, date and group size and we confirm within 24 hours."
+msgstr ""
+"Buchen Sie Ihre Kenia- oder Ostafrika-Safari online bei Day Safaris "
+"Adventures. Wählen Sie Reiseziel, Datum und Gruppengröße – wir bestätigen "
+"innerhalb von 24 Stunden."
+
+msgid "Online Booking"
+msgstr "Online-Buchung"
+
 msgid "Home"
 msgstr "Startseite"
 
-#: Home/templates/Home/base.html:102 Home/templates/Home/base.html:178
-msgid "About"
-msgstr "Über uns"
+msgid "Booking"
+msgstr "Buchung"
 
-#: Home/templates/Home/base.html:104
-msgid "Tours"
-msgstr "Touren"
+msgid "Book Your Safari Adventure"
+msgstr "Buchen Sie Ihr Safari-Abenteuer"
 
-#: Home/templates/Home/base.html:106
-msgid "East Africa Tours"
-msgstr "Ostafrika-Touren"
+msgid ""
+"Ready to experience the adventure of a lifetime? Booking your safari with "
+"Day Safaris is quick and easy. Our team of travel experts will help you "
+"customize your perfect African getaway, whether you're dreaming of "
+"witnessing the Great Migration, relaxing on tropical beaches, or climbing "
+"majestic mountains."
+msgstr ""
+"Bereit für das Abenteuer Ihres Lebens? Die Buchung Ihrer Safari mit Day "
+"Safaris ist schnell und einfach. Unser Team von Reiseexperten hilft Ihnen, "
+"Ihren perfekten Afrika-Urlaub zu gestalten, ob Sie von der Großen Migration "
+"träumen, an tropischen Stränden entspannen oder majestätische Berge "
+"besteigen möchten."
 
-#: Home/templates/Home/base.html:107
-msgid "South Africa Tours"
-msgstr "Südafrika-Touren"
+msgid ""
+"Take advantage of our early bird discounts and group booking offers. All our"
+" packages include professional guides, comfortable accommodations, park "
+"entry fees, and 24/7 support throughout your journey. Book today and pay "
+"later with our flexible payment plans!"
+msgstr ""
+"Nutzen Sie unsere Frühbucherrabatte und Gruppenbuchungsangebote. Alle unsere"
+" Pakete beinhalten professionelle Führer, komfortable Unterkünfte, "
+"Parkeintrittsgebühren und 24/7-Unterstützung während Ihrer gesamten Reise. "
+"Buchen Sie heute und zahlen Sie später mit unseren flexiblen Zahlungsplänen!"
 
-#: Home/templates/Home/base.html:108
-msgid "West Africa Tours"
-msgstr "Westafrika-Touren"
+msgid "Book A Tour"
+msgstr "Eine Tour buchen"
 
-#: Home/templates/Home/base.html:109
-msgid "International Tours"
-msgstr "Internationale Touren"
+msgid ""
+"On Your First Adventure Trip With Day Safaris Adventures. Get More Deal With"
+" Us Today."
+msgstr ""
+"Auf Ihrer ersten Abenteuerreise mit Day Safaris Adventures. Sichern Sie sich"
+" noch heute mehr Vorteile."
 
-#: Home/templates/Home/base.html:111
-msgid "Cruises"
-msgstr "Kreuzfahrten"
+msgid "Close"
+msgstr "Schließen"
 
-#: Home/templates/Home/base.html:113
-msgid "Services"
-msgstr "Dienstleistungen"
+msgid "Number of Persons"
+msgstr "Anzahl der Personen"
 
-#: Home/templates/Home/base.html:115
-msgid "All Services"
-msgstr "Alle Dienstleistungen"
+msgid "Travel Date"
+msgstr "Reisedatum"
 
-#: Home/templates/Home/base.html:116
-msgid "African WildLife Tours"
-msgstr "Afrikanische Wildtier-Touren"
-
-#: Home/templates/Home/base.html:117
-msgid "Travel Partnerships"
-msgstr "Reisepartnerschaften"
-
-#: Home/templates/Home/base.html:118
-msgid "Holiday Tailor Made Tours"
-msgstr "Maßgeschneiderte Urlaubstouren"
-
-#: Home/templates/Home/base.html:119
-msgid "AirPort Transfers"
-msgstr "Flughafentransfers"
-
-#: Home/templates/Home/base.html:122
-msgid "Blogs"
-msgstr "Blogs"
-
-#: Home/templates/Home/base.html:123
-msgid "Gallery"
-msgstr "Galerie"
-
-#: Home/templates/Home/base.html:124
-msgid "AirBNB"
-msgstr "AirBNB"
-
-#: Home/templates/Home/base.html:125 Home/templates/Home/base.html:189
-msgid "Contact"
-msgstr "Kontakt"
-
-#: Home/templates/Home/base.html:127
 msgid "Book Now"
 msgstr "Jetzt buchen"
 
-#: Home/templates/Home/base.html:146
-msgid "Newsletter"
-msgstr "Newsletter"
+msgid "Your information is secure"
+msgstr "Ihre Daten sind sicher"
 
-#: Home/templates/Home/base.html:147
-msgid "Subscribe for Safari Updates & Special Offers"
-msgstr "Abonnieren Sie Safari-Updates und Sonderangebote"
+msgid "By submitting this form you agree to our"
+msgstr "Mit dem Absenden dieses Formulars stimmen Sie unseren"
 
-#: Home/templates/Home/base.html:148
-msgid "Join our newsletter to receive exclusive travel deals, safari tips, and inspiring stories from East Africa. Get 10% off your first booking when you subscribe today!"
-msgstr "Abonnieren Sie unseren Newsletter, um exklusive Reiseangebote, Safari-Tipps und inspirierende Geschichten aus Ostafrika zu erhalten. Sichern Sie sich 10% Rabatt auf Ihre erste Buchung, wenn Sie noch heute abonnieren!"
-
-#: Home/templates/Home/base.html:150
-msgid "Enter your email address"
-msgstr "Geben Sie Ihre E-Mail-Adresse ein"
-
-#: Home/templates/Home/base.html:151
-msgid "Subscribe Now"
-msgstr "Jetzt abonnieren"
-
-#: Home/templates/Home/base.html:163
-msgid "Get In Touch"
-msgstr "Kontaktieren Sie uns"
-
-#: Home/templates/Home/base.html:176
-msgid "Company"
-msgstr "Unternehmen"
-
-#: Home/templates/Home/base.html:179
-msgid "Careers"
-msgstr "Karriere"
-
-#: Home/templates/Home/base.html:180
-msgid "Blog"
-msgstr "Blog"
-
-#: Home/templates/Home/base.html:181
-msgid "Press"
-msgstr "Presse"
-
-#: Home/templates/Home/base.html:182
-msgid "Gift Cards"
-msgstr "Geschenkkarten"
-
-#: Home/templates/Home/base.html:183
-msgid "Magazine"
-msgstr "Magazin"
-
-#: Home/templates/Home/base.html:187
-msgid "Support"
-msgstr "Support"
-
-#: Home/templates/Home/base.html:190
-msgid "Legal Notice"
-msgstr "Impressum"
-
-#: Home/templates/Home/base.html:191
 msgid "Privacy Policy"
 msgstr "Datenschutzerklärung"
 
-#: Home/templates/Home/base.html:192
+msgid "and"
+msgstr "und"
+
 msgid "Terms and Conditions"
 msgstr "Allgemeine Geschäftsbedingungen"
 
-#: Home/templates/Home/base.html:193
-msgid "Sitemap"
-msgstr "Sitemap"
+msgid "Popular Destinations"
+msgstr "Beliebte Reiseziele"
 
-#: Home/templates/Home/base.html:194
-msgid "Cookie policy"
-msgstr "Cookie-Richtlinie"
+msgid "Most Requested Safari Destinations"
+msgstr "Die am meisten nachgefragten Safari-Reiseziele"
 
-#: Home/templates/Home/base.html:202
-msgid "Arabic"
-msgstr "Arabisch"
+msgid ""
+"Our customers love these incredible destinations for their safari adventures"
+msgstr ""
+"Unsere Kunden lieben diese unglaublichen Reiseziele für ihre Safari-"
+"Abenteuer"
 
-#: Home/templates/Home/base.html:203
-msgid "German"
-msgstr "Deutsch"
+msgid "Featured Packages"
+msgstr "Vorgestellte Pakete"
 
-#: Home/templates/Home/base.html:204
-msgid "Greek"
-msgstr "Griechisch"
+msgid "Popular Safari Packages"
+msgstr "Beliebte Safaripakete"
 
-#: Home/templates/Home/base.html:205
+msgid "days"
+msgstr "Tage"
+
+msgid "per person"
+msgstr "pro Person"
+
+msgid "View Details"
+msgstr "Details anzeigen"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Contact - Day Safaris Adventures"
+msgstr "Kontakt - Day Safaris Adventures"
+
+msgid ""
+"Contact Day Safaris Adventures in Nairobi: call, WhatsApp or email us for "
+"safari quotes, trekking and custom itineraries. Reply within 24 hours."
+msgstr ""
+"Kontaktieren Sie Day Safaris Adventures in Nairobi: Rufen Sie an, schreiben "
+"Sie per WhatsApp oder E-Mail für Safari-Angebote, Trekking und individuelle "
+"Reiserouten. Antwort innerhalb von 24 Stunden."
+
+msgid "Contact Us"
+msgstr "Kontaktieren Sie uns"
+
+msgid "Pages"
+msgstr "Seiten"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Get In Touch With Us"
+msgstr "Nehmen Sie Kontakt mit uns auf"
+
+msgid "Our Office"
+msgstr "Unser Büro"
+
+msgid "Day Safaris Adventures Ltd<br>00200 Street RailWays, Nairobi, Kenya"
+msgstr "Day Safaris Adventures Ltd<br>00200 Street RailWays, Nairobi, Kenia"
+
+msgid "Phone Numbers"
+msgstr "Telefonnummern"
+
+msgid "(WhatsApp)"
+msgstr "(WhatsApp)"
+
+msgid "(HotLine)"
+msgstr "(Hotline)"
+
+msgid "(Alternate)"
+msgstr "(Alternativ)"
+
+msgid "Email Addresses"
+msgstr "E-Mail-Adressen"
+
+msgid "Send Us a Message"
+msgstr "Senden Sie uns eine Nachricht"
+
+msgid ""
+"Have questions about safaris, packages, or accommodations? Our travel "
+"experts are here to help you create the perfect East African experience. "
+"Fill out the form below and we'll get back to you within 24 hours."
+msgstr ""
+"Haben Sie Fragen zu Safaris, Paketen oder Unterkünften? Unsere Reiseexperten"
+" sind hier, um Ihnen zu helfen, das perfekte ostafrikanische Erlebnis zu "
+"schaffen. Füllen Sie das untenstehende Formular aus, und wir werden uns "
+"innerhalb von 24 Stunden bei Ihnen melden."
+
+msgid "Your Message"
+msgstr "Ihre Nachricht"
+
+msgid "Send Message"
+msgstr "Nachricht senden"
+
+# ==================== PACKAGE_DETAIL.HTML TRANSLATIONS ====================
+msgid "Day Safaris Adventures office location map"
+msgstr "Karte mit dem Standort des Büros von Day Safaris Adventures"
+
+msgid "Our Brochures"
+msgstr "Unsere Broschüren"
+
+msgid "Download Safari Brochures & Travel Guides"
+msgstr "Laden Sie Safari-Broschüren & Reiseführer herunter"
+
+msgid ""
+"Explore our collection of detailed brochures featuring safari packages, tour"
+" itineraries, accommodation options, and travel tips for East Africa. "
+"Download PDF guides to plan your perfect African adventure."
+msgstr ""
+"Entdecken Sie unsere Sammlung detaillierter Broschüren mit Safaripaketen, "
+"Reiseverläufen, Unterkunftsoptionen und Reisetipps für Ostafrika. Laden Sie "
+"PDF-Leitfäden herunter, um Ihr perfektes Afrika-Abenteuer zu planen."
+
+msgid "View details"
+msgstr "Details ansehen"
+
+msgid "Download PDF"
+msgstr "PDF herunterladen"
+
+msgid "Preview"
+msgstr "Vorschau"
+
+msgid "PDF Brochure"
+msgstr "PDF-Broschüre"
+
+msgid "Download Now"
+msgstr "Jetzt herunterladen"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "No brochures available yet"
+msgstr "Noch keine Broschüren verfügbar"
+
+msgid "Check back soon for downloadable safari brochures and travel guides!"
+msgstr ""
+"Schauen Sie bald wieder vorbei für herunterladbare Safari-Broschüren und "
+"Reiseführer!"
+
+msgid "Destinations"
+msgstr "Reiseziele"
+
+#, python-format
+msgid ""
+"Thank you %(name)s! Your booking request has been submitted successfully. We"
+" will contact you within 24 hours to confirm your safari."
+msgstr ""
+"Vielen Dank, %(name)s! Ihre Buchungsanfrage wurde erfolgreich übermittelt. "
+"Wir melden uns innerhalb von 24 Stunden, um Ihre Safari zu bestätigen."
+
+msgid ""
+"There was an error with your booking. Please check the form and try again."
+msgstr ""
+"Bei Ihrer Buchung ist ein Fehler aufgetreten. Bitte prüfen Sie das Formular "
+"und versuchen Sie es erneut."
+
+#, python-format
+msgid ""
+"Thank you %(name)s! Your message has been sent successfully. We will get "
+"back to you within 24 hours."
+msgstr ""
+"Vielen Dank, %(name)s! Ihre Nachricht wurde erfolgreich gesendet. Wir "
+"antworten innerhalb von 24 Stunden."
+
 msgid "English"
 msgstr "Englisch"
 
-#: Home/templates/Home/base.html:217
-msgid "Payments"
-msgstr "Zahlungen"
+msgid "Swahili"
+msgstr "Suaheli"
 
-#: Home/templates/Home/base.html:228
+msgid "French"
+msgstr "Französisch"
+
+msgid "German"
+msgstr "Deutsch"
+
+msgid "Spanish"
+msgstr "Spanisch"
+
+msgid "Italian"
+msgstr "Italienisch"
+
+msgid ""
+"I'm having trouble connecting to our support system. Please contact us "
+"directly at info@daysafarisadventures.com or call +254759379600 for "
+"assistance. 🦁"
+msgstr ""
+"Ich habe Probleme, mich mit unserem Support-System zu verbinden. Bitte "
+"kontaktieren Sie uns direkt unter info@daysafarisadventures.com oder rufen "
+"Sie +254759379600 an. 🦁"
+
+msgid ""
+"Network error. Please check your connection or contact us directly at "
+"info@daysafarisadventures.com. We're here to help! 🦁"
+msgstr ""
+"Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung oder kontaktieren Sie uns "
+"direkt unter info@daysafarisadventures.com. Wir helfen gern! 🦁"
+
+msgid "Please wait for my response before sending another message. 🦁"
+msgstr ""
+"Bitte warten Sie auf meine Antwort, bevor Sie eine weitere Nachricht senden."
+" 🦁"
+
+msgid ""
+"Hello! Welcome to Day Safaris Adventures! 🦁 How can I help you plan your "
+"East African safari today? I can assist with destinations, packages, "
+"bookings, or any questions about our services!"
+msgstr ""
+"Hallo! Willkommen bei Day Safaris Adventures! 🦁 Wie kann ich Ihnen bei der "
+"Planung Ihrer Ostafrika-Safari helfen? Ich helfe bei Reisezielen, Paketen, "
+"Buchungen oder allen Fragen zu unseren Leistungen!"
+
+msgid ""
+"I can help you with:\n"
+"• Booking safaris\n"
+"• Destination information\n"
+"• Package prices\n"
+"• Payment options\n"
+"• Group discounts\n"
+"• Travel tips\n"
+"\n"
+"Just let me know what you need! 😊"
+msgstr ""
+"Ich helfe Ihnen bei:\n"
+"• Safari-Buchungen\n"
+"• Informationen zu Reisezielen\n"
+"• Paketpreisen\n"
+"• Zahlungsoptionen\n"
+"• Gruppenrabatten\n"
+"• Reisetipps\n"
+"\n"
+"Sagen Sie mir einfach, was Sie brauchen! 😊"
+
+msgid ""
+"You can reach us at:\n"
+"📞 Phone: +254759379600\n"
+"📧 Email: info@daysafarisadventures.com\n"
+"📍 Location: Nairobi, Kenya\n"
+"🌐 Website: daysafarisadventures.co.ke\n"
+"\n"
+"We're available 24/7!"
+msgstr ""
+"So erreichen Sie uns:\n"
+"📞 Telefon: +254759379600\n"
+"📧 E-Mail: info@daysafarisadventures.com\n"
+"📍 Standort: Nairobi, Kenia\n"
+"🌐 Website: daysafarisadventures.co.ke\n"
+"\n"
+"Wir sind rund um die Uhr erreichbar!"
+
+msgid ""
+"Our customer support is available:\n"
+"Monday - Friday: 8:00 AM - 8:00 PM (EAT)\n"
+"Saturday: 9:00 AM - 6:00 PM (EAT)\n"
+"Sunday: 10:00 AM - 4:00 PM (EAT)\n"
+"Emergency support: 24/7 at +254 782 390 295"
+msgstr ""
+"Unser Kundenservice ist erreichbar:\n"
+"Montag - Freitag: 8:00 - 20:00 Uhr (EAT)\n"
+"Samstag: 9:00 - 18:00 Uhr (EAT)\n"
+"Sonntag: 10:00 - 16:00 Uhr (EAT)\n"
+"Notfallhilfe: rund um die Uhr unter +254 782 390 295"
+
+msgid ""
+"Our safari packages start from $649 for 3-day adventures to $1,899 for luxury experiences. Popular packages include:\n"
+"• Masai Mara Safari (4 days, $849)\n"
+"• Zanzibar Beach Holiday (6 days, $1,299)\n"
+"• Serengeti Migration (5 days, $1,499)\n"
+"• Amboseli Elephant Experience (3 days, $649)\n"
+"\n"
+"Would you like details on any specific package?"
+msgstr ""
+"Unsere Safaripakete beginnen bei 649 $ für 3-tägige Abenteuer und reichen bis 1.899 $ für Luxuserlebnisse. Beliebte Pakete:\n"
+"• Masai-Mara-Safari (4 Tage, 849 $)\n"
+"• Strandurlaub auf Sansibar (6 Tage, 1.299 $)\n"
+"• Serengeti-Migration (5 Tage, 1.499 $)\n"
+"• Elefanten-Erlebnis in Amboseli (3 Tage, 649 $)\n"
+"\n"
+"Möchten Sie Details zu einem bestimmten Paket?"
+
+msgid ""
+"We offer amazing destinations across East Africa:\n"
+"🇰🇪 Kenya: Masai Mara, Amboseli, Tsavo, Diani Beach\n"
+"🇹🇿 Tanzania: Serengeti, Zanzibar, Kilimanjaro, Ngorongoro\n"
+"🇺🇬 Uganda: Bwindi Gorillas, Queen Elizabeth Park\n"
+"🇷🇼 Rwanda: Kigali Cultural Tour, Lake Kivu\n"
+"\n"
+"Which destination interests you? 🗺️"
+msgstr ""
+"Wir bieten fantastische Reiseziele in ganz Ostafrika:\n"
+"🇰🇪 Kenia: Masai Mara, Amboseli, Tsavo, Diani Beach\n"
+"🇹🇿 Tansania: Serengeti, Sansibar, Kilimandscharo, Ngorongoro\n"
+"🇺🇬 Uganda: Bwindi-Gorillas, Queen-Elizabeth-Nationalpark\n"
+"🇷🇼 Ruanda: Kulturtour durch Kigali, Kivusee\n"
+"\n"
+"Welches Reiseziel interessiert Sie? 🗺️"
+
+msgid "Your Full Name"
+msgstr "Ihr vollständiger Name"
+
+msgid "Any special requests?"
+msgstr "Besondere Wünsche?"
+
+msgid "Number of persons must be at least 1."
+msgstr "Die Personenzahl muss mindestens 1 betragen."
+
+msgid "Travel date cannot be in the past."
+msgstr "Das Reisedatum darf nicht in der Vergangenheit liegen."
+
 msgid "Days Safaris Adventures"
 msgstr "Days Safaris Adventures"
 
-#: Home/templates/Home/base.html:228
+msgid "Blog"
+msgstr "Blog"
+
+msgid "min read"
+msgstr "Min. Lesezeit"
+
+msgid "likes"
+msgstr "Likes"
+
+msgid "Share this:"
+msgstr "Teilen:"
+
+msgid "Share on Facebook"
+msgstr "Auf Facebook teilen"
+
+msgid "Share on X (Twitter)"
+msgstr "Auf X (Twitter) teilen"
+
+msgid "Share on WhatsApp"
+msgstr "Auf WhatsApp teilen"
+
+msgid "Share on LinkedIn"
+msgstr "Auf LinkedIn teilen"
+
+msgid "Written by"
+msgstr "Geschrieben von"
+
+msgid ""
+"Storyteller at Day Safaris Adventures, sharing tips, guides and adventures "
+"from across East Africa."
+msgstr ""
+"Geschichtenerzähler bei Day Safaris Adventures, der Tipps, Reiseführer und "
+"Abenteuer aus ganz Ostafrika teilt."
+
+msgid "Back to Blog"
+msgstr "Zurück zum Blog"
+
+msgid "Ready for an adventure?"
+msgstr "Bereit für ein Abenteuer?"
+
+msgid "Turn inspiration into an itinerary. Let's plan your next safari."
+msgstr ""
+"Machen Sie aus Inspiration eine Reiseroute. Planen wir Ihre nächste Safari."
+
+msgid "Book a Safari"
+msgstr "Safari buchen"
+
+msgid "Recent Posts"
+msgstr "Neueste Beiträge"
+
+msgid "No other posts yet."
+msgstr "Noch keine weiteren Beiträge."
+
+msgid "Need help planning?"
+msgstr "Brauchen Sie Hilfe bei der Planung?"
+
+msgid "Our safari experts are ready to help you plan the perfect trip."
+msgstr ""
+"Unsere Safari-Experten helfen Ihnen gern bei der Planung der perfekten "
+"Reise."
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Blogs - Days Safaris Adventures"
+msgstr "Blogs - Days Safaris Adventures"
+
+msgid ""
+"Safari travel tips, wildlife guides, packing lists and destination stories "
+"from the Day Safaris Adventures team in Nairobi."
+msgstr ""
+"Safari-Reisetipps, Tierführer, Packlisten und Reiseziel-Geschichten vom Team"
+" von Day Safaris Adventures in Nairobi."
+
+msgid "Our Blog"
+msgstr "Unser Blog"
+
+msgid "Popular Travel Blogs & Safari Tips"
+msgstr "Beliebte Reiseblogs & Safari-Tipps"
+
+msgid ""
+"Discover expert travel advice, safari planning guides, and inspiring stories"
+" from our adventures across East Africa. Learn about the best times to "
+"visit, wildlife photography tips, and hidden gems off the beaten path."
+msgstr ""
+"Entdecken Sie Experten-Reiseberatung, Safari-Planungsleitfäden und "
+"inspirierende Geschichten von unseren Abenteuern in ganz Ostafrika. Erfahren"
+" Sie mehr über die besten Reisezeiten, Wildtierfotografie-Tipps und "
+"versteckte Juwelen abseits der ausgetretenen Pfade."
+
+msgid "Open"
+msgstr "Geöffnet"
+
+msgid "Posted By:"
+msgstr "Veröffentlicht von:"
+
+msgid "Read More"
+msgstr "Weiterlesen"
+
+msgid "about"
+msgstr "über"
+
+msgid "No blog posts yet"
+msgstr "Noch keine Blogbeiträge"
+
+msgid "Check back soon for exciting travel stories and tips!"
+msgstr ""
+"Schauen Sie bald wieder vorbei für spannende Reisegeschichten und Tipps!"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+#, python-format
+msgid "Visit %(name)s with Day Safaris Adventures. %(desc)s"
+msgstr "Besuchen Sie %(name)s mit Day Safaris Adventures. %(desc)s"
+
+msgid "Log in to save this destination"
+msgstr "Melden Sie sich an, um dieses Reiseziel zu speichern"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Location"
+msgstr "Standort"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Category:"
+msgstr "Kategorie:"
+
+msgid "Expert Local Guides"
+msgstr "Erfahrene lokale Guides"
+
+msgid "Best Price Guarantee"
+msgstr "Bestpreisgarantie"
+
+msgid "Customized Itineraries"
+msgstr "Individuelle Reiserouten"
+
+msgid "24/7 Customer Support"
+msgstr "24/7 Kundensupport"
+
+msgid "Safe & Reliable"
+msgstr "Sicher und zuverlässig"
+
+msgid "Eco-Friendly Practices"
+msgstr "Umweltfreundliche Praktiken"
+
+msgid "Book This Destination"
+msgstr "Dieses Reiseziel buchen"
+
+msgid "View All Destinations"
+msgstr "Alle Reiseziele ansehen"
+
+msgid "Plan Your Trip"
+msgstr "Planen Sie Ihre Reise"
+
+#, python-format
+msgid "Best Time to Visit %(n)s"
+msgstr "Beste Reisezeit für %(n)s"
+
+msgid ""
+"Choose the perfect season for your adventure based on wildlife viewing, "
+"weather, and crowds."
+msgstr ""
+"Wählen Sie die perfekte Jahreszeit für Ihr Abenteuer – je nach "
+"Tierbeobachtung, Wetter und Besucherandrang."
+
+msgid "Peak Season"
+msgstr "Hauptsaison"
+
+msgid "July - October:"
+msgstr "Juli - Oktober:"
+
+msgid ""
+"Best for wildlife viewing, dry weather, and optimal safari conditions. "
+"Expect more visitors but incredible sightings."
+msgstr ""
+"Ideal für Tierbeobachtungen, trockenes Wetter und optimale "
+"Safaribedingungen. Mehr Besucher, aber unglaubliche Sichtungen."
+
+msgid "Green Season"
+msgstr "Grüne Saison"
+
+msgid "November - December & March - May:"
+msgstr "November - Dezember und März - Mai:"
+
+msgid ""
+"Lush landscapes, fewer crowds, lower prices, and excellent bird watching "
+"opportunities."
+msgstr ""
+"Üppige Landschaften, weniger Besucher, niedrigere Preise und hervorragende "
+"Möglichkeiten zur Vogelbeobachtung."
+
+msgid "Destination Highlights"
+msgstr "Highlights des Reiseziels"
+
+#, python-format
+msgid "Why Visit %(n)s?"
+msgstr "Warum %(n)s besuchen?"
+
+msgid ""
+"Discover what makes this destination special and why it should be on your "
+"bucket list."
+msgstr ""
+"Entdecken Sie, was dieses Reiseziel so besonders macht und warum es auf Ihre"
+" Wunschliste gehört."
+
+msgid "Breathtaking Views"
+msgstr "Atemberaubende Aussichten"
+
+msgid ""
+"Experience stunning landscapes and panoramic views that will take your "
+"breath away."
+msgstr ""
+"Erleben Sie beeindruckende Landschaften und Panoramablicke, die Ihnen den "
+"Atem rauben."
+
+msgid "Incredible Wildlife"
+msgstr "Unglaubliche Tierwelt"
+
+msgid ""
+"Spot diverse wildlife including the Big Five and unique species native to "
+"this region."
+msgstr ""
+"Beobachten Sie vielfältige Wildtiere, darunter die Big Five und einzigartige"
+" Arten dieser Region."
+
+msgid "Rich Culture"
+msgstr "Reiche Kultur"
+
+msgid ""
+"Immerse yourself in local traditions and authentic cultural experiences."
+msgstr ""
+"Tauchen Sie ein in lokale Traditionen und authentische kulturelle "
+"Erlebnisse."
+
+msgid "Photo Opportunities"
+msgstr "Fotomotive"
+
+msgid "Capture stunning images of wildlife, landscapes, and cultural moments."
+msgstr ""
+"Halten Sie beeindruckende Bilder von Tieren, Landschaften und kulturellen "
+"Momenten fest."
+
+msgid "Perfect Climate"
+msgstr "Ideales Klima"
+
+msgid ""
+"Enjoy favorable weather conditions for year-round travel and activities."
+msgstr ""
+"Genießen Sie günstige Wetterbedingungen für Reisen und Aktivitäten das ganze"
+" Jahr über."
+
+msgid "Safe Travel"
+msgstr "Sicher reisen"
+
+msgid "Well-maintained facilities and professional guides ensure your safety."
+msgstr ""
+"Gepflegte Einrichtungen und professionelle Guides sorgen für Ihre "
+"Sicherheit."
+
+#, python-format
+msgid "Ready to Visit %(n)s?"
+msgstr "Bereit, %(n)s zu besuchen?"
+
+msgid ""
+"Book your safari adventure today and create memories that will last a "
+"lifetime."
+msgstr ""
+"Buchen Sie noch heute Ihre Safari und schaffen Sie Erinnerungen fürs Leben."
+
+msgid "Book This Destination Now"
+msgstr "Dieses Reiseziel jetzt buchen"
+
+msgid "You May Also Like"
+msgstr "Das könnte Ihnen auch gefallen"
+
+msgid "Similar Destinations"
+msgstr "Ähnliche Reiseziele"
+
+msgid "Explore other amazing destinations in the same region."
+msgstr "Entdecken Sie weitere großartige Reiseziele in derselben Region."
+
+msgid "No similar destinations found."
+msgstr "Keine ähnlichen Reiseziele gefunden."
+
+# ==================== ABOUT.HTML TRANSLATIONS ====================
+msgid "About Us - Days Safaris Adventures"
+msgstr "Über uns - Days Safaris Adventures"
+
+msgid ""
+"Learn about Day Safaris Adventures, a premier Nairobi-based destination "
+"management company offering tailor-made safaris, trekking and travel "
+"experiences across East, West, South and International Africa."
+msgstr ""
+"Lernen Sie Day Safaris Adventures kennen, ein führendes Destination-"
+"Management-Unternehmen aus Nairobi mit maßgeschneiderten Safaris, Trekking "
+"und Reiseerlebnissen in Ost-, West-, Südafrika und international."
+
+msgid ""
+"Learn about Day Safaris Adventures, a premier Nairobi-based destination "
+"management company offering tailor-made safaris, trekking and travel "
+"experiences across Africa."
+msgstr ""
+"Lernen Sie Day Safaris Adventures kennen, ein führendes Destination-"
+"Management-Unternehmen aus Nairobi mit maßgeschneiderten Safaris, Trekking "
+"und Reiseerlebnissen in ganz Afrika."
+
+msgid "About Our Destinations"
+msgstr "Über unsere Reiseziele"
+
+msgid "About"
+msgstr "Über uns"
+
+msgid "South Africa Tours"
+msgstr "Südafrika-Touren"
+
+msgid "Discover South Africa"
+msgstr "Entdecken Sie Südafrika"
+
+msgid "Experience the Beauty & Luxury of South Africa"
+msgstr "Erleben Sie die Schönheit und den Luxus Südafrikas"
+
+msgid ""
+"Discover breathtaking landscapes, vibrant cities, and unforgettable wildlife"
+" adventures across South Africa. From the stunning coastlines of Cape Town "
+"to thrilling safaris in Kruger National Park, every journey is designed to "
+"create lasting memories."
+msgstr ""
+"Entdecken Sie atemberaubende Landschaften, pulsierende Städte und "
+"unvergessliche Wildtierabenteuer in ganz Südafrika. Von den atemberaubenden "
+"Küsten Kapstadts bis zu aufregenden Safaris im Kruger-Nationalpark ist jede "
+"Reise darauf ausgerichtet, bleibende Erinnerungen zu schaffen."
+
+msgid ""
+"Enjoy luxury accommodations, guided wildlife tours, cultural experiences, "
+"wine tasting adventures, and scenic road trips with professionally curated "
+"travel packages tailored for every explorer."
+msgstr ""
+"Genießen Sie luxuriöse Unterkünfte, geführte Wildtier-Touren, kulturelle "
+"Erlebnisse, Weinproben-Abenteuer und malerische Roadtrips mit professionell "
+"kuratierten Reisepaketen, die auf jeden Entdecker zugeschnitten sind."
+
+msgid "Luxury Safari Experiences"
+msgstr "Luxus-Safari-Erlebnisse"
+
+msgid "Cape Town City Tours"
+msgstr "Stadtrundfahrten in Kapstadt"
+
+msgid "Beach & Coastal Escapes"
+msgstr "Strand- und Küstenausflüge"
+
+msgid "Adventure Activities"
+msgstr "Abenteueraktivitäten"
+
+msgid "Wine & Cultural Tours"
+msgstr "Wein- und Kulturtouren"
+
+msgid "24/7 Travel Assistance"
+msgstr "24/7 Reiseassistenz"
+
+msgid "Explore South Africa Tours"
+msgstr "Entdecken Sie Südafrika-Touren"
+
+msgid "West Africa Tours"
+msgstr "Westafrika-Touren"
+
+msgid "Explore West Africa"
+msgstr "Entdecken Sie Westafrika"
+
+msgid "Discover Culture, History & Adventure"
+msgstr "Entdecken Sie Kultur, Geschichte & Abenteuer"
+
+msgid ""
+"Experience the rich traditions, colorful cultures, and vibrant destinations "
+"of West Africa. From historical landmarks and bustling cities to tropical "
+"beaches and wildlife reserves, every destination offers something unique."
+msgstr ""
+"Erleben Sie die reichen Traditionen, farbenfrohen Kulturen und lebendigen "
+"Reiseziele Westafrikas. Von historischen Wahrzeichen und geschäftigen "
+"Städten bis zu tropischen Stränden und Wildtierreservaten bietet jedes "
+"Reiseziel etwas Einzigartiges."
+
+msgid ""
+"Our West Africa tours combine authentic cultural encounters, comfortable "
+"travel experiences, local cuisine adventures, and guided excursions across "
+"some of Africa's most exciting destinations."
+msgstr ""
+"Unsere Westafrika-Touren kombinieren authentische kulturelle Begegnungen, "
+"komfortable Reiseerlebnisse, Abenteuer der lokalen Küche und geführte "
+"Ausflüge zu einigen der aufregendsten Reiseziele Afrikas."
+
+msgid "Cultural Heritage Tours"
+msgstr "Kulturerbe-Touren"
+
+msgid "Historical Site Visits"
+msgstr "Besuche historischer Stätten"
+
+msgid "Luxury Hotel Stays"
+msgstr "Luxushotelaufenthalte"
+
+msgid "Beach Getaways"
+msgstr "Strandausflüge"
+
+msgid "Guided City Excursions"
+msgstr "Geführte Stadtexkursionen"
+
+msgid "Professional Tour Guides"
+msgstr "Professionelle Reiseführer"
+
+msgid "Explore West Africa Tours"
+msgstr "Entdecken Sie Westafrika-Touren"
+
+msgid "International Tours"
+msgstr "Internationale Touren"
+
+msgid "Travel Beyond Borders & Create Memories"
+msgstr "Reisen Sie über Grenzen hinaus und schaffen Sie Erinnerungen"
+
+msgid ""
+"Explore iconic destinations around the world with carefully planned "
+"international travel experiences. Whether you dream of luxury vacations, "
+"romantic escapes, or adventure-filled journeys, we make global travel "
+"seamless and exciting."
+msgstr ""
+"Entdecken Sie ikonische Reiseziele auf der ganzen Welt mit sorgfältig "
+"geplanten internationalen Reiseerlebnissen. Ob Sie von Luxusurlauben, "
+"romantischen Ausflügen oder abenteuerlichen Reisen träumen, wir machen "
+"globales Reisen nahtlos und aufregend."
+
+msgid ""
+"From flight bookings and hotel reservations to guided tours and visa "
+"assistance, our international travel packages are crafted to give you "
+"comfort, convenience, and unforgettable experiences."
+msgstr ""
+"Von Flugbuchungen und Hotelreservierungen bis zu geführten Touren und "
+"Visumshilfe – unsere internationalen Reisepakete sind darauf ausgerichtet, "
+"Ihnen Komfort, Bequemlichkeit und unvergessliche Erlebnisse zu bieten."
+
+msgid "Worldwide Destinations"
+msgstr "Weltweite Reiseziele"
+
+msgid "Flight & Hotel Booking"
+msgstr "Flug- & Hotelbuchung"
+
+msgid "Visa Assistance"
+msgstr "Visumshilfe"
+
+msgid "Luxury Vacation Packages"
+msgstr "Luxus-Urlaubspakete"
+
+msgid "Family & Group Tours"
+msgstr "Familien- & Gruppentouren"
+
+msgid "Explore International Tours"
+msgstr "Entdecken Sie Internationale Touren"
+
+msgid "East Africa Tours"
+msgstr "Ostafrika-Touren"
+
+msgid "Explore East Africa"
+msgstr "Entdecken Sie Ostafrika"
+
+msgid "Witness Africa's Greatest Safari Adventures"
+msgstr "Erleben Sie Afrikas größte Safari-Abenteuer"
+
+msgid ""
+"Discover the breathtaking beauty of East Africa through unforgettable "
+"safaris, wildlife encounters, mountain adventures, and relaxing beach "
+"holidays across Kenya, Tanzania, Uganda, and Rwanda."
+msgstr ""
+"Entdecken Sie die atemberaubende Schönheit Ostafrikas durch unvergessliche "
+"Safaris, Wildtierbegegnungen, Bergabenteuer und entspannte Strandurlaube in "
+"Kenia, Tansania, Uganda und Ruanda."
+
+msgid ""
+"From the Great Migration in Maasai Mara and Serengeti to gorilla trekking "
+"and coastal escapes, our expertly curated tours deliver authentic African "
+"experiences for solo travelers, couples, families, and groups."
+msgstr ""
+"Von der Großen Migration in der Masai Mara und Serengeti bis zu Gorilla-"
+"Trekking und Küstenausflügen bieten unsere fachmännisch zusammengestellten "
+"Touren authentische afrikanische Erlebnisse für Alleinreisende, Paare, "
+"Familien und Gruppen."
+
+msgid "Big Five Safari Tours"
+msgstr "Big Five Safari-Touren"
+
+msgid "Hot Air Balloon Safaris"
+msgstr "Heißluftballon-Safaris"
+
+msgid "Mountain Climbing Adventures"
+msgstr "Bergsteiger-Abenteuer"
+
+msgid "Luxury Safari Lodges"
+msgstr "Luxus-Safari-Lodges"
+
+msgid "Beach & Island Holidays"
+msgstr "Strand- & Inselurlaube"
+
+msgid "Experienced Safari Guides"
+msgstr "Erfahrene Safari-Guides"
+
+msgid "Explore East Africa Tours"
+msgstr "Entdecken Sie Ostafrika-Touren"
+
+msgid "Services"
+msgstr "Dienstleistungen"
+
+msgid "Our Services"
+msgstr "Unsere Dienstleistungen"
+
+msgid "View All Services"
+msgstr "Alle Dienstleistungen anzeigen"
+
+# ==================== AIRLINE.HTML TRANSLATIONS ====================
+msgid "Airline - Days Safaris Adventures"
+msgstr "Fluggesellschaft - Days Safaris Adventures"
+
+msgid ""
+"Flight booking and airline ticketing services from Day Safaris Adventures, "
+"Nairobi."
+msgstr "Flugbuchung und Ticketing von Day Safaris Adventures, Nairobi."
+
+msgid "Airline"
+msgstr "Fluggesellschaft"
+
+msgid "About Day Safaris"
+msgstr "Über Day Safaris"
+
+msgid "Welcome To Day Safaris Adventures"
+msgstr "Willkommen bei Day Safaris Adventures"
+
+msgid ""
+"We will help you plan for travel, a very daunting task if you try to do it "
+"yourself and especially when it comes to booking cheap flights."
+msgstr ""
+"Wir helfen Ihnen bei der Reiseplanung, eine sehr entmutigende Aufgabe, wenn "
+"Sie es selbst versuchen, insbesondere wenn es um die Buchung günstiger Flüge"
+" geht."
+
+msgid ""
+"Day Safaris Adventures simplifies this task by enabling you to search "
+"domestic and international flights offered by major airlines in the world "
+"such as Egypt Air, Kenya Airways, South African Airways, Ethiopian Airlines,"
+" Air France, KLM, Emirates, Lufthansa, Swiss Airways among others at the "
+"cheapest price. Find and compare flights, book/buy flights, and buy air "
+"tickets online with ease using Day Safaris Adventures bookings website here."
+msgstr ""
+"Day Safaris Adventures vereinfacht diese Aufgabe, indem Sie Inlands- und "
+"Auslandsflüge von großen Fluggesellschaften wie Egypt Air, Kenya Airways, "
+"South African Airways, Ethiopian Airlines, Air France, KLM, Emirates, "
+"Lufthansa, Swiss Airways und anderen zum günstigsten Preis suchen können. "
+"Finden und vergleichen Sie Flüge, buchen/kaufen Sie Flüge und kaufen Sie "
+"Flugtickets online ganz einfach über die Buchungswebsite von Day Safaris "
+"Adventures."
+
+msgid "about Day Safaris Adventures"
+msgstr "über Day Safaris Adventures"
+
+msgid "African Wildlife Safaris"
+msgstr "Afrikanische Wildtier-Safaris"
+
+msgid ""
+"Experience the magic of the African wilderness with our expert guides. Track"
+" the Big Five in Masai Mara, witness the Great Wildebeest Migration, and "
+"capture breathtaking moments of lions, elephants, rhinos, leopards, and "
+"buffalos in their natural habitat."
+msgstr ""
+"Erleben Sie die Magie der afrikanischen Wildnis mit unseren erfahrenen "
+"Guides. Verfolgen Sie die Big Five in der Masai Mara, erleben Sie die Große "
+"Gnuswanderung und fangen Sie atemberaubende Momente von Löwen, Elefanten, "
+"Nashörnern, Leoparden und Büffeln in ihrem natürlichen Lebensraum ein."
+
+msgid "Travel Partnership Programs"
+msgstr "Reisepartnerschaftsprogramme"
+
+msgid ""
+"Join our exclusive travel partnership network and unlock special rates for "
+"group bookings, corporate retreats, and family vacations. We work with "
+"hotels, airlines, and local guides to provide seamless travel experiences "
+"across East Africa."
+msgstr ""
+"Treten Sie unserem exklusiven Reisepartnerschaftsnetzwerk bei und erhalten "
+"Sie Sonderkonditionen für Gruppenbuchungen, Firmenausflüge und "
+"Familienurlaube. Wir arbeiten mit Hotels, Fluggesellschaften und lokalen "
+"Guides zusammen, um nahtlose Reiseerlebnisse in ganz Ostafrika zu bieten."
+
+msgid "Airport Transfers & Shuttles"
+msgstr "Flughafentransfers & Shuttles"
+
+msgid ""
+"Enjoy hassle-free airport transfers from Jomo Kenyatta International "
+"Airport, Moi International Airport, Kilimanjaro International Airport, and "
+"Entebbe Airport. Our professional drivers and comfortable vehicles ensure "
+"you start and end your journey stress-free."
+msgstr ""
+"Genießen Sie problemlose Flughafentransfers vom Jomo Kenyatta International "
+"Airport, Moi International Airport, Kilimanjaro International Airport und "
+"Entebbe Airport. Unsere professionellen Fahrer und komfortablen Fahrzeuge "
+"sorgen dafür, dass Sie Ihre Reise stressfrei beginnen und beenden."
+
+msgid "Custom Tailor-Made Tours"
+msgstr "Maßgeschneiderte Touren"
+
+msgid ""
+"Design your dream African adventure with our personalized tour planning "
+"service. Whether it's a romantic honeymoon safari, a family vacation, or a "
+"solo expedition, we craft itineraries that match your preferences, budget, "
+"and travel style perfectly."
+msgstr ""
+"Gestalten Sie Ihr Traum-Afrika-Abenteuer mit unserem persönlichen "
+"Tourenplanungsservice. Ob romantische Flitterwochen-Safari, Familienurlaub "
+"oder Solo-Expedition – wir erstellen Reiseverläufe, die perfekt auf Ihre "
+"Vorlieben, Ihr Budget und Ihren Reisestil abgestimmt sind."
+
+msgid "Day Safaris Adventures | Premier Safari & Travel Company in Kenya"
+msgstr ""
+"Day Safaris Adventures | Führendes Safari- und Reiseunternehmen in Kenia"
+
+msgid ""
+"Day Safaris Adventures is a premier destination management company in "
+"Nairobi, Kenya, offering tailor-made African safaris, trekking, cruises and "
+"travel services across East, West, South and International destinations."
+msgstr ""
+"Day Safaris Adventures ist ein führendes Destination-Management-Unternehmen "
+"in Nairobi, Kenia, und bietet maßgeschneiderte Afrika-Safaris, Trekking, "
+"Kreuzfahrten und Reiseleistungen in Ost-, West- und Südafrika sowie "
+"international an."
+
+msgid ""
+"Kenya safari, Africa safari tours, Day Safaris Adventures, Nairobi tour "
+"operator, Mount Kenya trekking, Kilimanjaro trekking, African wildlife "
+"tours, safari packages"
+msgstr ""
+"Kenia Safari, Afrika Safaris, Day Safaris Adventures, Reiseveranstalter "
+"Nairobi, Mount Kenya Trekking, Kilimandscharo Trekking, afrikanische "
+"Tierwelt-Touren, Safaripakete"
+
+msgid "Limited Time"
+msgstr "Nur für kurze Zeit"
+
+#, python-format
+msgid "Get $10%% Discount"
+msgstr "Erhalten Sie 10%% Rabatt"
+
+#, python-format
+msgid "Save %(p)s%%"
+msgstr "Sparen Sie %(p)s%%"
+
+#, python-format
+msgid "Valid until %(dt)s"
+msgstr "Gültig bis %(dt)s"
+
+msgid "Special Offer"
+msgstr "Sonderangebot"
+
+msgid "Don't show again"
+msgstr "Nicht mehr anzeigen"
+
+msgid "Day Safaris on Instagram"
+msgstr "Day Safaris auf Instagram"
+
+msgid "Language"
+msgstr "Sprache"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+# ==================== BASE.HTML TRANSLATIONS ====================
+msgid "Register"
+msgstr "Registrieren"
+
+msgid "Login"
+msgstr "Anmelden"
+
+msgid "My Dashboard"
+msgstr "Mein Dashboard"
+
+msgid "My Profile"
+msgstr "Mein Profil"
+
+msgid "Account Settings"
+msgstr "Kontoeinstellungen"
+
+msgid "Log Out"
+msgstr "Abmelden"
+
+msgid "Days Safaris Adventures logo"
+msgstr "Logo von Days Safaris Adventures"
+
+msgid "Toggle navigation"
+msgstr "Navigation umschalten"
+
+msgid "Tours"
+msgstr "Touren"
+
+msgid "Trekking"
+msgstr "Trekking"
+
+msgid "Mt Kilimanjaro"
+msgstr "Kilimandscharo"
+
+msgid "Mt Kenya"
+msgstr "Mount Kenya"
+
+msgid "Mt Longonot"
+msgstr "Mount Longonot"
+
+msgid "Mt Suswa"
+msgstr "Mount Suswa"
+
+msgid "Mt Meru"
+msgstr "Mount Meru"
+
+msgid "Cruises"
+msgstr "Kreuzfahrten"
+
+msgid "All Services"
+msgstr "Alle Dienstleistungen"
+
+msgid "African WildLife Tours"
+msgstr "Afrikanische Wildtier-Touren"
+
+msgid "Travel Partnerships"
+msgstr "Reisepartnerschaften"
+
+msgid "Holiday Tailor Made Tours"
+msgstr "Maßgeschneiderte Urlaubstouren"
+
+msgid "AirPort Transfers"
+msgstr "Flughafentransfers"
+
+msgid "AirLine"
+msgstr "Fluggesellschaft"
+
+msgid "Hotels"
+msgstr "Hotels"
+
+msgid "Packages"
+msgstr "Pakete"
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Subscribe for Safari Updates & Special Offers"
+msgstr "Abonnieren Sie Safari-Updates und Sonderangebote"
+
+#, python-format
+msgid ""
+"Join our newsletter to receive exclusive travel deals, safari tips, and "
+"inspiring stories from East Africa. Get 10%% off your first booking when you"
+" subscribe today!"
+msgstr ""
+"Abonnieren Sie unseren Newsletter und erhalten Sie exklusive Reiseangebote, "
+"Safari-Tipps und inspirierende Geschichten aus Ostafrika. Sichern Sie sich "
+"10%% Rabatt auf Ihre erste Buchung, wenn Sie sich heute anmelden!"
+
+msgid "Enter your email address"
+msgstr "Geben Sie Ihre E-Mail-Adresse ein"
+
+msgid "Subscribe Now"
+msgstr "Jetzt abonnieren"
+
+msgid "Get In Touch"
+msgstr "Kontaktieren Sie uns"
+
+msgid "00200 Nairobi Railways Museum"
+msgstr "00200 Nairobi Railway Museum"
+
+# ==================== PACKAGE_DETAIL.HTML TRANSLATIONS ====================
+msgid "Day Safaris on Facebook"
+msgstr "Day Safaris auf Facebook"
+
+msgid "Company"
+msgstr "Unternehmen"
+
+msgid "Careers"
+msgstr "Karriere"
+
+msgid "Press"
+msgstr "Presse"
+
+msgid "Gift Cards"
+msgstr "Geschenkkarten"
+
+msgid "Magazine"
+msgstr "Magazin"
+
+msgid "Support"
+msgstr "Support"
+
+msgid "Legal Notice"
+msgstr "Impressum"
+
+msgid "Sitemap"
+msgstr "Sitemap"
+
+msgid "Cookie policy"
+msgstr "Cookie-Richtlinie"
+
+msgid "Arabic"
+msgstr "Arabisch"
+
+msgid "Greek"
+msgstr "Griechisch"
+
+msgid "USD"
+msgstr "USD"
+
+msgid "EUR"
+msgstr "EUR"
+
+msgid "INR"
+msgstr "INR"
+
+msgid "GBP"
+msgstr "GBP"
+
+msgid "Payments"
+msgstr "Zahlungen"
+
+msgid "American Express accepted"
+msgstr "American Express akzeptiert"
+
+msgid "Visa accepted"
+msgstr "Visa akzeptiert"
+
+msgid "Credit card accepted"
+msgstr "Kreditkarten akzeptiert"
+
+msgid "Mastercard accepted"
+msgstr "Mastercard akzeptiert"
+
+msgid "PayPal accepted"
+msgstr "PayPal akzeptiert"
+
+msgid "Discover accepted"
+msgstr "Discover akzeptiert"
+
+msgid "Gallery"
+msgstr "Galerie"
+
+msgid "View the full gallery"
+msgstr "Gesamte Galerie ansehen"
+
+msgid "View all"
+msgstr "Alle ansehen"
+
+msgid "View photo"
+msgstr "Foto ansehen"
+
 msgid "All right reserved"
 msgstr "Alle Rechte vorbehalten"
 
-#: Home/templates/Home/base.html:230
 msgid "Designed By"
 msgstr "Entworfen von"
 
-#: Home/templates/Home/base.html:281 Home/templates/Home/base.html:293
+msgid "BlackCodeLabs"
+msgstr "BlackCodeLabs"
+
+msgid "Back to top"
+msgstr "Nach oben"
+
 msgid "Success!"
 msgstr "Erfolg!"
 
-#: Home/templates/Home/base.html:284
 msgid "Error!"
 msgstr "Fehler!"
 
-#: Home/templates/Home/base.html:287
 msgid "Warning!"
 msgstr "Warnung!"
 
-#: Home/templates/Home/base.html:290
 msgid "Info!"
 msgstr "Info!"
 
-#: Home/templates/Home/base.html:410
+msgid "Open chat"
+msgstr "Chat öffnen"
+
 msgid "Customer Support"
 msgstr "Kundensupport"
 
-#: Home/templates/Home/base.html:411
 msgid "Usually replies in under 5 mins"
 msgstr "Antwortet normalerweise innerhalb von 5 Minuten"
 
-#: Home/templates/Home/base.html:415
 msgid "Online"
 msgstr "Online"
 
-#: Home/templates/Home/base.html:421
 msgid "Hello! 👋 Welcome to Day Safaris Adventures! How can I help you today?"
-msgstr "Hallo! 👋 Willkommen bei Day Safaris Adventures! Wie kann ich Ihnen heute helfen?"
+msgstr ""
+"Hallo! 👋 Willkommen bei Day Safaris Adventures! Wie kann ich Ihnen heute "
+"helfen?"
 
-#: Home/templates/Home/base.html:422
 msgid "Just now"
 msgstr "Gerade eben"
 
-#: Home/templates/Home/base.html:428
 msgid "I need help with booking a safari"
 msgstr "Ich brauche Hilfe bei der Buchung einer Safari"
 
-#: Home/templates/Home/base.html:429
 msgid "Book Safari"
 msgstr "Safari buchen"
 
-#: Home/templates/Home/base.html:430
 msgid "Tell me about available destinations"
 msgstr "Informieren Sie mich über verfügbare Reiseziele"
 
-#: Home/templates/Home/base.html:432
 msgid "What are your current packages and prices?"
 msgstr "Was sind Ihre aktuellen Pakete und Preise?"
 
-#: Home/templates/Home/base.html:433
 msgid "Packages & Prices"
 msgstr "Pakete & Preise"
 
-#: Home/templates/Home/base.html:434
 msgid "I need help with payment options"
 msgstr "Ich brauche Hilfe bei den Zahlungsmöglichkeiten"
 
-#: Home/templates/Home/base.html:435
 msgid "Payment Help"
 msgstr "Zahlungshilfe"
 
-#: Home/templates/Home/base.html:441
 msgid "Type your message..."
 msgstr "Geben Sie Ihre Nachricht ein..."
 
-#: Home/templates/Home/base.html:447
+msgid "Send message"
+msgstr "Nachricht senden"
+
 msgid "Powered by Day Safaris Support Team"
 msgstr "Unterstützt durch das Day Safaris Support-Team"
 
 # ==================== INDEX.HTML TRANSLATIONS ====================
+msgid "Brochures - Day Safari Adventures"
+msgstr "Broschüren - Day Safari Adventures"
 
-#: Home/templates/Home/index.html:4
-msgid "Home - Days Safaris Adventures"
-msgstr "Startseite - Days Safaris Adventures"
+msgid ""
+"Download safari brochures, itineraries and travel guides for East Africa "
+"from Day Safaris Adventures."
+msgstr ""
+"Laden Sie Safari-Broschüren, Reiserouten und Reiseführer für Ostafrika von "
+"Day Safaris Adventures herunter."
 
-#: Home/templates/Home/index.html:14
-msgid "Explore The World"
-msgstr "Entdecken Sie die Welt"
+msgid "Download Our Brochures"
+msgstr "Unsere Broschüren herunterladen"
 
-#: Home/templates/Home/index.html:15
-msgid "EXPERIENCE THE WORLD"
-msgstr "ERLEBEN SIE DIE WELT"
+# ==================== INDEX.HTML TRANSLATIONS ====================
+msgid "Cruses - Days Safaris Adventures"
+msgstr "Kreuzfahrten - Days Safaris Adventures"
 
-#: Home/templates/Home/index.html:16
-msgid "Adventure Awaits – Let's Go"
-msgstr "Abenteuer wartet – Los geht's"
+msgid ""
+"Luxury cruise and island holiday packages booked through Day Safaris "
+"Adventures, Nairobi."
+msgstr ""
+"Luxuskreuzfahrten und Inselurlaubspakete, buchbar über Day Safaris "
+"Adventures, Nairobi."
 
-#: Home/templates/Home/index.html:18 Home/templates/Home/index.html:29 Home/templates/Home/index.html:40
-msgid "Discover Now"
-msgstr "Jetzt entdecken"
+msgid "Cruise Image"
+msgstr "Kreuzfahrtbild"
 
-#: Home/templates/Home/index.html:27
-msgid "Travel With Us Today"
-msgstr "Reisen Sie heute mit uns"
+msgid "Luxury Ocean Travel"
+msgstr "Luxus-Hochseereisen"
 
-#: Home/templates/Home/index.html:28
-msgid "And Let Us Give You The Experience Of The World"
-msgstr "Und lassen Sie uns Ihnen die Erfahrung der Welt geben"
+msgid "Island Adventures"
+msgstr "Inselabenteuer"
 
-#: Home/templates/Home/index.html:38
-msgid "Sail Into Serenity"
-msgstr "Segeln Sie in die Ruhe"
+msgid "Included:"
+msgstr "Inbegriffen:"
 
-#: Home/templates/Home/index.html:39
-msgid "At Days Safaris Adventures"
-msgstr "Bei Days Safaris Adventures"
+msgid "Not Included:"
+msgstr "Nicht inbegriffen:"
 
-#: Home/templates/Home/index.html:40
-msgid "We Are Your Ultimate Cruise Escape"
-msgstr "Wir sind Ihr ultimativer Kreuzfahrt-Escape"
-
-#: Home/templates/Home/index.html:48
 msgid "Previous"
 msgstr "Zurück"
 
-#: Home/templates/Home/index.html:52
 msgid "Next"
 msgstr "Weiter"
 
-#: Home/templates/Home/index.html:60
-msgid "Eg: Masai Mara, Diani, Amboseli"
-msgstr "Z.B.: Masai Mara, Diani, Amboseli"
+msgid "Our Cruises"
+msgstr "Unsere Kreuzfahrten"
 
-#: Home/templates/Home/index.html:61
-msgid "Search"
-msgstr "Suchen"
+msgid "Experience Luxury Cruise Packages with Us"
+msgstr "Erleben Sie Luxuskreuzfahrten mit uns"
 
-#: Home/templates/Home/index.html:73
-msgid "About Day Safaris"
-msgstr "Über Day Safaris"
+msgid ""
+"Experience the luxury and excitement of unforgettable cruise journeys across"
+" stunning coastlines, tropical islands, and vibrant destinations with world-"
+"class entertainment, fine dining, and relaxing ocean adventures."
+msgstr ""
+"Erleben Sie Luxus und Spannung unvergesslicher Kreuzfahrten entlang "
+"atemberaubender Küsten, tropischer Inseln und lebendiger Reiseziele – mit "
+"Unterhaltung von Weltklasse, feinem Essen und entspannenden Abenteuern auf "
+"dem Meer."
 
-#: Home/templates/Home/index.html:77
-msgid "Explore East Africa with Day Safaris – Become a Story Teller"
-msgstr "Entdecken Sie Ostafrika mit Day Safaris – Werden Sie zum Geschichtenerzähler"
+msgid ""
+"From luxury ocean cruises and island-hopping adventures to sunset voyages "
+"and deep-sea explorations, our expertly curated cruise experiences offer "
+"unforgettable journeys for solo travelers, couples, families, and groups."
+msgstr ""
+"Von luxuriösen Hochseekreuzfahrten und Inselhüpfen bis zu "
+"Sonnenuntergangsfahrten und Tiefseeerkundungen – unsere sorgfältig "
+"zusammengestellten Kreuzfahrten bieten unvergessliche Reisen für "
+"Alleinreisende, Paare, Familien und Gruppen."
 
-#: Home/templates/Home/index.html:78
-msgid "Day Safaris Adventures is Kenya's leading and fastest-growing tour company, renowned for delivering exceptional safari experiences across East Africa. As a premier destination management company, we specialize in creating unforgettable wildlife adventures, cultural immersions, and luxury getaways throughout Kenya, Tanzania, Uganda, and Rwanda."
-msgstr "Day Safaris Adventures ist Kenias führendes und am schnellsten wachsendes Tourismusunternehmen, bekannt für außergewöhnliche Safari-Erlebnisse in ganz Ostafrika. Als erstklassiges Destination-Management-Unternehmen spezialisieren wir uns auf die Schaffung unvergesslicher Wildtierabenteuer, kultureller Eintauchen und luxuriöser Ausflüge in Kenia, Tansania, Uganda und Ruanda."
+msgid "Luxury Cruise Experiences"
+msgstr "Luxuskreuzfahrten"
 
-#: Home/templates/Home/index.html:79
-msgid "With our headquarters in Nairobi, Kenya, and strategic partner offices in South Africa and Tanzania, we offer tailor-made safari packages that include private game drives, hot air balloon safaris, mountain climbing expeditions, and beach holidays at the Kenyan coast. Our commitment to sustainable tourism and exceptional service ensures every journey with us becomes a lifetime memory."
-msgstr "Mit unserem Hauptsitz in Nairobi, Kenia, und strategischen Partnerbüros in Südafrika und Tansania bieten wir maßgeschneiderte Safaripakete an, die private Pirschfahrten, Heißluftballonsafaris, Bergsteigerexpeditionen und Strandurlaube an der kenianischen Küste umfassen. Unser Engagement für nachhaltigen Tourismus und außergewöhnlichen Service stellt sicher, dass jede Reise mit uns zu einer lebenslangen Erinnerung wird."
+msgid "Ocean & Deep-Sea Voyages"
+msgstr "Hochsee- und Tiefseereisen"
 
-#: Home/templates/Home/index.html:81
-msgid "First Class Flights"
-msgstr "First-Class-Flüge"
+msgid "Island Hopping Adventures"
+msgstr "Inselhüpfen-Abenteuer"
 
-#: Home/templates/Home/index.html:84
-msgid "Handpicked Safari Lodges"
-msgstr "Handverlesene Safari-Lodges"
+msgid "Sunset & Scenic Cruises"
+msgstr "Sonnenuntergangs- und Panoramafahrten"
 
-#: Home/templates/Home/index.html:87
-msgid "5 Star Accommodations"
-msgstr "5-Sterne-Unterkünfte"
+msgid "Private Yacht Charters"
+msgstr "Private Yachtcharter"
 
-#: Home/templates/Home/index.html:90
-msgid "Latest Model Safari Vehicles"
-msgstr "Safari-Fahrzeuge der neuesten Modelle"
+msgid "Professional Cruise Crew & Hospitality"
+msgstr "Professionelle Crew und Gastfreundschaft"
 
-#: Home/templates/Home/index.html:93
-msgid "150+ Premium Safari Tours"
-msgstr "150+ Premium-Safari-Touren"
+msgid "Cruise Packages"
+msgstr "Kreuzfahrtpakete"
 
-#: Home/templates/Home/index.html:96
-msgid "24/7 Customer Support"
-msgstr "24/7 Kundensupport"
+msgid "Awesome Cruise Packages"
+msgstr "Großartige Kreuzfahrtpakete"
 
-#: Home/templates/Home/index.html:108
-msgid "Our Services"
-msgstr "Unsere Dienstleistungen"
-
-#: Home/templates/Home/index.html:157
-msgid "Destination"
-msgstr "Reiseziel"
-
-#: Home/templates/Home/index.html:158
-msgid "The 'Must Visit' Destinations in East Africa"
-msgstr "Die 'Must-Visit'-Reiseziele in Ostafrika"
-
-#: Home/templates/Home/index.html:165
-msgid "All Destinations"
-msgstr "Alle Reiseziele"
-
-#: Home/templates/Home/index.html:210 Home/templates/Home/index.html:317
-msgid "Placeholder Image"
-msgstr "Platzhalterbild"
-
-#: Home/templates/Home/index.html:215 Home/templates/Home/index.html:253 Home/templates/Home/index.html:291
-msgid "View All Places"
-msgstr "Alle Orte anzeigen"
-
-#: Home/templates/Home/index.html:334
-msgid "Placeholder"
-msgstr "Platzhalter"
-
-#: Home/templates/Home/index.html:336
-msgid "Coming Soon"
-msgstr "Demnächst verfügbar"
-
-#: Home/templates/Home/index.html:337
-msgid "New Destination"
-msgstr "Neues Reiseziel"
-
-#: Home/templates/Home/index.html:499
-msgid "Packages"
-msgstr "Pakete"
-
-#: Home/templates/Home/index.html:500
-msgid "Awesome Safari Packages"
-msgstr "Tolle Safaripakete"
-
-#: Home/templates/Home/index.html:512
-msgid "days"
-msgstr "Tage"
-
-#: Home/templates/Home/index.html:513
-msgid "Persons"
-msgstr "Personen"
-
-#: Home/templates/Home/index.html:520
 msgid "Safari Package"
 msgstr "Safaripaket"
 
-#: Home/templates/Home/index.html:534
 msgid "No packages available at the moment"
 msgstr "Derzeit keine Pakete verfügbar"
 
-#: Home/templates/Home/index.html:535
 msgid "Please check back later for exciting safari packages!"
 msgstr "Bitte schauen Sie später wieder vorbei für spannende Safaripakete!"
 
-#: Home/templates/Home/index.html:545
-msgid "Booking"
-msgstr "Buchung"
+msgid "FAQ - Days Safaris Adventures"
+msgstr "FAQ - Days Safaris Adventures"
 
-#: Home/templates/Home/index.html:546
-msgid "Book Your Safari Adventure"
-msgstr "Buchen Sie Ihr Safari-Abenteuer"
+msgid ""
+"Answers to common questions about booking a safari, visas, payments, best "
+"time to travel and what to pack, from Day Safaris Adventures."
+msgstr ""
+"Antworten auf häufige Fragen zur Safari-Buchung, zu Visa, Zahlungen, der "
+"besten Reisezeit und dem Packen – von Day Safaris Adventures."
 
-#: Home/templates/Home/index.html:547
-msgid "Ready to experience the adventure of a lifetime? Booking your safari with Day Safaris is quick and easy. Our team of travel experts will help you customize your perfect African getaway, whether you're dreaming of witnessing the Great Migration, relaxing on tropical beaches, or climbing majestic mountains."
-msgstr "Bereit für das Abenteuer Ihres Lebens? Die Buchung Ihrer Safari mit Day Safaris ist schnell und einfach. Unser Team von Reiseexperten hilft Ihnen, Ihren perfekten Afrika-Urlaub zu gestalten, ob Sie von der Großen Migration träumen, an tropischen Stränden entspannen oder majestätische Berge besteigen möchten."
+msgid "Frequently Asked Questions"
+msgstr "Häufig gestellte Fragen"
 
-#: Home/templates/Home/index.html:548
-msgid "Take advantage of our early bird discounts and group booking offers. All our packages include professional guides, comfortable accommodations, park entry fees, and 24/7 support throughout your journey. Book today and pay later with our flexible payment plans!"
-msgstr "Nutzen Sie unsere Frühbucherrabatte und Gruppenbuchungsangebote. Alle unsere Pakete beinhalten professionelle Führer, komfortable Unterkünfte, Parkeintrittsgebühren und 24/7-Unterstützung während Ihrer gesamten Reise. Buchen Sie heute und zahlen Sie später mit unseren flexiblen Zahlungsplänen!"
+msgid "What does Day Safaris Adventures specialize in?"
+msgstr "Worauf ist Day Safaris Adventures spezialisiert?"
 
-#: Home/templates/Home/index.html:549
-msgid "Brochures"
-msgstr "Broschüren"
+msgid ""
+"We specialize in African wildlife safaris, tailor-made tours, beach "
+"holidays, mountain adventures, cultural experiences, airport transfers, "
+"hotel bookings, visa assistance, and international travel packages."
+msgstr ""
+"Wir sind spezialisiert auf afrikanische Tierwelt-Safaris, maßgeschneiderte "
+"Touren, Strandurlaub, Bergabenteuer, Kulturerlebnisse, Flughafentransfers, "
+"Hotelbuchungen, Visahilfe und internationale Reisepakete."
 
-#: Home/templates/Home/index.html:552
-msgid "Book A Tour Deals"
-msgstr "Buchen Sie Touren-Angebote"
+msgid "Where are you located?"
+msgstr "Wo befinden Sie sich?"
 
-#: Home/templates/Home/index.html:553
-msgid "Get"
-msgstr "Erhalten Sie"
+msgid "Our head office is conveniently located at"
+msgstr "Unser Hauptbüro befindet sich praktisch im"
 
-#: Home/templates/Home/index.html:553
-msgid "50% Off"
-msgstr "50% Rabatt"
+msgid "Nairobi Railways Museum, Nairobi, Kenya (00200)"
+msgstr "Nairobi Railway Museum, Nairobi, Kenia (00200)"
 
-#: Home/templates/Home/index.html:553
-msgid "On Your First Adventure Trip With Day Safaris Adventures. Get More Deal Offers Here."
-msgstr "Auf Ihre erste Abenteuerreise mit Day Safaris Adventures. Hier finden Sie weitere Angebote."
+msgid ""
+", making it easy for clients to visit us for travel consultations and "
+"bookings."
+msgstr ""
+", sodass Kunden uns leicht für Reiseberatung und Buchungen besuchen können."
 
-#: Home/templates/Home/index.html:569
-msgid "Your Name"
-msgstr "Ihr Name"
+msgid "What are your business hours?"
+msgstr "Wie sind Ihre Öffnungszeiten?"
 
-#: Home/templates/Home/index.html:577
-msgid "Your Email"
-msgstr "Ihre E-Mail"
+msgid "We are open"
+msgstr "Wir haben geöffnet"
 
-#: Home/templates/Home/index.html:585
-msgid "Phone Number"
-msgstr "Telefonnummer"
+msgid "Monday to Sunday"
+msgstr "Montag bis Sonntag"
 
-#: Home/templates/Home/index.html:601
-msgid "Number of Persons"
-msgstr "Anzahl der Personen"
+msgid "from"
+msgstr "von"
 
-#: Home/templates/Home/index.html:609
-msgid "Travel Date"
-msgstr "Reisedatum"
+msgid ""
+". Our customer support team is available throughout these hours to assist "
+"with bookings and travel inquiries."
+msgstr ""
+". Unser Kundenserviceteam steht Ihnen in dieser Zeit bei Buchungen und "
+"Reiseanfragen zur Verfügung."
 
-#: Home/templates/Home/index.html:617
-msgid "Special Requests (Dietary, Accessibility, etc.)"
-msgstr "Besondere Wünsche (Ernährung, Barrierefreiheit, usw.)"
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "How can I contact Day Safaris Adventures?"
+msgstr "Wie kann ich Day Safaris Adventures kontaktieren?"
 
-#: Home/templates/Home/index.html:637
-msgid "Our Blog"
-msgstr "Unser Blog"
+msgid "You can reach us via email at"
+msgstr "Sie erreichen uns per E-Mail unter"
 
-#: Home/templates/Home/index.html:638
-msgid "Popular Travel Blogs & Safari Tips"
-msgstr "Beliebte Reiseblogs & Safari-Tipps"
+msgid "or call us on"
+msgstr "oder rufen Sie uns an unter"
 
-#: Home/templates/Home/index.html:639
-msgid "Discover expert travel advice, safari planning guides, and inspiring stories from our adventures across East Africa. Learn about the best times to visit, wildlife photography tips, and hidden gems off the beaten path."
-msgstr "Entdecken Sie Experten-Reiseberatung, Safari-Planungsleitfäden und inspirierende Geschichten von unseren Abenteuern in ganz Ostafrika. Erfahren Sie mehr über die besten Reisezeiten, Wildtierfotografie-Tipps und versteckte Juwelen abseits der ausgetretenen Pfade."
+msgid ". off - office number is"
+msgstr ". Die Büronummer lautet"
 
-#: Home/templates/Home/index.html:665
-msgid "Posted By:"
-msgstr "Veröffentlicht von:"
+msgid ". You may also visit our office during business hours."
+msgstr ". Sie können unser Büro auch während der Öffnungszeiten besuchen."
 
-#: Home/templates/Home/index.html:674
-msgid "No blog posts yet"
-msgstr "Noch keine Blogbeiträge"
+msgid "Can you help with visa processing?"
+msgstr "Können Sie bei der Visabeschaffung helfen?"
 
-#: Home/templates/Home/index.html:675
-msgid "Check back soon for exciting travel stories and tips!"
-msgstr "Schauen Sie bald wieder vorbei für spannende Reisegeschichten und Tipps!"
+msgid ""
+"Yes. We provide professional visa processing assistance, helping clients "
+"prepare documents, complete applications, and track their visa status for "
+"various destinations."
+msgstr ""
+"Ja. Wir bieten professionelle Unterstützung bei der Visabeschaffung: Wir "
+"helfen bei den Unterlagen, beim Ausfüllen der Anträge und bei der Verfolgung"
+" des Visastatus für verschiedene Reiseziele."
 
-#: Home/templates/Home/index.html:685
+msgid "How do I book a safari?"
+msgstr "Wie buche ich eine Safari?"
+
+msgid ""
+"Booking is easy. Simply fill out our online booking form, call our travel "
+"consultants, or send us an email. We'll help you choose the perfect package "
+"and customize your adventure to suit your budget and preferences."
+msgstr ""
+"Die Buchung ist einfach. Füllen Sie unser Online-Buchungsformular aus, rufen"
+" Sie unsere Reiseberater an oder senden Sie uns eine E-Mail. Wir helfen "
+"Ihnen, das perfekte Paket zu wählen und Ihr Abenteuer an Budget und Wünsche "
+"anzupassen."
+
 msgid "Testimonial"
 msgstr "Erfahrungsbericht"
 
-#: Home/templates/Home/index.html:686
 msgid "What Our Clients Say About Us"
 msgstr "Was unsere Kunden über uns sagen"
 
-#: Home/templates/Home/index.html:713
 msgid "No testimonials yet"
 msgstr "Noch keine Erfahrungsberichte"
 
-#: Home/templates/Home/index.html:714
 msgid "Be the first to share your experience with us!"
 msgstr "Teilen Sie als Erster Ihre Erfahrungen mit uns!"
 
-# ==================== ABOUT.HTML TRANSLATIONS ====================
-
-#: Home/templates/Home/about.html:4
-msgid "About Us - Days Safaris Adventures"
-msgstr "Über uns - Days Safaris Adventures"
-
-#: Home/templates/Home/about.html:11
-msgid "About Our Destinations"
-msgstr "Über unsere Reiseziele"
-
-#: Home/templates/Home/about.html:14
-msgid "Pages"
-msgstr "Seiten"
-
-#: Home/templates/Home/about.html:36
-msgid "Discover South Africa"
-msgstr "Entdecken Sie Südafrika"
-
-#: Home/templates/Home/about.html:37
-msgid "Experience the Beauty & Luxury of South Africa"
-msgstr "Erleben Sie die Schönheit und den Luxus Südafrikas"
-
-#: Home/templates/Home/about.html:38
-msgid "Discover breathtaking landscapes, vibrant cities, and unforgettable wildlife adventures across South Africa. From the stunning coastlines of Cape Town to thrilling safaris in Kruger National Park, every journey is designed to create lasting memories."
-msgstr "Entdecken Sie atemberaubende Landschaften, pulsierende Städte und unvergessliche Wildtierabenteuer in ganz Südafrika. Von den atemberaubenden Küsten Kapstadts bis zu aufregenden Safaris im Kruger-Nationalpark ist jede Reise darauf ausgerichtet, bleibende Erinnerungen zu schaffen."
-
-#: Home/templates/Home/about.html:39
-msgid "Enjoy luxury accommodations, guided wildlife tours, cultural experiences, wine tasting adventures, and scenic road trips with professionally curated travel packages tailored for every explorer."
-msgstr "Genießen Sie luxuriöse Unterkünfte, geführte Wildtier-Touren, kulturelle Erlebnisse, Weinproben-Abenteuer und malerische Roadtrips mit professionell kuratierten Reisepaketen, die auf jeden Entdecker zugeschnitten sind."
-
-#: Home/templates/Home/about.html:43
-msgid "Luxury Safari Experiences"
-msgstr "Luxus-Safari-Erlebnisse"
-
-#: Home/templates/Home/about.html:45
-msgid "Cape Town City Tours"
-msgstr "Stadtrundfahrten in Kapstadt"
-
-#: Home/templates/Home/about.html:47
-msgid "Beach & Coastal Escapes"
-msgstr "Strand- und Küstenausflüge"
-
-#: Home/templates/Home/about.html:49
-msgid "Adventure Activities"
-msgstr "Abenteueraktivitäten"
-
-#: Home/templates/Home/about.html:51
-msgid "Wine & Cultural Tours"
-msgstr "Wein- und Kulturtouren"
-
-#: Home/templates/Home/about.html:53
-msgid "24/7 Travel Assistance"
-msgstr "24/7 Reiseassistenz"
-
-#: Home/templates/Home/about.html:56
-msgid "Explore South Africa Tours"
-msgstr "Entdecken Sie Südafrika-Touren"
-
-#: Home/templates/Home/about.html:75
-msgid "Explore West Africa"
-msgstr "Entdecken Sie Westafrika"
-
-#: Home/templates/Home/about.html:76
-msgid "Discover Culture, History & Adventure"
-msgstr "Entdecken Sie Kultur, Geschichte & Abenteuer"
-
-#: Home/templates/Home/about.html:77
-msgid "Experience the rich traditions, colorful cultures, and vibrant destinations of West Africa. From historical landmarks and bustling cities to tropical beaches and wildlife reserves, every destination offers something unique."
-msgstr "Erleben Sie die reichen Traditionen, farbenfrohen Kulturen und lebendigen Reiseziele Westafrikas. Von historischen Wahrzeichen und geschäftigen Städten bis zu tropischen Stränden und Wildtierreservaten bietet jedes Reiseziel etwas Einzigartiges."
-
-#: Home/templates/Home/about.html:78
-msgid "Our West Africa tours combine authentic cultural encounters, comfortable travel experiences, local cuisine adventures, and guided excursions across some of Africa's most exciting destinations."
-msgstr "Unsere Westafrika-Touren kombinieren authentische kulturelle Begegnungen, komfortable Reiseerlebnisse, Abenteuer der lokalen Küche und geführte Ausflüge zu einigen der aufregendsten Reiseziele Afrikas."
-
-#: Home/templates/Home/about.html:82
-msgid "Cultural Heritage Tours"
-msgstr "Kulturerbe-Touren"
-
-#: Home/templates/Home/about.html:84
-msgid "Historical Site Visits"
-msgstr "Besuche historischer Stätten"
-
-#: Home/templates/Home/about.html:86
-msgid "Luxury Hotel Stays"
-msgstr "Luxushotelaufenthalte"
-
-#: Home/templates/Home/about.html:88
-msgid "Beach Getaways"
-msgstr "Strandausflüge"
-
-#: Home/templates/Home/about.html:90
-msgid "Guided City Excursions"
-msgstr "Geführte Stadtexkursionen"
-
-#: Home/templates/Home/about.html:92
-msgid "Professional Tour Guides"
-msgstr "Professionelle Reiseführer"
-
-#: Home/templates/Home/about.html:95
-msgid "Explore West Africa Tours"
-msgstr "Entdecken Sie Westafrika-Touren"
-
-#: Home/templates/Home/about.html:114
-msgid "Travel Beyond Borders & Create Memories"
-msgstr "Reisen Sie über Grenzen hinaus und schaffen Sie Erinnerungen"
-
-#: Home/templates/Home/about.html:115
-msgid "Explore iconic destinations around the world with carefully planned international travel experiences. Whether you dream of luxury vacations, romantic escapes, or adventure-filled journeys, we make global travel seamless and exciting."
-msgstr "Entdecken Sie ikonische Reiseziele auf der ganzen Welt mit sorgfältig geplanten internationalen Reiseerlebnissen. Ob Sie von Luxusurlauben, romantischen Ausflügen oder abenteuerlichen Reisen träumen, wir machen globales Reisen nahtlos und aufregend."
-
-#: Home/templates/Home/about.html:116
-msgid "From flight bookings and hotel reservations to guided tours and visa assistance, our international travel packages are crafted to give you comfort, convenience, and unforgettable experiences."
-msgstr "Von Flugbuchungen und Hotelreservierungen bis zu geführten Touren und Visumshilfe – unsere internationalen Reisepakete sind darauf ausgerichtet, Ihnen Komfort, Bequemlichkeit und unvergessliche Erlebnisse zu bieten."
-
-#: Home/templates/Home/about.html:120
-msgid "Worldwide Destinations"
-msgstr "Weltweite Reiseziele"
-
-#: Home/templates/Home/about.html:122
-msgid "Flight & Hotel Booking"
-msgstr "Flug- & Hotelbuchung"
-
-#: Home/templates/Home/about.html:124
-msgid "Visa Assistance"
-msgstr "Visumshilfe"
-
-#: Home/templates/Home/about.html:126
-msgid "Luxury Vacation Packages"
-msgstr "Luxus-Urlaubspakete"
-
-#: Home/templates/Home/about.html:128
-msgid "Family & Group Tours"
-msgstr "Familien- & Gruppentouren"
-
-#: Home/templates/Home/about.html:132
-msgid "Explore International Tours"
-msgstr "Entdecken Sie Internationale Touren"
-
-#: Home/templates/Home/about.html:152
-msgid "Explore East Africa"
-msgstr "Entdecken Sie Ostafrika"
-
-#: Home/templates/Home/about.html:153
-msgid "Witness Africa's Greatest Safari Adventures"
-msgstr "Erleben Sie Afrikas größte Safari-Abenteuer"
-
-#: Home/templates/Home/about.html:154
-msgid "Discover the breathtaking beauty of East Africa through unforgettable safaris, wildlife encounters, mountain adventures, and relaxing beach holidays across Kenya, Tanzania, Uganda, and Rwanda."
-msgstr "Entdecken Sie die atemberaubende Schönheit Ostafrikas durch unvergessliche Safaris, Wildtierbegegnungen, Bergabenteuer und entspannte Strandurlaube in Kenia, Tansania, Uganda und Ruanda."
-
-#: Home/templates/Home/about.html:155
-msgid "From the Great Migration in Maasai Mara and Serengeti to gorilla trekking and coastal escapes, our expertly curated tours deliver authentic African experiences for solo travelers, couples, families, and groups."
-msgstr "Von der Großen Migration in der Masai Mara und Serengeti bis zu Gorilla-Trekking und Küstenausflügen bieten unsere fachmännisch zusammengestellten Touren authentische afrikanische Erlebnisse für Alleinreisende, Paare, Familien und Gruppen."
-
-#: Home/templates/Home/about.html:159
-msgid "Big Five Safari Tours"
-msgstr "Big Five Safari-Touren"
-
-#: Home/templates/Home/about.html:161
-msgid "Hot Air Balloon Safaris"
-msgstr "Heißluftballon-Safaris"
-
-#: Home/templates/Home/about.html:163
-msgid "Mountain Climbing Adventures"
-msgstr "Bergsteiger-Abenteuer"
-
-#: Home/templates/Home/about.html:165
-msgid "Luxury Safari Lodges"
-msgstr "Luxus-Safari-Lodges"
-
-#: Home/templates/Home/about.html:167
-msgid "Beach & Island Holidays"
-msgstr "Strand- & Inselurlaube"
-
-#: Home/templates/Home/about.html:169
-msgid "Experienced Safari Guides"
-msgstr "Erfahrene Safari-Guides"
-
-#: Home/templates/Home/about.html:172
-msgid "Explore East Africa Tours"
-msgstr "Entdecken Sie Ostafrika-Touren"
-
-#: Home/templates/Home/about.html:196
-msgid "Travel Guide"
-msgstr "Reiseführer"
-
-#: Home/templates/Home/about.html:197
-msgid "Meet Our Guides"
-msgstr "Treffen Sie unsere Guides"
-
-#: Home/templates/Home/about.html:222 Home/templates/Home/about.html:244 Home/templates/Home/about.html:266 Home/templates/Home/about.html:288
-msgid "Designation"
-msgstr "Bezeichnung"
-
-# ==================== SERVICES ====================
-
-#: Home/templates/Home/index.html:24
-msgid "Aeroplane Transfers"
-msgstr "Flugzeugtransfers"
-
-#: Home/templates/Home/index.html:40
-msgid "Visit Africa Today"
-msgstr "Besuchen Sie Afrika heute"
-
-#: Home/templates/Home/index.html:41
-msgid "Africa Tours"
-msgstr "Afrika-Touren"
-
-#: Home/templates/Home/index.html:55
-msgid "Accomodation"
-msgstr "Unterkunft"
-
-#: Home/templates/Home/index.html:56
-msgid "Hotel Accomodation"
-msgstr "Hotelunterkunft"
-
-#: Home/templates/Home/index.html:57
-msgid "Enjoy comfortable and carefully selected hotels"
-msgstr "Genießen Sie komfortable und sorgfältig ausgewählte Hotels"
-
-#: Home/templates/Home/index.html:71
-msgid "Get Visa processed"
-msgstr "Visum bearbeiten lassen"
-
-#: Home/templates/Home/index.html:72
-msgid "Visa Processing"
-msgstr "Visumsbearbeitung"
-
-#: Home/templates/Home/index.html:73
-msgid "Our visa processing and transfer services are designed to make international travel simple and hassle-free"
-msgstr "Unsere Visumsbearbeitungs- und Transferdienstleistungen sind darauf ausgelegt, internationale Reisen einfach und problemlos zu gestalten"
-
-#: Home/templates/Home/index.html:87
-msgid "Tailor Made Tours"
-msgstr "Maßgeschneiderte Touren"
-
-#: Home/templates/Home/index.html:88
-msgid "Tailour Made Tours"
-msgstr "Maßgeschneiderte Touren"
-
-#: Home/templates/Home/index.html:89
-msgid "Design your dream African adventure with our personalized tour planning service"
-msgstr "Gestalten Sie Ihr Traum-Afrika-Abenteuer mit unserem persönlichen Tourenplanungsservice"
-
-#: Home/templates/Home/index.html:103
-msgid "partner program"
-msgstr "Partnerprogramm"
-
-#: Home/templates/Home/index.html:105
-msgid "Enjoy hassle-free airport transfers from Jomo Kenyatta International Airport, Moi International Airport, Kilimanjaro International Airport, and Entebbe Airport"
-msgstr "Genießen Sie problemlose Flughafentransfers vom Jomo Kenyatta International Airport, Moi International Airport, Kilimanjaro International Airport und Entebbe Airport"
-
-# ==================== AIRLINE.HTML TRANSLATIONS ====================
-
-#: Home/templates/Home/airline.html:4
-msgid "Airline - Days Safaris Adventures"
-msgstr "Fluggesellschaft - Days Safaris Adventures"
-
-#: Home/templates/Home/airline.html:14
-msgid "Airline"
-msgstr "Fluggesellschaft"
-
-#: Home/templates/Home/airline.html:32
-msgid "Welcome To Day Safaris Adventures"
-msgstr "Willkommen bei Day Safaris Adventures"
-
-#: Home/templates/Home/airline.html:33
-msgid "We will help you plan for travel, a very daunting task if you try to do it yourself and especially when it comes to booking cheap flights."
-msgstr "Wir helfen Ihnen bei der Reiseplanung, eine sehr entmutigende Aufgabe, wenn Sie es selbst versuchen, insbesondere wenn es um die Buchung günstiger Flüge geht."
-
-#: Home/templates/Home/airline.html:34
-msgid "Day Safaris Adventures simplifies this task by enabling you to search domestic and international flights offered by major airlines in the world such as Egypt Air, Kenya Airways, South African Airways, Ethiopian Airlines, Air France, KLM, Emirates, Lufthansa, Swiss Airways among others at the cheapest price. Find and compare flights, book/buy flights, and buy air tickets online with ease using Day Safaris Adventures bookings website here."
-msgstr "Day Safaris Adventures vereinfacht diese Aufgabe, indem Sie Inlands- und Auslandsflüge von großen Fluggesellschaften wie Egypt Air, Kenya Airways, South African Airways, Ethiopian Airlines, Air France, KLM, Emirates, Lufthansa, Swiss Airways und anderen zum günstigsten Preis suchen können. Finden und vergleichen Sie Flüge, buchen/kaufen Sie Flüge und kaufen Sie Flugtickets online ganz einfach über die Buchungswebsite von Day Safaris Adventures."
-
-#: Home/templates/Home/airline.html:35
-msgid "Read More"
-msgstr "Weiterlesen"
-
-#: Home/templates/Home/airline.html:46
-msgid "African Wildlife Safaris"
-msgstr "Afrikanische Wildtier-Safaris"
-
-#: Home/templates/Home/airline.html:47
-msgid "Experience the magic of the African wilderness with our expert guides. Track the Big Five in Masai Mara, witness the Great Wildebeest Migration, and capture breathtaking moments of lions, elephants, rhinos, leopards, and buffalos in their natural habitat."
-msgstr "Erleben Sie die Magie der afrikanischen Wildnis mit unseren erfahrenen Guides. Verfolgen Sie die Big Five in der Masai Mara, erleben Sie die Große Gnuswanderung und fangen Sie atemberaubende Momente von Löwen, Elefanten, Nashörnern, Leoparden und Büffeln in ihrem natürlichen Lebensraum ein."
-
-#: Home/templates/Home/airline.html:56
-msgid "Travel Partnership Programs"
-msgstr "Reisepartnerschaftsprogramme"
-
-#: Home/templates/Home/airline.html:57
-msgid "Join our exclusive travel partnership network and unlock special rates for group bookings, corporate retreats, and family vacations. We work with hotels, airlines, and local guides to provide seamless travel experiences across East Africa."
-msgstr "Treten Sie unserem exklusiven Reisepartnerschaftsnetzwerk bei und erhalten Sie Sonderkonditionen für Gruppenbuchungen, Firmenausflüge und Familienurlaube. Wir arbeiten mit Hotels, Fluggesellschaften und lokalen Guides zusammen, um nahtlose Reiseerlebnisse in ganz Ostafrika zu bieten."
-
-#: Home/templates/Home/airline.html:69
-msgid "Airport Transfers & Shuttles"
-msgstr "Flughafentransfers & Shuttles"
-
-#: Home/templates/Home/airline.html:70
-msgid "Enjoy hassle-free airport transfers from Jomo Kenyatta International Airport, Moi International Airport, Kilimanjaro International Airport, and Entebbe Airport. Our professional drivers and comfortable vehicles ensure you start and end your journey stress-free."
-msgstr "Genießen Sie problemlose Flughafentransfers vom Jomo Kenyatta International Airport, Moi International Airport, Kilimanjaro International Airport und Entebbe Airport. Unsere professionellen Fahrer und komfortablen Fahrzeuge sorgen dafür, dass Sie Ihre Reise stressfrei beginnen und beenden."
-
-#: Home/templates/Home/airline.html:79
-msgid "Custom Tailor-Made Tours"
-msgstr "Maßgeschneiderte Touren"
-
-#: Home/templates/Home/airline.html:80
-msgid "Design your dream African adventure with our personalized tour planning service. Whether it's a romantic honeymoon safari, a family vacation, or a solo expedition, we craft itineraries that match your preferences, budget, and travel style perfectly."
-msgstr "Gestalten Sie Ihr Traum-Afrika-Abenteuer mit unserem persönlichen Tourenplanungsservice. Ob romantische Flitterwochen-Safari, Familienurlaub oder Solo-Expedition – wir erstellen Reiseverläufe, die perfekt auf Ihre Vorlieben, Ihr Budget und Ihren Reisestil abgestimmt sind."
-
-#: Home/templates/Home/airline.html:88
-msgid "View All Services"
-msgstr "Alle Dienstleistungen anzeigen"
-
 # ==================== GALLERY.HTML TRANSLATIONS ====================
-
-#: Home/templates/Home/gallery.html:4
 msgid "Gallery - Days Safaris Adventures"
 msgstr "Galerie - Days Safaris Adventures"
 
-#: Home/templates/Home/gallery.html:24
+msgid ""
+"Photo gallery of safari game drives, wildlife, lodges and travellers from "
+"Day Safaris Adventures tours across East Africa."
+msgstr ""
+"Fotogalerie mit Safari-Pirschfahrten, Wildtieren, Lodges und Reisenden von "
+"Touren von Day Safaris Adventures in ganz Ostafrika."
+
 msgid "Our Gallery"
 msgstr "Unsere Galerie"
 
-#: Home/templates/Home/gallery.html:25
 msgid "Unforgettable Safari Moments Captured"
 msgstr "Unvergessliche Safari-Momente festgehalten"
 
-#: Home/templates/Home/gallery.html:26
-msgid "Explore stunning images from our recent safaris across East Africa. From breathtaking wildlife encounters to beautiful landscapes and cultural experiences, our gallery showcases the magic of African adventures."
-msgstr "Entdecken Sie atemberaubende Bilder von unseren letzten Safaris in ganz Ostafrika. Von atemberaubenden Wildtierbegegnungen über wunderschöne Landschaften bis hin zu kulturellen Erlebnissen – unsere Galerie zeigt die Magie afrikanischer Abenteuer."
+msgid ""
+"Explore stunning images from our recent safaris across East Africa. From "
+"breathtaking wildlife encounters to beautiful landscapes and cultural "
+"experiences, our gallery showcases the magic of African adventures."
+msgstr ""
+"Entdecken Sie atemberaubende Bilder von unseren letzten Safaris in ganz "
+"Ostafrika. Von atemberaubenden Wildtierbegegnungen über wunderschöne "
+"Landschaften bis hin zu kulturellen Erlebnissen – unsere Galerie zeigt die "
+"Magie afrikanischer Abenteuer."
 
-#: Home/templates/Home/gallery.html:33
 msgid "All Photos"
 msgstr "Alle Fotos"
 
-#: Home/templates/Home/gallery.html:56 Home/templates/Home/gallery.html:86
 msgid "View Gallery"
 msgstr "Galerie ansehen"
 
-#: Home/templates/Home/gallery.html:68
 msgid "No images available"
 msgstr "Keine Bilder verfügbar"
 
-#: Home/templates/Home/gallery.html:69
 msgid "Check back soon for amazing gallery photos!"
 msgstr "Schauen Sie bald wieder vorbei für tolle Galerie-Fotos!"
 
-#: Home/templates/Home/gallery.html:93
 msgid "No images in this category"
 msgstr "Keine Bilder in dieser Kategorie"
 
-#: Home/templates/Home/gallery.html:94
 msgid "Check back soon for amazing photos!"
 msgstr "Schauen Sie bald wieder vorbei für tolle Fotos!"
 
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid ""
+"Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours — Days "
+"Safaris Adventures"
+msgstr ""
+"Kenia-Safaripakete | Masai Mara, Kilimandscharo und Ostafrika-Touren — Days "
+"Safaris Adventures"
+
+msgid ""
+"Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, "
+"Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets. "
+"Get a free quote today!"
+msgstr ""
+"Buchen Sie Kenia-Safaripakete ab Nairobi. Von Experten geführte Touren zur "
+"Masai Mara, nach Amboseli, zum Kilimandscharo und durch Ostafrika. "
+"Maßgeschneiderte Safaris für jedes Budget. Fordern Sie noch heute ein "
+"kostenloses Angebot an!"
+
+msgid "Kenya Safari Packages | Masai Mara, Kilimanjaro & East Africa Tours"
+msgstr "Kenia-Safaripakete | Masai Mara, Kilimandscharo und Ostafrika-Touren"
+
+msgid ""
+"Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, "
+"Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets."
+msgstr ""
+"Buchen Sie Kenia-Safaripakete ab Nairobi. Von Experten geführte Touren zur "
+"Masai Mara, nach Amboseli, zum Kilimandscharo und durch Ostafrika. "
+"Maßgeschneiderte Safaris für jedes Budget."
+
+msgid "Image"
+msgstr "Bild"
+
+msgid "Explore The World"
+msgstr "Entdecken Sie die Welt"
+
+msgid "Kenya Safari Tours & East Africa Packages"
+msgstr "Kenia-Safaris und Ostafrika-Pakete"
+
+msgid "Adventure Awaits – Let's Go"
+msgstr "Abenteuer wartet – Los geht's"
+
+msgid "Discover Now"
+msgstr "Jetzt entdecken"
+
+msgid "Travel With Us Today"
+msgstr "Reisen Sie heute mit uns"
+
+msgid "And Let Us Give You The Experience Of The World"
+msgstr "Und lassen Sie uns Ihnen die Erfahrung der Welt geben"
+
+msgid "Sail Into Serenity"
+msgstr "Segeln Sie in die Ruhe"
+
+msgid "At Days Safaris Adventures"
+msgstr "Bei Days Safaris Adventures"
+
+msgid "We Are Your Ultimate Cruise Escape"
+msgstr "Wir sind Ihr ultimativer Kreuzfahrt-Escape"
+
+msgid "Video Fallback"
+msgstr "Video nicht verfügbar"
+
+msgid "Witness The Wild"
+msgstr "Erleben Sie die Wildnis"
+
+msgid "Experience The Magic of Masai Mara"
+msgstr "Erleben Sie die Magie der Masai Mara"
+
+msgid "Watch the Great Migration in All Its Glory"
+msgstr "Erleben Sie die Große Migration in ihrer ganzen Pracht"
+
+msgid "Explore Packages"
+msgstr "Pakete entdecken"
+
+msgid "From Kilimanjaro to Zanzibar"
+msgstr "Vom Kilimandscharo nach Sansibar"
+
+msgid "Unforgettable Adventures Across East Africa"
+msgstr "Unvergessliche Abenteuer in ganz Ostafrika"
+
+msgid "View Tours"
+msgstr "Touren ansehen"
+
+msgid "Ultimate Safari Experience"
+msgstr "Das ultimative Safari-Erlebnis"
+
 # ==================== PACKAGE_DETAIL.HTML TRANSLATIONS ====================
+msgid "Luxury Safari Adventures Await"
+msgstr "Luxus-Safaris warten auf Sie"
 
-#: Home/templates/Home/package_detail.html:4
-msgid "Day Safaris Adventures"
-msgstr "Day Safaris Adventures"
+msgid "Discover the Best of African Wildlife and Culture"
+msgstr "Entdecken Sie das Beste der afrikanischen Tierwelt und Kultur"
 
-#: Home/templates/Home/package_detail.html:38
-msgid "Days Offer"
-msgstr "Tagesangebot"
-
-#: Home/templates/Home/package_detail.html:47
-msgid "Days"
-msgstr "Tage"
-
-#: Home/templates/Home/package_detail.html:48
-msgid "Duration"
-msgstr "Dauer"
-
-#: Home/templates/Home/package_detail.html:54
-msgid "Location"
-msgstr "Standort"
-
-#: Home/templates/Home/package_detail.html:60
-msgid "Max Group"
-msgstr "Max. Gruppe"
-
-#: Home/templates/Home/package_detail.html:67
-msgid "Rating:"
-msgstr "Bewertung:"
-
-#: Home/templates/Home/package_detail.html:82
-msgid "Professional Safari Guide"
-msgstr "Professioneller Safari-Guide"
-
-#: Home/templates/Home/package_detail.html:85
-msgid "Park Entry Fees Included"
-msgstr "Parkeintrittsgebühren inbegriffen"
-
-#: Home/templates/Home/package_detail.html:88
-msgid "Game Drives in 4x4 Vehicles"
-msgstr "Wildbeobachtungsfahrten in 4x4-Fahrzeugen"
-
-#: Home/templates/Home/package_detail.html:91
-msgid "Accommodation & Meals"
-msgstr "Unterkunft & Mahlzeiten"
-
-#: Home/templates/Home/package_detail.html:94
-msgid "Airport Transfers"
-msgstr "Flughafentransfers"
-
-#: Home/templates/Home/package_detail.html:102
-msgid "View All Packages"
-msgstr "Alle Pakete anzeigen"
-
-#: Home/templates/Home/package_detail.html:114
-msgid "Your Journey"
-msgstr "Ihre Reise"
-
-#: Home/templates/Home/package_detail.html:115
-msgid "Day Safari Itinerary"
-msgstr "Täglicher Safari-Reiseverlauf"
-
-#: Home/templates/Home/package_detail.html:116
-msgid "Day-by-day breakdown of your"
-msgstr "Tag-für-Tag-Aufschlüsselung Ihrer"
-
-#: Home/templates/Home/package_detail.html:116
-msgid "adventure."
-msgstr "Abenteuer."
-
-#: Home/templates/Home/package_detail.html:125
-msgid "Day"
-msgstr "Tag"
-
-#: Home/templates/Home/package_detail.html:143
-msgid "Activities:"
-msgstr "Aktivitäten:"
-
-#: Home/templates/Home/package_detail.html:166
-msgid "Arrival & Welcome"
-msgstr "Ankunft & Begrüßung"
-
-#: Home/templates/Home/package_detail.html:166
-msgid "Departure"
-msgstr "Abreise"
-
-#: Home/templates/Home/package_detail.html:166
-msgid "Safari Experience"
-msgstr "Safari-Erlebnis"
-
-#: Home/templates/Home/package_detail.html:169
-msgid "Arrive at"
-msgstr "Ankunft in"
-
-#: Home/templates/Home/package_detail.html:169
-msgid "meet your safari guide, and transfer to your accommodation. Evening briefing about your"
-msgstr "Treffen Sie Ihren Safari-Guide und transferieren Sie zu Ihrer Unterkunft. Abendliches Briefing über Ihr"
-
-#: Home/templates/Home/package_detail.html:169
-msgid "day adventure."
-msgstr "tägiges Abenteuer."
-
-#: Home/templates/Home/package_detail.html:171
-msgid "Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the airport for your departure flight."
-msgstr "Genießen Sie ein letztes Frühstück, Last-Minute-Souvenir-Einkäufe und den Transfer zum Flughafen für Ihren Abflug."
-
-#: Home/templates/Home/package_detail.html:173
-msgid "Early morning game drive to spot wildlife in their natural habitat. Return to lodge for breakfast. Afternoon relaxation or optional activities. Evening game drive with sundowners."
-msgstr "Morgendliche Pirschfahrt zur Wildtierbeobachtung in ihrem natürlichen Lebensraum. Rückkehr zur Lodge zum Frühstück. Nachmittags Entspannung oder optionale Aktivitäten. Abendliche Pirschfahrt mit Sundownern."
-
-#: Home/templates/Home/package_detail.html:177
-msgid "Meals:"
-msgstr "Mahlzeiten:"
-
-#: Home/templates/Home/package_detail.html:177
-msgid "Full Board (Breakfast, Lunch & Dinner)"
-msgstr "Vollpension (Frühstück, Mittagessen & Abendessen)"
-
-#: Home/templates/Home/package_detail.html:194
 msgid "Learn More"
 msgstr "Mehr erfahren"
 
-#: Home/templates/Home/package_detail.html:218
+msgid "Eg: Masai Mara, Diani, Amboseli"
+msgstr "Z.B.: Masai Mara, Diani, Amboseli"
+
+msgid "Search"
+msgstr "Suchen"
+
+msgid "WHO WE ARE"
+msgstr "WER WIR SIND"
+
+msgid ""
+"We are a premier destination management company headquartered in Nairobi, "
+"Kenya, dedicated to creating unforgettable travel experiences across Africa "
+"and beyond. Our team of experienced, informative, friendly, and professional"
+" guides ensures every client enjoys safe, reliable, personalized, and "
+"budget-friendly journeys."
+msgstr ""
+"Wir sind ein führendes Destination-Management-Unternehmen mit Sitz in "
+"Nairobi, Kenia, und schaffen unvergessliche Reiseerlebnisse in Afrika und "
+"darüber hinaus. Unser Team aus erfahrenen, kompetenten, freundlichen und "
+"professionellen Guides sorgt dafür, dass jeder Gast sichere, zuverlässige, "
+"persönliche und budgetfreundliche Reisen erlebt."
+
+msgid ""
+"We specialize in both inbound and outbound travel services, offering a "
+"diverse range of tailor-made tours that showcase Africa’s breathtaking "
+"wildlife, stunning landscapes, rich cultural heritage, and iconic "
+"attractions, alongside exciting destinations across Europe, America, and "
+"Asia."
+msgstr ""
+"Wir sind auf Incoming- und Outgoing-Reisen spezialisiert und bieten eine "
+"vielfältige Auswahl maßgeschneiderter Touren, die Afrikas atemberaubende "
+"Tierwelt, beeindruckende Landschaften, reiches Kulturerbe und ikonische "
+"Sehenswürdigkeiten zeigen – sowie spannende Ziele in Europa, Amerika und "
+"Asien."
+
+msgid ""
+"Driven by passion and excellence, we go beyond ordinary travel by connecting"
+" our clients with authentic experiences, vibrant cultures, fascinating "
+"history, and unique cuisines that make every destination memorable. Our "
+"commitment is to deliver exceptional service, comfort, and meaningful "
+"adventures that leave lasting impressions."
+msgstr ""
+"Aus Leidenschaft und Streben nach Exzellenz gehen wir über gewöhnliches "
+"Reisen hinaus und verbinden unsere Gäste mit authentischen Erlebnissen, "
+"lebendigen Kulturen, faszinierender Geschichte und einzigartiger Küche, die "
+"jedes Reiseziel unvergesslich machen. Unser Anspruch ist außergewöhnlicher "
+"Service, Komfort und bedeutungsvolle Abenteuer mit bleibendem Eindruck."
+
+msgid "First Class Flights"
+msgstr "First-Class-Flüge"
+
+msgid "Handpicked Safari Lodges"
+msgstr "Handverlesene Safari-Lodges"
+
+msgid "5 Star Accommodations"
+msgstr "5-Sterne-Unterkünfte"
+
+msgid "Latest Model Safari Vehicles"
+msgstr "Safari-Fahrzeuge der neuesten Modelle"
+
+msgid "150+ Premium Safari Tours"
+msgstr "150+ Premium-Safari-Touren"
+
+msgid "Awesome Safari Packages"
+msgstr "Tolle Safaripakete"
+
+msgid "Brochures"
+msgstr "Broschüren"
+
+msgid "Book A Tour Deals"
+msgstr "Buchen Sie Touren-Angebote"
+
+msgid ""
+"On Your First Adventure Trip With Day Safaris Adventures. Get More Deal "
+"Offers Here."
+msgstr ""
+"Auf Ihre erste Abenteuerreise mit Day Safaris Adventures. Hier finden Sie "
+"weitere Angebote."
+
+msgid "Read article"
+msgstr "Artikel lesen"
+
+# ==================== AIRLINE.HTML TRANSLATIONS ====================
+msgid "Services - Days Safaris Adventures"
+msgstr "Leistungen - Days Safaris Adventures"
+
+msgid ""
+"Safari tours, trekking, airport transfers, cruises, flights and tailor-made "
+"holidays: all the travel services of Day Safaris Adventures in Nairobi."
+msgstr ""
+"Safari-Touren, Trekking, Flughafentransfers, Kreuzfahrten, Flüge und "
+"maßgeschneiderte Urlaube: alle Reiseleistungen von Day Safaris Adventures in"
+" Nairobi."
+
+# ==================== SERVICES ====================
+msgid "Aeroplane Transfers"
+msgstr "Flugzeugtransfers"
+
+msgid "Visit Africa Today"
+msgstr "Besuchen Sie Afrika heute"
+
+msgid "Africa Tours"
+msgstr "Afrika-Touren"
+
+msgid "Accomodation"
+msgstr "Unterkunft"
+
+msgid "Hotel Accomodation"
+msgstr "Hotelunterkunft"
+
+msgid "Enjoy comfortable and carefully selected hotels"
+msgstr "Genießen Sie komfortable und sorgfältig ausgewählte Hotels"
+
+msgid "Get Visa processed"
+msgstr "Visum bearbeiten lassen"
+
+msgid "Visa Processing"
+msgstr "Visumsbearbeitung"
+
+msgid ""
+"Our visa processing and transfer services are designed to make international"
+" travel simple and hassle-free"
+msgstr ""
+"Unsere Visumsbearbeitungs- und Transferdienstleistungen sind darauf "
+"ausgelegt, internationale Reisen einfach und problemlos zu gestalten"
+
+msgid "Tailor Made Tours"
+msgstr "Maßgeschneiderte Touren"
+
+msgid "Tailour Made Tours"
+msgstr "Maßgeschneiderte Touren"
+
+msgid ""
+"Design your dream African adventure with our personalized tour planning "
+"service"
+msgstr ""
+"Gestalten Sie Ihr Traum-Afrika-Abenteuer mit unserem persönlichen "
+"Tourenplanungsservice"
+
+msgid "partner program"
+msgstr "Partnerprogramm"
+
+msgid ""
+"Enjoy hassle-free airport transfers from Jomo Kenyatta International "
+"Airport, Moi International Airport, Kilimanjaro International Airport, and "
+"Entebbe Airport"
+msgstr ""
+"Genießen Sie problemlose Flughafentransfers vom Jomo Kenyatta International "
+"Airport, Moi International Airport, Kilimanjaro International Airport und "
+"Entebbe Airport"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Cookie Policy - Day Safaris Adventures"
+msgstr "Cookie-Richtlinie - Day Safaris Adventures"
+
+msgid ""
+"Which cookies and similar technologies daysafarisadventures.co.ke uses, why,"
+" and how you can control them."
+msgstr ""
+"Welche Cookies und ähnliche Technologien daysafarisadventures.co.ke "
+"verwendet, warum und wie Sie sie steuern können."
+
+msgid "Which cookies daysafarisadventures.co.ke uses and how to control them."
+msgstr ""
+"Welche Cookies daysafarisadventures.co.ke verwendet und wie Sie sie steuern "
+"können."
+
+msgid "Cookie Policy"
+msgstr "Cookie-Richtlinie"
+
+msgid "Cookies we use"
+msgstr "Von uns verwendete Cookies"
+
+msgid "Third-party content"
+msgstr "Inhalte von Drittanbietern"
+
+msgid "Local storage"
+msgstr "Lokaler Speicher"
+
+msgid "Managing cookies"
+msgstr "Cookies verwalten"
+
+msgid "Changes"
+msgstr "Änderungen"
+
+msgid "Last updated:"
+msgstr "Zuletzt aktualisiert:"
+
+msgid "October"
+msgstr "Oktober"
+
+msgid ""
+"This legal text is provided in English. If a translation and the English "
+"text differ, the English text prevails."
+msgstr ""
+"Dieser Rechtstext wird auf Englisch bereitgestellt. Weichen eine Übersetzung"
+" und der englische Text voneinander ab, gilt der englische Text."
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Legal Notice - Day Safaris Adventures"
+msgstr "Impressum - Day Safaris Adventures"
+
+msgid ""
+"Legal notice for Day Safaris Adventures Ltd, Nairobi, Kenya: who we are, how"
+" to contact us, website ownership and liability."
+msgstr ""
+"Impressum von Day Safaris Adventures Ltd, Nairobi, Kenia: wer wir sind, wie "
+"Sie uns erreichen, Website-Eigentümer und Haftung."
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Legal notice for Day Safaris Adventures Ltd, Nairobi, Kenya."
+msgstr "Impressum von Day Safaris Adventures Ltd, Nairobi, Kenia."
+
+msgid "Website owner"
+msgstr "Betreiber der Website"
+
+msgid "Contact us"
+msgstr "Kontaktieren Sie uns"
+
+msgid "Purpose of the website"
+msgstr "Zweck der Website"
+
+msgid "Intellectual property"
+msgstr "Geistiges Eigentum"
+
+msgid "Liability"
+msgstr "Haftung"
+
+msgid "External links and third-party services"
+msgstr "Externe Links und Drittanbieterdienste"
+
+msgid "Governing law"
+msgstr "Anwendbares Recht"
+
+msgid "Related documents"
+msgstr "Zugehörige Dokumente"
+
+# ==================== GALLERY.HTML TRANSLATIONS ====================
+msgid "Privacy Policy - Day Safaris Adventures"
+msgstr "Datenschutzerklärung - Day Safaris Adventures"
+
+msgid ""
+"How Day Safaris Adventures collects, uses and protects your personal data "
+"when you enquire or book, and your rights under the Kenya Data Protection "
+"Act."
+msgstr ""
+"Wie Day Safaris Adventures Ihre personenbezogenen Daten bei Anfragen und "
+"Buchungen erhebt, verwendet und schützt, sowie Ihre Rechte nach dem "
+"kenianischen Datenschutzgesetz."
+
+msgid ""
+"How Day Safaris Adventures collects, uses and protects your personal data."
+msgstr ""
+"Wie Day Safaris Adventures Ihre personenbezogenen Daten erhebt, verwendet "
+"und schützt."
+
+msgid "Who is responsible"
+msgstr "Wer verantwortlich ist"
+
+msgid "What we collect"
+msgstr "Welche Daten wir erheben"
+
+msgid "Why we use your data"
+msgstr "Warum wir Ihre Daten verwenden"
+
+msgid "Who we share it with"
+msgstr "Mit wem wir sie teilen"
+
+msgid "International transfers"
+msgstr "Internationale Übermittlungen"
+
+msgid "How long we keep it"
+msgstr "Wie lange wir sie speichern"
+
+msgid "Your rights"
+msgstr "Ihre Rechte"
+
+msgid "Security"
+msgstr "Sicherheit"
+
+msgid "Children"
+msgstr "Kinder"
+
+msgid "Cookies"
+msgstr "Cookies"
+
+msgid "Changes to this policy"
+msgstr "Änderungen dieser Richtlinie"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Sitemap - Day Safaris Adventures"
+msgstr "Sitemap - Day Safaris Adventures"
+
+msgid ""
+"Browse every page of Day Safaris Adventures: safari packages, destinations, "
+"trekking, cruises, Airbnb stays, services, blog and support pages."
+msgstr ""
+"Alle Seiten von Day Safaris Adventures im Überblick: Safaripakete, "
+"Reiseziele, Trekking, Kreuzfahrten, Airbnb-Unterkünfte, Leistungen, Blog und"
+" Hilfeseiten."
+
+# ==================== INDEX.HTML TRANSLATIONS ====================
+msgid "Browse every page of Day Safaris Adventures."
+msgstr "Alle Seiten von Day Safaris Adventures im Überblick."
+
+msgid "Main pages"
+msgstr "Hauptseiten"
+
+msgid "About us"
+msgstr "Über uns"
+
+msgid "All safari packages"
+msgstr "Alle Safaripakete"
+
+msgid "Book online"
+msgstr "Online buchen"
+
+msgid "Tours by region"
+msgstr "Touren nach Region"
+
+msgid "East Africa tours"
+msgstr "Ostafrika-Touren"
+
+msgid "South Africa tours"
+msgstr "Südafrika-Touren"
+
+msgid "West Africa tours"
+msgstr "Westafrika-Touren"
+
+msgid "International tours"
+msgstr "Internationale Touren"
+
+msgid "African wildlife tours"
+msgstr "Afrikanische Tierwelt-Touren"
+
+msgid "Tailor-made holidays"
+msgstr "Maßgeschneiderte Urlaube"
+
+msgid "Mount Kenya"
+msgstr "Mount Kenya"
+
+msgid "Mount Kilimanjaro"
+msgstr "Kilimandscharo"
+
+msgid "Mount Meru"
+msgstr "Mount Meru"
+
+msgid "Mount Longonot"
+msgstr "Mount Longonot"
+
+msgid "Mount Suswa"
+msgstr "Mount Suswa"
+
+msgid "Other services"
+msgstr "Weitere Leistungen"
+
+msgid "Airport transfers"
+msgstr "Flughafentransfers"
+
+msgid "Flights"
+msgstr "Flüge"
+
+msgid "Travel partnerships"
+msgstr "Reisepartnerschaften"
+
+# ==================== BNB_DETAIL.HTML TRANSLATIONS ====================
+msgid "Airbnb stays"
+msgstr "Airbnb-Unterkünfte"
+
+msgid "Safari packages"
+msgstr "Safaripakete"
+
+msgid "Latest articles"
+msgstr "Neueste Artikel"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Terms and Conditions - Day Safaris Adventures"
+msgstr "Allgemeine Geschäftsbedingungen - Day Safaris Adventures"
+
+msgid ""
+"Terms and conditions for booking safaris, treks, cruises and stays with Day "
+"Safaris Adventures: quotations, payments, changes, cancellations and "
+"responsibilities."
+msgstr ""
+"Bedingungen für die Buchung von Safaris, Treks, Kreuzfahrten und "
+"Unterkünften bei Day Safaris Adventures: Angebote, Zahlungen, Änderungen, "
+"Stornierungen und Verantwortlichkeiten."
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Terms and conditions for booking with Day Safaris Adventures."
+msgstr "Bedingungen für Buchungen bei Day Safaris Adventures."
+
+msgid "Enquiries, quotations and booking"
+msgstr "Anfragen, Angebote und Buchung"
+
+msgid "Prices and payment"
+msgstr "Preise und Zahlung"
+
+msgid "What is included"
+msgstr "Was inbegriffen ist"
+
+msgid "Changes by you"
+msgstr "Änderungen durch Sie"
+
+msgid "Cancellation by you and refunds"
+msgstr "Stornierung durch Sie und Erstattungen"
+
+msgid "Changes or cancellation by us"
+msgstr "Änderungen oder Stornierung durch uns"
+
+msgid "Travel documents, health and insurance"
+msgstr "Reisedokumente, Gesundheit und Versicherung"
+
+msgid "Safety and conduct"
+msgstr "Sicherheit und Verhalten"
+
+msgid "Our responsibility"
+msgstr "Unsere Verantwortung"
+
+msgid "Photography"
+msgstr "Fotografie"
+
+msgid "Website use"
+msgstr "Nutzung der Website"
+
+msgid "Governing law and disputes"
+msgstr "Anwendbares Recht und Streitigkeiten"
+
+# ==================== PACKAGE_DETAIL.HTML TRANSLATIONS ====================
+msgid "Day Safaris Adventures"
+msgstr "Day Safaris Adventures"
+
+#, python-format
+msgid ""
+"%(name)s: %(days)s-day safari in %(loc)s from Day Safaris Adventures, "
+"Nairobi. %(desc)s"
+msgstr ""
+"%(name)s: %(days)s-tägige Safari in %(loc)s von Day Safaris Adventures, "
+"Nairobi. %(desc)s"
+
+msgid "Days Offer"
+msgstr "Tagesangebot"
+
+msgid "Days"
+msgstr "Tage"
+
+msgid "Duration"
+msgstr "Dauer"
+
+msgid "Max Group"
+msgstr "Max. Gruppe"
+
+msgid "Rating:"
+msgstr "Bewertung:"
+
+msgid "What’s Included"
+msgstr "Was inbegriffen ist"
+
+msgid "No inclusions available."
+msgstr "Keine Inklusivleistungen angegeben."
+
+msgid "What’s Not Included"
+msgstr "Was nicht inbegriffen ist"
+
+msgid "No exclusions listed."
+msgstr "Keine Ausschlüsse angegeben."
+
+msgid "View All Packages"
+msgstr "Alle Pakete anzeigen"
+
+msgid "Your Journey"
+msgstr "Ihre Reise"
+
+msgid "Day Safari Itinerary"
+msgstr "Täglicher Safari-Reiseverlauf"
+
+msgid "Day-by-day breakdown of your"
+msgstr "Tag-für-Tag-Aufschlüsselung Ihrer"
+
+msgid "adventure."
+msgstr "Abenteuer."
+
+msgid "Day"
+msgstr "Tag"
+
+msgid "Accommodation:"
+msgstr "Unterkunft:"
+
+msgid "Activities:"
+msgstr "Aktivitäten:"
+
+msgid "Arrival & Welcome"
+msgstr "Ankunft & Begrüßung"
+
+msgid "Departure"
+msgstr "Abreise"
+
+msgid "Safari Experience"
+msgstr "Safari-Erlebnis"
+
+msgid "Arrive at"
+msgstr "Ankunft in"
+
+msgid ""
+"meet your safari guide, and transfer to your accommodation. Evening briefing"
+" about your"
+msgstr ""
+"Treffen Sie Ihren Safari-Guide und transferieren Sie zu Ihrer Unterkunft. "
+"Abendliches Briefing über Ihr"
+
+msgid "day adventure."
+msgstr "tägiges Abenteuer."
+
+msgid ""
+"Enjoy a final breakfast, last-minute souvenir shopping, and transfer to the "
+"airport for your departure flight."
+msgstr ""
+"Genießen Sie ein letztes Frühstück, Last-Minute-Souvenir-Einkäufe und den "
+"Transfer zum Flughafen für Ihren Abflug."
+
+msgid ""
+"Early morning game drive to spot wildlife in their natural habitat. Return "
+"to lodge for breakfast. Afternoon relaxation or optional activities. Evening"
+" game drive with sundowners."
+msgstr ""
+"Morgendliche Pirschfahrt zur Wildtierbeobachtung in ihrem natürlichen "
+"Lebensraum. Rückkehr zur Lodge zum Frühstück. Nachmittags Entspannung oder "
+"optionale Aktivitäten. Abendliche Pirschfahrt mit Sundownern."
+
+msgid "Meals:"
+msgstr "Mahlzeiten:"
+
+msgid "Full Board (Breakfast, Lunch & Dinner)"
+msgstr "Vollpension (Frühstück, Mittagessen & Abendessen)"
+
+msgid "Tap a day to expand its details."
+msgstr "Tippen Sie auf einen Tag, um die Details anzuzeigen."
+
 msgid "Full Name"
 msgstr "Vollständiger Name"
 
-#: Home/templates/Home/package_detail.html:226
 msgid "Email Address"
 msgstr "E-Mail-Adresse"
 
-#: Home/templates/Home/package_detail.html:259
 msgid "Package"
 msgstr "Paket"
 
-#: Home/templates/Home/package_detail.html:266
 msgid "Special Requests"
 msgstr "Besondere Wünsche"
 
-#: Home/templates/Home/package_detail.html:273
-msgid "Package Price:"
-msgstr "Paketpreis:"
-
-#: Home/templates/Home/package_detail.html:273
-msgid "per person"
-msgstr "pro Person"
-
-#: Home/templates/Home/package_detail.html:276
-msgid "Total:"
-msgstr "Gesamt:"
-
-#: Home/templates/Home/package_detail.html:279
-msgid "Proceed to Payment"
-msgstr "Zur Zahlung fortfahren"
-
-#: Home/templates/Home/package_detail.html:294
-msgid "You May Also Like"
-msgstr "Das könnte Ihnen auch gefallen"
-
-#: Home/templates/Home/package_detail.html:295
 msgid "Similar Safari Packages"
 msgstr "Ähnliche Safaripakete"
 
-#: Home/templates/Home/package_detail.html:296
 msgid "Explore other amazing safari experiences we offer."
-msgstr "Entdecken Sie weitere erstaunliche Safari-Erlebnisse, die wir anbieten."
+msgstr ""
+"Entdecken Sie weitere erstaunliche Safari-Erlebnisse, die wir anbieten."
 
-#: Home/templates/Home/package_detail.html:320
-msgid "View Details"
-msgstr "Details anzeigen"
-
-#: Home/templates/Home/package_detail.html:324
 msgid "No similar packages found."
 msgstr "Keine ähnlichen Pakete gefunden."
 
-#: Home/templates/Home/package_detail.html:336
 msgid "Package Highlights"
 msgstr "Paket-Highlights"
 
-#: Home/templates/Home/package_detail.html:337
 msgid "What's Included in Your Safari"
 msgstr "Was in Ihrer Safari enthalten ist"
 
-#: Home/templates/Home/package_detail.html:338
-msgid "Everything you need for an unforgettable African adventure is included in your package."
-msgstr "Alles, was Sie für ein unvergessliches Afrika-Abenteuer benötigen, ist in Ihrem Paket enthalten."
+msgid ""
+"Everything you need for an unforgettable African adventure is included in "
+"your package."
+msgstr ""
+"Alles, was Sie für ein unvergessliches Afrika-Abenteuer benötigen, ist in "
+"Ihrem Paket enthalten."
 
-#: Home/templates/Home/package_detail.html:346
 msgid "Comfortable Transport"
 msgstr "Komfortabler Transport"
 
-#: Home/templates/Home/package_detail.html:347
-msgid "Travel in style in our modern 4x4 safari vehicles with pop-up roofs for optimal wildlife viewing and photography."
-msgstr "Reisen Sie stilvoll in unseren modernen 4x4-Safari-Fahrzeugen mit aufklappbaren Dächern für optimale Wildtierbeobachtung und Fotografie."
+msgid ""
+"Travel in style in our modern 4x4 safari vehicles with pop-up roofs for "
+"optimal wildlife viewing and photography."
+msgstr ""
+"Reisen Sie stilvoll in unseren modernen 4x4-Safari-Fahrzeugen mit "
+"aufklappbaren Dächern für optimale Wildtierbeobachtung und Fotografie."
 
-#: Home/templates/Home/package_detail.html:355
 msgid "Premium Accommodation"
 msgstr "Premium-Unterkunft"
 
-#: Home/templates/Home/package_detail.html:356
-msgid "Stay in carefully selected lodges and tented camps that offer comfort, safety, and authentic African experiences."
-msgstr "Übernachten Sie in sorgfältig ausgewählten Lodges und Zeltcamps, die Komfort, Sicherheit und authentische afrikanische Erlebnisse bieten."
+msgid ""
+"Stay in carefully selected lodges and tented camps that offer comfort, "
+"safety, and authentic African experiences."
+msgstr ""
+"Übernachten Sie in sorgfältig ausgewählten Lodges und Zeltcamps, die "
+"Komfort, Sicherheit und authentische afrikanische Erlebnisse bieten."
 
-#: Home/templates/Home/package_detail.html:364
 msgid "Delicious Meals"
 msgstr "Köstliche Mahlzeiten"
 
-#: Home/templates/Home/package_detail.html:365
-msgid "Enjoy a variety of local and international cuisine prepared by expert chefs, including special dietary requirements."
-msgstr "Genießen Sie eine Vielzahl lokaler und internationaler Küchen, die von erfahrenen Köchen zubereitet werden, einschließlich spezieller Ernährungsanforderungen."
+msgid ""
+"Enjoy a variety of local and international cuisine prepared by expert chefs,"
+" including special dietary requirements."
+msgstr ""
+"Genießen Sie eine Vielzahl lokaler und internationaler Küchen, die von "
+"erfahrenen Köchen zubereitet werden, einschließlich spezieller "
+"Ernährungsanforderungen."
 
-#: Home/templates/Home/package_detail.html:373
 msgid "Expert Safari Guides"
 msgstr "Erfahrene Safari-Guides"
 
-#: Home/templates/Home/package_detail.html:374
-msgid "Our knowledgeable guides have years of experience and will ensure you don't miss any wildlife sightings."
-msgstr "Unsere sachkundigen Guides verfügen über jahrelange Erfahrung und stellen sicher, dass Sie keine Wildtiersichtung verpassen."
+msgid ""
+"Our knowledgeable guides have years of experience and will ensure you don't "
+"miss any wildlife sightings."
+msgstr ""
+"Unsere sachkundigen Guides verfügen über jahrelange Erfahrung und stellen "
+"sicher, dass Sie keine Wildtiersichtung verpassen."
 
-#: Home/templates/Home/package_detail.html:382
 msgid "Photography Tips"
 msgstr "Fotografie-Tipps"
 
-#: Home/templates/Home/package_detail.html:383
-msgid "Get professional photography guidance to capture stunning wildlife moments during your safari."
-msgstr "Erhalten Sie professionelle Fotografie-Anleitung, um atemberaubende Wildtiermomente während Ihrer Safari festzuhalten."
+msgid ""
+"Get professional photography guidance to capture stunning wildlife moments "
+"during your safari."
+msgstr ""
+"Erhalten Sie professionelle Fotografie-Anleitung, um atemberaubende "
+"Wildtiermomente während Ihrer Safari festzuhalten."
 
-#: Home/templates/Home/package_detail.html:391
 msgid "24/7 Support"
 msgstr "24/7 Support"
 
-#: Home/templates/Home/package_detail.html:392
-msgid "Our dedicated support team is available around the clock to assist you before and during your safari."
-msgstr "Unser engagiertes Support-Team ist rund um die Uhr verfügbar, um Sie vor und während Ihrer Safari zu unterstützen."
+msgid ""
+"Our dedicated support team is available around the clock to assist you "
+"before and during your safari."
+msgstr ""
+"Unser engagiertes Support-Team ist rund um die Uhr verfügbar, um Sie vor und"
+" während Ihrer Safari zu unterstützen."
 
-# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS ====================
+# ==================== AIRLINE.HTML TRANSLATIONS ====================
+msgid "Our Safari Packages - Days Safaris Adventures"
+msgstr "Unsere Safaripakete - Days Safaris Adventures"
 
-#: Home/templates/Home/african_wildlife_tours.html:4
+msgid ""
+"Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South "
+"Africa with Day Safaris Adventures. Custom itineraries, expert guides, best "
+"prices."
+msgstr ""
+"Entdecken Sie Safaripakete in Kenia, Tansania, Uganda, Ruanda und Südafrika "
+"mit Day Safaris Adventures. Individuelle Reiserouten, erfahrene Guides, "
+"beste Preise."
+
+msgid "Our Safari Packages"
+msgstr "Unsere Safaripakete"
+
+msgid "Search packages..."
+msgstr "Pakete suchen..."
+
+msgid "All Categories"
+msgstr "Alle Kategorien"
+
+msgid "All Locations"
+msgstr "Alle Orte"
+
+msgid "Min Price ($)"
+msgstr "Mindestpreis ($)"
+
+msgid "Min"
+msgstr "Min."
+
+msgid "Max Price ($)"
+msgstr "Höchstpreis ($)"
+
+msgid "Max"
+msgstr "Max."
+
+msgid "Max Days"
+msgstr "Max. Tage"
+
+msgid "Sort By"
+msgstr "Sortieren nach"
+
+msgid "Sort packages"
+msgstr "Pakete sortieren"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Price: Low to High"
+msgstr "Preis: aufsteigend"
+
+msgid "Price: High to Low"
+msgstr "Preis: absteigend"
+
+msgid "Rating: High to Low"
+msgstr "Bewertung: absteigend"
+
+msgid "Duration: Short to Long"
+msgstr "Dauer: kurz bis lang"
+
+msgid "Filter"
+msgstr "Filtern"
+
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+msgid "Our Packages"
+msgstr "Unsere Pakete"
+
+# ==================== PACKAGE_DETAIL.HTML TRANSLATIONS ====================
+msgid "Discover Amazing Safari Adventures"
+msgstr "Entdecken Sie fantastische Safari-Abenteuer"
+
+msgid ""
+"Explore our curated selection of safari packages across East Africa. From "
+"luxury wildlife safaris to budget-friendly adventures, we have the perfect "
+"journey for you."
+msgstr ""
+"Entdecken Sie unsere kuratierte Auswahl an Safaripaketen in Ostafrika. Von "
+"luxuriösen Tiersafaris bis zu preiswerten Abenteuern haben wir die perfekte "
+"Reise für Sie."
+
+msgid "Showing"
+msgstr "Angezeigt:"
+
+msgid "of"
+msgstr "von"
+
+msgid "packages"
+msgstr "Pakete"
+
+msgid "View Detail"
+msgstr "Details ansehen"
+
+msgid "No packages found"
+msgstr "Keine Pakete gefunden"
+
+msgid "Try adjusting your filters or search criteria."
+msgstr "Passen Sie Ihre Filter oder Suchkriterien an."
+
+msgid "Clear All Filters"
+msgstr "Alle Filter löschen"
+
+msgid "Page navigation"
+msgstr "Seitennavigation"
+
+msgid "First"
+msgstr "Erste"
+
+msgid "Last"
+msgstr "Letzte"
+
+# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS
+# ====================
 msgid "African Wildlife Tours - Days Safaris Adventures"
 msgstr "Afrikanische Wildtier-Touren - Days Safaris Adventures"
 
-#: Home/templates/Home/african_wildlife_tours.html:11
+msgid ""
+"African wildlife tours: Big Five game drives, the Great Migration and "
+"gorilla trekking, organised by Day Safaris Adventures."
+msgstr ""
+"Afrikanische Tierwelt-Touren: Big-Five-Pirschfahrten, die Große Migration "
+"und Gorilla-Trekking, organisiert von Day Safaris Adventures."
+
 msgid "African Wildlife Tours"
 msgstr "Afrikanische Wildtier-Touren"
 
-#: Home/templates/Home/african_wildlife_tours.html:31
 msgid "Explore African Wildlife Tours"
 msgstr "Entdecken Sie afrikanische Wildtier-Touren"
 
-#: Home/templates/Home/african_wildlife_tours.html:32
-msgid "Day Safaris Adventures offers a wide range of African Wildlife Safari packages, Kenya, one of them being the country where the word 'Safari' (Swahili for 'journey') actually comes from. Close encounters with a variety of wildlife in breath-taking landscapes, luxurious and unusual camps and lodges and the fascinating culture of Kenyan tribes bring the country top of many lists for the best wildlife safaris in Africa."
-msgstr "Day Safaris Adventures bietet eine breite Palette afrikanischer Wildtier-Safari-Pakete an. Kenia ist eines der Länder, aus dem das Wort 'Safari' (Swahili für 'Reise') tatsächlich stammt. Begegnungen mit einer Vielzahl von Wildtieren in atemberaubenden Landschaften, luxuriösen und ungewöhnlichen Camps und Lodges sowie die faszinierende Kultur der kenianischen Stämme bringen das Land an die Spitze vieler Listen für die besten Wildtier-Safaris Afrikas."
+msgid ""
+"Day Safaris Adventures offers a wide range of African Wildlife Safari "
+"packages, Kenya, one of them being the country where the word 'Safari' "
+"(Swahili for 'journey') actually comes from. Close encounters with a variety"
+" of wildlife in breath-taking landscapes, luxurious and unusual camps and "
+"lodges and the fascinating culture of Kenyan tribes bring the country top of"
+" many lists for the best wildlife safaris in Africa."
+msgstr ""
+"Day Safaris Adventures bietet eine breite Palette afrikanischer Wildtier-"
+"Safari-Pakete an. Kenia ist eines der Länder, aus dem das Wort 'Safari' "
+"(Swahili für 'Reise') tatsächlich stammt. Begegnungen mit einer Vielzahl von"
+" Wildtieren in atemberaubenden Landschaften, luxuriösen und ungewöhnlichen "
+"Camps und Lodges sowie die faszinierende Kultur der kenianischen Stämme "
+"bringen das Land an die Spitze vieler Listen für die besten Wildtier-Safaris"
+" Afrikas."
 
-#: Home/templates/Home/african_wildlife_tours.html:33
-msgid "A hunting ban over the last 35 years has also reduced animals' fear of humans making Kenya more approachable, allowing the best wildlife safaris in Kenya to be really close to wildlife."
-msgstr "Ein Jagdverbot in den letzten 35 Jahren hat auch die Angst der Tiere vor Menschen verringert, wodurch Kenia zugänglicher wurde und die besten Wildtier-Safaris in Kenia wirklich nah an die Tierwelt herankommen."
+msgid ""
+"A hunting ban over the last 35 years has also reduced animals' fear of "
+"humans making Kenya more approachable, allowing the best wildlife safaris in"
+" Kenya to be really close to wildlife."
+msgstr ""
+"Ein Jagdverbot in den letzten 35 Jahren hat auch die Angst der Tiere vor "
+"Menschen verringert, wodurch Kenia zugänglicher wurde und die besten "
+"Wildtier-Safaris in Kenia wirklich nah an die Tierwelt herankommen."
 
-#: Home/templates/Home/african_wildlife_tours.html:34
-msgid "The various habitats, from grasslands, to riverine forests, to moorlands and semi-deserts, accounts for the variety of wildlife in Kenya. This also means that there is a huge range of choice for your wildlife safari trip. We won't deny that many of the best wildlife safari destinations in Kenya, like Maasai Mara National Reserve or Samburu, are very popular and thus busy. However, with our experience we can help you to avoid the crowds!"
-msgstr "Die verschiedenen Lebensräute – von Grasland über Flusswälder bis hin zu Moorlandschaften und Halbwüsten – sind verantwortlich für die Vielfalt der Tierwelt in Kenia. Das bedeutet auch, dass es eine große Auswahl für Ihre Wildtier-Safari-Reise gibt. Wir werden nicht leugnen, dass viele der besten Wildtier-Safari-Ziele in Kenia, wie das Masai Mara National Reserve oder Samburu, sehr beliebt und daher stark besucht sind. Mit unserer Erfahrung können wir Ihnen jedoch helfen, den Menschenmassen zu entgehen!"
+msgid ""
+"The various habitats, from grasslands, to riverine forests, to moorlands and"
+" semi-deserts, accounts for the variety of wildlife in Kenya. This also "
+"means that there is a huge range of choice for your wildlife safari trip. We"
+" won't deny that many of the best wildlife safari destinations in Kenya, "
+"like Maasai Mara National Reserve or Samburu, are very popular and thus "
+"busy. However, with our experience we can help you to avoid the crowds!"
+msgstr ""
+"Die verschiedenen Lebensräute – von Grasland über Flusswälder bis hin zu "
+"Moorlandschaften und Halbwüsten – sind verantwortlich für die Vielfalt der "
+"Tierwelt in Kenia. Das bedeutet auch, dass es eine große Auswahl für Ihre "
+"Wildtier-Safari-Reise gibt. Wir werden nicht leugnen, dass viele der besten "
+"Wildtier-Safari-Ziele in Kenia, wie das Masai Mara National Reserve oder "
+"Samburu, sehr beliebt und daher stark besucht sind. Mit unserer Erfahrung "
+"können wir Ihnen jedoch helfen, den Menschenmassen zu entgehen!"
 
-#: Home/templates/Home/african_wildlife_tours.html:35
-msgid "Others wildlife Safaris include those in Tanzania, a country that offers a winning combination: some of Africa's best wildlife safaris plus stunning tropical beaches. Besides the Serengeti's famous wildebeest migration, there are other world-class safari locations here. There is also Volcanoes National Park in Rwanda, and Addo Elephant Park and Samara Game Reserve in South Africa among others."
-msgstr "Weitere Wildtier-Safaris umfassen solche in Tansania, einem Land, das eine unschlagbare Kombination bietet: einige der besten Wildtier-Safaris Afrikas plus atemberaubende tropische Strände. Neben der berühmten Gnuswanderung in der Serengeti gibt es hier auch andere erstklassige Safari-Standorte. Dazu gehören der Volcanoes National Park in Ruanda sowie der Addo Elephant Park und das Samara Game Reserve in Südafrika."
+msgid ""
+"Others wildlife Safaris include those in Tanzania, a country that offers a "
+"winning combination: some of Africa's best wildlife safaris plus stunning "
+"tropical beaches. Besides the Serengeti's famous wildebeest migration, there"
+" are other world-class safari locations here. There is also Volcanoes "
+"National Park in Rwanda, and Addo Elephant Park and Samara Game Reserve in "
+"South Africa among others."
+msgstr ""
+"Weitere Wildtier-Safaris umfassen solche in Tansania, einem Land, das eine "
+"unschlagbare Kombination bietet: einige der besten Wildtier-Safaris Afrikas "
+"plus atemberaubende tropische Strände. Neben der berühmten Gnuswanderung in "
+"der Serengeti gibt es hier auch andere erstklassige Safari-Standorte. Dazu "
+"gehören der Volcanoes National Park in Ruanda sowie der Addo Elephant Park "
+"und das Samara Game Reserve in Südafrika."
 
-# ==================== AIRPORT TRANSFERS.HTML TRANSLATIONS ====================
-
-#: Home/templates/Home/airport_transfers.html:4
+# ==================== AIRPORT TRANSFERS.HTML TRANSLATIONS
+# ====================
 msgid "Airport Transfers - Days Safaris Adventures"
 msgstr "Flughafentransfers - Days Safaris Adventures"
 
-#: Home/templates/Home/airport_transfers.html:31
+msgid ""
+"Reliable airport transfers in Nairobi (JKIA and Wilson) and across Kenya "
+"with Day Safaris Adventures."
+msgstr ""
+"Zuverlässige Flughafentransfers in Nairobi (JKIA und Wilson) und ganz Kenia "
+"mit Day Safaris Adventures."
+
+msgid "Airport Transfers"
+msgstr "Flughafentransfers"
+
 msgid "Explore Our Airport Transfers"
 msgstr "Entdecken Sie unsere Flughafentransfers"
 
-#: Home/templates/Home/airport_transfers.html:32
-msgid "What's the best way to get from the airport to your destination? Let Day Safaris Adventures help solve this for you. We are one of Kenya's biggest tour company providing the best services, even airport transfers services."
-msgstr "Was ist der beste Weg, um vom Flughafen zu Ihrem Ziel zu gelangen? Lassen Sie Day Safaris Adventures dieses Problem für Sie lösen. Wir sind eines der größten Tourismusunternehmen Kenias, das die besten Dienstleistungen anbietet, darunter auch Flughafentransfers."
+msgid ""
+"What's the best way to get from the airport to your destination? Let Day "
+"Safaris Adventures help solve this for you. We are one of Kenya's biggest "
+"tour company providing the best services, even airport transfers services."
+msgstr ""
+"Was ist der beste Weg, um vom Flughafen zu Ihrem Ziel zu gelangen? Lassen "
+"Sie Day Safaris Adventures dieses Problem für Sie lösen. Wir sind eines der "
+"größten Tourismusunternehmen Kenias, das die besten Dienstleistungen "
+"anbietet, darunter auch Flughafentransfers."
 
-#: Home/templates/Home/airport_transfers.html:33
-msgid "We are currently working in partnership with over 50 companies in Kenya and outside the country. We can find the right car in the right place, at the right price. Enter your dates and airport and we'll find all the options, including private transfers, shared shuttles, minibuses or coaches. Compare prices, find the deal that suits you best, then book your airport transfer direct."
-msgstr "Wir arbeiten derzeit mit über 50 Unternehmen in Kenia und im Ausland zusammen. Wir finden das richtige Auto am richtigen Ort zum richtigen Preis. Geben Sie Ihre Daten und Ihren Flughafen ein, und wir finden alle Optionen, einschließlich privater Transfers, gemeinsamer Shuttles, Kleinbusse oder Reisebusse. Vergleichen Sie die Preise, finden Sie das Angebot, das am besten zu Ihnen passt, und buchen Sie dann Ihren Flughafentransfer direkt."
+msgid ""
+"We are currently working in partnership with over 50 companies in Kenya and "
+"outside the country. We can find the right car in the right place, at the "
+"right price. Enter your dates and airport and we'll find all the options, "
+"including private transfers, shared shuttles, minibuses or coaches. Compare "
+"prices, find the deal that suits you best, then book your airport transfer "
+"direct."
+msgstr ""
+"Wir arbeiten derzeit mit über 50 Unternehmen in Kenia und im Ausland "
+"zusammen. Wir finden das richtige Auto am richtigen Ort zum richtigen Preis."
+" Geben Sie Ihre Daten und Ihren Flughafen ein, und wir finden alle Optionen,"
+" einschließlich privater Transfers, gemeinsamer Shuttles, Kleinbusse oder "
+"Reisebusse. Vergleichen Sie die Preise, finden Sie das Angebot, das am "
+"besten zu Ihnen passt, und buchen Sie dann Ihren Flughafentransfer direkt."
 
-#: Home/templates/Home/airport_transfers.html:34
 msgid "NB:"
 msgstr "Hinweis:"
 
-#: Home/templates/Home/airport_transfers.html:34
-msgid "Don't wait until you get to your destination to find your airport transfer. Enter your details on our contacts page and Day Safaris Adventures will help you choose a reliable company and get a great deal from airports worldwide. Then you can relax knowing it's all taken care of."
-msgstr "Warten Sie nicht, bis Sie an Ihrem Zielort angekommen sind, um Ihren Flughafentransfer zu finden. Geben Sie Ihre Daten auf unserer Kontaktseite ein, und Day Safaris Adventures hilft Ihnen, ein zuverlässiges Unternehmen auszuwählen und ein tolles Angebot von Flughäfen weltweit zu erhalten. Dann können Sie entspannen, in dem Wissen, dass alles erledigt ist."
+msgid ""
+"Don't wait until you get to your destination to find your airport transfer. "
+"Enter your details on our contacts page and Day Safaris Adventures will help"
+" you choose a reliable company and get a great deal from airports worldwide."
+" Then you can relax knowing it's all taken care of."
+msgstr ""
+"Warten Sie nicht, bis Sie an Ihrem Zielort angekommen sind, um Ihren "
+"Flughafentransfer zu finden. Geben Sie Ihre Daten auf unserer Kontaktseite "
+"ein, und Day Safaris Adventures hilft Ihnen, ein zuverlässiges Unternehmen "
+"auszuwählen und ein tolles Angebot von Flughäfen weltweit zu erhalten. Dann "
+"können Sie entspannen, in dem Wissen, dass alles erledigt ist."
 
-# ==================== HOLIDAY TAILOR MADE TOURS.HTML TRANSLATIONS ====================
-
-#: Home/templates/Home/holiday_tailor_made_tours.html:4
+# ==================== HOLIDAY TAILOR MADE TOURS.HTML TRANSLATIONS
+# ====================
 msgid "Holiday Tailor Made Tours - Days Safaris Adventures"
 msgstr "Maßgeschneiderte Urlaubstouren - Days Safaris Adventures"
 
-#: Home/templates/Home/holiday_tailor_made_tours.html:31
+msgid ""
+"Tailor-made holidays built around your dates, budget and interests by the "
+"Day Safaris Adventures travel team."
+msgstr ""
+"Maßgeschneiderte Urlaube nach Ihren Reisedaten, Ihrem Budget und Ihren "
+"Interessen vom Reiseteam von Day Safaris Adventures."
+
 msgid "Explore Our Holiday Tailor Made Tours"
 msgstr "Entdecken Sie unsere maßgeschneiderten Urlaubstouren"
 
-#: Home/templates/Home/holiday_tailor_made_tours.html:32
-msgid "Day Safaris Adventures is your authentic travel partner of integrity focussed on providing unequal travel experiences on the African Continent. We specialise in complete travel management with special focus on family travel, wildlife safaris, special interest tours and romantic honeymoons."
-msgstr "Day Safaris Adventures ist Ihr authentischer Reisepartner mit Integrität, der sich darauf konzentriert, unvergleichliche Reiseerlebnisse auf dem afrikanischen Kontinent zu bieten. Wir spezialisieren uns auf das komplette Reisemanagement mit besonderem Fokus auf Familienreisen, Wildtier-Safaris, Spezialinteressen-Touren und romantische Flitterwochen."
+msgid ""
+"Day Safaris Adventures is your authentic travel partner of integrity "
+"focussed on providing unequal travel experiences on the African Continent. "
+"We specialise in complete travel management with special focus on family "
+"travel, wildlife safaris, special interest tours and romantic honeymoons."
+msgstr ""
+"Day Safaris Adventures ist Ihr authentischer Reisepartner mit Integrität, "
+"der sich darauf konzentriert, unvergleichliche Reiseerlebnisse auf dem "
+"afrikanischen Kontinent zu bieten. Wir spezialisieren uns auf das komplette "
+"Reisemanagement mit besonderem Fokus auf Familienreisen, Wildtier-Safaris, "
+"Spezialinteressen-Touren und romantische Flitterwochen."
 
-#: Home/templates/Home/holiday_tailor_made_tours.html:33
-msgid "All our holidays are tailor-made and we pride ourselves in matching your holiday travel preparations arrangements to your exact needs and special interests. Our vacations are all carefully designed so that your holiday experience is one of a kind, leaving memories that are only yours to keep!"
-msgstr "Alle unsere Urlaube sind maßgeschneidert, und wir sind stolz darauf, Ihre Urlaubsreisevorbereitungen genau auf Ihre Bedürfnisse und besonderen Interessen abzustimmen. Unsere Ferien sind alle sorgfältig gestaltet, damit Ihr Urlaubserlebnis einzigartig ist und Erinnerungen hinterlässt, die nur Ihnen gehören!"
+msgid ""
+"All our holidays are tailor-made and we pride ourselves in matching your "
+"holiday travel preparations arrangements to your exact needs and special "
+"interests. Our vacations are all carefully designed so that your holiday "
+"experience is one of a kind, leaving memories that are only yours to keep!"
+msgstr ""
+"Alle unsere Urlaube sind maßgeschneidert, und wir sind stolz darauf, Ihre "
+"Urlaubsreisevorbereitungen genau auf Ihre Bedürfnisse und besonderen "
+"Interessen abzustimmen. Unsere Ferien sind alle sorgfältig gestaltet, damit "
+"Ihr Urlaubserlebnis einzigartig ist und Erinnerungen hinterlässt, die nur "
+"Ihnen gehören!"
 
-#: Home/templates/Home/holiday_tailor_made_tours.html:37
 msgid "Excellent value for money"
 msgstr "Hervorragendes Preis-Leistungs-Verhältnis"
 
-#: Home/templates/Home/holiday_tailor_made_tours.html:39
 msgid "Personalized service"
 msgstr "Personalisierter Service"
 
-#: Home/templates/Home/holiday_tailor_made_tours.html:43
 msgid "Captivating destinations"
 msgstr "Faszinierende Reiseziele"
 
-#: Home/templates/Home/holiday_tailor_made_tours.html:45
 msgid "unforgettable holiday travel experience"
 msgstr "unvergessliches Urlaubsreiseerlebnis"
 
-# ==================== TRAVEL PARTNERSHIPS.HTML TRANSLATIONS ====================
-
-#: Home/templates/Home/travel_partnerships.html:4
+# ==================== TRAVEL PARTNERSHIPS.HTML TRANSLATIONS
+# ====================
 msgid "Travel Partnerships - Days Safaris Adventures"
 msgstr "Reisepartnerschaften - Days Safaris Adventures"
 
-#: Home/templates/Home/travel_partnerships.html:31
+msgid ""
+"Partner with Day Safaris Adventures: ground handling and destination "
+"management for travel agents worldwide."
+msgstr ""
+"Werden Sie Partner von Day Safaris Adventures: Bodenabfertigung und "
+"Destination Management für Reisebüros weltweit."
+
 msgid "Explore Our Travel Partnerships"
 msgstr "Entdecken Sie unsere Reisepartnerschaften"
 
-#: Home/templates/Home/travel_partnerships.html:32
-msgid "Day Safaris Adventures has partnered with award-winning tour operators to bring you the best Travel Tours and flight plans across the globe. Whether you are looking to explore Africa, Asia or the United States, temples, embark on an off-the-beaten-track adventure or discover the wonders of the world, we can help you plan your perfect trip."
-msgstr "Day Safaris Adventures hat mit preisgekrönten Reiseveranstaltern zusammengearbeitet, um Ihnen die besten Reisetouren und Flugpläne auf der ganzen Welt zu bieten. Egal, ob Sie Afrika, Asien oder die USA erkunden, Tempel besuchen, ein abenteuerliches Abenteuer abseits der ausgetretenen Pfade unternehmen oder die Wunder der Welt entdecken möchten – wir helfen Ihnen bei der Planung Ihrer perfekten Reise."
+msgid ""
+"Day Safaris Adventures has partnered with award-winning tour operators to "
+"bring you the best Travel Tours and flight plans across the globe. Whether "
+"you are looking to explore Africa, Asia or the United States, temples, "
+"embark on an off-the-beaten-track adventure or discover the wonders of the "
+"world, we can help you plan your perfect trip."
+msgstr ""
+"Day Safaris Adventures hat mit preisgekrönten Reiseveranstaltern "
+"zusammengearbeitet, um Ihnen die besten Reisetouren und Flugpläne auf der "
+"ganzen Welt zu bieten. Egal, ob Sie Afrika, Asien oder die USA erkunden, "
+"Tempel besuchen, ein abenteuerliches Abenteuer abseits der ausgetretenen "
+"Pfade unternehmen oder die Wunder der Welt entdecken möchten – wir helfen "
+"Ihnen bei der Planung Ihrer perfekten Reise."
 
-#: Home/templates/Home/travel_partnerships.html:33
-msgid "Enjoy the benefits of an African tour to West Africa, South Africa or Egypt among other countries and explore multiple fascinating cultures and countries in one go, whether you are looking to sight see in historic cities, and enjoy various cuisines and dine on the finest food in the world. Admire wildlife on African safari with our Africa tours, or take a trip to the United Arab Emirates and marvel at the modern architectural wonders of cities like Dubai, Abu Dhabi and Sharjah, or the amazing sites like the Palm Islands, Burj Khalifa and Sheikh Zayed."
-msgstr "Genießen Sie die Vorteile einer Afrikareise nach Westafrika, Südafrika oder Ägypten und entdecken Sie mehrere faszinierende Kulturen und Länder auf einmal, ob Sie historische Städte besichtigen, verschiedene Küchen genießen und die besten Speisen der Welt probieren möchten. Bewundern Sie Wildtiere auf afrikanischen Safaris mit unseren Afrika-Touren oder unternehmen Sie eine Reise in die Vereinigten Arabischen Emirate und bestaunen Sie die modernen architektonischen Wunder von Städten wie Dubai, Abu Dhabi und Sharjah oder die erstaunlichen Sehenswürdigkeiten wie die Palm Islands, den Burj Khalifa und Sheikh Zayed."
+msgid ""
+"Enjoy the benefits of an African tour to West Africa, South Africa or Egypt "
+"among other countries and explore multiple fascinating cultures and "
+"countries in one go, whether you are looking to sight see in historic "
+"cities, and enjoy various cuisines and dine on the finest food in the world."
+" Admire wildlife on African safari with our Africa tours, or take a trip to "
+"the United Arab Emirates and marvel at the modern architectural wonders of "
+"cities like Dubai, Abu Dhabi and Sharjah, or the amazing sites like the Palm"
+" Islands, Burj Khalifa and Sheikh Zayed."
+msgstr ""
+"Genießen Sie die Vorteile einer Afrikareise nach Westafrika, Südafrika oder "
+"Ägypten und entdecken Sie mehrere faszinierende Kulturen und Länder auf "
+"einmal, ob Sie historische Städte besichtigen, verschiedene Küchen genießen "
+"und die besten Speisen der Welt probieren möchten. Bewundern Sie Wildtiere "
+"auf afrikanischen Safaris mit unseren Afrika-Touren oder unternehmen Sie "
+"eine Reise in die Vereinigten Arabischen Emirate und bestaunen Sie die "
+"modernen architektonischen Wunder von Städten wie Dubai, Abu Dhabi und "
+"Sharjah oder die erstaunlichen Sehenswürdigkeiten wie die Palm Islands, den "
+"Burj Khalifa und Sheikh Zayed."
 
-# ==================== BLOG_DETAIL.HTML TRANSLATIONS ====================
+# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS
+# ====================
+msgid "Africa Tours - Days Safaris Adventures"
+msgstr "Afrika-Touren - Days Safaris Adventures"
 
-#: Home/templates/Home/blog_detail.html:36
-msgid "Tags:"
-msgstr "Tags:"
+msgid ""
+"Africa tour packages across East, West, South and international destinations"
+" from Day Safaris Adventures."
+msgstr ""
+"Afrika-Tourpakete für Ost-, West- und Südafrika sowie internationale Ziele "
+"von Day Safaris Adventures."
 
-#: Home/templates/Home/blog_detail.html:44
-msgid "Back to Blog"
-msgstr "Zurück zum Blog"
+msgid "African Tour Gallery"
+msgstr "Galerie der Afrika-Touren"
 
-#: Home/templates/Home/blog_detail.html:45
-msgid "Book a Safari"
-msgstr "Safari buchen"
+msgid "Experience Breathtaking Moments in Africa"
+msgstr "Erleben Sie atemberaubende Momente in Afrika"
 
-# ==================== AIRBNB.HTML TRANSLATIONS ====================
+msgid "All Destinations"
+msgstr "Alle Reiseziele"
 
-#: Home/templates/Home/airbnb.html:4
-msgid "AirBNB - Days Safaris Adventures"
-msgstr "AirBNB - Days Safaris Adventures"
+msgid "No destinations available"
+msgstr "Keine Reiseziele verfügbar"
 
-#: Home/templates/Home/airbnb.html:11
-msgid "Airbnb Accommodations"
-msgstr "Airbnb-Unterkünfte"
+msgid "Check back soon for amazing destinations!"
+msgstr "Schauen Sie bald wieder vorbei – tolle Reiseziele folgen!"
 
-#: Home/templates/Home/airbnb.html:14
-msgid "Accommodation"
-msgstr "Unterkunft"
+#| msgid "West Africa"
+msgid "East Africa"
+msgstr "Ostafrika"
 
-#: Home/templates/Home/airbnb.html:26
-msgid "Premium Stays"
-msgstr "Premium-Aufenthalte"
+msgid "No destinations in this category"
+msgstr "Keine Reiseziele in dieser Kategorie"
 
-#: Home/templates/Home/airbnb.html:27
-msgid "Experience Luxury Accommodations Across Africa"
-msgstr "Erleben Sie luxuriöse Unterkünfte in ganz Afrika"
+msgid "Awesome Africa Tour Packages"
+msgstr "Großartige Afrika-Tourpakete"
 
-#: Home/templates/Home/airbnb.html:28
-msgid "Handpicked Airbnb properties for your perfect African getaway"
-msgstr "Handverlesene Airbnb-Unterkünfte für Ihren perfekten Afrika-Urlaub"
+#, python-format
+msgid "%(d)s days"
+msgstr "%(d)s Tage"
 
-#: Home/templates/Home/airbnb.html:50
-msgid "book"
-msgstr "buchen"
+#, python-format
+msgid "%(p)s Persons"
+msgstr "%(p)s Personen"
 
-#: Home/templates/Home/airbnb.html:57
-msgid "guests"
-msgstr "Gäste"
+# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS
+# ====================
+msgid "East African Tours - Days Safaris Adventures"
+msgstr "Ostafrika-Touren - Days Safaris Adventures"
 
-#: Home/templates/Home/airbnb.html:70
-msgid "WiFi"
-msgstr "WLAN"
+msgid ""
+"East Africa tours: Kenya, Tanzania, Uganda and Rwanda safari packages from "
+"Day Safaris Adventures."
+msgstr ""
+"Ostafrika-Touren: Safaripakete für Kenia, Tansania, Uganda und Ruanda von "
+"Day Safaris Adventures."
 
-#: Home/templates/Home/airbnb.html:71
-msgid "AC"
-msgstr "Klimaanlage"
+msgid "East African Tours"
+msgstr "Ostafrika-Touren"
 
-#: Home/templates/Home/airbnb.html:73
-msgid "Kitchen"
-msgstr "Küche"
+msgid "East African Tour Gallery"
+msgstr "Galerie der Ostafrika-Touren"
 
-#: Home/templates/Home/airbnb.html:82
-msgid "No properties available"
-msgstr "Keine Unterkünfte verfügbar"
+msgid "Awesome East Africa Tour Packages"
+msgstr "Großartige Ostafrika-Tourpakete"
 
-#: Home/templates/Home/airbnb.html:83
-msgid "Check back soon for amazing accommodations!"
-msgstr "Schauen Sie bald wieder vorbei für tolle Unterkünfte!"
+# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS
+# ====================
+msgid "International Tours - Days Safaris Adventures"
+msgstr "Internationale Touren - Days Safaris Adventures"
 
-#: Home/templates/Home/airbnb.html:97
-msgid "Verified Properties"
-msgstr "Verifizierte Unterkünfte"
+msgid ""
+"International tour packages beyond Africa, arranged by Day Safaris "
+"Adventures, Nairobi."
+msgstr ""
+"Internationale Tourpakete außerhalb Afrikas, organisiert von Day Safaris "
+"Adventures, Nairobi."
 
-#: Home/templates/Home/airbnb.html:98
-msgid "All properties are handpicked and verified"
-msgstr "Alle Unterkünfte sind handverlesen und verifiziert"
+msgid "Other Tour Gallery"
+msgstr "Galerie weiterer Touren"
 
-#: Home/templates/Home/airbnb.html:105
-msgid "Round-the-clock customer assistance"
-msgstr "Rund-um-die-Uhr-Kundenbetreuung"
+msgid "Experience Breathtaking Moments AnyWhere"
+msgstr "Erleben Sie atemberaubende Momente überall auf der Welt"
 
-#: Home/templates/Home/airbnb.html:111
-msgid "Secure Payments"
-msgstr "Sichere Zahlungen"
+msgid "Awesome International Tour Packages"
+msgstr "Großartige internationale Tourpakete"
 
-#: Home/templates/Home/airbnb.html:112
-msgid "Safe and encrypted transactions"
-msgstr "Sichere und verschlüsselte Transaktionen"
+# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS
+# ====================
+msgid "South Africa Tours - Days Safaris Adventures"
+msgstr "Südafrika-Touren - Days Safaris Adventures"
 
-#: Home/templates/Home/airbnb.html:118
-msgid "Best Locations"
-msgstr "Beste Lagen"
+msgid ""
+"South Africa tours and safari packages including Kruger and Cape Town, from "
+"Day Safaris Adventures."
+msgstr ""
+"Südafrika-Touren und Safaripakete inklusive Krüger-Nationalpark und Kapstadt"
+" von Day Safaris Adventures."
 
-#: Home/templates/Home/airbnb.html:119
-msgid "Prime locations across East Africa"
-msgstr "Top-Lagen in ganz Ostafrika"
+msgid "South Africa Packages"
+msgstr "Südafrika-Pakete"
 
-#: Home/templates/Home/airbnb.html:130
-msgid "Looking for a specific property?"
-msgstr "Sie suchen eine bestimmte Unterkunft?"
+# ==================== PACKAGE_DETAIL.HTML TRANSLATIONS ====================
+msgid "Epic South African Safari & Adventure Deals"
+msgstr "Spektakuläre Safari- und Abenteuerangebote in Südafrika"
 
-#: Home/templates/Home/airbnb.html:131
-msgid "Contact us for custom accommodation arrangements or long-term stays."
-msgstr "Kontaktieren Sie uns für individuelle Unterkunftsvereinbarungen oder Langzeitaufenthalte."
+#| msgid "South Africa"
+msgid "South Africa Safari"
+msgstr "Südafrika-Safari"
 
-#: Home/templates/Home/airbnb.html:134
-msgid "Contact Us"
-msgstr "Kontaktieren Sie uns"
+msgid "Please check back later for epic South Africa safari deals!"
+msgstr ""
+"Schauen Sie später wieder vorbei – spektakuläre Südafrika-Safariangebote "
+"folgen!"
 
-# ==================== BNB_DETAIL.HTML TRANSLATIONS ====================
+msgid "Other Destination Tour Gallery"
+msgstr "Galerie weiterer Reiseziele"
 
-#: Home/templates/Home/bnb_detail.html:14
-msgid "Airbnb"
-msgstr "Airbnb"
+msgid "Discover Nation's Wild Beauty"
+msgstr "Entdecken Sie die wilde Schönheit des Landes"
 
-#: Home/templates/Home/bnb_detail.html:55
-msgid "Guests"
-msgstr "Gäste"
+msgid "Check back soon for amazing South African destinations!"
+msgstr ""
+"Schauen Sie bald wieder vorbei – tolle Reiseziele in Südafrika folgen!"
 
-#: Home/templates/Home/bnb_detail.html:63
-msgid "Book Today"
-msgstr "Heute buchen"
+msgid "Check back soon for incredible South African experiences!"
+msgstr ""
+"Schauen Sie bald wieder vorbei – unglaubliche Erlebnisse in Südafrika "
+"folgen!"
 
-#: Home/templates/Home/bnb_detail.html:64
-msgid "night"
-msgstr "Nacht"
+# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS
+# ====================
+msgid "West African Tours - Days Safaris Adventures"
+msgstr "Westafrika-Touren - Days Safaris Adventures"
 
-#: Home/templates/Home/bnb_detail.html:82
-msgid "Free WiFi"
-msgstr "Kostenloses WLAN"
+# ==================== AFRICAN WILDLIFE TOURS.HTML TRANSLATIONS
+# ====================
+msgid ""
+"West Africa tours and cultural travel packages from Day Safaris Adventures."
+msgstr ""
+"Westafrika-Touren und kulturelle Reisepakete von Day Safaris Adventures."
 
-#: Home/templates/Home/bnb_detail.html:85
-msgid "Air Conditioning"
-msgstr "Klimaanlage"
+msgid "West African Tours"
+msgstr "Westafrika-Touren"
 
-#: Home/templates/Home/bnb_detail.html:88
-msgid "Fully Equipped Kitchen"
-msgstr "Voll ausgestattete Küche"
+msgid "West African Tour Gallery"
+msgstr "Galerie der Westafrika-Touren"
 
-#: Home/templates/Home/bnb_detail.html:91
-msgid "Private Bathroom"
-msgstr "Privates Badezimmer"
+msgid "Discover the Vibrant Spirit of West Africa"
+msgstr "Entdecken Sie den lebendigen Geist Westafrikas"
 
-#: Home/templates/Home/bnb_detail.html:94
-msgid "Parking Available"
-msgstr "Parkplätze verfügbar"
+msgid "Check back soon for amazing West African destinations!"
+msgstr ""
+"Schauen Sie bald wieder vorbei – tolle Reiseziele in Westafrika folgen!"
 
-#: Home/templates/Home/bnb_detail.html:97
-msgid "24/7 Security"
-msgstr "24/7 Sicherheitsdienst"
+msgid "Check back soon for exciting West African highlights!"
+msgstr ""
+"Schauen Sie bald wieder vorbei – spannende Highlights aus Westafrika folgen!"
 
-#: Home/templates/Home/bnb_detail.html:112
-msgid "Book Your Stay Today"
-msgstr "Buchen Sie Ihren Aufenthalt heute"
+msgid "West African Packages"
+msgstr "Westafrika-Pakete"
 
-#: Home/templates/Home/bnb_detail.html:113
-msgid "Experience comfort and luxury at its finest. Book your stay with Day Safaris Adventures and enjoy a memorable African getaway."
-msgstr "Erleben Sie Komfort und Luxus pur. Buchen Sie Ihren Aufenthalt bei Day Safaris Adventures und genießen Sie einen unvergesslichen Afrika-Urlaub."
+msgid "Unforgettable West Africa Tour Experiences"
+msgstr "Unvergessliche Westafrika-Erlebnisse"
 
-#: Home/templates/Home/bnb_detail.html:114
-msgid "Take advantage of our early bird discounts and long-stay offers. All our properties are carefully selected to ensure you have the best experience."
-msgstr "Nutzen Sie unsere Frühbucherrabatte und Langzeitaufenthaltsangebote. Alle unsere Unterkünfte werden sorgfältig ausgewählt, um Ihnen das beste Erlebnis zu garantieren."
+msgid "Please check back later for incredible West Africa tour deals!"
+msgstr ""
+"Schauen Sie später wieder vorbei – unglaubliche Westafrika-Tourangebote "
+"folgen!"
 
-#: Home/templates/Home/bnb_detail.html:119
-msgid "Book This Property"
-msgstr "Diese Unterkunft buchen"
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Mt Kenya - Days Safaris Adventures"
+msgstr "Mount Kenya - Days Safaris Adventures"
 
-#: Home/templates/Home/bnb_detail.html:120
-msgid "10% Off"
-msgstr "10% Rabatt"
+msgid ""
+"Mount Kenya trekking: routes, itineraries and guided climbs with Day Safaris"
+" Adventures."
+msgstr ""
+"Mount-Kenya-Trekking: Routen, Reiseverläufe und geführte Besteigungen mit "
+"Day Safaris Adventures."
 
-#: Home/templates/Home/bnb_detail.html:120
-msgid "On Your First Booking With Day Safaris Adventures."
-msgstr "Auf Ihre erste Buchung bei Day Safaris Adventures."
+msgid "Mt Kenya Trekking"
+msgstr "Mount-Kenya-Trekking"
 
-#: Home/templates/Home/bnb_detail.html:160
+msgid "Awesome Mt Kenya Packages"
+msgstr "Großartige Mount-Kenya-Pakete"
+
+# ==================== AIRLINE.HTML TRANSLATIONS ====================
+msgid "Mt Kilimanjaro - Days Safaris Adventures"
+msgstr "Kilimandscharo - Days Safaris Adventures"
+
+msgid ""
+"Mount Kilimanjaro climbing packages with expert guides from Day Safaris "
+"Adventures."
+msgstr ""
+"Kilimandscharo-Besteigungen mit erfahrenen Guides von Day Safaris "
+"Adventures."
+
+msgid "Mt Kilimanjaro Trekking"
+msgstr "Kilimandscharo-Trekking"
+
+msgid "Awesome Mt Kilimanjaro Packages"
+msgstr "Großartige Kilimandscharo-Pakete"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Mt Longonot - Days Safaris Adventures"
+msgstr "Mount Longonot - Days Safaris Adventures"
+
+msgid ""
+"Mount Longonot day hike near Nairobi: guided crater trek with Day Safaris "
+"Adventures."
+msgstr ""
+"Tageswanderung auf den Mount Longonot bei Nairobi: geführter Kratertrek mit "
+"Day Safaris Adventures."
+
+msgid "Mt Longonot Trekking"
+msgstr "Mount-Longonot-Trekking"
+
+msgid "Awesome Mt Longonot Packages"
+msgstr "Großartige Mount-Longonot-Pakete"
+
+# ==================== INDEX.HTML TRANSLATIONS ====================
+msgid "Mt Meru - Days Safaris Adventures"
+msgstr "Mount Meru - Days Safaris Adventures"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid ""
+"Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris "
+"Adventures."
+msgstr ""
+"Mount-Meru-Trekkingpakete in Arusha, Tansania, mit Day Safaris Adventures."
+
+msgid "Mt Meru Trekking"
+msgstr "Mount-Meru-Trekking"
+
+msgid "Awesome Mt Meru Packages"
+msgstr "Großartige Mount-Meru-Pakete"
+
+# ==================== ABOUT.HTML TRANSLATIONS ====================
+msgid "Mt Suswa - Days Safaris Adventures"
+msgstr "Mount Suswa - Days Safaris Adventures"
+
+msgid "Mount Suswa hiking and cave exploration with Day Safaris Adventures."
+msgstr ""
+"Wandern und Höhlenerkundung am Mount Suswa mit Day Safaris Adventures."
+
+msgid "Mt Suswa Trekking"
+msgstr "Mount-Suswa-Trekking"
+
+msgid "Awesome Mt Suswa Packages"
+msgstr "Großartige Mount-Suswa-Pakete"
+
+#, python-format
+msgid ""
+"%(name)s: %(days)s-day trek in %(loc)s. Guided by Day Safaris Adventures. "
+"%(desc)s"
+msgstr ""
+"%(name)s: %(days)s-tägiger Trek in %(loc)s. Geführt von Day Safaris "
+"Adventures. %(desc)s"
+
+msgid "Professional Safari Guide"
+msgstr "Professioneller Safari-Guide"
+
+msgid "Park Entry Fees Included"
+msgstr "Parkeintrittsgebühren inbegriffen"
+
+msgid "Game Drives in 4x4 Vehicles"
+msgstr "Wildbeobachtungsfahrten in 4x4-Fahrzeugen"
+
+msgid "Accommodation & Meals"
+msgstr "Unterkunft & Mahlzeiten"
+
+msgid "Page Not Found"
+msgstr "Seite nicht gefunden"
+
+msgid "404 Page"
+msgstr "404-Seite"
+
+# ==================== BASE.HTML TRANSLATIONS ====================
+msgid "Regiter"
+msgstr "Registrieren"
+
+msgid ""
+"We’re sorry, the page you have looked for does not exist in our website! "
+"Maybe go to our home page or try to use a search?"
+msgstr ""
+"Es tut uns leid, die gesuchte Seite existiert auf unserer Website nicht. "
+"Vielleicht gehen Sie zur Startseite oder versuchen es mit der Suche."
+
+msgid "Go Back To Home"
+msgstr "Zurück zur Startseite"
+
+msgid "Server Error"
+msgstr "Serverfehler"
+
+msgid "Something went wrong on our end. We're looking into it."
+msgstr "Bei uns ist etwas schiefgelaufen. Wir kümmern uns darum."
+
+msgid "Return to the homepage"
+msgstr "Zurück zur Startseite"
+
+#, python-format
+msgid ""
+"Thank you %(name)s! Your booking request has been submitted successfully. We"
+" will contact you within 24 hours."
+msgstr ""
+"Vielen Dank, %(name)s! Ihre Buchungsanfrage wurde erfolgreich übermittelt. "
+"Wir melden uns innerhalb von 24 Stunden."
+
+#, python-format
+msgid ""
+"Thank you %(name)s! Your trekking request for %(package)s has been received."
+" We will contact you within 24 hours."
+msgstr ""
+"Vielen Dank, %(name)s! Ihre Trekking-Anfrage für %(package)s ist "
+"eingegangen. Wir melden uns innerhalb von 24 Stunden."
+
+msgid "Phone / WhatsApp"
+msgstr "Telefon / WhatsApp"
+
 msgid "Number of Guests"
 msgstr "Anzahl der Gäste"
 
-#: Home/templates/Home/bnb_detail.html:168
+msgid "Guests must be between 1 and 50."
+msgstr "Die Gästezahl muss zwischen 1 und 50 liegen."
+
+msgid "Check-in cannot be in the past."
+msgstr "Das Anreisedatum darf nicht in der Vergangenheit liegen."
+
+msgid "Check-out date must be after check-in date"
+msgstr "Das Abreisedatum muss nach dem Anreisedatum liegen"
+
+msgid "Travelling with children?"
+msgstr "Reisen Sie mit Kindern?"
+
+msgid "No children"
+msgstr "Keine Kinder"
+
+msgid "Yes, with children"
+msgstr "Ja, mit Kindern"
+
+msgid "Your full name"
+msgstr "Ihr vollständiger Name"
+
+msgid "Your email"
+msgstr "Ihre E-Mail"
+
+msgid "Guests"
+msgstr "Gäste"
+
+msgid "How many?"
+msgstr "Wie viele?"
+
+msgid "Ages, e.g. 4, 7"
+msgstr "Alter, z. B. 4, 7"
+
+msgid "Room preferences, special requests…"
+msgstr "Zimmerwünsche, besondere Wünsche…"
+
+msgid "Check-in"
+msgstr "Anreise"
+
+msgid "Check-out"
+msgstr "Abreise"
+
+msgid "Guests (including children)"
+msgstr "Gäste (einschließlich Kinder)"
+
+msgid "Guests must be at least 1."
+msgstr "Die Gästezahl muss mindestens 1 betragen."
+
+#, python-format
+msgid ""
+"This hotel sleeps up to %(n)s guests. For larger groups please contact us."
+msgstr ""
+"Dieses Hotel bietet Platz für bis zu %(n)s Gäste. Für größere Gruppen "
+"kontaktieren Sie uns bitte."
+
+msgid "Please enter ages as numbers, e.g. 4, 7."
+msgstr "Bitte geben Sie das Alter als Zahlen ein, z. B. 4, 7."
+
+msgid "Check-out must be after check-in."
+msgstr "Die Abreise muss nach der Anreise liegen."
+
+msgid "Please tell us how many children (1 to 10)."
+msgstr "Bitte geben Sie an, wie viele Kinder (1 bis 10)."
+
+msgid "Children cannot be more than the total number of guests."
+msgstr "Die Zahl der Kinder darf die Gesamtzahl der Gäste nicht übersteigen."
+
+msgid "Hotel"
+msgstr "Hotel"
+
+msgid "Safari Lodge"
+msgstr "Safarilodge"
+
+msgid "Tented Camp"
+msgstr "Zeltcamp"
+
+msgid "Beach Resort"
+msgstr "Strandresort"
+
+msgid "Villa"
+msgstr "Villa"
+
+msgid "Apartment / Suite"
+msgstr "Apartment / Suite"
+
+msgid "Eco Cabin"
+msgstr "Öko-Hütte"
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "1 Bedroom"
+msgstr "1 Schlafzimmer"
+
+msgid "2 Bedroom"
+msgstr "2 Schlafzimmer"
+
+msgid "3 Bedroom"
+msgstr "3 Schlafzimmer"
+
+msgid "4 Bedroom"
+msgstr "4 Schlafzimmer"
+
+msgid "Not specified"
+msgstr "Nicht angegeben"
+
+msgid "Room only"
+msgstr "Nur Übernachtung"
+
+msgid "Bed & Breakfast"
+msgstr "Übernachtung mit Frühstück"
+
+msgid "Half board"
+msgstr "Halbpension"
+
+msgid "Full board"
+msgstr "Vollpension"
+
+msgid "All inclusive"
+msgstr "All inclusive"
+
+# ==================== AIRBNB.HTML TRANSLATIONS ====================
+msgid "AirBNB - Days Safaris Adventures"
+msgstr "AirBNB - Days Safaris Adventures"
+
+msgid ""
+"Airbnb-style stays and apartments in Nairobi and across Kenya, booked "
+"through Day Safaris Adventures."
+msgstr ""
+"Airbnb-ähnliche Unterkünfte und Apartments in Nairobi und ganz Kenia, "
+"buchbar über Day Safaris Adventures."
+
+msgid "Airbnb Accommodations"
+msgstr "Airbnb-Unterkünfte"
+
+msgid "Accommodation"
+msgstr "Unterkunft"
+
+# ==================== BNB_DETAIL.HTML TRANSLATIONS ====================
+msgid "Airbnb"
+msgstr "Airbnb"
+
+msgid "Premium Stays"
+msgstr "Premium-Aufenthalte"
+
+msgid "Experience Luxury Accommodations Across Africa"
+msgstr "Erleben Sie luxuriöse Unterkünfte in ganz Afrika"
+
+msgid "Handpicked Airbnb properties for your perfect African getaway"
+msgstr "Handverlesene Airbnb-Unterkünfte für Ihren perfekten Afrika-Urlaub"
+
+msgid "book"
+msgstr "buchen"
+
+msgid "guests"
+msgstr "Gäste"
+
+msgid "WiFi"
+msgstr "WLAN"
+
+msgid "AC"
+msgstr "Klimaanlage"
+
+msgid "Kitchen"
+msgstr "Küche"
+
+msgid "No properties available"
+msgstr "Keine Unterkünfte verfügbar"
+
+msgid "Check back soon for amazing accommodations!"
+msgstr "Schauen Sie bald wieder vorbei für tolle Unterkünfte!"
+
+msgid "Verified Properties"
+msgstr "Verifizierte Unterkünfte"
+
+msgid "All properties are handpicked and verified"
+msgstr "Alle Unterkünfte sind handverlesen und verifiziert"
+
+msgid "Round-the-clock customer assistance"
+msgstr "Rund-um-die-Uhr-Kundenbetreuung"
+
+msgid "Secure Payments"
+msgstr "Sichere Zahlungen"
+
+msgid "Safe and encrypted transactions"
+msgstr "Sichere und verschlüsselte Transaktionen"
+
+msgid "Best Locations"
+msgstr "Beste Lagen"
+
+msgid "Prime locations across East Africa"
+msgstr "Top-Lagen in ganz Ostafrika"
+
+msgid "Looking for a specific property?"
+msgstr "Sie suchen eine bestimmte Unterkunft?"
+
+msgid "Contact us for custom accommodation arrangements or long-term stays."
+msgstr ""
+"Kontaktieren Sie uns für individuelle Unterkunftsvereinbarungen oder "
+"Langzeitaufenthalte."
+
+#, python-format
+msgid "Book %(title)s in %(loc)s: sleeps up to %(n)s guests. %(desc)s"
+msgstr ""
+"Buchen Sie %(title)s in %(loc)s: Platz für bis zu %(n)s Gäste. %(desc)s"
+
+msgid "Book Today"
+msgstr "Heute buchen"
+
+msgid "night"
+msgstr "Nacht"
+
+msgid "Free WiFi"
+msgstr "Kostenloses WLAN"
+
+msgid "Air Conditioning"
+msgstr "Klimaanlage"
+
+msgid "Fully Equipped Kitchen"
+msgstr "Voll ausgestattete Küche"
+
+msgid "Private Bathroom"
+msgstr "Privates Badezimmer"
+
+msgid "Parking Available"
+msgstr "Parkplätze verfügbar"
+
+msgid "24/7 Security"
+msgstr "24/7 Sicherheitsdienst"
+
+msgid "Book Your Stay Today"
+msgstr "Buchen Sie Ihren Aufenthalt heute"
+
+msgid ""
+"Experience comfort and luxury at its finest. Book your stay with Day Safaris"
+" Adventures and enjoy a memorable African getaway."
+msgstr ""
+"Erleben Sie Komfort und Luxus pur. Buchen Sie Ihren Aufenthalt bei Day "
+"Safaris Adventures und genießen Sie einen unvergesslichen Afrika-Urlaub."
+
+msgid ""
+"Take advantage of our early bird discounts and long-stay offers. All our "
+"properties are carefully selected to ensure you have the best experience."
+msgstr ""
+"Nutzen Sie unsere Frühbucherrabatte und Langzeitaufenthaltsangebote. Alle "
+"unsere Unterkünfte werden sorgfältig ausgewählt, um Ihnen das beste Erlebnis"
+" zu garantieren."
+
+msgid "Book This Property"
+msgstr "Diese Unterkunft buchen"
+
+msgid "Get"
+msgstr "Erhalten Sie"
+
+#, python-format
+msgid "10%% Off"
+msgstr "10%% Rabatt"
+
+msgid "On Your First Booking With Day Safaris Adventures."
+msgstr "Auf Ihre erste Buchung bei Day Safaris Adventures."
+
 msgid "Check-in Date"
 msgstr "Check-in-Datum"
 
-#: Home/templates/Home/bnb_detail.html:176
 msgid "Check-out Date"
 msgstr "Check-out-Datum"
 
-#: Home/templates/Home/bnb_detail.html:185
-msgid "Your information is secure"
-msgstr "Ihre Daten sind sicher"
-
-#: Home/templates/Home/bnb_detail.html:199
 msgid "Amenities"
 msgstr "Ausstattung"
 
-#: Home/templates/Home/bnb_detail.html:200
 msgid "What This Property Offers"
 msgstr "Was diese Unterkunft bietet"
 
-#: Home/templates/Home/bnb_detail.html:208
 msgid "High-speed internet available throughout"
 msgstr "Hochgeschwindigkeits-Internet in der gesamten Unterkunft"
 
-#: Home/templates/Home/bnb_detail.html:216
 msgid "Fully air-conditioned rooms"
 msgstr "Voll klimatisierte Räume"
 
-#: Home/templates/Home/bnb_detail.html:224
 msgid "Fully equipped kitchen available"
 msgstr "Voll ausgestattete Küche verfügbar"
 
-#: Home/templates/Home/bnb_detail.html:232
 msgid "Smart TV"
 msgstr "Smart-TV"
 
-#: Home/templates/Home/bnb_detail.html:233
 msgid "Flat-screen TV with streaming services"
 msgstr "Flachbildfernseher mit Streaming-Diensten"
 
-#: Home/templates/Home/bnb_detail.html:240
 msgid "Free Parking"
 msgstr "Kostenlose Parkplätze"
 
-#: Home/templates/Home/bnb_detail.html:241
 msgid "On-site parking available"
 msgstr "Parkplätze vor Ort verfügbar"
 
-#: Home/templates/Home/bnb_detail.html:249
 msgid "Round-the-clock security service"
 msgstr "Rund-um-die-Uhr-Sicherheitsdienst"
 
-#: Home/templates/Home/bnb_detail.html:256
 msgid "Swimming Pool"
 msgstr "Schwimmbad"
 
-#: Home/templates/Home/bnb_detail.html:257
 msgid "Access to swimming pool"
 msgstr "Zugang zum Schwimmbad"
 
-#: Home/templates/Home/bnb_detail.html:264
 msgid "Fitness Center"
 msgstr "Fitnesscenter"
 
-#: Home/templates/Home/bnb_detail.html:265
 msgid "Gym facilities available"
 msgstr "Fitnesseinrichtungen verfügbar"
 
-#: Home/templates/Home/bnb_detail.html:277
 msgid "Property Gallery"
 msgstr "Unterkunftsgalerie"
 
-#: Home/templates/Home/bnb_detail.html:278
 msgid "Explore"
 msgstr "Entdecken Sie"
 
-#: Home/templates/Home/bnb_detail.html:279
 msgid "Take a visual tour of this beautiful accommodation"
 msgstr "Machen Sie eine visuelle Tour durch diese schöne Unterkunft"
 
-#: Home/templates/Home/bnb_detail.html:292
 msgid "Photo"
 msgstr "Foto"
 
-#: Home/templates/Home/bnb_detail.html:295
 msgid "Beautiful view of the property"
 msgstr "Schöner Blick auf die Unterkunft"
 
-#: Home/templates/Home/bnb_detail.html:296
 msgid "View Full Size"
 msgstr "In voller Größe anzeigen"
 
-#: Home/templates/Home/bnb_detail.html:305
 msgid "Check back soon for photos of this property!"
 msgstr "Schauen Sie bald wieder vorbei für Fotos dieser Unterkunft!"
 
-#: Home/templates/Home/bnb_detail.html:321
 msgid "Exterior"
 msgstr "Außenansicht"
 
-#: Home/templates/Home/bnb_detail.html:324
 msgid "Property exterior view"
 msgstr "Außenansicht der Unterkunft"
 
-#: Home/templates/Home/bnb_detail.html:343
 msgid "Interior"
 msgstr "Innenansicht"
 
-#: Home/templates/Home/bnb_detail.html:346
 msgid "Beautiful interior design"
 msgstr "Wunderschönes Innendesign"
 
-#: Home/templates/Home/bnb_detail.html:365
-msgid "Amenity"
-msgstr "Ausstattungsmerkmal"
-
-#: Home/templates/Home/bnb_detail.html:368
-msgid "Relax and unwind"
-msgstr "Entspannen Sie sich"
-
-#: Home/templates/Home/bnb_detail.html:384
-msgid "Stay fit while traveling"
-msgstr "Bleiben Sie auf Reisen fit"
-
-#: Home/templates/Home/bnb_detail.html:398
-msgid "Modern Kitchen"
-msgstr "Moderne Küche"
-
-#: Home/templates/Home/bnb_detail.html:399
-msgid "Fully equipped"
-msgstr "Voll ausgestattet"
-
-#: Home/templates/Home/bnb_detail.html:420
 msgid "Beautiful surroundings"
 msgstr "Wunderschöne Umgebung"
 
-#: Home/templates/Home/bnb_detail.html:441
 msgid "Perfectly Situated in"
 msgstr "Perfekt gelegen in"
 
-#: Home/templates/Home/bnb_detail.html:442
 msgid "This property is ideally located in the heart of"
 msgstr "Diese Unterkunft liegt ideal im Herzen von"
 
-#: Home/templates/Home/bnb_detail.html:442
-msgid "offering easy access to local attractions, restaurants, and shopping areas. Whether you're here for business or leisure, you'll find everything you need within close proximity."
-msgstr "und bietet einfachen Zugang zu lokalen Sehenswürdigkeiten, Restaurants und Einkaufsmöglichkeiten. Ob Sie geschäftlich oder privat hier sind, Sie finden alles, was Sie brauchen, in unmittelbarer Nähe."
+msgid ""
+"offering easy access to local attractions, restaurants, and shopping areas. "
+"Whether you're here for business or leisure, you'll find everything you need"
+" within close proximity."
+msgstr ""
+"und bietet einfachen Zugang zu lokalen Sehenswürdigkeiten, Restaurants und "
+"Einkaufsmöglichkeiten. Ob Sie geschäftlich oder privat hier sind, Sie finden"
+" alles, was Sie brauchen, in unmittelbarer Nähe."
 
-#: Home/templates/Home/bnb_detail.html:445
 msgid "Near City Center"
 msgstr "Nähe Stadtzentrum"
 
-#: Home/templates/Home/bnb_detail.html:447
 msgid "Close to Restaurants"
 msgstr "Nähe Restaurants"
 
-#: Home/templates/Home/bnb_detail.html:449
 msgid "Shopping Nearby"
 msgstr "Einkaufsmöglichkeiten in der Nähe"
 
-#: Home/templates/Home/bnb_detail.html:451
 msgid "Public Transport Access"
 msgstr "Anbindung an öffentliche Verkehrsmittel"
 
-#: Home/templates/Home/bnb_detail.html:453
 msgid "View on Map"
 msgstr "Auf Karte anzeigen"
 
-#: Home/templates/Home/bnb_detail.html:459
 msgid "Exact location details provided upon booking confirmation"
 msgstr "Genaue Standortdetails werden bei der Buchungsbestätigung mitgeteilt"
 
+#, python-format
+msgid "%(name)s in %(loc)s, %(country)s: %(stars)s-star %(kind)s"
+msgstr "%(name)s in %(loc)s, %(country)s: %(stars)s-Sterne-%(kind)s"
+
+#, python-format
+msgid "from $%(p)s per night"
+msgstr "ab %(p)s $ pro Nacht"
+
+msgid "Hotel photos"
+msgstr "Hotelfotos"
+
+msgid "Show photo"
+msgstr "Foto anzeigen"
+
+msgid "star rating"
+msgstr "Sternekategorie"
+
+msgid "View on map"
+msgstr "Auf der Karte ansehen"
+
+msgid "Max guests"
+msgstr "Max. Gäste"
+
+msgid "Meals"
+msgstr "Mahlzeiten"
+
+msgid "Star"
+msgstr "Sterne"
+
+msgid "Rating"
+msgstr "Bewertung"
+
+msgid "About this hotel"
+msgstr "Über dieses Hotel"
+
+msgid "Children policy"
+msgstr "Kinderregelung"
+
+msgid "Good to know"
+msgstr "Gut zu wissen"
+
+msgid ""
+"Prices are per night, starting rates in US dollars, and change by season and"
+" room type."
+msgstr ""
+"Preise gelten pro Nacht, Ab-Preise in US-Dollar, und ändern sich je nach "
+"Saison und Zimmertyp."
+
+msgid ""
+"Send an enquiry with your dates and we confirm availability and your exact "
+"rate within 24 hours."
+msgstr ""
+"Senden Sie uns eine Anfrage mit Ihren Reisedaten – wir bestätigen "
+"Verfügbarkeit und Ihren genauen Preis innerhalb von 24 Stunden."
+
+msgid ""
+"We can combine this stay with a safari or tour. Just mention it in your "
+"message."
+msgstr ""
+"Wir können diesen Aufenthalt mit einer Safari oder Tour kombinieren. "
+"Erwähnen Sie es einfach in Ihrer Nachricht."
+
+msgid "From"
+msgstr "Ab"
+
+msgid "Check availability"
+msgstr "Verfügbarkeit prüfen"
+
+msgid "max"
+msgstr "max."
+
+msgid "Message (optional)"
+msgstr "Nachricht (optional)"
+
+msgid "Send enquiry"
+msgstr "Anfrage senden"
+
+msgid "By submitting you agree to our"
+msgstr "Mit dem Absenden stimmen Sie unserer"
+
+msgid "Prefer to talk?"
+msgstr "Lieber persönlich sprechen?"
+
+msgid "WhatsApp +254 759 379 600"
+msgstr "WhatsApp +254 759 379 600"
+
+msgid "More places to stay"
+msgstr "Weitere Unterkünfte"
+
+msgid "View Hotel"
+msgstr "Hotel ansehen"
+
 # ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Hotels & Lodges in East Africa - Day Safaris Adventures"
+msgstr "Hotels und Lodges in Ostafrika - Day Safaris Adventures"
 
-#: Home/templates/Home/contact.html:4
-msgid "Contact - Day Safaris Adventures"
-msgstr "Kontakt - Day Safaris Adventures"
+msgid ""
+"Browse hand-picked hotels, safari lodges, camps and beach villas in Kenya, "
+"Tanzania, Uganda and Rwanda. Compare prices and book with Day Safaris "
+"Adventures."
+msgstr ""
+"Entdecken Sie handverlesene Hotels, Safarilodges, Camps und Strandvillen in "
+"Kenia, Tansania, Uganda und Ruanda. Preise vergleichen und bei Day Safaris "
+"Adventures buchen."
 
-#: Home/templates/Home/contact.html:24
-msgid "Get In Touch With Us"
-msgstr "Nehmen Sie Kontakt mit uns auf"
+msgid ""
+"Hand-picked hotels, safari lodges, camps and beach villas in Kenya, "
+"Tanzania, Uganda and Rwanda."
+msgstr ""
+"Handverlesene Hotels, Safarilodges, Camps und Strandvillen in Kenia, "
+"Tansania, Uganda und Ruanda."
 
-#: Home/templates/Home/contact.html:33
-msgid "Our Office"
-msgstr "Unser Büro"
+msgid ""
+"Hand-picked hotels, safari lodges, camps and beach villas in East Africa."
+msgstr ""
+"Handverlesene Hotels, Safarilodges, Camps und Strandvillen in Ostafrika."
 
-#: Home/templates/Home/contact.html:34
-msgid "Day Safaris Adventures Ltd<br>00200 Street RailWays, Nairobi, Kenya"
-msgstr "Day Safaris Adventures Ltd<br>00200 Street RailWays, Nairobi, Kenia"
+msgid "Where to stay"
+msgstr "Wo Sie übernachten"
 
-#: Home/templates/Home/contact.html:39
-msgid "Phone Numbers"
-msgstr "Telefonnummern"
+msgid "Hotels, Lodges & Beach Villas"
+msgstr "Hotels, Lodges und Strandvillen"
 
-#: Home/templates/Home/contact.html:40
-msgid "(WhatsApp)"
-msgstr "(WhatsApp)"
+msgid ""
+"Hand-picked places to stay across East Africa, from safari camps on the edge"
+" of the Mara to beach villas on the Indian Ocean. Pick a country, compare, "
+"and send us your dates. We confirm availability and rates within 24 hours."
+msgstr ""
+"Handverlesene Unterkünfte in ganz Ostafrika, von Safaricamps am Rand der "
+"Mara bis zu Strandvillen am Indischen Ozean. Wählen Sie ein Land, "
+"vergleichen Sie und senden Sie uns Ihre Reisedaten. Wir bestätigen "
+"Verfügbarkeit und Preise innerhalb von 24 Stunden."
 
-#: Home/templates/Home/contact.html:41
-msgid "(HotLine)"
-msgstr "(Hotline)"
+msgid "Filter by country"
+msgstr "Nach Land filtern"
 
-#: Home/templates/Home/contact.html:42
-msgid "(Alternate)"
-msgstr "(Alternativ)"
+msgid "All Hotels"
+msgstr "Alle Hotels"
 
-#: Home/templates/Home/contact.html:47
-msgid "Email Addresses"
-msgstr "E-Mail-Adressen"
+msgid "Filter by type"
+msgstr "Nach Typ filtern"
 
-#: Home/templates/Home/contact.html:55
-msgid "Send Us a Message"
-msgstr "Senden Sie uns eine Nachricht"
+msgid "Clear type"
+msgstr "Typ zurücksetzen"
 
-#: Home/templates/Home/contact.html:56
-msgid "Have questions about safaris, packages, or accommodations? Our travel experts are here to help you create the perfect East African experience. Fill out the form below and we'll get back to you within 24 hours."
-msgstr "Haben Sie Fragen zu Safaris, Paketen oder Unterkünften? Unsere Reiseexperten sind hier, um Ihnen zu helfen, das perfekte ostafrikanische Erlebnis zu schaffen. Füllen Sie das untenstehende Formular aus, und wir werden uns innerhalb von 24 Stunden bei Ihnen melden."
+msgid "Hotel name or place..."
+msgstr "Hotelname oder Ort..."
 
-#: Home/templates/Home/contact.html:82
-msgid "Subject"
-msgstr "Betreff"
+msgid "Sort by"
+msgstr "Sortieren nach"
 
-#: Home/templates/Home/contact.html:90
-msgid "Your Message"
-msgstr "Ihre Nachricht"
+#, python-format
+msgid "Showing %(n)s hotels"
+msgstr "%(n)s Hotels angezeigt"
 
-#: Home/templates/Home/contact.html:95
-msgid "Send Message"
-msgstr "Nachricht senden"
+msgid "Reset filters"
+msgstr "Filter zurücksetzen"
 
-#: Home/templates/Home/contact.html:119
-msgid "Our Brochures"
-msgstr "Unsere Broschüren"
+msgid "No hotels match your filters"
+msgstr "Keine Hotels entsprechen Ihren Filtern"
 
-#: Home/templates/Home/contact.html:120
-msgid "Download Safari Brochures & Travel Guides"
-msgstr "Laden Sie Safari-Broschüren & Reiseführer herunter"
+msgid "Try another country or type, or"
+msgstr "Versuchen Sie ein anderes Land oder einen anderen Typ oder"
 
-#: Home/templates/Home/contact.html:121
-msgid "Explore our collection of detailed brochures featuring safari packages, tour itineraries, accommodation options, and travel tips for East Africa. Download PDF guides to plan your perfect African adventure."
-msgstr "Entdecken Sie unsere Sammlung detaillierter Broschüren mit Safaripaketen, Reiseverläufen, Unterkunftsoptionen und Reisetipps für Ostafrika. Laden Sie PDF-Leitfäden herunter, um Ihr perfektes Afrika-Abenteuer zu planen."
+msgid "see all hotels"
+msgstr "alle Hotels ansehen"
 
-#: Home/templates/Home/contact.html:144
-msgid "Download PDF"
-msgstr "PDF herunterladen"
+msgid "Can't find what you need? We'll find the right place for you:"
+msgstr "Nichts Passendes gefunden? Wir finden den richtigen Ort für Sie:"
 
-#: Home/templates/Home/contact.html:145
-msgid "Preview"
-msgstr "Vorschau"
+msgid "contact us"
+msgstr "kontaktieren Sie uns"
 
-#: Home/templates/Home/contact.html:150
-msgid "PDF Brochure"
-msgstr "PDF-Broschüre"
+msgid "Previous page"
+msgstr "Vorherige Seite"
 
-#: Home/templates/Home/contact.html:154
-msgid "Download Now"
-msgstr "Jetzt herunterladen"
+msgid "Next page"
+msgstr "Nächste Seite"
 
-#: Home/templates/Home/contact.html:163
-msgid "No brochures available yet"
-msgstr "Noch keine Broschüren verfügbar"
+msgid "Featured"
+msgstr "Empfohlen"
 
-#: Home/templates/Home/contact.html:164
-msgid "Check back soon for downloadable safari brochures and travel guides!"
-msgstr "Schauen Sie bald wieder vorbei für herunterladbare Safari-Broschüren und Reiseführer!"
+msgid "Price: low to high"
+msgstr "Preis: aufsteigend"
 
-#: Home/templates/Home/contact.html:171
-msgid "Destinations"
-msgstr "Reiseziele"
+msgid "Price: high to low"
+msgstr "Preis: absteigend"
 
-# ==================== BOOKING.HTML TRANSLATIONS ====================
+msgid "Star rating"
+msgstr "Sternekategorie"
 
-#: Home/templates/Home/booking.html:4
-msgid "Online Booking - Days Safaris"
-msgstr "Online-Buchung - Days Safaris"
+msgid "Name A-Z"
+msgstr "Name A-Z"
 
-#: Home/templates/Home/booking.html:11
-msgid "Online Booking"
-msgstr "Online-Buchung"
+#, python-format
+msgid ""
+"Thank you %(name)s! Your enquiry for %(hotel)s was received. We will confirm"
+" availability and rates within 24 hours."
+msgstr ""
+"Vielen Dank, %(name)s! Ihre Anfrage für %(hotel)s ist eingegangen. Wir "
+"bestätigen Verfügbarkeit und Preise innerhalb von 24 Stunden."
 
-#: Home/templates/Home/booking.html:26
-msgid "Book A Tour"
-msgstr "Eine Tour buchen"
+#, python-format
+msgid ""
+"Thank you %(name)s! Your request for %(place)s was received. We will contact"
+" you shortly to confirm availability."
+msgstr ""
+"Vielen Dank, %(name)s! Ihre Anfrage für %(place)s ist eingegangen. Wir "
+"melden uns in Kürze, um die Verfügbarkeit zu bestätigen."
 
-#: Home/templates/Home/booking.html:108
-msgid "Popular Destinations"
-msgstr "Beliebte Reiseziele"
+msgid "Enter your first name"
+msgstr "Geben Sie Ihren Vornamen ein"
 
-#: Home/templates/Home/booking.html:109
-msgid "Most Requested Safari Destinations"
-msgstr "Die am meisten nachgefragten Safari-Reiseziele"
+msgid "Enter your last name"
+msgstr "Geben Sie Ihren Nachnamen ein"
 
-#: Home/templates/Home/booking.html:110
-msgid "Our customers love these incredible destinations for their safari adventures"
-msgstr "Unsere Kunden lieben diese unglaublichen Reiseziele für ihre Safari-Abenteuer"
+msgid "Choose a username"
+msgstr "Wählen Sie einen Benutzernamen"
 
-#: Home/templates/Home/booking.html:127
-msgid "Featured Packages"
-msgstr "Vorgestellte Pakete"
+msgid "Enter your password"
+msgstr "Geben Sie Ihr Passwort ein"
 
-#: Home/templates/Home/booking.html:128
-msgid "Popular Safari Packages"
-msgstr "Beliebte Safaripakete"
+msgid "Confirm your password"
+msgstr "Bestätigen Sie Ihr Passwort"
+
+msgid "A user with this email already exists."
+msgstr "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits."
+
+msgid "Username can only contain letters, numbers, and underscores."
+msgstr ""
+"Der Benutzername darf nur Buchstaben, Zahlen und Unterstriche enthalten."
+
+msgid "Enter your username"
+msgstr "Geben Sie Ihren Benutzernamen ein"
+
+# ==================== ABOUT.HTML TRANSLATIONS ====================
+msgid "Account Settings - Day Safaris Adventures"
+msgstr "Kontoeinstellungen - Day Safaris Adventures"
+
+msgid "Security Settings"
+msgstr "Sicherheitseinstellungen"
+
+msgid "Manage your password and security preferences"
+msgstr "Verwalten Sie Ihr Passwort und Ihre Sicherheitseinstellungen"
+
+msgid "Back to Profile"
+msgstr "Zurück zum Profil"
+
+msgid "Change Password"
+msgstr "Passwort ändern"
+
+msgid "Update your password to keep your account secure"
+msgstr "Aktualisieren Sie Ihr Passwort, um Ihr Konto zu schützen"
+
+msgid "Current Password"
+msgstr "Aktuelles Passwort"
+
+msgid "Enter your current password"
+msgstr "Geben Sie Ihr aktuelles Passwort ein"
+
+msgid "Required to verify your identity"
+msgstr "Zur Überprüfung Ihrer Identität erforderlich"
+
+msgid "New Password"
+msgstr "Neues Passwort"
+
+msgid "Enter new password"
+msgstr "Neues Passwort eingeben"
+
+msgid "Password Strength"
+msgstr "Passwortstärke"
+
+msgid "Password Requirements:"
+msgstr "Passwortanforderungen:"
+
+msgid "At least 8 characters"
+msgstr "Mindestens 8 Zeichen"
+
+msgid "One lowercase letter"
+msgstr "Ein Kleinbuchstabe"
+
+msgid "One uppercase letter"
+msgstr "Ein Großbuchstabe"
+
+msgid "One number"
+msgstr "Eine Zahl"
+
+#, python-format
+msgid "One special character (!@#$%%^&*)"
+msgstr "Ein Sonderzeichen (!@#$%%^&*)"
+
+msgid "Confirm New Password"
+msgstr "Neues Passwort bestätigen"
+
+msgid "Confirm your new password"
+msgstr "Bestätigen Sie Ihr neues Passwort"
+
+msgid "Tips for a strong password:"
+msgstr "Tipps für ein starkes Passwort:"
+
+msgid "Use a mix of uppercase and lowercase letters"
+msgstr "Verwenden Sie Groß- und Kleinbuchstaben"
+
+msgid "Include numbers and special characters"
+msgstr "Fügen Sie Zahlen und Sonderzeichen hinzu"
+
+msgid "Avoid common words or personal information"
+msgstr "Vermeiden Sie gängige Wörter oder persönliche Daten"
+
+msgid "Don't reuse passwords from other sites"
+msgstr "Verwenden Sie keine Passwörter anderer Websites erneut"
+
+msgid "Consider using a passphrase with multiple words"
+msgstr "Erwägen Sie eine Passphrase aus mehreren Wörtern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Update Password"
+msgstr "Passwort aktualisieren"
+
+msgid "Updating..."
+msgstr "Wird aktualisiert..."
+
+msgid "Active Sessions"
+msgstr "Aktive Sitzungen"
+
+msgid ""
+"You are currently logged in on this device. For security, we recommend "
+"logging out of devices you don't recognize."
+msgstr ""
+"Sie sind derzeit auf diesem Gerät angemeldet. Aus Sicherheitsgründen "
+"empfehlen wir, sich von unbekannten Geräten abzumelden."
+
+msgid "Current Device"
+msgstr "Aktuelles Gerät"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Last active: Just now"
+msgstr "Zuletzt aktiv: gerade eben"
+
+msgid "Logout All Other Devices (Coming Soon)"
+msgstr "Von allen anderen Geräten abmelden (demnächst)"
+
+msgid "Two-Factor Authentication"
+msgstr "Zwei-Faktor-Authentifizierung"
+
+msgid ""
+"Enhance your account security with 2FA. Get a verification code via SMS or "
+"authenticator app."
+msgstr ""
+"Erhöhen Sie die Sicherheit Ihres Kontos mit 2FA. Erhalten Sie einen "
+"Bestätigungscode per SMS oder Authenticator-App."
+
+msgid "Enable 2FA (Coming Soon)"
+msgstr "2FA aktivieren (demnächst)"
+
+# ==================== AIRLINE.HTML TRANSLATIONS ====================
+msgid "Edit Profile - Day Safaris Adventures"
+msgstr "Profil bearbeiten - Day Safaris Adventures"
+
+msgid "Edit Profile"
+msgstr "Profil bearbeiten"
+
+#, python-format
+msgid "Member since %(dt)s"
+msgstr "Mitglied seit %(dt)s"
+
+msgid "Edit Your Profile"
+msgstr "Ihr Profil bearbeiten"
+
+msgid "Update your personal information and account details"
+msgstr "Aktualisieren Sie Ihre persönlichen Daten und Kontodetails"
+
+msgid "First Name"
+msgstr "Vorname"
+
+msgid "Last Name"
+msgstr "Nachname"
+
+msgid "Username"
+msgstr "Benutzername"
+
+msgid "Your username is unique and cannot be changed easily"
+msgstr "Ihr Benutzername ist einzigartig und lässt sich nicht einfach ändern"
+
+msgid "We'll send booking confirmations and updates to this email"
+msgstr ""
+"Buchungsbestätigungen und Neuigkeiten senden wir an diese E-Mail-Adresse"
+
+msgid "For emergency contact and updates"
+msgstr "Für Notfallkontakt und Neuigkeiten"
+
+msgid "Want to change your password?"
+msgstr "Möchten Sie Ihr Passwort ändern?"
+
+msgid "to update your password and security preferences."
+msgstr "um Ihr Passwort und Ihre Sicherheitseinstellungen zu aktualisieren."
+
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+msgid "Privacy & Security"
+msgstr "Datenschutz und Sicherheit"
+
+msgid ""
+"Your personal information is protected and will only be used for booking "
+"confirmations and safari updates. We never share your data with third "
+"parties without your consent."
+msgstr ""
+"Ihre persönlichen Daten sind geschützt und werden nur für "
+"Buchungsbestätigungen und Safari-Neuigkeiten verwendet. Wir geben Ihre Daten"
+" niemals ohne Ihre Zustimmung an Dritte weiter."
+
+msgid "Saved Destinations"
+msgstr "Gespeicherte Reiseziele"
+
+msgid "Remove from saved destinations"
+msgstr "Aus gespeicherten Reisezielen entfernen"
+
+msgid "View"
+msgstr "Ansehen"
+
+#, python-format
+msgid "Saved %(t)s ago"
+msgstr "Vor %(t)s gespeichert"
+
+msgid "No Saved Destinations Yet"
+msgstr "Noch keine gespeicherten Reiseziele"
+
+msgid "Tap the heart icon on any destination page to save it here for later."
+msgstr ""
+"Tippen Sie auf das Herz-Symbol auf einer Reisezielseite, um es hier zu "
+"speichern."
+
+msgid "Browse Destinations"
+msgstr "Reiseziele durchsuchen"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Login - Day Safaris Adventures"
+msgstr "Anmelden - Day Safaris Adventures"
+
+msgid "Welcome Back to Day Safaris"
+msgstr "Willkommen zurück bei Day Safaris"
+
+msgid ""
+"Your gateway to unforgettable East African adventures. Continue your journey"
+" with us."
+msgstr ""
+"Ihr Tor zu unvergesslichen Abenteuern in Ostafrika. Setzen Sie Ihre Reise "
+"mit uns fort."
+
+msgid "Happy Travelers"
+msgstr "Zufriedene Reisende"
+
+msgid "Sign In"
+msgstr "Anmelden"
+
+msgid "Enter your credentials to access your account"
+msgstr "Geben Sie Ihre Zugangsdaten ein, um auf Ihr Konto zuzugreifen"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Remember me"
+msgstr "Angemeldet bleiben"
+
+msgid "Forgot Password?"
+msgstr "Passwort vergessen?"
+
+msgid "Don't have an account?"
+msgstr "Noch kein Konto?"
+
+msgid "Create Account"
+msgstr "Konto erstellen"
+
+msgid "Special Offers"
+msgstr "Sonderangebote"
+
+msgid "Offers"
+msgstr "Angebote"
+
+msgid "Exclusive Deals Just For You"
+msgstr "Exklusive Angebote nur für Sie"
+
+msgid "Offers tailored to your booking history — grab one before it expires."
+msgstr ""
+"Angebote passend zu Ihrer Buchungshistorie – greifen Sie zu, bevor sie "
+"ablaufen."
+
+msgid "No Offers Available Right Now"
+msgstr "Derzeit keine Angebote verfügbar"
+
+msgid "Check back soon — new deals are added regularly."
+msgstr ""
+"Schauen Sie bald wieder vorbei – regelmäßig kommen neue Angebote hinzu."
+
+msgid "Browse Safaris"
+msgstr "Safaris durchsuchen"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "My Profile - Day Safaris Adventures"
+msgstr "Mein Profil - Day Safaris Adventures"
+
+msgid "Account"
+msgstr "Konto"
+
+msgid "Logout"
+msgstr "Abmelden"
+
+msgid "Total Bookings"
+msgstr "Buchungen gesamt"
+
+msgid "Upcoming"
+msgstr "Bevorstehend"
+
+msgid "Completed"
+msgstr "Abgeschlossen"
+
+msgid "Loyalty Points"
+msgstr "Treuepunkte"
+
+msgid "My Bookings"
+msgstr "Meine Buchungen"
+
+msgid "View and manage your safari bookings"
+msgstr "Ihre Safari-Buchungen ansehen und verwalten"
+
+msgid "View Bookings"
+msgstr "Buchungen ansehen"
+
+msgid "Your favorite safari destinations"
+msgstr "Ihre liebsten Safari-Reiseziele"
+
+#, python-format
+msgid "%(c)s saved"
+msgstr "%(c)s gespeichert"
+
+msgid "View Favorites"
+msgstr "Favoriten ansehen"
+
+msgid "Exclusive member deals just for you"
+msgstr "Exklusive Mitgliederangebote nur für Sie"
+
+msgid "View Offers"
+msgstr "Angebote ansehen"
+
+msgid "Update password and preferences"
+msgstr "Passwort und Einstellungen aktualisieren"
+
+msgid "Edit Settings"
+msgstr "Einstellungen bearbeiten"
+
+msgid "Current Bookings"
+msgstr "Aktuelle Buchungen"
+
+msgid "Your Upcoming Safaris"
+msgstr "Ihre kommenden Safaris"
+
+msgid ""
+"Track and manage your upcoming safari adventures. Get ready for an "
+"unforgettable experience with Day Safaris!"
+msgstr ""
+"Verfolgen und verwalten Sie Ihre kommenden Safari-Abenteuer. Freuen Sie sich"
+" auf ein unvergessliches Erlebnis mit Day Safaris!"
+
+#, python-format
+msgid "Email : %(e)s"
+msgstr "E-Mail: %(e)s"
+
+msgid "No Upcoming Bookings"
+msgstr "Keine bevorstehenden Buchungen"
+
+msgid "You haven't booked any safaris yet. Start planning your adventure!"
+msgstr ""
+"Sie haben noch keine Safari gebucht. Beginnen Sie mit der Planung Ihres "
+"Abenteuers!"
+
+msgid "Past Bookings"
+msgstr "Frühere Buchungen"
+
+msgid "Your Safari Memories"
+msgstr "Ihre Safari-Erinnerungen"
+
+msgid ""
+"Relive your past safari experiences and share your stories with us. Write a "
+"review and inspire other travelers!"
+msgstr ""
+"Erleben Sie Ihre vergangenen Safaris noch einmal und teilen Sie Ihre "
+"Geschichten mit uns. Schreiben Sie eine Bewertung und inspirieren Sie andere"
+" Reisende!"
+
+msgid "No Past Bookings Yet"
+msgstr "Noch keine früheren Buchungen"
+
+msgid "Complete your first safari adventure to see it here!"
+msgstr "Schließen Sie Ihre erste Safari ab, um sie hier zu sehen!"
+
+msgid "Recommended For You"
+msgstr "Für Sie empfohlen"
+
+msgid "Based on Your Interests"
+msgstr "Basierend auf Ihren Interessen"
+
+msgid ""
+"Discover personalized safari recommendations tailored to your travel "
+"preferences and past adventures."
+msgstr ""
+"Entdecken Sie persönliche Safari-Empfehlungen, die auf Ihre Reisevorlieben "
+"und früheren Abenteuer abgestimmt sind."
+
+msgid "Keep Interacring ANd Bookingt"
+msgstr "Stöbern und buchen Sie weiter"
+
+msgid "Please check back later for exciting safari Recomandation!"
+msgstr ""
+"Schauen Sie später wieder vorbei – spannende Safari-Empfehlungen folgen!"
+
+# ==================== PACKAGE_DETAIL.HTML TRANSLATIONS ====================
+msgid "Discover Amazing Safaris"
+msgstr "Entdecken Sie fantastische Safaris"
+
+msgid "Browse our collection of incredible safari adventures"
+msgstr "Stöbern Sie in unserer Sammlung unglaublicher Safari-Abenteuer"
+
+msgid "Explore Safaris"
+msgstr "Safaris entdecken"
+
+# ==================== CONTACT.HTML TRANSLATIONS ====================
+msgid "Register - Day Safaris Adventures"
+msgstr "Registrieren - Day Safaris Adventures"
+
+msgid "Start Your Safari Journey"
+msgstr "Starten Sie Ihre Safari-Reise"
+
+msgid ""
+"Join Day Safaris Adventures and unlock unforgettable experiences across East"
+" Africa."
+msgstr ""
+"Werden Sie Teil von Day Safaris Adventures und erleben Sie Unvergessliches "
+"in ganz Ostafrika."
+
+#, python-format
+msgid "Exclusive member discounts up to 30%%"
+msgstr "Exklusive Mitgliederrabatte von bis zu 30%%"
+
+msgid "Personalized safari planning"
+msgstr "Individuelle Safariplanung"
+
+msgid "Premium loyalty rewards program"
+msgstr "Premium-Treueprogramm"
+
+msgid "24/7 priority customer support"
+msgstr "Vorrangiger Kundenservice rund um die Uhr"
+
+msgid "Join us and start planning your dream safari"
+msgstr "Machen Sie mit und planen Sie Ihre Traum-Safari"
+
+msgid "At least one lowercase letter"
+msgstr "Mindestens ein Kleinbuchstabe"
+
+msgid "At least one uppercase letter"
+msgstr "Mindestens ein Großbuchstabe"
+
+msgid "At least one number"
+msgstr "Mindestens eine Zahl"
+
+msgid "At least one special character"
+msgstr "Mindestens ein Sonderzeichen"
+
+msgid "Confirm Password"
+msgstr "Passwort bestätigen"
+
+msgid "I agree to the"
+msgstr "Ich stimme den"
+
+msgid "Terms of Service"
+msgstr "Nutzungsbedingungen zu"
+
+msgid "Already have an account?"
+msgstr "Sie haben bereits ein Konto?"
+
+#, python-format
+msgid "Welcome back, %(name)s! 🦁"
+msgstr "Willkommen zurück, %(name)s! 🦁"
+
+msgid "Invalid username or password. Please try again."
+msgstr ""
+"Ungültiger Benutzername oder ungültiges Passwort. Bitte versuchen Sie es "
+"erneut."
+
+msgid "You have been successfully logged out. Come back soon! 🦁"
+msgstr "Sie wurden erfolgreich abgemeldet. Bis bald! 🦁"
+
+#, python-format
+msgid ""
+"Account created successfully! Welcome %(name)s! 🎉 Please log in to continue."
+msgstr ""
+"Konto erfolgreich erstellt! Willkommen, %(name)s! 🎉 Bitte melden Sie sich "
+"an, um fortzufahren."
+
+msgid "Your profile has been updated successfully!"
+msgstr "Ihr Profil wurde erfolgreich aktualisiert!"
+
+msgid "New passwords do not match."
+msgstr "Die neuen Passwörter stimmen nicht überein."
+
+msgid "Your password has been updated successfully!"
+msgstr "Ihr Passwort wurde erfolgreich aktualisiert!"
+
+msgid "Current password is incorrect."
+msgstr "Das aktuelle Passwort ist falsch."
+
+#, python-format
+msgid "Booking #%(id)s has been cancelled successfully."
+msgstr "Buchung Nr. %(id)s wurde erfolgreich storniert."
+
+msgid "This booking cannot be cancelled as it's too close to the travel date."
+msgstr ""
+"Diese Buchung kann nicht storniert werden, da der Reisetermin zu nah ist."
+
+#, python-format
+msgid "Booking confirmed for %(package)s! Your safari adventure awaits!"
+msgstr ""
+"Buchung für %(package)s bestätigt! Ihr Safari-Abenteuer wartet auf Sie!"
+
+#, python-format
+msgid "Removed %(name)s from your saved destinations."
+msgstr "%(name)s wurde aus Ihren gespeicherten Reisezielen entfernt."
+
+#, python-format
+msgid "Added %(name)s to your saved destinations!"
+msgstr "%(name)s wurde zu Ihren gespeicherten Reisezielen hinzugefügt!"
+
+#, python-format
+msgid "+23%% this month"
+msgstr "+23%% diesen Monat"
+
+msgid "Customer Rating"
+msgstr "Kundenbewertung"
+
+msgid "Based on 1,234 reviews"
+msgstr "Basierend auf 1.234 Bewertungen"
+
+msgid "Support Available"
+msgstr "Support verfügbar"
+
+msgid "Instant assistance"
+msgstr "Sofortige Hilfe"
+
+msgid "SSL Encrypted"
+msgstr "SSL-verschlüsselt"
+
+msgid "Order Summary"
+msgstr "Bestellübersicht"
+
+msgid "Review your booking details before payment"
+msgstr "Prüfen Sie Ihre Buchungsdetails vor der Zahlung"
+
+#, python-format
+msgid "%(d)s days adventure"
+msgstr "%(d)s-Tage-Abenteuer"
+
+msgid "Traveler Information"
+msgstr "Reisendeninformationen"
+
+msgid "Full Name:"
+msgstr "Vollständiger Name:"
+
+msgid "Email:"
+msgstr "E-Mail:"
+
+msgid "Phone:"
+msgstr "Telefon:"
+
+msgid "Travel Date:"
+msgstr "Reisedatum:"
+
+msgid "Number of Persons:"
+msgstr "Anzahl der Personen:"
+
+msgid "Message:"
+msgstr "Nachricht:"
+
+msgid "Package Price (per person)"
+msgstr "Paketpreis (pro Person)"
+
+msgid "Subtotal"
+msgstr "Zwischensumme"
+
+#, python-format
+msgid "Tax (16%% VAT)"
+msgstr "Steuer (16%% MwSt.)"
+
+msgid "Total Amount"
+msgstr "Gesamtbetrag"
+
+#, python-format
+msgid "Booking Reference: #%(i)s"
+msgstr "Buchungsreferenz: #%(i)s"
+
+msgid "Select Payment Method"
+msgstr "Zahlungsmethode wählen"
+
+msgid "Choose your preferred payment option"
+msgstr "Wählen Sie Ihre bevorzugte Zahlungsoption"
+
+msgid "Pay via M-Pesa - Instant confirmation"
+msgstr "Zahlung per M-Pesa - sofortige Bestätigung"
+
+msgid "Credit/Debit Card"
+msgstr "Kredit-/Debitkarte"
+
+msgid "Visa, Mastercard, Amex accepted"
+msgstr "Visa, Mastercard, Amex werden akzeptiert"
+
+# ==================== SERVICES ====================
+msgid "Bank Transfer"
+msgstr "Banküberweisung"
+
+msgid "Direct bank transfer"
+msgstr "Direkte Banküberweisung"
+
+msgid "Cryptocurrency"
+msgstr "Kryptowährung"
+
+msgid "Bitcoin, Ethereum, USDT & More"
+msgstr "Bitcoin, Ethereum, USDT und mehr"
+
+msgid ""
+"Your payment is secure and encrypted. We never store your payment "
+"information."
+msgstr ""
+"Ihre Zahlung ist sicher und verschlüsselt. Wir speichern niemals Ihre "
+"Zahlungsdaten."
+
+msgid "Payment Details"
+msgstr "Zahlungsdetails"
+
+msgid "Processing payment..."
+msgstr "Zahlung wird verarbeitet..."
+
+msgid "Please check your phone for M-Pesa prompt"
+msgstr "Bitte prüfen Sie Ihr Telefon auf die M-Pesa-Anfrage"
+
+msgid "Payment successful! Redirecting..."
+msgstr "Zahlung erfolgreich! Sie werden weitergeleitet..."
+
+msgid "Payment failed. Please try again."
+msgstr "Die Zahlung ist fehlgeschlagen. Bitte versuchen Sie es erneut."
+
+msgid "Payment still processing. You will receive confirmation via SMS."
+msgstr ""
+"Die Zahlung wird noch verarbeitet. Sie erhalten eine Bestätigung per SMS."
+
+msgid "Please enter your M-Pesa phone number"
+msgstr "Bitte geben Sie Ihre M-Pesa-Telefonnummer ein"
+
+msgid "Failed to initiate payment:"
+msgstr "Die Zahlung konnte nicht gestartet werden:"
+
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+msgid "Network error. Please try again."
+msgstr "Netzwerkfehler. Bitte versuchen Sie es erneut."
+
+msgid "Enter transaction reference"
+msgstr "Transaktionsreferenz eingeben"
+
+msgid "Enter transaction hash"
+msgstr "Transaktions-Hash eingeben"
+
+msgid "Address copied to clipboard!"
+msgstr "Adresse in die Zwischenablage kopiert!"
+
+msgid "Stripe integration coming soon! For now, please use M-Pesa."
+msgstr "Die Stripe-Integration folgt bald! Bitte nutzen Sie vorerst M-Pesa."
+
+msgid "Please enter transaction reference"
+msgstr "Bitte geben Sie die Transaktionsreferenz ein"
+
+# ==================== SERVICES ====================
+msgid "Bank transfer submitted!"
+msgstr "Banküberweisung übermittelt!"
+
+msgid "Reference:"
+msgstr "Referenz:"
+
+msgid "We will verify within 24 hours."
+msgstr "Wir prüfen dies innerhalb von 24 Stunden."
+
+msgid "Please enter transaction hash"
+msgstr "Bitte geben Sie den Transaktions-Hash ein"
+
+msgid "Crypto payment submitted!"
+msgstr "Kryptozahlung übermittelt!"
+
+msgid "Transaction Hash:"
+msgstr "Transaktions-Hash:"
+
+msgid "Payment will be confirmed within 30 minutes."
+msgstr "Die Zahlung wird innerhalb von 30 Minuten bestätigt."
+
+msgid "Special Requests:"
+msgstr "Besondere Wünsche:"
+
+msgid "Payment Successful!"
+msgstr "Zahlung erfolgreich!"
+
+msgid "Payment Successful! 🎉"
+msgstr "Zahlung erfolgreich! 🎉"
+
+msgid "Thank you for your payment. Your booking is now confirmed."
+msgstr "Vielen Dank für Ihre Zahlung. Ihre Buchung ist jetzt bestätigt."
+
+msgid "Booking Details:"
+msgstr "Buchungsdetails:"
+
+msgid "Package:"
+msgstr "Paket:"
+
+msgid "Booking Reference:"
+msgstr "Buchungsreferenz:"
+
+msgid "Confirmation has been sent to your email:"
+msgstr "Eine Bestätigung wurde an Ihre E-Mail-Adresse gesendet:"
+
+msgid "Return Home"
+msgstr "Zurück zur Startseite"
+
+msgid "Payment successful!"
+msgstr "Zahlung erfolgreich!"
+
+msgid "6 Persons"
+msgstr "6 Personen"
+
+msgid "7 Persons"
+msgstr "7 Personen"
+
+msgid "8 Persons"
+msgstr "8 Personen"
+
+msgid "9 Persons"
+msgstr "9 Personen"
+
+msgid "10+ Persons"
+msgstr "10+ Personen"
+
+msgid "Travel date cannot be in the past. Please select a future date."
+msgstr ""
+"Das Reisedatum darf nicht in der Vergangenheit liegen. Bitte wählen Sie ein "
+"zukünftiges Datum."
+
+msgid "Please enter a valid email address."
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+
+msgid "Please enter a valid phone number with at least 10 digits."
+msgstr ""
+"Bitte geben Sie eine gültige Telefonnummer mit mindestens 10 Ziffern ein."
+
+msgid "South Africa"
+msgstr "Südafrika"
+
+msgid "West Africa"
+msgstr "Westafrika"
+
+#, python-format
+msgid ""
+"Successfully booked %(name)s! A payment link has been sent to your email."
+msgstr ""
+"%(name)s wurde erfolgreich gebucht! Ein Zahlungslink wurde an Ihre E-Mail-"
+"Adresse gesendet."
+
+msgid ""
+"Booking saved! However, we could not send the email. Please contact us to "
+"complete payment."
+msgstr ""
+"Buchung gespeichert! Die E-Mail konnte jedoch nicht gesendet werden. Bitte "
+"kontaktieren Sie uns, um die Zahlung abzuschließen."

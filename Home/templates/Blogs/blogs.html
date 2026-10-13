@@ -3,22 +3,22 @@
 {% load static image_tags %}
 {% load i18n %}
 
-{% block title %}Blogs - Days Safaris Adventures{% endblock title %}
+{% block title %}{% trans "Blogs - Days Safaris Adventures" %}{% endblock title %}
 
-{% block meta_description %}Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi.{% endblock meta_description %}
-{% block og_description %}Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi.{% endblock og_description %}
-{% block twitter_description %}Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi.{% endblock twitter_description %}
+{% block meta_description %}{% trans "Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi." %}{% endblock meta_description %}
+{% block og_description %}{% trans "Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi." %}{% endblock og_description %}
+{% block twitter_description %}{% trans "Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi." %}{% endblock twitter_description %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Our Blog</h1>
+        <h3 class="text-white display-3 mb-4">{% trans "Our Blog" %}</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Blog</li>
+            <li class="breadcrumb-item"><a href="index.html">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Blog" %}</li>
         </ol>
     </div>
 </div>
@@ -44,7 +44,7 @@
                             <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-placeholder.jpg' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto" aria-label="Open" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="#" class="my-auto" aria-label="{% trans "Open" %}" aria-label="{% trans "View details" %}"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">

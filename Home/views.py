@@ -6,6 +6,7 @@ from django.utils.html import strip_tags
 from django.core.cache import cache
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.conf import settings
 from django.core.cache import cache
 from .models import (
@@ -78,8 +79,8 @@ class HomeView(AntiSpamViewMixin, ListView):
 
             messages.success(
                 request,
-                f"Thank you {booking.name}! Your booking request has been submitted successfully. "
-                "We will contact you within 24 hours."
+                _("Thank you %(name)s! Your booking request has been submitted successfully. "
+                  "We will contact you within 24 hours.") % {'name': booking.name}
             )
             return redirect('home')
 
@@ -524,8 +525,9 @@ class TrekkingDetailView(AntiSpamViewMixin, DetailView):
         booking.save()
 
         handle_new_lead(booking, send_booking_confirmation)
-        messages.success(request, f"Thank you {booking.name}! Your trekking request for {package.name} "
-                                  "has been received. We will contact you within 24 hours.")
+        messages.success(request, _("Thank you %(name)s! Your trekking request for %(package)s "
+                                    "has been received. We will contact you within 24 hours.")
+                         % {'name': booking.name, 'package': package.name})
         return redirect(request.path)
 
 

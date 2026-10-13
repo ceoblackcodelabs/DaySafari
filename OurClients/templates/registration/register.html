@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -5,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Day Safaris Adventures</title>
+    <title>{% trans "Register - Day Safaris Adventures" %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -553,24 +554,24 @@
                 <div class="welcome-logo">
                     <i class="fas fa-tree"></i>
                 </div>
-                <h1>Start Your Safari Journey</h1>
-                <p>Join Day Safaris Adventures and unlock unforgettable experiences across East Africa.</p>
+                <h1>{% trans "Start Your Safari Journey" %}</h1>
+                <p>{% trans "Join Day Safaris Adventures and unlock unforgettable experiences across East Africa." %}</p>
                 <div class="feature-grid">
                     <div class="feature-item">
                         <i class="fas fa-gem"></i>
-                        <span>Exclusive member discounts up to 30%</span>
+                        <span>{% trans "Exclusive member discounts up to 30%" %}</span>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-map-marked-alt"></i>
-                        <span>Personalized safari planning</span>
+                        <span>{% trans "Personalized safari planning" %}</span>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-trophy"></i>
-                        <span>Premium loyalty rewards program</span>
+                        <span>{% trans "Premium loyalty rewards program" %}</span>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-headset"></i>
-                        <span>24/7 priority customer support</span>
+                        <span>{% trans "24/7 priority customer support" %}</span>
                     </div>
                 </div>
             </div>
@@ -580,8 +581,8 @@
         <div class="form-section">
             <div class="form-container">
                 <div class="form-header">
-                    <h2>Create Account</h2>
-                    <p>Join us and start planning your dream safari</p>
+                    <h2>{% trans "Create Account" %}</h2>
+                    <p>{% trans "Join us and start planning your dream safari" %}</p>
                 </div>
 
                 {% if messages %}
@@ -600,27 +601,27 @@
                     <div class="form-row">
                         <div class="input-group">
                             <i class="fas fa-user"></i>
-                            <input type="text" name="first_name" placeholder="First Name" id="firstName">
+                            <input type="text" name="first_name" placeholder="{% trans "First Name" %}" id="firstName">
                         </div>
                         <div class="input-group">
                             <i class="fas fa-user"></i>
-                            <input type="text" name="last_name" placeholder="Last Name" id="lastName">
+                            <input type="text" name="last_name" placeholder="{% trans "Last Name" %}" id="lastName">
                         </div>
                     </div>
 
                     <div class="input-group">
                         <i class="fas fa-user-circle"></i>
-                        <input type="text" name="username" placeholder="Username" required id="username">
+                        <input type="text" name="username" placeholder="{% trans "Username" %}" required id="username">
                     </div>
 
                     <div class="input-group">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" name="email" placeholder="Email Address" required id="email">
+                        <input type="email" name="email" placeholder="{% trans "Email Address" %}" required id="email">
                     </div>
 
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="password1" name="password1" placeholder="Password" required>
+                        <input type="password" id="password1" name="password1" placeholder="{% trans "Password" %}" required>
                         <i class="fas fa-eye-slash toggle-password" style="left: auto; right: 16px; cursor: pointer;"></i>
                     </div>
                     
@@ -633,37 +634,37 @@
 
                     <div class="password-requirements" id="passwordRequirements">
                         <div class="requirement" id="req-length">
-                            <i class="fas fa-circle"></i> At least 8 characters
+                            <i class="fas fa-circle"></i> {% trans "At least 8 characters" %}
                         </div>
                         <div class="requirement" id="req-lowercase">
-                            <i class="fas fa-circle"></i> At least one lowercase letter
+                            <i class="fas fa-circle"></i> {% trans "At least one lowercase letter" %}
                         </div>
                         <div class="requirement" id="req-uppercase">
-                            <i class="fas fa-circle"></i> At least one uppercase letter
+                            <i class="fas fa-circle"></i> {% trans "At least one uppercase letter" %}
                         </div>
                         <div class="requirement" id="req-number">
-                            <i class="fas fa-circle"></i> At least one number
+                            <i class="fas fa-circle"></i> {% trans "At least one number" %}
                         </div>
                         <div class="requirement" id="req-special">
-                            <i class="fas fa-circle"></i> At least one special character
+                            <i class="fas fa-circle"></i> {% trans "At least one special character" %}
                         </div>
                     </div>
 
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="password2" name="password2" placeholder="Confirm Password" required>
+                        <input type="password" id="password2" name="password2" placeholder="{% trans "Confirm Password" %}" required>
                     </div>
 
                     <label class="checkbox">
                         <input type="checkbox" required id="termsCheckbox">
                         <span class="checkmark"></span>
-                        <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                        <span>{% trans "I agree to the" %} <a href="#">{% trans "Terms of Service" %}</a> {% trans "and" %} <a href="#">{% trans "Privacy Policy" %}</a></span>
                     </label>
 
-                    <button type="submit" class="btn-register" id="registerBtn">Create Account</button>
+                    <button type="submit" class="btn-register" id="registerBtn">{% trans "Create Account" %}</button>
 
                     <div class="login-link">
-                        Already have an account? <a href="{% url 'login' %}">Sign In</a>
+                        {% trans "Already have an account?" %} <a href="{% url 'login' %}">{% trans "Sign In" %}</a>
                     </div>
                 </form>
             </div>

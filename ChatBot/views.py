@@ -197,6 +197,7 @@ def response_api(request):
         try:
             body = json.loads(request.body)
             user_message = body.get('message', '').strip()
+            lang = str(body.get('lang', ''))[:2]
         except json.JSONDecodeError as e:
             return JsonResponse({
                 'success': False,
@@ -214,6 +215,10 @@ def response_api(request):
 
         # Load prompt and get response
         system_prompt = load_prompt_template()
+        language = dict(settings.LANGUAGES).get(lang)
+        if language and lang != 'en':
+            system_prompt += (f"\n\nThe visitor is browsing the {language} version of the website. "
+                              f"Reply in {language} unless the visitor writes in a different language.")
         ai_response = get_ai_response(user_message, system_prompt)
 
         return JsonResponse({

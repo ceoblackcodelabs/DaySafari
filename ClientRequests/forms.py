@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from .models import Bookings, Contact
 from Places.models import Destinations
@@ -13,17 +14,17 @@ class BookingsForm(AntiSpamFormMixin, forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control bg-white border-0',
-                'placeholder': 'Your Name',
+                'placeholder': _('Your Name'),
                 'required': 'required'
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control bg-white border-0',
-                'placeholder': 'Your Email',
+                'placeholder': _('Your Email'),
                 'required': 'required'
             }),
             'phone': forms.TextInput(attrs={
                 'class': 'form-control bg-white border-0',
-                'placeholder': 'Phone Number',
+                'placeholder': _('Phone Number'),
                 'required': 'required'
             }),
             'destination': forms.Select(attrs={
@@ -33,17 +34,17 @@ class BookingsForm(AntiSpamFormMixin, forms.ModelForm):
             'persons': forms.Select(attrs={
                 'class': 'form-select bg-white border-0',
                 'required': 'required'
-            }, choices=[(1, '1 Person'), (2, '2 Persons'), (3, '3 Persons'), (4, '4 Persons'), (5, '5 Persons'), (6, '6+ Persons')]),
+            }, choices=[(1, _('1 Person')), (2, _('2 Persons')), (3, _('3 Persons')), (4, _('4 Persons')), (5, _('5 Persons')), (6, _('6+ Persons'))]),
             'date': forms.DateInput(attrs={
                 'class': 'form-control bg-white border-0',
                 'type': 'date',
                 'required': 'required',
                 'min': date.today().isoformat(),
-                'placeholder': 'Select Date'
+                'placeholder': _('Select Date')
             }),
             'message': forms.Textarea(attrs={
                 'class': 'form-control bg-white border-0',
-                'placeholder': 'Special Requests (Dietary, Accessibility, etc.)',
+                'placeholder': _('Special Requests (Dietary, Accessibility, etc.)'),
                 'rows': 3,
                 'style': 'height: 100px'
             }),
@@ -53,7 +54,7 @@ class BookingsForm(AntiSpamFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Set up destination choices
         self.fields['destination'].queryset = Destinations.objects.all().order_by('name')
-        self.fields['destination'].empty_label = "Select Destination"
+        self.fields['destination'].empty_label = _("Select Destination")
         
         # Set min date for date picker (today's date)
         self.fields['date'].widget.attrs['min'] = date.today().isoformat()
@@ -93,19 +94,19 @@ class ContactForm(AntiSpamFormMixin, forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control border-0',
-                'placeholder': 'Your Name'
+                'placeholder': _('Your Name')
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control border-0',
-                'placeholder': 'Your Email'
+                'placeholder': _('Your Email')
             }),
             'subject': forms.TextInput(attrs={
                 'class': 'form-control border-0',
-                'placeholder': 'Subject'
+                'placeholder': _('Subject')
             }),
             'message': forms.Textarea(attrs={
                 'class': 'form-control border-0',
-                'placeholder': 'Leave a message here',
+                'placeholder': _('Leave a message here'),
                 'style': 'height: 160px'
             }),
         }

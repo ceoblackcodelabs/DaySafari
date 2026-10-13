@@ -570,7 +570,7 @@
                         {% if ad.discount_percentage %}
                         <div class="discount-badge">
                             <span class="discount-percentage">{{ ad.discount_percentage }}% OFF</span>
-                            <span class="discount-text">Limited Time</span>
+                            <span class="discount-text">{% trans "Limited Time" %}</span>
                         </div>
                         {% endif %}
                     </div>
@@ -585,23 +585,23 @@
                             <div class="price-container">
                                 {% if ad.discount_percentage %}
                                 {% comment %} <span class="original-price">${{ ad.get_package_price|floatformat:2 }}</span> {% endcomment %}
-                                <span class="discounted-price">Get $10% Discount</span>
-                                <span class="save-amount">Save {{ ad.discount_percentage }}%</span>
+                                <span class="discounted-price">{% trans "Get $10% Discount" %}</span>
+                                <span class="save-amount">{% blocktrans with p=ad.discount_percentage %}Save {{ p }}%{% endblocktrans %}</span>
                                 {% else %}
-                                <span class="discounted-price">Get $10% Discount</span>
+                                <span class="discounted-price">{% trans "Get $10% Discount" %}</span>
                                 {% endif %}
                             </div>
-                            <div class="price-note">Valid until {{ ad.end_date|date:"F d, Y" }}</div>
+                            <div class="price-note">{% blocktrans with dt=ad.end_date|date:"F d, Y" %}Valid until {{ dt }}{% endblocktrans %}</div>
                         </div>
 
                         <div class="popup-details">
                             <div class="popup-detail-item">
                                 <i class="fas fa-tag"></i>
-                                <span>Special Offer</span>
+                                <span>{% trans "Special Offer" %}</span>
                             </div>
                             <div class="popup-detail-item">
                                 <i class="fas fa-calendar-alt"></i>
-                                <span>Valid until {{ ad.end_date|date:"F d, Y" }}</span>
+                                <span>{% blocktrans with dt=ad.end_date|date:"F d, Y" %}Valid until {{ dt }}{% endblocktrans %}</span>
                             </div>
                             {% if ad.discount_percentage %}
                             <div class="popup-detail-item discount-highlight">
@@ -615,20 +615,20 @@
                             <div class="popup-buttons">
                                 <a href="{{ ad.get_package_url }}" class="popup-button {{ ad.button_color }}">
                                     <i class="fas fa-eye"></i>
-                                    View Details
+                                    {% trans "View Details" %}
                                 </a>
                                 <a href="https://wa.me/254759379600?text={{ ad.get_whatsapp_message|urlencode }}"
                                 class="popup-button btn-success"
                                 target="_blank"
                                 rel="noopener noreferrer">
                                     <i class="fab fa-whatsapp"></i>
-                                    Book Now
+                                    {% trans "Book Now" %}
                                 </a>
                             </div>
 
                             <label class="popup-dont-show">
                                 <input type="checkbox" id="dontShowAgain">
-                                <span>Don't show again</span>
+                                <span>{% trans "Don't show again" %}</span>
                             </label>
                         </div>
                     </div>
@@ -686,7 +686,7 @@
                         <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://x.com/dayssafaris" target="_blank" aria-label="X (Twitter)" rel="noopener"><i class="fab fa-twitter fw-normal"></i></a>
                         <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254734962965" target="_blank" aria-label="Facebook" rel="noopener"><i class="fab fa-facebook-f fw-normal"></i></a>
                         <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254734962965" target="_blank" aria-label="LinkedIn" rel="noopener"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.instagram.com/day_safaris?igsh=eWVybW1yYm1ycW0=" target="_blank" rel="noopener" aria-label="Day Safaris on Instagram"><i class="fab fa-instagram fw-normal"></i></a>
+                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="https://www.instagram.com/day_safaris?igsh=eWVybW1yYm1ycW0=" target="_blank" rel="noopener" aria-label="{% trans "Day Safaris on Instagram" %}"><i class="fab fa-instagram fw-normal"></i></a>
                         <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href="https://www.addtoany.com/add_to/youtube?linkurl=https%3A%2F%2Fdaysafarisadventures.co.ke%2F&linkname=Home%20-%20Day%20Safaris%20Adventures&linknote=254734962965" target="_blank" aria-label="YouTube" rel="noopener"><i class="fab fa-youtube fw-normal"></i></a>
                     </div>
                 </div>
@@ -696,7 +696,7 @@
                         <form action="{% url 'set_language' %}" method="post" class="me-3">
                             {% csrf_token %}
                             <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
-                            <select name="language" aria-label="Language" onchange="this.form.submit()" class="form-select form-select-sm bg-primary text-light border-light" style="width: auto;">
+                            <select name="language" aria-label="{% trans "Language" %}" onchange="this.form.submit()" class="form-select form-select-sm bg-primary text-light border-light" style="width: auto;">
                                 {% get_current_language as LANGUAGE_CODE %}
                                 {% get_available_languages as LANGUAGES %}
                                 {% get_language_info_list for LANGUAGES as languages %}
@@ -731,9 +731,9 @@
         <div class="container-fluid position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-3 px-lg-5 py-2 py-lg-0">
                 <a href="{% url 'home' %}" class="navbar-brand p-0">
-                    <img src="{% static "img/logo-nav.png" %}" alt="Days Safaris Adventures logo" width="152" height="120" fetchpriority="high">
+                    <img src="{% static "img/logo-nav.png" %}" alt="{% trans "Days Safaris Adventures logo" %}" width="152" height="120" fetchpriority="high">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="Toggle navigation" aria-controls="navbarCollapse" aria-expanded="false">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="{% trans "Toggle navigation" %}" aria-controls="navbarCollapse" aria-expanded="false">
                     <span class="fa fa-bars"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -812,7 +812,7 @@
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item d-flex flex-column">
                             <h2 class="h4 mb-4 text-white">{% trans "Get In Touch" %}</h2>
-                            <a href=""><i class="fas fa-home me-2"></i>00200 Nairobi Railways Museum</a>
+                            <a href=""><i class="fas fa-home me-2"></i>{% trans "00200 Nairobi Railways Museum" %}</a>
                             <a href=""><i class="fas fa-envelope me-2"></i>info@daysafarisadventures.com</a>
                             <a href="https://wa.me/254759379600?text=Hello%20I%20need%20an%20inquiry" target="_blank">
                             <i class="fab fa-whatsapp me-2"></i> +254759379600
@@ -822,8 +822,8 @@
                             <a href=""><i class="fas fa-phone me-2"></i> +254734962965 </a>
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-share fa-2x text-white me-2"></i>
-                                <a class="btn-square btn btn-primary rounded-circle mx-1" href="https://www.facebook.com/profile.php?id=1481097984&ref=ig_profile_ac&target=1481097984" target="_blank" rel="noopener" aria-label="Day Safaris on Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn-square btn btn-primary rounded-circle mx-1" href="https://www.instagram.com/day_safaris?igsh=eWVybW1yYm1ycW0=" target="_blank" rel="noopener" aria-label="Day Safaris on Instagram"><i class="fab fa-instagram"></i></a>
+                                <a class="btn-square btn btn-primary rounded-circle mx-1" href="https://www.facebook.com/profile.php?id=1481097984&ref=ig_profile_ac&target=1481097984" target="_blank" rel="noopener" aria-label="{% trans "Day Safaris on Facebook" %}"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn-square btn btn-primary rounded-circle mx-1" href="https://www.instagram.com/day_safaris?igsh=eWVybW1yYm1ycW0=" target="_blank" rel="noopener" aria-label="{% trans "Day Safaris on Instagram" %}"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -868,10 +868,10 @@
                                     <form>
                                         <div class="form-floating">
                                             <select class="form-select bg-dark border" id="select2">
-                                                <option value="1">USD</option>
-                                                <option value="2">EUR</option>
-                                                <option value="3">INR</option>
-                                                <option value="3">GBP</option>
+                                                <option value="1">{% trans "USD" %}</option>
+                                                <option value="2">{% trans "EUR" %}</option>
+                                                <option value="3">{% trans "INR" %}</option>
+                                                <option value="3">{% trans "GBP" %}</option>
                                             </select>
                                             <label for="select2">$</label>
                                         </div>
@@ -880,12 +880,12 @@
                             </div>
                             <h2 class="h4 text-white mb-3">{% trans "Payments" %}</h2>
                             <div class="footer-bank-card">
-                                <span class="text-white me-2" role="img" aria-label="American Express accepted"><i class="fab fa-cc-amex fa-2x"></i></span>
-                                <span class="text-white me-2" role="img" aria-label="Visa accepted"><i class="fab fa-cc-visa fa-2x"></i></span>
-                                <span class="text-white me-2" role="img" aria-label="Credit card accepted"><i class="fas fa-credit-card fa-2x"></i></span>
-                                <span class="text-white me-2" role="img" aria-label="Mastercard accepted"><i class="fab fa-cc-mastercard fa-2x"></i></span>
-                                <span class="text-white me-2" role="img" aria-label="PayPal accepted"><i class="fab fa-cc-paypal fa-2x"></i></span>
-                                <span class="text-white" role="img" aria-label="Discover accepted"><i class="fab fa-cc-discover fa-2x"></i></span>
+                                <span class="text-white me-2" role="img" aria-label="{% trans "American Express accepted" %}"><i class="fab fa-cc-amex fa-2x"></i></span>
+                                <span class="text-white me-2" role="img" aria-label="{% trans "Visa accepted" %}"><i class="fab fa-cc-visa fa-2x"></i></span>
+                                <span class="text-white me-2" role="img" aria-label="{% trans "Credit card accepted" %}"><i class="fas fa-credit-card fa-2x"></i></span>
+                                <span class="text-white me-2" role="img" aria-label="{% trans "Mastercard accepted" %}"><i class="fab fa-cc-mastercard fa-2x"></i></span>
+                                <span class="text-white me-2" role="img" aria-label="{% trans "PayPal accepted" %}"><i class="fab fa-cc-paypal fa-2x"></i></span>
+                                <span class="text-white" role="img" aria-label="{% trans "Discover accepted" %}"><i class="fab fa-cc-discover fa-2x"></i></span>
                             </div>
                             {% if footer_gallery %}
                             <h2 class="h4 text-white mt-4 mb-3">{% trans "Gallery" %}</h2>
@@ -921,7 +921,7 @@
                         <i class="fas fa-copyright me-2"></i><a class="text-white" href="{% url 'home' %}">{% trans "Days Safaris Adventures" %}</a>, {% trans "All right reserved" %}.
                     </div>
                     <div class="col-md-6 text-center text-md-start">
-                        {% trans "Designed By" %} <a class="text-white" href="https://blackcodelab.com">BlackCodeLabs</a>
+                        {% trans "Designed By" %} <a class="text-white" href="https://blackcodelab.com">{% trans "BlackCodeLabs" %}</a>
                     </div>
                 </div>
             </div>
@@ -929,7 +929,7 @@
         <!-- Copyright End -->
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top" aria-label="Back to top"><i class="fa fa-arrow-up"></i></a>
+        <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top" aria-label="{% trans "Back to top" %}"><i class="fa fa-arrow-up"></i></a>
 
 
         <!-- JavaScript Libraries -->
@@ -1105,7 +1105,8 @@
         </div>
 
         <!-- Chatbot JavaScript -->
-        <script src="{% static "js/chatbot.js" %}"></script>
+        {{ chat_i18n|json_script:"chat-i18n" }}
+        <script src="{% static "js/chatbot.js" %}?v=2"></script>
 
         {% block extra_js %}{% endblock extra_js %}
     </body>

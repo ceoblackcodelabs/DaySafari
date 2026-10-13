@@ -1,8 +1,9 @@
 {% extends "Home/base.html" %}
+{% load i18n %}
 
 {% load static %}
 
-{% block title %}Payment Successful!{% endblock title %}
+{% block title %}{% trans "Payment Successful!" %}{% endblock title %}
 
 {% block body %}
 <div class="container-fluid py-5">
@@ -14,23 +15,23 @@
                         <div class="mb-4">
                             <i class="fas fa-check-circle text-success" style="font-size: 64px;"></i>
                         </div>
-                        <h2 class="mb-3">Payment Successful! 🎉</h2>
-                        <p class="text-muted mb-4">Thank you for your payment. Your booking is now confirmed.</p>
+                        <h2 class="mb-3">{% trans "Payment Successful! 🎉" %}</h2>
+                        <p class="text-muted mb-4">{% trans "Thank you for your payment. Your booking is now confirmed." %}</p>
                         
                         <div class="bg-light rounded-3 p-4 mb-4 text-start">
-                            <h6>Booking Details:</h6>
+                            <h6>{% trans "Booking Details:" %}</h6>
                             <hr>
-                            <p><strong>Package:</strong> {{ purchase.package.name }}</p>
-                            <p><strong>Travel Date:</strong> {{ purchase.travel_date|date:"F j, Y" }}</p>
-                            <p><strong>Number of Persons:</strong> {{ purchase.number_of_persons }}</p>
-                            <p><strong>Booking Reference:</strong> #{{ purchase.id }}</p>
+                            <p><strong>{% trans "Package:" %}</strong> {{ purchase.package.name }}</p>
+                            <p><strong>{% trans "Travel Date:" %}</strong> {{ purchase.travel_date|date:"F j, Y" }}</p>
+                            <p><strong>{% trans "Number of Persons:" %}</strong> {{ purchase.number_of_persons }}</p>
+                            <p><strong>{% trans "Booking Reference:" %}</strong> #{{ purchase.id }}</p>
                         </div>
                         
-                        <p>Confirmation has been sent to your email: <strong>{{ purchase.email }}</strong></p>
+                        <p>{% trans "Confirmation has been sent to your email:" %} <strong>{{ purchase.email }}</strong></p>
                         
                         <div class="mt-4">
-                            <a href="{% url 'home' %}" class="btn btn-primary">Return Home</a>
-                            <a href="{% url 'profile' %}" class="btn btn-outline-primary ms-2">My Bookings</a>
+                            <a href="{% url 'home' %}" class="btn btn-primary">{% trans "Return Home" %}</a>
+                            <a href="{% url 'profile' %}" class="btn btn-outline-primary ms-2">{% trans "My Bookings" %}</a>
                         </div>
                     </div>
                 </div>

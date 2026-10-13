@@ -1,18 +1,19 @@
 {% extends "Home/base.html" %}
+{% load i18n %}
 {% load static image_tags %}
 
-{% block title %}My Profile - Day Safaris Adventures{% endblock title %}
+{% block title %}{% trans "My Profile - Day Safaris Adventures" %}{% endblock title %}
 
 {% block body %}
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">My Profile</h3>
+        <h3 class="text-white display-3 mb-4">{% trans "My Profile" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Account</a></li>
-            <li class="breadcrumb-item active text-white">My Profile</li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Account" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "My Profile" %}</li>
         </ol>    
     </div>
 </div>
@@ -43,14 +44,14 @@
                     <p class="mb-3"><i class="fa fa-phone me-2"></i> {{ user.phone|default:"+254 XXX XXX XXX" }}</p>
                     <p class="mb-4"><i class="fa fa-map-marker-alt me-2"></i> {{ user.location|default:"Nairobi, Kenya" }}</p>
                     <div class="border-top pt-3 mt-2">
-                        <small class="text-muted"><i class="fa fa-calendar me-1"></i> Member since {{ user.date_joined|date:"F j, Y" }}</small>
+                        <small class="text-muted"><i class="fa fa-calendar me-1"></i> {% blocktrans with dt=user.date_joined|date:"F j, Y" %}Member since {{ dt }}{% endblocktrans %}</small>
                     </div>
                     <div class="mt-3">
                         <a href="{% url 'edit_profile' %}" class="btn btn-outline-primary w-100 mb-2">
-                            <i class="fa fa-edit me-2"></i>Edit Profile
+                            <i class="fa fa-edit me-2"></i>{% trans "Edit Profile" %}
                         </a>
                         <a href="{% url 'logout' %}" class="btn btn-outline-danger w-100">
-                            <i class="fa fa-sign-out-alt me-2"></i>Logout
+                            <i class="fa fa-sign-out-alt me-2"></i>{% trans "Logout" %}
                         </a>
                     </div>
                 </div>
@@ -59,7 +60,7 @@
             <!-- Dashboard Main Content -->
             <div class="col-lg-8">
                 <div class="bg-light rounded p-4">
-                    <h3 class="mb-4">My Dashboard</h3>
+                    <h3 class="mb-4">{% trans "My Dashboard" %}</h3>
                     
                     <!-- Stats Cards -->
                     <div class="row g-4 mb-4">
@@ -67,28 +68,28 @@
                             <div class="bg-white rounded p-3 text-center">
                                 <i class="fa fa-suitcase fa-2x text-primary mb-2"></i>
                                 <h4 class="mb-1">{{ total_bookings|default:"0" }}</h4>
-                                <p class="text-muted mb-0 small">Total Bookings</p>
+                                <p class="text-muted mb-0 small">{% trans "Total Bookings" %}</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-6">
                             <div class="bg-white rounded p-3 text-center">
                                 <i class="fa fa-clock fa-2x text-warning mb-2"></i>
                                 <h4 class="mb-1">{{ upcoming_bookings|default:"0" }}</h4>
-                                <p class="text-muted mb-0 small">Upcoming</p>
+                                <p class="text-muted mb-0 small">{% trans "Upcoming" %}</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-6">
                             <div class="bg-white rounded p-3 text-center">
                                 <i class="fa fa-check-circle fa-2x text-success mb-2"></i>
                                 <h4 class="mb-1">{{ completed_bookings|default:"0" }}</h4>
-                                <p class="text-muted mb-0 small">Completed</p>
+                                <p class="text-muted mb-0 small">{% trans "Completed" %}</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-6">
                             <div class="bg-white rounded p-3 text-center">
                                 <i class="fa fa-star fa-2x text-info mb-2"></i>
                                 <h4 class="mb-1">{{ loyalty_points|default:"0" }}</h4>
-                                <p class="text-muted mb-0 small">Loyalty Points</p>
+                                <p class="text-muted mb-0 small">{% trans "Loyalty Points" %}</p>
                             </div>
                         </div>
                     </div>
@@ -98,33 +99,33 @@
                         <div class="col-md-6">
                             <div class="bg-white rounded p-3 text-center">
                                 <i class="fa fa-suitcase fa-3x text-primary mb-2"></i>
-                                <h5>My Bookings</h5>
-                                <p class="mb-2">View and manage your safari bookings</p>
-                                <a href="#current-bookings" class="btn btn-sm btn-outline-primary">View Bookings</a>
+                                <h5>{% trans "My Bookings" %}</h5>
+                                <p class="mb-2">{% trans "View and manage your safari bookings" %}</p>
+                                <a href="#current-bookings" class="btn btn-sm btn-outline-primary">{% trans "View Bookings" %}</a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="bg-white rounded p-3 text-center">
                                 <i class="fa fa-heart fa-3x text-danger mb-2"></i>
-                                <h5>Saved Destinations</h5>
-                                <p class="mb-2">Your favorite safari destinations{% if saved_destinations_count %} &middot; {{ saved_destinations_count }} saved{% endif %}</p>
-                                <a href="{% url 'favorites' %}" class="btn btn-sm btn-outline-primary">View Favorites</a>
+                                <h5>{% trans "Saved Destinations" %}</h5>
+                                <p class="mb-2">{% trans "Your favorite safari destinations" %}{% if saved_destinations_count %} &middot; {% blocktrans with c=saved_destinations_count %}{{ c }} saved{% endblocktrans %}{% endif %}</p>
+                                <a href="{% url 'favorites' %}" class="btn btn-sm btn-outline-primary">{% trans "View Favorites" %}</a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="bg-white rounded p-3 text-center">
                                 <i class="fa fa-gift fa-3x text-success mb-2"></i>
-                                <h5>Special Offers</h5>
-                                <p class="mb-2">Exclusive member deals just for you</p>
-                                <a href="{% url 'offers' %}" class="btn btn-sm btn-outline-primary">View Offers</a>
+                                <h5>{% trans "Special Offers" %}</h5>
+                                <p class="mb-2">{% trans "Exclusive member deals just for you" %}</p>
+                                <a href="{% url 'offers' %}" class="btn btn-sm btn-outline-primary">{% trans "View Offers" %}</a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="bg-white rounded p-3 text-center">
                                 <i class="fa fa-cog fa-3x text-secondary mb-2"></i>
-                                <h5>Account Settings</h5>
-                                <p class="mb-2">Update password and preferences</p>
-                                <a href="{% url 'account_settings' %}" class="btn btn-sm btn-outline-primary">Edit Settings</a>
+                                <h5>{% trans "Account Settings" %}</h5>
+                                <p class="mb-2">{% trans "Update password and preferences" %}</p>
+                                <a href="{% url 'account_settings' %}" class="btn btn-sm btn-outline-primary">{% trans "Edit Settings" %}</a>
                             </div>
                         </div>
                     </div>
@@ -138,9 +139,9 @@
 <div class="container-fluid blog py-5 bg-light">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3"><i class="fa fa-clock me-2"></i>Current Bookings</p>
-            <h1 class="mb-4">Your Upcoming Safaris</h1>
-            <p class="mb-0">Track and manage your upcoming safari adventures. Get ready for an unforgettable experience with Day Safaris!</p>
+            <p class="h5 section-title px-3"><i class="fa fa-clock me-2"></i>{% trans "Current Bookings" %}</p>
+            <h1 class="mb-4">{% trans "Your Upcoming Safaris" %}</h1>
+            <p class="mb-0">{% trans "Track and manage your upcoming safari adventures. Get ready for an unforgettable experience with Day Safaris!" %}</p>
         </div>
         
         {% if current_bookings %}
@@ -156,7 +157,7 @@
                             <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-1.webp' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto" aria-label="Open" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="#" class="my-auto" aria-label="{% trans "Open" %}" aria-label="{% trans "View details" %}"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
@@ -166,10 +167,10 @@
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Email : {{ booking.client.email }}</p>
+                        <p class="mb-3">{% blocktrans with e=booking.client.email %}Email : {{ e }}{% endblocktrans %}</p>
                         <a href="" class="h4">{{ booking.destination }}</a>
                         <p class="my-3">{{ booking.destination.description|striptags|truncatewords:50 }}</p>
-                        <a href="" class="btn btn-primary rounded-pill py-2 px-4">Read More</a>
+                        <a href="" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Read More" %}</a>
                     </div>
                 </div>
             </div>
@@ -178,10 +179,10 @@
         {% else %}
         <div class="text-center py-5 bg-white rounded">
             <i class="fa fa-suitcase fa-4x text-muted mb-3"></i>
-            <h3>No Upcoming Bookings</h3>
-            <p class="mb-3">You haven't booked any safaris yet. Start planning your adventure!</p>
+            <h3>{% trans "No Upcoming Bookings" %}</h3>
+            <p class="mb-3">{% trans "You haven't booked any safaris yet. Start planning your adventure!" %}</p>
             <a href="{% url 'tours' %}" class="btn btn-primary rounded-pill py-2 px-4">
-                <i class="fa fa-search me-2"></i>Browse Safaris
+                <i class="fa fa-search me-2"></i>{% trans "Browse Safaris" %}
             </a>
         </div>
         {% endif %}
@@ -192,9 +193,9 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3"><i class="fa fa-history me-2"></i>Past Bookings</p>
-            <h1 class="mb-4">Your Safari Memories</h1>
-            <p class="mb-0">Relive your past safari experiences and share your stories with us. Write a review and inspire other travelers!</p>
+            <p class="h5 section-title px-3"><i class="fa fa-history me-2"></i>{% trans "Past Bookings" %}</p>
+            <h1 class="mb-4">{% trans "Your Safari Memories" %}</h1>
+            <p class="mb-0">{% trans "Relive your past safari experiences and share your stories with us. Write a review and inspire other travelers!" %}</p>
         </div>
         
         {% if past_bookings %}
@@ -210,7 +211,7 @@
                             <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-1.webp' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto" aria-label="Open" aria-label="View details"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="#" class="my-auto" aria-label="{% trans "Open" %}" aria-label="{% trans "View details" %}"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
@@ -220,10 +221,10 @@
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Email : {{ booking.client.email }}</p>
+                        <p class="mb-3">{% blocktrans with e=booking.client.email %}Email : {{ e }}{% endblocktrans %}</p>
                         <a href="" class="h4">{{ booking.destination }}</a>
                         <p class="my-3">{{ booking.destination.description|striptags|truncatewords:50 }}</p>
-                        <a href="" class="btn btn-primary rounded-pill py-2 px-4">Read More</a>
+                        <a href="" class="btn btn-primary rounded-pill py-2 px-4">{% trans "Read More" %}</a>
                     </div>
                 </div>
             </div>
@@ -232,8 +233,8 @@
         {% else %}
         <div class="text-center py-5 bg-light rounded">
             <i class="fa fa-history fa-4x text-muted mb-3"></i>
-            <h3>No Past Bookings Yet</h3>
-            <p>Complete your first safari adventure to see it here!</p>
+            <h3>{% trans "No Past Bookings Yet" %}</h3>
+            <p>{% trans "Complete your first safari adventure to see it here!" %}</p>
         </div>
         {% endif %}
     </div>
@@ -243,9 +244,9 @@
 <div class="container-fluid packages py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3"><i class="fa fa-star me-2"></i>Recommended For You</p>
-            <h1 class="mb-4">Based on Your Interests</h1>
-            <p class="mb-0">Discover personalized safari recommendations tailored to your travel preferences and past adventures.</p>
+            <p class="h5 section-title px-3"><i class="fa fa-star me-2"></i>{% trans "Recommended For You" %}</p>
+            <h1 class="mb-4">{% trans "Based on Your Interests" %}</h1>
+            <p class="mb-0">{% trans "Discover personalized safari recommendations tailored to your travel preferences and past adventures." %}</p>
         </div>
         
         {% if recommended_packages %}
@@ -260,15 +261,15 @@
                     {% endif %}
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ package.location }}</small>
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ package.days }} days</small>
-                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ package.persons }} Persons</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{% blocktrans with d=package.days %}{{ d }} days{% endblocktrans %}</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{% blocktrans with p=package.persons %}{{ p }} Persons{% endblocktrans %}</small>
                     </div>
                     <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div>
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
                         <h2 class="h5 mb-0">{{ package.name }}</h2>
-                        <small class="text-uppercase">{{ package.package_type|default:"Safari Package" }}</small>
+                        <small class="text-uppercase">{{ package.package_type|default:_("Safari Package") }}</small>
                         <div class="mb-3">
                             {% for i in ""|ljust:package.starRating %}
                             <small class="fa fa-star text-primary"></small>
@@ -283,28 +284,28 @@
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">
-                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Read More" %}</a>
                         </div>
                         <div class="col-6 text-end px-0">
-                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                            <a href="{% url 'package_detail' package.slug %}" class="btn-hover btn text-white py-2 px-4">{% trans "Book Now" %}</a>
                         </div>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <h3>Keep Interacring ANd Bookingt</h3>
-                <p>Please check back later for exciting safari Recomandation!</p>
+                <h3>{% trans "Keep Interacring ANd Bookingt" %}</h3>
+                <p>{% trans "Please check back later for exciting safari Recomandation!" %}</p>
             </div>
             {% endfor %}
         </div>
         {% else %}
         <div class="text-center py-5 bg-white rounded">
             <i class="fa fa-compass fa-4x text-muted mb-3"></i>
-            <h3>Discover Amazing Safaris</h3>
-            <p class="mb-3">Browse our collection of incredible safari adventures</p>
+            <h3>{% trans "Discover Amazing Safaris" %}</h3>
+            <p class="mb-3">{% trans "Browse our collection of incredible safari adventures" %}</p>
             <a href="{% url 'tours' %}" class="btn btn-primary rounded-pill py-2 px-4">
-                <i class="fa fa-search me-2"></i>Explore Safaris
+                <i class="fa fa-search me-2"></i>{% trans "Explore Safaris" %}
             </a>
         </div>
         {% endif %}

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -5,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Day Safaris Adventures</title>
+    <title>{% trans "Login - Day Safaris Adventures" %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -613,20 +614,20 @@
                 <div class="welcome-logo">
                     <i class="fas fa-tree"></i>
                 </div>
-                <h1>Welcome Back to Day Safaris</h1>
-                <p>Your gateway to unforgettable East African adventures. Continue your journey with us.</p>
+                <h1>{% trans "Welcome Back to Day Safaris" %}</h1>
+                <p>{% trans "Your gateway to unforgettable East African adventures. Continue your journey with us." %}</p>
                 <div class="stats">
                     <div class="stat-item">
                         <span class="stat-number" data-target="15000">0</span>
-                        <span class="stat-label">Happy Travelers</span>
+                        <span class="stat-label">{% trans "Happy Travelers" %}</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number" data-target="50">0</span>
-                        <span class="stat-label">Destinations</span>
+                        <span class="stat-label">{% trans "Destinations" %}</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number" data-target="247">0</span>
-                        <span class="stat-label">Support</span>
+                        <span class="stat-label">{% trans "Support" %}</span>
                     </div>
                 </div>
             </div>
@@ -636,8 +637,8 @@
         <div class="form-section">
             <div class="form-container">
                 <div class="form-header">
-                    <h2>Sign In</h2>
-                    <p>Enter your credentials to access your account</p>
+                    <h2>{% trans "Sign In" %}</h2>
+                    <p>{% trans "Enter your credentials to access your account" %}</p>
                 </div>
 
                 {% if messages %}
@@ -654,12 +655,12 @@
 
                     <div class="input-group">
                         <i class="fas fa-user"></i>
-                        <input type="text" name="username" placeholder="Username" required autofocus>
+                        <input type="text" name="username" placeholder="{% trans "Username" %}" required autofocus>
                     </div>
 
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Password" required>
+                        <input type="password" name="password" placeholder="{% trans "Password" %}" required>
                         <i class="fas fa-eye-slash toggle-password" style="left: auto; right: 16px; cursor: pointer;"></i>
                     </div>
 
@@ -667,12 +668,12 @@
                         <label class="checkbox">
                             <input type="checkbox" name="remember">
                             <span class="checkmark"></span>
-                            <span>Remember me</span>
+                            <span>{% trans "Remember me" %}</span>
                         </label>
-                        <a href="#" class="forgot-link">Forgot Password?</a>
+                        <a href="#" class="forgot-link">{% trans "Forgot Password?" %}</a>
                     </div>
 
-                    <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
+                    <button type="submit" class="btn-login" id="loginBtn">{% trans "Sign In" %}</button>
 
                     {% comment %} <div class="divider">
                         <span>or continue with</span>
@@ -688,7 +689,7 @@
                     </div> {% endcomment %}
 
                     <div class="register-link">
-                        Don't have an account? <a href="{% url 'register' %}">Create Account</a>
+                        {% trans "Don't have an account?" %} <a href="{% url 'register' %}">{% trans "Create Account" %}</a>
                     </div>
                 </form>
             </div>

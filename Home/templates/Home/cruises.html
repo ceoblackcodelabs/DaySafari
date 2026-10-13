@@ -4,9 +4,9 @@
 
 {% block title %}{% trans "Cruses - Days Safaris Adventures" %}{% endblock title %}
 
-{% block meta_description %}Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi.{% endblock meta_description %}
-{% block og_description %}Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi.{% endblock og_description %}
-{% block twitter_description %}Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi.{% endblock twitter_description %}
+{% block meta_description %}{% trans "Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi." %}{% endblock meta_description %}
+{% block og_description %}{% trans "Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi." %}{% endblock og_description %}
+{% block twitter_description %}{% trans "Luxury cruise and island holiday packages booked through Day Safaris Adventures, Nairobi." %}{% endblock twitter_description %}
 
 {% block carousel %}
 
@@ -22,7 +22,7 @@
             {% for cc in cruise_carousels %}
 
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ cc.image|thumb:640 }}" class="img-fluid" alt="Cruise Image" decoding="async">
+                <img src="{{ cc.image|thumb:640 }}" class="img-fluid" alt="{% trans "Cruise Image" %}" decoding="async">
 
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">

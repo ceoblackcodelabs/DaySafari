@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -10,7 +11,7 @@ class CustomUserCreationForm(AntiSpamFormMixin, UserCreationForm):
         required=True,
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Enter your email address'
+            'placeholder': _('Enter your email address')
         })
     )
     first_name = forms.CharField(
@@ -18,7 +19,7 @@ class CustomUserCreationForm(AntiSpamFormMixin, UserCreationForm):
         required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Enter your first name'
+            'placeholder': _('Enter your first name')
         })
     )
     last_name = forms.CharField(
@@ -26,7 +27,7 @@ class CustomUserCreationForm(AntiSpamFormMixin, UserCreationForm):
         required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Enter your last name'
+            'placeholder': _('Enter your last name')
         })
     )
     
@@ -40,15 +41,15 @@ class CustomUserCreationForm(AntiSpamFormMixin, UserCreationForm):
         # Customize widget attributes
         self.fields['username'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Choose a username'
+            'placeholder': _('Choose a username')
         })
         self.fields['password1'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Enter your password'
+            'placeholder': _('Enter your password')
         })
         self.fields['password2'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Confirm your password'
+            'placeholder': _('Confirm your password')
         })
         
         # Remove help text for cleaner look (optional)
@@ -58,13 +59,13 @@ class CustomUserCreationForm(AntiSpamFormMixin, UserCreationForm):
     def clean_email(self):
         email = super().clean_email()          # junk / throwaway / spam-domain check
         if User.objects.filter(email__iexact=email).exists():
-            raise ValidationError("A user with this email already exists.")
+            raise ValidationError(_("A user with this email already exists."))
         return email
     
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if not re.match(r'^[a-zA-Z0-9_]+$', username):
-            raise ValidationError("Username can only contain letters, numbers, and underscores.")
+            raise ValidationError(_("Username can only contain letters, numbers, and underscores."))
         return username
 
 
@@ -74,12 +75,12 @@ class CustomAuthenticationForm(AuthenticationForm):
         
         self.fields['username'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Enter your username',
+            'placeholder': _('Enter your username'),
             'autofocus': True
         })
         self.fields['password'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Enter your password'
+            'placeholder': _('Enter your password')
         })
         
         # Remove labels for cleaner look

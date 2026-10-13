@@ -1,4 +1,5 @@
 {% extends "Home/base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}{{ title }}{% endblock title %}
@@ -8,11 +9,11 @@
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">Special Offers</h3>
+        <h3 class="text-white display-3 mb-4">{% trans "Special Offers" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'profile' %}">My Profile</a></li>
-            <li class="breadcrumb-item active text-white">Offers</li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'profile' %}">{% trans "My Profile" %}</a></li>
+            <li class="breadcrumb-item active text-white">{% trans "Offers" %}</li>
         </ol>
     </div>
 </div>
@@ -21,8 +22,8 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 700px;">
-            <h1 class="mb-3">Exclusive Deals Just For You</h1>
-            <p class="text-muted">Offers tailored to your booking history — grab one before it expires.</p>
+            <h1 class="mb-3">{% trans "Exclusive Deals Just For You" %}</h1>
+            <p class="text-muted">{% trans "Offers tailored to your booking history — grab one before it expires." %}</p>
         </div>
 
         <div class="row g-4">
@@ -37,7 +38,7 @@
                         <p class="text-muted mb-3">{{ offer.description }}</p>
                         <div class="d-flex flex-wrap align-items-center gap-3">
                             <span class="offer-code">{{ offer.code }}</span>
-                            <small class="text-muted"><i class="fa fa-clock me-1"></i>Valid until {{ offer.valid_until|date:"M d, Y" }}</small>
+                            <small class="text-muted"><i class="fa fa-clock me-1"></i>{% blocktrans with dt=offer.valid_until|date:"M d, Y" %}Valid until {{ dt }}{% endblocktrans %}</small>
                         </div>
                     </div>
                 </div>
@@ -45,18 +46,18 @@
             {% empty %}
             <div class="col-12 text-center py-5">
                 <i class="fa fa-tag fa-4x text-muted mb-3"></i>
-                <h3>No Offers Available Right Now</h3>
-                <p class="text-muted">Check back soon — new deals are added regularly.</p>
+                <h3>{% trans "No Offers Available Right Now" %}</h3>
+                <p class="text-muted">{% trans "Check back soon — new deals are added regularly." %}</p>
             </div>
             {% endfor %}
         </div>
 
         <div class="mt-5 text-center">
             <a href="{% url 'east_africa_tours' %}" class="btn btn-primary rounded-pill py-2 px-4 me-2">
-                <i class="fa fa-compass me-2"></i>Browse Safaris
+                <i class="fa fa-compass me-2"></i>{% trans "Browse Safaris" %}
             </a>
             <a href="{% url 'profile' %}" class="btn btn-outline-primary rounded-pill py-2 px-4">
-                <i class="fa fa-arrow-left me-2"></i>Back to Profile
+                <i class="fa fa-arrow-left me-2"></i>{% trans "Back to Profile" %}
             </a>
         </div>
     </div>
