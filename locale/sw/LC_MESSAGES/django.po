@@ -4560,3 +4560,39 @@ msgstr "Kuanzia %(d)s"
 
 msgid "Until %(d)s"
 msgstr "Hadi %(d)s"
+
+msgid "Free quote"
+msgstr "Bei ya bure"
+
+msgid "Reply in minutes"
+msgstr "Jibu ndani ya dakika"
+
+msgid "Hello! What's your next adventure?"
+msgstr "Habari! Safari yako ijayo ni ipi?"
+
+msgid "Tell us where you dream of going and we will chat with you on WhatsApp with a free, no-obligation quote."
+msgstr "Tuambie unapoota kwenda nasi tutaongea nawe WhatsApp na bei ya bure bila wajibu."
+
+msgid "Your name"
+msgstr "Jina lako"
+
+msgid "Phone / WhatsApp number"
+msgstr "Simu / namba ya WhatsApp"
+
+msgid "Which safari or tour? Pick or type"
+msgstr "Safari au ziara ipi? Chagua au andika"
+
+msgid "Which safari or tour?"
+msgstr "Safari au ziara ipi?"
+
+msgid "A short message (optional)"
+msgstr "Ujumbe mfupi (hiari)"
+
+msgid "Send on WhatsApp"
+msgstr "Tuma kupitia WhatsApp"
+
+msgid "We only use your details to reply about your trip."
+msgstr "Tunatumia taarifa zako kujibu kuhusu safari yako tu."
+
+msgid "Please enter your name."
+msgstr "Tafadhali weka jina lako."

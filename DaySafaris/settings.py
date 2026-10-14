@@ -104,6 +104,7 @@ TEMPLATES = [
                 'Home.context_processors.footer_gallery',
                 'Home.context_processors.chat_i18n',
                 'Home.context_processors.mega_menu',
+                'Home.context_processors.lead_popup',
             ],
         },
     },

@@ -71,3 +71,25 @@ class Contact(models.Model):
     def __str__(self):
         return f"{self.name} - {self.subject[:50]}"
     
+
+
+class QuickLead(models.Model):
+    """A visitor who used the 'What's your next adventure?' popup and was sent on to WhatsApp."""
+    STATUS = [('New', 'New'), ('Contacted', 'Contacted'), ('Booked', 'Booked'), ('Closed', 'Closed'), ('Spam', 'Spam')]
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=25)
+    tour = models.CharField(max_length=160, blank=True)
+    message = models.TextField(blank=True)
+    page_url = models.CharField(max_length=300, blank=True)
+    language = models.CharField(max_length=8, blank=True)
+    ip = models.GenericIPAddressField(null=True, blank=True)
+    status = models.CharField(max_length=12, choices=STATUS, default='New', db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'WhatsApp lead'
+        verbose_name_plural = 'WhatsApp leads'
+
+    def __str__(self):
+        return f"{self.name} - {self.tour or 'general'}"

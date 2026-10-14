@@ -96,6 +96,17 @@ def notify_staff_of_lead(lead):
             company = get_company()
             to_email = company.booking_confirmation_email if company else 'info@daysafarisadventures.com'
             is_booking = hasattr(lead, 'booking_type')
+            if hasattr(lead, 'tour'):          # WhatsApp popup lead
+                title = f"New WhatsApp lead: {lead.name} - {lead.tour or 'general enquiry'}"
+                rows = [('Name', lead.name), ('Phone', lead.phone), ('Tour', lead.tour or '-'),
+                        ('Message', lead.message or '-'), ('Page', lead.page_url or '-')]
+                body = ''.join(f"<tr><td style='padding:4px 12px 4px 0'><b>{escape(k)}</b></td>"
+                               f"<td>{escape(str(v)).replace(chr(10), '<br>')}</td></tr>" for k, v in rows)
+                digits = ''.join(c for c in lead.phone if c.isdigit())
+                html = (f"<h3>{escape(title)}</h3><table>{body}</table>"
+                        f"<p>They were also sent to WhatsApp. Follow up: <a href='https://wa.me/{digits}'>wa.me/{digits}</a></p>")
+                send_transactional_email(to_email, 'Day Safaris Team', title, html)
+                return
             if is_booking:
                 title = f"New {lead.get_booking_type_display()} booking lead: {lead.item_name}"
                 rows = [('Name', lead.name), ('Email', lead.email), ('Phone', lead.phone),

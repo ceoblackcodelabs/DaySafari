@@ -1,0 +1,66 @@
+{% load i18n image_tags %}
+<div id="leadOverlay" class="popup-overlay lead-overlay" role="dialog" aria-modal="true" aria-labelledby="leadTitle" hidden>
+    <div class="popup-container lead-container">
+        <button type="button" class="popup-close" data-lead-close aria-label="{% trans "Close" %}"><i class="fas fa-times"></i></button>
+        <div class="popup-layout">
+            <div class="popup-image-side lead-slides" aria-hidden="true">
+                {% for img in mega.lead_images %}{% if img %}<img src="{{ img }}" alt="" class="lead-slide" style="animation-delay:{{ forloop.counter0 }}s" loading="lazy" width="480" height="640">{% endif %}{% endfor %}
+                <div class="discount-badge lead-badge"><span class="discount-percentage">{% trans "Free quote" %}</span><span class="discount-text">{% trans "Reply in minutes" %}</span></div>
+            </div>
+            <div class="popup-content-side">
+                <h2 class="popup-title" id="leadTitle">{% trans "Hello! What's your next adventure?" %}</h2>
+                <p class="popup-description">{% trans "Tell us where you dream of going and we will chat with you on WhatsApp with a free, no-obligation quote." %}</p>
+                <form id="leadForm" action="{% url 'lead_capture' %}" method="post" novalidate>
+                    {% csrf_token %}
+                    <input type="text" name="website" tabindex="-1" autocomplete="off" class="lead-hp" aria-hidden="true">
+                    <div class="lead-field"><i class="fa fa-user"></i><input type="text" name="name" required maxlength="100" autocomplete="name" placeholder="{% trans "Your name" %}" aria-label="{% trans "Your name" %}"></div>
+                    <div class="lead-field"><i class="fa fa-phone"></i><input type="tel" name="phone" required maxlength="25" autocomplete="tel" inputmode="tel" placeholder="{% trans "Phone / WhatsApp number" %}" aria-label="{% trans "Phone / WhatsApp number" %}"></div>
+                    <div class="lead-field"><i class="fa fa-map-marked-alt"></i><input type="text" name="tour" list="leadTours" maxlength="160" placeholder="{% trans "Which safari or tour? Pick or type" %}" aria-label="{% trans "Which safari or tour?" %}"></div>
+                    <datalist id="leadTours">{% for t in mega.lead_tours %}<option value="{{ t }}">{% endfor %}</datalist>
+                    <div class="lead-field lead-area"><i class="fa fa-comment-dots"></i><textarea name="message" rows="2" maxlength="600" placeholder="{% trans "A short message (optional)" %}" aria-label="{% trans "A short message (optional)" %}"></textarea></div>
+                    <p class="lead-error" id="leadError" role="alert" hidden></p>
+                    <div class="popup-footer">
+                        <div class="popup-buttons">
+                            <button type="submit" class="popup-button btn-success"><i class="fab fa-whatsapp"></i> {% trans "Send on WhatsApp" %}</button>
+                        </div>
+                        <label class="popup-dont-show"><input type="checkbox" id="leadDontShow"><span>{% trans "Don't show again" %}</span></label>
+                    </div>
+                </form>
+                <p class="lead-note">{% trans "We only use your details to reply about your trip." %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+(function(){
+    var ov=document.getElementById('leadOverlay'); if(!ov) return;
+    var KEY='dsaLead', DAY=86400000, form=document.getElementById('leadForm'), err=document.getElementById('leadError');
+    function get(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+    function put(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+    var st=get(), now=Date.now();
+    if((st.until||0)>now) return;                         // closed or used recently
+    var timer, shown=false;
+    function show(){ if(shown||document.querySelector('.popup-overlay.active:not(.lead-overlay)')) return; shown=true; ov.hidden=false; ov.classList.add('active'); var n=form.elements.name; setTimeout(function(){n&&n.focus({preventScroll:true})},300); }
+    function hide(days){ ov.classList.remove('active'); ov.hidden=true; clearTimeout(timer);
+        var d=document.getElementById('leadDontShow').checked?3650:(days||3); put({until:Date.now()+d*DAY}); }
+    timer=setTimeout(show,9000);
+    window.addEventListener('scroll',function onS(){ if(window.scrollY>window.innerHeight*0.8){ window.removeEventListener('scroll',onS); clearTimeout(timer); timer=setTimeout(show,1500);} },{passive:true});
+    ov.addEventListener('click',function(e){ if(e.target===ov) hide(); });
+    ov.querySelector('[data-lead-close]').addEventListener('click',function(){hide();});
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&ov.classList.contains('active')) hide(); });
+    form.addEventListener('submit',function(e){
+        e.preventDefault(); err.hidden=true;
+        var f=form.elements, name=f.name.value.trim(), phone=f.phone.value.trim(), tour=f.tour.value.trim(), msg=f.message.value.trim();
+        if(name.length<2){ return bad(f.name,"{% trans "Please enter your name." %}"); }
+        if(!/^\+?[0-9 ()\-]{7,22}$/.test(phone)){ return bad(f.phone,"{% trans "Please enter a valid phone number." %}"); }
+        var text="Hello Day Safaris! My name is "+name+"."+(tour?" I am interested in: "+tour+".":" I would like to plan a trip.")+(msg?" "+msg:"")+" My phone: "+phone;
+        var url="https://wa.me/254759379600?text="+encodeURIComponent(text);
+        var w=window.open(url,'_blank'); if(w){ try{w.opener=null}catch(x){} }   // opened straight from the click so it is never blocked
+        var body=new URLSearchParams(new FormData(form)); body.set('page',location.pathname); body.set('lang',document.documentElement.lang||'');
+        try{ fetch(form.action,{method:'POST',body:body,keepalive:true,credentials:'same-origin',headers:{'X-Requested-With':'XMLHttpRequest'}}).catch(function(){}); }catch(x){}
+        hide(30);
+        if(!w) location.href=url;                              // popup blocked: continue in this tab
+    });
+    function bad(el,m){ err.textContent=m; err.hidden=false; el.focus(); }
+})();
+</script>

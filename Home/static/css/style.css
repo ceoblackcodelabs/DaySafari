@@ -192,3 +192,26 @@ body{color:#555}
 
 /* homepage: alternate plain sections white / tinted so each band is clearly separate */
 .band-alt{background:#ece4e8!important}
+
+/* "What's your next adventure?" lead popup (re-uses the discount popup's .popup-* styles) */
+.lead-overlay[hidden]{display:none!important}
+.lead-container{width:min(900px,94vw)}
+.lead-slides{overflow:hidden;min-height:340px;background:#2a0a18}
+.lead-slides .lead-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:leadFade 18s infinite;transform:scale(1.04)}
+@keyframes leadFade{0%{opacity:0;transform:scale(1.04)}4%{opacity:1}17%{opacity:1;transform:scale(1.12)}21%{opacity:0}100%{opacity:0}}
+.lead-slides .lead-slide:nth-child(1){animation-delay:0s}.lead-slides .lead-slide:nth-child(2){animation-delay:3s}.lead-slides .lead-slide:nth-child(3){animation-delay:6s}
+.lead-slides .lead-slide:nth-child(4){animation-delay:9s}.lead-slides .lead-slide:nth-child(5){animation-delay:12s}.lead-slides .lead-slide:nth-child(6){animation-delay:15s}
+.lead-slides .lead-slide:first-of-type{opacity:1}
+.lead-badge{z-index:3}
+.lead-container .popup-content-side{flex:1.4}
+.lead-field{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #dcdfe4;border-radius:12px;padding:0 14px;margin-bottom:10px;transition:border-color .2s,box-shadow .2s}
+.lead-field:focus-within{border-color:var(--bs-primary);box-shadow:0 0 0 3px rgba(66,13,36,.12)}
+.lead-field i{color:var(--bs-primary);width:16px;text-align:center}
+.lead-field input,.lead-field textarea{border:0;outline:0;background:transparent;width:100%;padding:12px 0;font-size:15px;resize:none;font-family:inherit}
+.lead-area{align-items:flex-start}.lead-area i{padding-top:14px}
+.lead-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.lead-error{color:#d92d20;font-size:13px;margin:0 0 8px}
+.lead-note{font-size:12px;color:#8a8f98;margin:10px 0 0}
+.lead-container .popup-button{border:0;cursor:pointer}
+@media (max-width:768px){.lead-slides{min-height:150px;max-width:100%!important;height:150px}.lead-container .popup-content-side{max-height:none}}
+@media (prefers-reduced-motion:reduce){.lead-slides .lead-slide{animation:none}.lead-slides .lead-slide:first-of-type{opacity:1}}

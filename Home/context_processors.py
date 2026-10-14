@@ -5,6 +5,11 @@ from datetime import date
 
 def ads_context(request):
     """Add active ads to template context"""
+    # The discount popup is only for the Packages page
+    match = getattr(request, 'resolver_match', None)
+    if not match or match.url_name != 'packages':
+        return {'popup_ads': [], 'has_popup_ads': False}
+
     today = date.today()
     active_ads = Ad.objects.filter(
         is_active=True,
@@ -70,7 +75,7 @@ def chat_i18n(request):
 def mega_menu(request):
     """Pictures for the header's big hover menus (tours, trekking, cruises, packages). Cached for 10 minutes."""
     from django.core.cache import cache
-    data = cache.get('mega_menu_v2')
+    data = cache.get('mega_menu_v3')
     if data is None:
         from .models import Trekking
         from .templatetags.image_tags import thumb
@@ -93,10 +98,28 @@ def mega_menu(request):
                   AwesomePackages.objects.values_list('category').annotate(n=Count('id'))}
         data = {
             'pkg_count': counts,
+            'lead_tours': list(AwesomePackages.objects.order_by('name').values_list('name', flat=True)[:80]),
+            'lead_images': [pic(p) for p in list(first_pkg.values())[:3]] +
+                           [pic(p) for p in AwesomePackages.objects.exclude(id__in=[x.id for x in first_pkg.values()]).order_by('id')[:3]],
             'pkg_img': {c.replace(' ', '_'): pic(p) for c, p in first_pkg.items()},
             'trek_img': {c.replace(' ', '_'): pic(t) for c, t in first_trek.items()},
             'cruises': [{'name': p.name, 'slug': p.slug, 'days': p.days, 'img': pic(p)}
                         for p in AwesomePackages.objects.filter(category='Cruises').order_by('id')[:5] if p.slug],
         }
-        cache.set('mega_menu_v2', data, 600)
+        cache.set('mega_menu_v3', data, 600)
     return {'mega': data}
+
+
+# Pages where the "What's your next adventure?" popup must not appear
+LEAD_POPUP_SKIP = {'booking_create', 'request_booking_detail', 'contact', 'login', 'register', 'logout',
+                   'profile', 'account_settings'}
+
+
+def lead_popup(request):
+    match = getattr(request, 'resolver_match', None)
+    name = match.url_name if match else ''
+    app = (match.app_names if match else [])
+    show = bool(name) and name not in LEAD_POPUP_SKIP and 'admin' not in app \
+        and not request.path.startswith(('/Mpesa', '/i18n')) and '/admin/' not in request.path \
+        and 'payment' not in (name or '')
+    return {'show_lead_popup': show}

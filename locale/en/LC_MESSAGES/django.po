@@ -4024,3 +4024,39 @@ msgstr "From %(d)s"
 
 msgid "Until %(d)s"
 msgstr "Until %(d)s"
+
+msgid "Free quote"
+msgstr "Free quote"
+
+msgid "Reply in minutes"
+msgstr "Reply in minutes"
+
+msgid "Hello! What's your next adventure?"
+msgstr "Hello! What's your next adventure?"
+
+msgid "Tell us where you dream of going and we will chat with you on WhatsApp with a free, no-obligation quote."
+msgstr "Tell us where you dream of going and we will chat with you on WhatsApp with a free, no-obligation quote."
+
+msgid "Your name"
+msgstr "Your name"
+
+msgid "Phone / WhatsApp number"
+msgstr "Phone / WhatsApp number"
+
+msgid "Which safari or tour? Pick or type"
+msgstr "Which safari or tour? Pick or type"
+
+msgid "Which safari or tour?"
+msgstr "Which safari or tour?"
+
+msgid "A short message (optional)"
+msgstr "A short message (optional)"
+
+msgid "Send on WhatsApp"
+msgstr "Send on WhatsApp"
+
+msgid "We only use your details to reply about your trip."
+msgstr "We only use your details to reply about your trip."
+
+msgid "Please enter your name."
+msgstr "Please enter your name."

@@ -145,3 +145,39 @@ class ContactView(AntiSpamViewMixin, FormView):
         context['user'] = self.request.user
 
         return context
+
+# ---------------------------------------------------------------------------
+# "What's your next adventure?" popup: save the lead; the browser opens WhatsApp itself
+# ---------------------------------------------------------------------------
+import re as _re
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from .antispam import rate_limited, get_client_ip
+from .models import QuickLead
+
+
+@require_POST
+@rate_limited('quick-lead', [(4, 300), (15, 86400)])
+def lead_capture(request):
+    data = request.POST
+    if data.get('website'):                      # honeypot: bots fill every field
+        return JsonResponse({'success': True})
+    name = ' '.join((data.get('name') or '').split())[:100]
+    phone = (data.get('phone') or '').strip()[:25]
+    tour = ' '.join((data.get('tour') or '').split())[:160]
+    message = (data.get('message') or '').strip()[:600]
+    if len(name) < 2:
+        return JsonResponse({'success': False, 'error': 'name'}, status=400)
+    if not _re.fullmatch(r'\+?[0-9 ()\-]{7,22}', phone):
+        return JsonResponse({'success': False, 'error': 'phone'}, status=400)
+    lead = QuickLead.objects.create(
+        name=name, phone=phone, tour=tour, message=message,
+        page_url=(data.get('page') or '')[:300], language=(data.get('lang') or '')[:8],
+        ip=get_client_ip(request) if get_client_ip(request) != 'unknown' else None,
+    )
+    try:
+        from EmailSetup.utils import notify_staff_of_lead
+        notify_staff_of_lead(lead)
+    except Exception:
+        pass
+    return JsonResponse({'success': True})

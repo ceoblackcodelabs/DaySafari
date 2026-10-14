@@ -607,3 +607,24 @@ class I18nTests(SiteHealthTests):
         self.assertEqual(h1.count('class="offer-card"'), 8)
         self.assertEqual(h2.count('class="offer-card"'), 2)
         self.assertNotIn('Old deal', h1 + h2)
+
+    def test_quick_lead_popup_saves_lead(self):
+        from unittest import mock
+        from ClientRequests.models import QuickLead
+        from EmailSetup import utils
+        url = '/en/lead/'
+        with mock.patch.object(utils, 'notify_staff_of_lead') as notify:
+            ok = self.client.post(url, {'name': 'Amina Test', 'phone': '+254 712 345 678', 'tour': 'Bali', 'message': 'Hi'})
+            self.assertEqual(ok.status_code, 200)
+            self.assertEqual(QuickLead.objects.count(), 1)
+            notify.assert_called_once()
+        self.assertEqual(self.client.post(url, {'name': 'A', 'phone': '+254712345678'}).status_code, 400)
+        self.assertEqual(self.client.post(url, {'name': 'Amina', 'phone': 'abc'}).status_code, 400)
+        self.client.post(url, {'name': 'Bot Bot', 'phone': '+254712345678', 'website': 'spam.com'})
+        self.assertEqual(QuickLead.objects.count(), 1)           # honeypot filled -> nothing saved
+
+    def test_popups_only_where_intended(self):
+        home = self.client.get('/en/').content.decode()
+        self.assertIn('id="leadOverlay"', home)
+        self.assertNotIn('id="popupOverlay"', home)               # the discount popup is packages-page only
+        self.assertNotIn('id="leadOverlay"', self.client.get('/en/contact/').content.decode())

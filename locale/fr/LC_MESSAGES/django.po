@@ -4626,3 +4626,39 @@ msgstr "À partir du %(d)s"
 
 msgid "Until %(d)s"
 msgstr "Jusqu'au %(d)s"
+
+msgid "Free quote"
+msgstr "Devis gratuit"
+
+msgid "Reply in minutes"
+msgstr "Réponse en quelques minutes"
+
+msgid "Hello! What's your next adventure?"
+msgstr "Bonjour ! Quelle est votre prochaine aventure ?"
+
+msgid "Tell us where you dream of going and we will chat with you on WhatsApp with a free, no-obligation quote."
+msgstr "Dites-nous où vous rêvez d'aller et nous vous écrirons sur WhatsApp avec un devis gratuit et sans engagement."
+
+msgid "Your name"
+msgstr "Votre nom"
+
+msgid "Phone / WhatsApp number"
+msgstr "Téléphone / numéro WhatsApp"
+
+msgid "Which safari or tour? Pick or type"
+msgstr "Quel safari ou circuit ? Choisissez ou écrivez"
+
+msgid "Which safari or tour?"
+msgstr "Quel safari ou circuit ?"
+
+msgid "A short message (optional)"
+msgstr "Un court message (facultatif)"
+
+msgid "Send on WhatsApp"
+msgstr "Envoyer sur WhatsApp"
+
+msgid "We only use your details to reply about your trip."
+msgstr "Nous utilisons vos coordonnées uniquement pour répondre au sujet de votre voyage."
+
+msgid "Please enter your name."
+msgstr "Veuillez saisir votre nom."
