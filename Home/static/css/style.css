@@ -189,3 +189,6 @@ body{color:#555}
 .offer-title{font-size:18px;font-weight:700;line-height:1.3;margin:14px 16px 12px;flex:1;color:#1b1b1b}
 .offer-btn{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 14px;padding:11px;border-radius:8px;background:linear-gradient(90deg,#10d98b,#0a9d5f);color:#fff!important;font-weight:600;text-decoration:none}
 .offer-btn:hover{filter:brightness(1.07)}
+
+/* homepage: alternate plain sections white / tinted so each band is clearly separate */
+.band-alt{background:#ece4e8!important}
