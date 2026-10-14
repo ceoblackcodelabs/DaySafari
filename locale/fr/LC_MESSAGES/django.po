@@ -4520,3 +4520,11 @@ msgid ""
 msgstr ""
 "Réservation enregistrée ! Nous n'avons toutefois pas pu envoyer l'e-mail. "
 "Veuillez nous contacter pour finaliser le paiement."
+
+msgid "All Cruises"
+msgstr "Toutes les croisières"
+
+msgid "%(d)s day"
+msgid_plural "%(d)s days"
+msgstr[0] "%(d)s jour"
+msgstr[1] "%(d)s jours"

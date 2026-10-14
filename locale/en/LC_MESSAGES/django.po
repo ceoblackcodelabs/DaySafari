@@ -3918,3 +3918,11 @@ msgid ""
 "Booking saved! However, we could not send the email. Please contact us to "
 "complete payment."
 msgstr ""
+
+msgid "All Cruises"
+msgstr "All Cruises"
+
+msgid "%(d)s day"
+msgid_plural "%(d)s days"
+msgstr[0] "%(d)s day"
+msgstr[1] "%(d)s days"

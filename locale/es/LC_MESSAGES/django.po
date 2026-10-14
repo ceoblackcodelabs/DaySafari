@@ -4470,3 +4470,11 @@ msgid ""
 msgstr ""
 "¡Reserva guardada! Sin embargo, no hemos podido enviar el correo "
 "electrónico. Contáctenos para completar el pago."
+
+msgid "All Cruises"
+msgstr "Todos los cruceros"
+
+msgid "%(d)s day"
+msgid_plural "%(d)s days"
+msgstr[0] "%(d)s día"
+msgstr[1] "%(d)s días"

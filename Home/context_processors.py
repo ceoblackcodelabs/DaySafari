@@ -65,3 +65,34 @@ def chat_i18n(request):
         'packages': _("Our safari packages start from $649 for 3-day adventures to $1,899 for luxury experiences. Popular packages include:\n• Masai Mara Safari (4 days, $849)\n• Zanzibar Beach Holiday (6 days, $1,299)\n• Serengeti Migration (5 days, $1,499)\n• Amboseli Elephant Experience (3 days, $649)\n\nWould you like details on any specific package?"),
         'destinations': _("We offer amazing destinations across East Africa:\n🇰🇪 Kenya: Masai Mara, Amboseli, Tsavo, Diani Beach\n🇹🇿 Tanzania: Serengeti, Zanzibar, Kilimanjaro, Ngorongoro\n🇺🇬 Uganda: Bwindi Gorillas, Queen Elizabeth Park\n🇷🇼 Rwanda: Kigali Cultural Tour, Lake Kivu\n\nWhich destination interests you? 🗺️"),
     }}
+
+
+def mega_menu(request):
+    """Pictures for the header's big hover menus (tours, trekking, cruises, packages). Cached for 10 minutes."""
+    from django.core.cache import cache
+    data = cache.get('mega_menu_v1')
+    if data is None:
+        from .models import Trekking
+        from .templatetags.image_tags import thumb
+        from Places.models import AwesomePackages
+
+        def pic(obj):
+            try:
+                return thumb(obj.image, 480) if obj and obj.image else ''
+            except Exception:
+                return ''
+
+        first_pkg = {}
+        for p in AwesomePackages.objects.order_by('id'):
+            first_pkg.setdefault(p.category, p)
+        first_trek = {}
+        for t in Trekking.objects.order_by('id'):
+            first_trek.setdefault(t.category, t)
+        data = {
+            'pkg_img': {c.replace(' ', '_'): pic(p) for c, p in first_pkg.items()},
+            'trek_img': {c.replace(' ', '_'): pic(t) for c, t in first_trek.items()},
+            'cruises': [{'name': p.name, 'slug': p.slug, 'days': p.days, 'img': pic(p)}
+                        for p in AwesomePackages.objects.filter(category='Cruises').order_by('id')[:5] if p.slug],
+        }
+        cache.set('mega_menu_v1', data, 600)
+    return {'mega': data}

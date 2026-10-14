@@ -4454,3 +4454,11 @@ msgid ""
 msgstr ""
 "Uhifadhi umehifadhiwa! Hata hivyo, hatukuweza kutuma barua pepe. Tafadhali "
 "wasiliana nasi ili kukamilisha malipo."
+
+msgid "All Cruises"
+msgstr "Safari Zote za Meli"
+
+msgid "%(d)s day"
+msgid_plural "%(d)s days"
+msgstr[0] "siku %(d)s"
+msgstr[1] "siku %(d)s"

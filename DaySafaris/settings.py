@@ -26,6 +26,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "10.5.12.133",
+    "10.5.3.50",
 ]
 
 # ========== APPLICATION DEFINITION ==========
@@ -102,6 +103,7 @@ TEMPLATES = [
                 'Home.context_processors.ads_context',
                 'Home.context_processors.footer_gallery',
                 'Home.context_processors.chat_i18n',
+                'Home.context_processors.mega_menu',
             ],
         },
     },

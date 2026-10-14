@@ -4487,3 +4487,11 @@ msgid ""
 msgstr ""
 "Buchung gespeichert! Die E-Mail konnte jedoch nicht gesendet werden. Bitte "
 "kontaktieren Sie uns, um die Zahlung abzuschließen."
+
+msgid "All Cruises"
+msgstr "Alle Kreuzfahrten"
+
+msgid "%(d)s day"
+msgid_plural "%(d)s days"
+msgstr[0] "%(d)s Tag"
+msgstr[1] "%(d)s Tage"

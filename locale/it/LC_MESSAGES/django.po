@@ -4388,3 +4388,11 @@ msgid ""
 msgstr ""
 "Prenotazione salvata! Tuttavia non siamo riusciti a inviare l'email. "
 "Contattaci per completare il pagamento."
+
+msgid "All Cruises"
+msgstr "Tutte le crociere"
+
+msgid "%(d)s day"
+msgid_plural "%(d)s days"
+msgstr[0] "%(d)s giorno"
+msgstr[1] "%(d)s giorni"
