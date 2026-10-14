@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
-    BlogComments, Blogs, BlogCategory, Offer, Brochure, ItineraryTreking,
+    BlogComments, Blogs, BlogCategory, Offer, TrustBadge, Brochure, ItineraryTreking,
     Trekking, Ad, AboutImage, HeroSlide
 )
 
@@ -415,3 +415,14 @@ class OfferAdmin(TranslationAdmin):
     def poster(self, obj):
         from django.utils.html import format_html
         return format_html('<img src="{}" style="height:50px;border-radius:4px">', obj.image.url) if obj.image else ''
+
+
+@admin.register(TrustBadge)
+class TrustBadgeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'kind', 'logo', 'order', 'is_active']
+    list_editable = ['order', 'is_active']
+    list_filter = ['kind', 'is_active']
+
+    def logo(self, obj):
+        from django.utils.html import format_html
+        return format_html('<img src="{}" style="height:36px">', obj.image.url) if obj.image else ''

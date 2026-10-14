@@ -4063,3 +4063,27 @@ msgstr "Please enter your name."
 
 msgid "Get a Quote"
 msgstr "Get a Quote"
+
+msgid "Safari & Tour Packages"
+msgstr "Safari & Tour Packages"
+
+msgid "Safaris, cruises and international tours"
+msgstr "Safaris, cruises and international tours"
+
+msgid "Hotels & Lodges"
+msgstr "Hotels & Lodges"
+
+msgid "Hand-picked places to stay"
+msgstr "Hand-picked places to stay"
+
+msgid "Trekking Routes"
+msgstr "Trekking Routes"
+
+msgid "Kilimanjaro, Mt Kenya, Meru and more"
+msgstr "Kilimanjaro, Mt Kenya, Meru and more"
+
+msgid "Across Kenya, Africa and beyond"
+msgstr "Across Kenya, Africa and beyond"
+
+msgid "Our Partners"
+msgstr "Our Partners"

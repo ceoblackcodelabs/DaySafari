@@ -56,10 +56,34 @@ def footer_gallery(request):
     return {'footer_gallery': data}
 
 
+def _site_stats():
+    """Real numbers from the database for the 'Why Day Safaris' cards."""
+    from .models import Trekking
+    from Hotels.models import Hotel
+    from Places.models import AwesomePackages, Destinations
+    return {
+        'packages': AwesomePackages.objects.count(),
+        'hotels': Hotel.objects.filter(is_published=True).count(),
+        'treks': Trekking.objects.count(),
+        'destinations': Destinations.objects.count(),
+    }
+
+
+def _badges():
+    from .models import TrustBadge
+    out = {'award': [], 'partner': []}
+    for b in TrustBadge.objects.filter(is_active=True):
+        try:
+            out[b.kind].append({'name': b.name, 'url': b.url, 'img': b.image.url})
+        except Exception:
+            continue
+    return out
+
+
 def mega_menu(request):
     """Pictures for the header's big hover menus (tours, trekking, cruises, packages). Cached for 10 minutes."""
     from django.core.cache import cache
-    data = cache.get('mega_menu_v3')
+    data = cache.get('mega_menu_v4')
     if data is None:
         from .models import Trekking
         from .templatetags.image_tags import thumb
@@ -82,6 +106,8 @@ def mega_menu(request):
                   AwesomePackages.objects.values_list('category').annotate(n=Count('id'))}
         data = {
             'pkg_count': counts,
+            'stats': _site_stats(),
+            'badges': _badges(),
             'lead_tours': list(AwesomePackages.objects.order_by('name').values_list('name', flat=True)[:80]),
             'lead_images': [pic(p) for p in list(first_pkg.values())[:3]] +
                            [pic(p) for p in AwesomePackages.objects.exclude(id__in=[x.id for x in first_pkg.values()]).order_by('id')[:3]],
@@ -90,7 +116,7 @@ def mega_menu(request):
             'cruises': [{'name': p.name, 'slug': p.slug, 'days': p.days, 'img': pic(p)}
                         for p in AwesomePackages.objects.filter(category='Cruises').order_by('id')[:5] if p.slug],
         }
-        cache.set('mega_menu_v3', data, 600)
+        cache.set('mega_menu_v4', data, 600)
     return {'mega': data}
 
 

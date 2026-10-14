@@ -4665,3 +4665,27 @@ msgstr "Veuillez saisir votre nom."
 
 msgid "Get a Quote"
 msgstr "Demander un devis"
+
+msgid "Safari & Tour Packages"
+msgstr "Forfaits safari et circuits"
+
+msgid "Safaris, cruises and international tours"
+msgstr "Safaris, croisières et circuits internationaux"
+
+msgid "Hotels & Lodges"
+msgstr "Hôtels et lodges"
+
+msgid "Hand-picked places to stay"
+msgstr "Hébergements sélectionnés"
+
+msgid "Trekking Routes"
+msgstr "Itinéraires de trekking"
+
+msgid "Kilimanjaro, Mt Kenya, Meru and more"
+msgstr "Kilimandjaro, mont Kenya, Meru et plus"
+
+msgid "Across Kenya, Africa and beyond"
+msgstr "Au Kenya, en Afrique et au-delà"
+
+msgid "Our Partners"
+msgstr "Nos partenaires"

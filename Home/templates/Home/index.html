@@ -612,18 +612,42 @@
 <!-- Blog End -->
 
 <!-- Why Us Start -->
-<div class="container-fluid bg-light band-alt py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3">{% trans "Why Day Safaris" %}</p>
-            <h2 class="mb-3">{% trans "Why Travel With Day Safaris Adventures" %}</h2>
-            <p class="mb-0">{% trans "A local Nairobi team that plans every detail so you can simply enjoy the trip." %}</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6"><div class="why-card"><i class="fa fa-map-marked-alt"></i><h3 class="h5">{% trans "Local Nairobi experts" %}</h3><p class="mb-0">{% trans "We are based in Nairobi and know every park, route and lodge first-hand." %}</p></div></div>
-            <div class="col-lg-3 col-md-6"><div class="why-card"><i class="fa fa-user-check"></i><h3 class="h5">{% trans "Tailor-made trips" %}</h3><p class="mb-0">{% trans "Your dates, your pace, your budget: every itinerary is built around you." %}</p></div></div>
-            <div class="col-lg-3 col-md-6"><div class="why-card"><i class="fa fa-shield-alt"></i><h3 class="h5">{% trans "Clear, honest pricing" %}</h3><p class="mb-0">{% trans "See what is included before you pay, with no hidden extras." %}</p></div></div>
-            <div class="col-lg-3 col-md-6"><div class="why-card"><i class="fa fa-headset"></i><h3 class="h5">{% trans "24/7 support" %}</h3><p class="mb-0">{% trans "Reach a real person by phone or WhatsApp before, during and after your trip." %}</p></div></div>
+<div class="container-fluid bg-light band-alt why-us py-5">
+    <div class="container py-4">
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-6">
+                <p class="h5 section-title px-3 ms-3">{% trans "Why Day Safaris" %}</p>
+                <h2 class="mb-3">{% trans "Why Travel With Day Safaris Adventures" %}</h2>
+                <p class="lead-text mb-4">{% trans "A local Nairobi team that plans every detail so you can simply enjoy the trip." %}</p>
+                <div class="row g-4 mb-4">
+                    <div class="col-sm-6"><div class="why-item"><span class="why-ico"><i class="fa fa-map-marked-alt"></i></span><div><h3>{% trans "Local Nairobi experts" %}</h3><p>{% trans "We are based in Nairobi and know every park, route and lodge first-hand." %}</p></div></div></div>
+                    <div class="col-sm-6"><div class="why-item"><span class="why-ico"><i class="fa fa-route"></i></span><div><h3>{% trans "Tailor-made trips" %}</h3><p>{% trans "Your dates, your pace, your budget: every itinerary is built around you." %}</p></div></div></div>
+                    <div class="col-sm-6"><div class="why-item"><span class="why-ico"><i class="fa fa-shield-alt"></i></span><div><h3>{% trans "Clear, honest pricing" %}</h3><p>{% trans "See what is included before you pay, with no hidden extras." %}</p></div></div></div>
+                    <div class="col-sm-6"><div class="why-item"><span class="why-ico"><i class="fa fa-headset"></i></span><div><h3>{% trans "24/7 support" %}</h3><p>{% trans "Reach a real person by phone or WhatsApp before, during and after your trip." %}</p></div></div></div>
+                </div>
+                {% if mega.badges.award %}
+                <div class="why-awards d-flex flex-wrap align-items-center gap-4 mb-4">
+                    {% for b in mega.badges.award %}{% if b.url %}<a href="{{ b.url }}" target="_blank" rel="noopener"><img src="{{ b.img }}" alt="{{ b.name }}" loading="lazy" height="90"></a>{% else %}<img src="{{ b.img }}" alt="{{ b.name }}" loading="lazy" height="90">{% endif %}{% endfor %}
+                </div>
+                {% endif %}
+                <a href="{% url 'about' %}" class="btn btn-primary rounded-pill py-3 px-5">{% trans "Learn More" %}</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6"><div class="stat-card"><strong>{{ mega.stats.packages }}<em>+</em></strong><h3>{% trans "Safari & Tour Packages" %}</h3><p>{% trans "Safaris, cruises and international tours" %}</p></div></div>
+                    <div class="col-6"><div class="stat-card"><strong>{{ mega.stats.hotels }}<em>+</em></strong><h3>{% trans "Hotels & Lodges" %}</h3><p>{% trans "Hand-picked places to stay" %}</p></div></div>
+                    <div class="col-6"><div class="stat-card"><strong>{{ mega.stats.treks }}<em>+</em></strong><h3>{% trans "Trekking Routes" %}</h3><p>{% trans "Kilimanjaro, Mt Kenya, Meru and more" %}</p></div></div>
+                    <div class="col-6"><div class="stat-card"><strong>{{ mega.stats.destinations }}<em>+</em></strong><h3>{% trans "Destinations" %}</h3><p>{% trans "Across Kenya, Africa and beyond" %}</p></div></div>
+                </div>
+                {% if mega.badges.partner %}
+                <div class="why-partners mt-4">
+                    <p class="partners-title"><span>{% trans "Our Partners" %}</span></p>
+                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-4">
+                        {% for b in mega.badges.partner %}{% if b.url %}<a href="{{ b.url }}" target="_blank" rel="noopener"><img src="{{ b.img }}" alt="{{ b.name }}" loading="lazy" height="56"></a>{% else %}<img src="{{ b.img }}" alt="{{ b.name }}" loading="lazy" height="56">{% endif %}{% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

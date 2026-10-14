@@ -304,6 +304,25 @@ class Offer(models.Model):
         return f"https://wa.me/254759379600?text={quote(text)}"
 
 
+class TrustBadge(models.Model):
+    """An award or partner logo shown in the homepage 'Why Day Safaris' section (add only ones you truly hold)."""
+    KINDS = [('award', 'Award / accreditation'), ('partner', 'Partner / association')]
+    name = models.CharField(max_length=100, help_text="Shown as the logo's alt text, e.g. 'IATA' or 'Tripadvisor Travellers' Choice 2025'.")
+    image = models.ImageField(upload_to='badges/', validators=[validate_image_10mb])
+    url = models.URLField(blank=True, help_text="Optional link when the logo is clicked.")
+    kind = models.CharField(max_length=10, choices=KINDS, default='partner')
+    order = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['kind', 'order', 'id']
+        verbose_name = 'Award / partner logo'
+        verbose_name_plural = 'Awards & partner logos'
+
+    def __str__(self):
+        return f"{self.get_kind_display()}: {self.name}"
+
+
 class Brochure(models.Model):
     title = models.CharField(max_length=200, db_index=True)
     pdf_file = models.FileField(upload_to='brochures/', validators=[validate_document_20mb])

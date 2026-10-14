@@ -4599,3 +4599,27 @@ msgstr "Tafadhali weka jina lako."
 
 msgid "Get a Quote"
 msgstr "Pata Bei"
+
+msgid "Safari & Tour Packages"
+msgstr "Vifurushi vya Safari na Ziara"
+
+msgid "Safaris, cruises and international tours"
+msgstr "Safari, meli na ziara za kimataifa"
+
+msgid "Hotels & Lodges"
+msgstr "Hoteli na Lodji"
+
+msgid "Hand-picked places to stay"
+msgstr "Maeneo ya kukaa yaliyochaguliwa"
+
+msgid "Trekking Routes"
+msgstr "Njia za Kupanda Milima"
+
+msgid "Kilimanjaro, Mt Kenya, Meru and more"
+msgstr "Kilimanjaro, Mlima Kenya, Meru na zaidi"
+
+msgid "Across Kenya, Africa and beyond"
+msgstr "Kenya, Afrika na kwingineko"
+
+msgid "Our Partners"
+msgstr "Washirika Wetu"
