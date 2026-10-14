@@ -241,3 +241,16 @@ body{color:#555}
 .why-partners img,.why-awards img{object-fit:contain;max-width:140px}
 .site-topbar .dropdown-menu .dropdown-item{display:block!important;white-space:nowrap;line-height:1.6;padding:.45rem 1rem;color:var(--bs-dark)}
 .site-topbar .dropdown-menu .dropdown-item:hover{color:#fff}
+
+/* slimmer top strip so it reads as a top bar, not a second header */
+.site-topbar{padding-top:3px!important;padding-bottom:3px!important}
+.site-topbar .d-inline-flex{min-height:30px!important}
+.site-topbar .btn-sm-square{width:26px!important;height:26px!important;font-size:12px}
+.site-topbar .btn-sm-square i{font-size:12px}
+.site-topbar .form-select-sm{padding-top:.1rem;padding-bottom:.1rem;font-size:.8rem;min-height:0;height:26px;line-height:1.2}
+.site-topbar small,.site-topbar .dropdown-toggle small{font-size:.8rem}
+.top-call i{font-size:15px!important}
+.site-topbar .top-call strong{font-size:13px}
+.site-topbar .top-call small{font-size:10px}
+.site-topbar .top-call{gap:7px}
+.site-topbar .top-call small{display:none}
