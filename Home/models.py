@@ -203,6 +203,26 @@ class BlogComments(models.Model):
         return f"Comment by {self.name} on {self.created_date}"
 
 
+class BlogCategory(models.Model):
+    name = models.CharField(max_length=60, unique=True)
+    slug = models.SlugField(max_length=70, unique=True, blank=True)
+    order = models.PositiveSmallIntegerField(default=0, help_text="Lower numbers show first")
+
+    class Meta:
+        verbose_name = 'Blog category'
+        verbose_name_plural = 'Blog categories'
+        ordering = ['order', 'name']
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            from django.utils.text import slugify
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+
 class Blogs(models.Model):
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(unique=True, blank=True, null=True, db_index=True)
@@ -222,6 +242,7 @@ class Blogs(models.Model):
     )
     schema_markup = models.TextField(blank=True, help_text="Paste raw JSON-LD schema here")
     author = models.CharField(max_length=100, db_index=True)
+    category = models.ForeignKey(BlogCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='posts')
     content = CKEditor5Field('Content', config_name='default')
     likes = models.IntegerField(default=0)
     comments = models.ManyToManyField(BlogComments, blank=True)

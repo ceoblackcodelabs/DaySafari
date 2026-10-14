@@ -10,13 +10,14 @@
 {% block twitter_description %}{% trans "Safari travel tips, wildlife guides, packing lists and destination stories from the Day Safaris Adventures team in Nairobi." %}{% endblock twitter_description %}
 
 {% block body %}
+<style>.featured-post{background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.1)}.featured-post:hover img{opacity:.92}</style>
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% trans "Our Blog" %}</h1>
+        <h3 class="text-white display-3 mb-4">{% trans "Our Blog" %}</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="index.html">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
             <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
             <li class="breadcrumb-item active text-white">{% trans "Blog" %}</li>
         </ol>
@@ -32,8 +33,27 @@
             <h1 class="mb-4">{% trans "Popular Travel Blogs & Safari Tips" %}</h1>
             <p class="mb-0">{% trans "Discover expert travel advice, safari planning guides, and inspiring stories from our adventures across East Africa. Learn about the best times to visit, wildlife photography tips, and hidden gems off the beaten path." %}</p>
         </div>
+        {% if categories %}
+        <div class="blog-cats d-flex flex-wrap justify-content-center gap-2 mb-5" role="navigation" aria-label="{% trans "Blog categories" %}">
+            <a href="{% url 'blog' %}" class="btn btn-sm rounded-pill {% if not active_category %}btn-primary{% else %}btn-outline-primary{% endif %}">{% trans "All" %}</a>
+            {% for c in categories %}<a href="?category={{ c.slug }}" class="btn btn-sm rounded-pill {% if c.slug == active_category %}btn-primary{% else %}btn-outline-primary{% endif %}">{{ c.name }} <span class="opacity-75">({{ c.n }})</span></a>{% endfor %}
+        </div>
+        {% endif %}
+        {% if featured %}
+        <a href="{% url 'blog_detail' featured.slug %}" class="featured-post row g-0 mb-5 rounded overflow-hidden text-decoration-none">
+            <div class="col-lg-7"><img class="w-100 h-100" style="object-fit:cover;min-height:280px" src="{{ featured.image|thumb:900 }}" alt="{{ featured.title }}" width="900" height="500" decoding="async"></div>
+            <div class="col-lg-5 p-4 p-lg-5 d-flex flex-column justify-content-center">
+                <span class="badge bg-primary align-self-start mb-3">{% trans "Featured" %}{% if featured.category %} &middot; {{ featured.category.name }}{% endif %}</span>
+                <h2 class="h3 text-dark">{{ featured.title }}</h2>
+                <p class="text-muted my-3">{{ featured.content|striptags|truncatewords:35 }}</p>
+                <small class="text-muted mb-3"><i class="fa fa-calendar-alt text-primary me-1"></i>{{ featured.published_date|date:"d M Y" }} &middot; <i class="fa fa-clock text-primary me-1"></i>{{ featured.reading_time }} {% trans "min read" %}</small>
+                <span class="btn btn-primary rounded-pill py-2 px-4 align-self-start">{% trans "Read article" %}</span>
+            </div>
+        </a>
+        {% endif %}
         <div class="row g-4 justify-content-center">
             {% for blog in blogs %}
+            {% if blog != featured %}
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item">
                     <div class="blog-img">
@@ -44,16 +64,18 @@
                             <img class="img-fluid w-100 rounded-top" src="{% static 'img/blog-placeholder.jpg' %}" alt="{{ blog.title }}" loading="lazy" decoding="async">
                             {% endif %}
                             <div class="blog-icon">
-                                <a href="#" class="my-auto" aria-label="{% trans "Open" %}" aria-label="{% trans "View details" %}"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="{% url 'blog_detail' blog.slug %}" class="my-auto" aria-label="{% trans "View details" %}"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
                             <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ blog.published_date|date:"d M Y" }}</small>
+                            <small class="flex-fill text-center border-end py-2 text-white"><i class="fa fa-clock text-primary me-2"></i>{{ blog.reading_time }} {% trans "min read" %}</small>
                             <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-thumbs-up text-primary me-2"></i>{{ blog.likes|floatformat:"0" }}K</a>
                             <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-comments text-primary me-2"></i>{{ blog.comments.count }}</a>
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
+                        {% if blog.category %}<a href="?category={{ blog.category.slug }}" class="badge bg-primary text-decoration-none mb-2">{{ blog.category.name }}</a>{% endif %}
                         <p class="mb-3">{% trans "Posted By:" %} {{ blog.author }}</p>
                         <a href="{% url 'blog_detail' blog.slug %}" class="h4">{{ blog.title }}</a>
                         <p class="my-3">{{ blog.content|striptags|truncatewords:30 }}</p>
@@ -61,6 +83,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% empty %}
             <div class="text-center py-5">
                 <h3>{% trans "No blog posts yet" %}</h3>
@@ -68,6 +91,15 @@
             </div>
             {% endfor %}
         </div>
+        {% if is_paginated %}
+        <nav class="mt-5" aria-label="{% trans "Pages" %}">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?{% if active_category %}category={{ active_category }}&{% endif %}page={{ page_obj.previous_page_number }}">&laquo; {% trans "Previous" %}</a></li>{% endif %}
+                {% for n in paginator.page_range %}<li class="page-item {% if n == page_obj.number %}active{% endif %}"><a class="page-link" href="?{% if active_category %}category={{ active_category }}&{% endif %}page={{ n }}">{{ n }}</a></li>{% endfor %}
+                {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?{% if active_category %}category={{ active_category }}&{% endif %}page={{ page_obj.next_page_number }}">{% trans "Next" %} &raquo;</a></li>{% endif %}
+            </ul>
+        </nav>
+        {% endif %}
     </div>
 </div>
 <!-- Blog End -->

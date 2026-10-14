@@ -4528,3 +4528,83 @@ msgid "%(d)s day"
 msgid_plural "%(d)s days"
 msgstr[0] "%(d)s jour"
 msgstr[1] "%(d)s jours"
+
+msgid "Type of trip"
+msgstr "Type de voyage"
+
+msgid "All types of trips"
+msgstr "Tous les types de voyages"
+
+msgid "Why Day Safaris"
+msgstr "Pourquoi Day Safaris"
+
+msgid "Why Travel With Day Safaris Adventures"
+msgstr "Pourquoi voyager avec Day Safaris Adventures"
+
+msgid "A local Nairobi team that plans every detail so you can simply enjoy the trip."
+msgstr "Une équipe locale de Nairobi qui planifie chaque détail pour que vous n'ayez qu'à profiter du voyage."
+
+msgid "Local Nairobi experts"
+msgstr "Experts locaux de Nairobi"
+
+msgid "We are based in Nairobi and know every park, route and lodge first-hand."
+msgstr "Nous sommes basés à Nairobi et connaissons de première main chaque parc, itinéraire et lodge."
+
+msgid "Tailor-made trips"
+msgstr "Voyages sur mesure"
+
+msgid "Your dates, your pace, your budget: every itinerary is built around you."
+msgstr "Vos dates, votre rythme, votre budget : chaque itinéraire est construit autour de vous."
+
+msgid "Clear, honest pricing"
+msgstr "Des prix clairs et honnêtes"
+
+msgid "See what is included before you pay, with no hidden extras."
+msgstr "Voyez ce qui est inclus avant de payer, sans frais cachés."
+
+msgid "24/7 support"
+msgstr "Assistance 24h/24 et 7j/7"
+
+msgid "Reach a real person by phone or WhatsApp before, during and after your trip."
+msgstr "Joignez une vraie personne par téléphone ou WhatsApp avant, pendant et après votre voyage."
+
+msgid "Find your trip"
+msgstr "Trouvez votre voyage"
+
+msgid "What kind of trip are you after?"
+msgstr "Quel type de voyage recherchez-vous ?"
+
+msgid "Pick a style and see the packages we offer."
+msgstr "Choisissez un style et découvrez nos forfaits."
+
+msgid "Not sure where to start?"
+msgstr "Vous ne savez pas par où commencer ?"
+
+msgid "Tell us your dates and budget and we will send you a free, no-obligation quote."
+msgstr "Indiquez-nous vos dates et votre budget et nous vous enverrons un devis gratuit et sans engagement."
+
+msgid "Get a Free Quote"
+msgstr "Obtenir un devis gratuit"
+
+msgid "Chat on WhatsApp"
+msgstr "Discuter sur WhatsApp"
+
+msgid "Call Us | 24/7"
+msgstr "Appelez-nous | 24h/24"
+
+msgid "Contents"
+msgstr "Sommaire"
+
+msgid "In this article"
+msgstr "Dans cet article"
+
+msgid "%(n)s package"
+msgid_plural "%(n)s packages"
+msgstr[0] "%(n)s forfait"
+msgstr[1] "%(n)s forfaits"
+
+msgid "Blog categories"
+msgstr "Catégories du blog"
+
+msgid "All"
+msgstr "Tout"

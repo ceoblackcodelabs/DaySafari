@@ -11,7 +11,7 @@ from django.conf import settings
 from django.core.cache import cache
 from .models import (
     Brochure, Services, GalleryCategory, Gallery,
-    Testimonials, Blogs, Trekking, ItineraryTreking,
+    Testimonials, Blogs, BlogCategory, Trekking, ItineraryTreking,
     Ad, AboutImage, HeroSlide
 )
 from Places.models import Destinations, DestinationsCategory, AwesomePackages, IncluisiveExcluisive
@@ -305,10 +305,46 @@ class BlogsView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Blogs.objects.only(
+        qs = Blogs.objects.select_related('category').only(
             'id', 'title', 'image', 'content', 'published_date',
-            'author', 'slug'
+            'author', 'slug', 'category__name', 'category__slug'
         ).order_by('-published_date')
+        slug = self.request.GET.get('category')
+        return qs.filter(category__slug=slug) if slug else qs
+
+    def get_context_data(self, **kwargs):
+        from django.db.models import Count
+        context = super().get_context_data(**kwargs)
+        page = context['blogs']
+        context['categories'] = BlogCategory.objects.annotate(n=Count('posts')).filter(n__gt=0)
+        context['active_category'] = self.request.GET.get('category', '')
+        for b in page:
+            b.reading_time = max(1, round(len(strip_tags(b.content or '').split()) / 200))
+        # the newest post is shown large on the first page
+        context['featured'] = page[0] if page and not context['page_obj'].number > 1 else None
+        return context
+
+
+def add_contents_list(html):
+    """Give h2/h3 headings an id and return (html, [(id, text, level)]) for a table of contents."""
+    import re
+    from django.utils.text import slugify
+    toc, used = [], set()
+
+    def repl(m):
+        level, attrs, inner = m.group(1), m.group(2), m.group(3)
+        text = strip_tags(inner).strip()
+        if not text or 'id=' in attrs:
+            return m.group(0)
+        slug = base = slugify(text)[:60] or 'section'
+        n = 2
+        while slug in used:
+            slug, n = f'{base}-{n}', n + 1
+        used.add(slug)
+        toc.append((slug, text, int(level)))
+        return f'<h{level}{attrs} id="{slug}">{inner}</h{level}>'
+
+    return re.sub(r'<h([23])([^>]*)>(.*?)</h\1>', repl, html or '', flags=re.S), toc
 
 
 class BlogDetailView(DetailView):
@@ -332,6 +368,8 @@ class BlogDetailView(DetailView):
         else:
             context['reading_time'] = 1
 
+        context['content_html'], toc = add_contents_list(blog.content)
+        context['toc'] = toc if len(toc) >= 3 else []
         return context
 
 

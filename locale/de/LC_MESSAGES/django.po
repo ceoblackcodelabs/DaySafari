@@ -4495,3 +4495,83 @@ msgid "%(d)s day"
 msgid_plural "%(d)s days"
 msgstr[0] "%(d)s Tag"
 msgstr[1] "%(d)s Tage"
+
+msgid "Type of trip"
+msgstr "Art der Reise"
+
+msgid "All types of trips"
+msgstr "Alle Reisearten"
+
+msgid "Why Day Safaris"
+msgstr "Warum Day Safaris"
+
+msgid "Why Travel With Day Safaris Adventures"
+msgstr "Warum mit Day Safaris Adventures reisen"
+
+msgid "A local Nairobi team that plans every detail so you can simply enjoy the trip."
+msgstr "Ein lokales Team aus Nairobi, das jedes Detail plant, damit Sie die Reise einfach genießen können."
+
+msgid "Local Nairobi experts"
+msgstr "Lokale Nairobi-Experten"
+
+msgid "We are based in Nairobi and know every park, route and lodge first-hand."
+msgstr "Wir sitzen in Nairobi und kennen jeden Park, jede Route und jede Lodge aus eigener Erfahrung."
+
+msgid "Tailor-made trips"
+msgstr "Maßgeschneiderte Reisen"
+
+msgid "Your dates, your pace, your budget: every itinerary is built around you."
+msgstr "Ihre Termine, Ihr Tempo, Ihr Budget: Jede Reiseroute wird um Sie herum gebaut."
+
+msgid "Clear, honest pricing"
+msgstr "Klare, ehrliche Preise"
+
+msgid "See what is included before you pay, with no hidden extras."
+msgstr "Sehen Sie vor der Zahlung, was enthalten ist – ohne versteckte Extras."
+
+msgid "24/7 support"
+msgstr "24/7-Support"
+
+msgid "Reach a real person by phone or WhatsApp before, during and after your trip."
+msgstr "Erreichen Sie vor, während und nach Ihrer Reise einen echten Menschen per Telefon oder WhatsApp."
+
+msgid "Find your trip"
+msgstr "Finden Sie Ihre Reise"
+
+msgid "What kind of trip are you after?"
+msgstr "Welche Art von Reise suchen Sie?"
+
+msgid "Pick a style and see the packages we offer."
+msgstr "Wählen Sie einen Stil und sehen Sie unsere Pakete."
+
+msgid "Not sure where to start?"
+msgstr "Sie wissen nicht, wo Sie anfangen sollen?"
+
+msgid "Tell us your dates and budget and we will send you a free, no-obligation quote."
+msgstr "Nennen Sie uns Ihre Termine und Ihr Budget, und wir senden Ihnen ein kostenloses, unverbindliches Angebot."
+
+msgid "Get a Free Quote"
+msgstr "Kostenloses Angebot anfordern"
+
+msgid "Chat on WhatsApp"
+msgstr "Per WhatsApp chatten"
+
+msgid "Call Us | 24/7"
+msgstr "Rufen Sie uns an | 24/7"
+
+msgid "Contents"
+msgstr "Inhalt"
+
+msgid "In this article"
+msgstr "In diesem Artikel"
+
+msgid "%(n)s package"
+msgid_plural "%(n)s packages"
+msgstr[0] "%(n)s Paket"
+msgstr[1] "%(n)s Pakete"
+
+msgid "Blog categories"
+msgstr "Blog-Kategorien"
+
+msgid "All"
+msgstr "Alle"

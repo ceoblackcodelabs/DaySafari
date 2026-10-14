@@ -70,7 +70,7 @@ def chat_i18n(request):
 def mega_menu(request):
     """Pictures for the header's big hover menus (tours, trekking, cruises, packages). Cached for 10 minutes."""
     from django.core.cache import cache
-    data = cache.get('mega_menu_v1')
+    data = cache.get('mega_menu_v2')
     if data is None:
         from .models import Trekking
         from .templatetags.image_tags import thumb
@@ -88,11 +88,15 @@ def mega_menu(request):
         first_trek = {}
         for t in Trekking.objects.order_by('id'):
             first_trek.setdefault(t.category, t)
+        from django.db.models import Count
+        counts = {c.replace(' ', '_'): n for c, n in
+                  AwesomePackages.objects.values_list('category').annotate(n=Count('id'))}
         data = {
+            'pkg_count': counts,
             'pkg_img': {c.replace(' ', '_'): pic(p) for c, p in first_pkg.items()},
             'trek_img': {c.replace(' ', '_'): pic(t) for c, t in first_trek.items()},
             'cruises': [{'name': p.name, 'slug': p.slug, 'days': p.days, 'img': pic(p)}
                         for p in AwesomePackages.objects.filter(category='Cruises').order_by('id')[:5] if p.slug],
         }
-        cache.set('mega_menu_v1', data, 600)
+        cache.set('mega_menu_v2', data, 600)
     return {'mega': data}

@@ -199,10 +199,27 @@
 
 <div class="container-fluid search-bar position-relative" style="top: -50%; transform: translateY(-50%);">
     <div class="container">
-        <div class="position-relative rounded-pill w-100 mx-auto p-5" style="background: rgb(58 20 20 / 65%);">
-            <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="{% trans 'Eg: Masai Mara, Diani, Amboseli' %}">
-            <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute me-2" style="top: 50%; right: 46px; transform: translateY(-50%);">{% trans "Search" %}</button>
-        </div>
+        <form method="get" action="{% url 'packages' %}" role="search" class="position-relative rounded-pill w-100 mx-auto p-4 p-lg-5" style="background: rgb(58 20 20 / 65%);">
+            <div class="row g-2 align-items-center">
+                <div class="col-lg-6">
+                    <input class="form-control border-0 rounded-pill w-100 py-3 ps-4" type="text" name="search" aria-label="{% trans 'Search' %}" placeholder="{% trans 'Eg: Masai Mara, Diani, Amboseli' %}">
+                </div>
+                <div class="col-lg-3">
+                    <select name="category" class="form-select border-0 rounded-pill w-100 py-3 ps-4" aria-label="{% trans 'Type of trip' %}">
+                        <option value="">{% trans "All types of trips" %}</option>
+                        <option value="East Africa Tours">{% trans "East Africa Tours" %}</option>
+                        <option value="South Africa">{% trans "South Africa" %}</option>
+                        <option value="West Africa">{% trans "West Africa" %}</option>
+                        <option value="Africa Tours">{% trans "Africa Tours" %}</option>
+                        <option value="International Tours">{% trans "International Tours" %}</option>
+                        <option value="Cruises">{% trans "Cruises" %}</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 d-grid">
+                    <button type="submit" class="btn btn-primary rounded-pill py-3 px-4">{% trans "Search" %}</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 <!-- Navbar & Hero End -->
@@ -473,6 +490,57 @@
     </div>
 </div>
 <!-- Tour Booking End -->
+
+<!-- Why Us Start -->
+<div class="container-fluid bg-light py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <p class="h5 section-title px-3">{% trans "Why Day Safaris" %}</p>
+            <h2 class="mb-3">{% trans "Why Travel With Day Safaris Adventures" %}</h2>
+            <p class="mb-0">{% trans "A local Nairobi team that plans every detail so you can simply enjoy the trip." %}</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6"><div class="why-card"><i class="fa fa-map-marked-alt"></i><h3 class="h5">{% trans "Local Nairobi experts" %}</h3><p class="mb-0">{% trans "We are based in Nairobi and know every park, route and lodge first-hand." %}</p></div></div>
+            <div class="col-lg-3 col-md-6"><div class="why-card"><i class="fa fa-user-check"></i><h3 class="h5">{% trans "Tailor-made trips" %}</h3><p class="mb-0">{% trans "Your dates, your pace, your budget: every itinerary is built around you." %}</p></div></div>
+            <div class="col-lg-3 col-md-6"><div class="why-card"><i class="fa fa-shield-alt"></i><h3 class="h5">{% trans "Clear, honest pricing" %}</h3><p class="mb-0">{% trans "See what is included before you pay, with no hidden extras." %}</p></div></div>
+            <div class="col-lg-3 col-md-6"><div class="why-card"><i class="fa fa-headset"></i><h3 class="h5">{% trans "24/7 support" %}</h3><p class="mb-0">{% trans "Reach a real person by phone or WhatsApp before, during and after your trip." %}</p></div></div>
+        </div>
+    </div>
+</div>
+<!-- Why Us End -->
+
+<!-- Trip Types Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <p class="h5 section-title px-3">{% trans "Find your trip" %}</p>
+            <h2 class="mb-3">{% trans "What kind of trip are you after?" %}</h2>
+            <p class="mb-0">{% trans "Pick a style and see the packages we offer." %}</p>
+        </div>
+        <div class="row g-4">
+            {% url 'packages' as pk_url %}
+            {% trans "East Africa Tours" as t1 %}{% trans "South Africa" as t2 %}{% trans "West Africa" as t3 %}{% trans "International Tours" as t4 %}{% trans "Cruises" as t5 %}{% trans "Africa Tours" as t6 %}
+            <div class="col-lg-4 col-md-6"><a class="type-tile" href="{{ pk_url }}?category=East+Africa+Tours">{% if mega.pkg_img.East_Africa_Tours %}<img src="{{ mega.pkg_img.East_Africa_Tours }}" alt="" loading="lazy" width="480" height="360">{% endif %}<span class="type-label"><strong>{{ t1 }}</strong><span>{% blocktrans count n=mega.pkg_count.East_Africa_Tours|default:0 %}{{ n }} package{% plural %}{{ n }} packages{% endblocktrans %}</span></span></a></div>
+            <div class="col-lg-4 col-md-6"><a class="type-tile" href="{{ pk_url }}?category=South+Africa">{% if mega.pkg_img.South_Africa %}<img src="{{ mega.pkg_img.South_Africa }}" alt="" loading="lazy" width="480" height="360">{% endif %}<span class="type-label"><strong>{{ t2 }}</strong><span>{% blocktrans count n=mega.pkg_count.South_Africa|default:0 %}{{ n }} package{% plural %}{{ n }} packages{% endblocktrans %}</span></span></a></div>
+            <div class="col-lg-4 col-md-6"><a class="type-tile" href="{{ pk_url }}?category=West+Africa">{% if mega.pkg_img.West_Africa %}<img src="{{ mega.pkg_img.West_Africa }}" alt="" loading="lazy" width="480" height="360">{% endif %}<span class="type-label"><strong>{{ t3 }}</strong><span>{% blocktrans count n=mega.pkg_count.West_Africa|default:0 %}{{ n }} package{% plural %}{{ n }} packages{% endblocktrans %}</span></span></a></div>
+            <div class="col-lg-4 col-md-6"><a class="type-tile" href="{{ pk_url }}?category=International+Tours">{% if mega.pkg_img.International_Tours %}<img src="{{ mega.pkg_img.International_Tours }}" alt="" loading="lazy" width="480" height="360">{% endif %}<span class="type-label"><strong>{{ t4 }}</strong><span>{% blocktrans count n=mega.pkg_count.International_Tours|default:0 %}{{ n }} package{% plural %}{{ n }} packages{% endblocktrans %}</span></span></a></div>
+            <div class="col-lg-4 col-md-6"><a class="type-tile" href="{{ pk_url }}?category=Cruises">{% if mega.pkg_img.Cruises %}<img src="{{ mega.pkg_img.Cruises }}" alt="" loading="lazy" width="480" height="360">{% endif %}<span class="type-label"><strong>{{ t5 }}</strong><span>{% blocktrans count n=mega.pkg_count.Cruises|default:0 %}{{ n }} package{% plural %}{{ n }} packages{% endblocktrans %}</span></span></a></div>
+            <div class="col-lg-4 col-md-6"><a class="type-tile" href="{{ pk_url }}?category=Africa+Tours">{% if mega.pkg_img.Africa_Tours %}<img src="{{ mega.pkg_img.Africa_Tours }}" alt="" loading="lazy" width="480" height="360">{% endif %}<span class="type-label"><strong>{{ t6 }}</strong><span>{% blocktrans count n=mega.pkg_count.Africa_Tours|default:0 %}{{ n }} package{% plural %}{{ n }} packages{% endblocktrans %}</span></span></a></div>
+        </div>
+    </div>
+</div>
+<!-- Trip Types End -->
+
+<!-- Closing CTA Start -->
+<div class="container-fluid cta-band py-5">
+    <div class="container py-4 text-center text-white">
+        <h2 class="text-white mb-3">{% trans "Not sure where to start?" %}</h2>
+        <p class="mb-4 mx-auto" style="max-width: 720px;">{% trans "Tell us your dates and budget and we will send you a free, no-obligation quote." %}</p>
+        <a href="{% url 'booking_create' %}" class="btn btn-light rounded-pill py-3 px-5 me-2 mb-2">{% trans "Get a Free Quote" %}</a>
+        <a href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20would%20like%20a%20quote" class="btn btn-outline-light rounded-pill py-3 px-5 mb-2" target="_blank" rel="noopener"><i class="fab fa-whatsapp me-2"></i>{% trans "Chat on WhatsApp" %}</a>
+    </div>
+</div>
+<!-- Closing CTA End -->
 
 <!-- Blog Start -->
 <div class="container-fluid blog py-5">

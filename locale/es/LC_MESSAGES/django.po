@@ -4478,3 +4478,83 @@ msgid "%(d)s day"
 msgid_plural "%(d)s days"
 msgstr[0] "%(d)s día"
 msgstr[1] "%(d)s días"
+
+msgid "Type of trip"
+msgstr "Tipo de viaje"
+
+msgid "All types of trips"
+msgstr "Todos los tipos de viaje"
+
+msgid "Why Day Safaris"
+msgstr "Por qué Day Safaris"
+
+msgid "Why Travel With Day Safaris Adventures"
+msgstr "Por qué viajar con Day Safaris Adventures"
+
+msgid "A local Nairobi team that plans every detail so you can simply enjoy the trip."
+msgstr "Un equipo local de Nairobi que planifica cada detalle para que usted solo disfrute del viaje."
+
+msgid "Local Nairobi experts"
+msgstr "Expertos locales de Nairobi"
+
+msgid "We are based in Nairobi and know every park, route and lodge first-hand."
+msgstr "Estamos en Nairobi y conocemos de primera mano cada parque, ruta y lodge."
+
+msgid "Tailor-made trips"
+msgstr "Viajes a medida"
+
+msgid "Your dates, your pace, your budget: every itinerary is built around you."
+msgstr "Sus fechas, su ritmo, su presupuesto: cada itinerario se construye en torno a usted."
+
+msgid "Clear, honest pricing"
+msgstr "Precios claros y honestos"
+
+msgid "See what is included before you pay, with no hidden extras."
+msgstr "Vea qué está incluido antes de pagar, sin extras ocultos."
+
+msgid "24/7 support"
+msgstr "Asistencia 24/7"
+
+msgid "Reach a real person by phone or WhatsApp before, during and after your trip."
+msgstr "Hable con una persona real por teléfono o WhatsApp antes, durante y después de su viaje."
+
+msgid "Find your trip"
+msgstr "Encuentre su viaje"
+
+msgid "What kind of trip are you after?"
+msgstr "¿Qué tipo de viaje busca?"
+
+msgid "Pick a style and see the packages we offer."
+msgstr "Elija un estilo y vea los paquetes que ofrecemos."
+
+msgid "Not sure where to start?"
+msgstr "¿No sabe por dónde empezar?"
+
+msgid "Tell us your dates and budget and we will send you a free, no-obligation quote."
+msgstr "Díganos sus fechas y su presupuesto y le enviaremos un presupuesto gratuito y sin compromiso."
+
+msgid "Get a Free Quote"
+msgstr "Pedir un presupuesto gratuito"
+
+msgid "Chat on WhatsApp"
+msgstr "Chatear por WhatsApp"
+
+msgid "Call Us | 24/7"
+msgstr "Llámenos | 24/7"
+
+msgid "Contents"
+msgstr "Contenido"
+
+msgid "In this article"
+msgstr "En este artículo"
+
+msgid "%(n)s package"
+msgid_plural "%(n)s packages"
+msgstr[0] "%(n)s paquete"
+msgstr[1] "%(n)s paquetes"
+
+msgid "Blog categories"
+msgstr "Categorías del blog"
+
+msgid "All"
+msgstr "Todo"

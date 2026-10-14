@@ -70,11 +70,18 @@
                         </div>
                     </div>
 
+                    {% if blog.category %}<a href="{% url 'blog' %}?category={{ blog.category.slug }}" class="badge bg-primary text-decoration-none mb-2">{{ blog.category.name }}</a>{% endif %}
                     <h1 class="blog-title mb-4">{{ blog.title }}</h1>
 
                     <!-- Rich content rendered from CKEditor -->
                     <div class="blog-content">
-                        {{ blog.content|safe }}
+                        {% if toc %}
+                        <nav class="blog-toc mb-4" aria-label="{% trans "Contents" %}">
+                            <strong class="d-block mb-2">{% trans "In this article" %}</strong>
+                            <ol class="mb-0 ps-3">{% for id, text, level in toc %}<li class="{% if level == 3 %}ms-3 small{% endif %}"><a href="#{{ id }}">{{ text }}</a></li>{% endfor %}</ol>
+                        </nav>
+                        {% endif %}
+                        {{ content_html|safe }}
                     </div>
 
                     <!-- Share Row -->
@@ -250,6 +257,9 @@
         padding: 8px 12px;
     }
 
+    .blog-toc{background:#f7f3f5;border-left:4px solid var(--bs-primary);border-radius:8px;padding:16px 20px}
+    .blog-toc a{text-decoration:none}
+    .blog-content h2,.blog-content h3{scroll-margin-top:90px}
     /* ===== Share buttons ===== */
     .share-btn {
         width: 38px;

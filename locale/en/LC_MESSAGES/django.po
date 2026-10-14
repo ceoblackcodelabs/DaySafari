@@ -3926,3 +3926,83 @@ msgid "%(d)s day"
 msgid_plural "%(d)s days"
 msgstr[0] "%(d)s day"
 msgstr[1] "%(d)s days"
+
+msgid "Type of trip"
+msgstr "Type of trip"
+
+msgid "All types of trips"
+msgstr "All types of trips"
+
+msgid "Why Day Safaris"
+msgstr "Why Day Safaris"
+
+msgid "Why Travel With Day Safaris Adventures"
+msgstr "Why Travel With Day Safaris Adventures"
+
+msgid "A local Nairobi team that plans every detail so you can simply enjoy the trip."
+msgstr "A local Nairobi team that plans every detail so you can simply enjoy the trip."
+
+msgid "Local Nairobi experts"
+msgstr "Local Nairobi experts"
+
+msgid "We are based in Nairobi and know every park, route and lodge first-hand."
+msgstr "We are based in Nairobi and know every park, route and lodge first-hand."
+
+msgid "Tailor-made trips"
+msgstr "Tailor-made trips"
+
+msgid "Your dates, your pace, your budget: every itinerary is built around you."
+msgstr "Your dates, your pace, your budget: every itinerary is built around you."
+
+msgid "Clear, honest pricing"
+msgstr "Clear, honest pricing"
+
+msgid "See what is included before you pay, with no hidden extras."
+msgstr "See what is included before you pay, with no hidden extras."
+
+msgid "24/7 support"
+msgstr "24/7 support"
+
+msgid "Reach a real person by phone or WhatsApp before, during and after your trip."
+msgstr "Reach a real person by phone or WhatsApp before, during and after your trip."
+
+msgid "Find your trip"
+msgstr "Find your trip"
+
+msgid "What kind of trip are you after?"
+msgstr "What kind of trip are you after?"
+
+msgid "Pick a style and see the packages we offer."
+msgstr "Pick a style and see the packages we offer."
+
+msgid "Not sure where to start?"
+msgstr "Not sure where to start?"
+
+msgid "Tell us your dates and budget and we will send you a free, no-obligation quote."
+msgstr "Tell us your dates and budget and we will send you a free, no-obligation quote."
+
+msgid "Get a Free Quote"
+msgstr "Get a Free Quote"
+
+msgid "Chat on WhatsApp"
+msgstr "Chat on WhatsApp"
+
+msgid "Call Us | 24/7"
+msgstr "Call Us | 24/7"
+
+msgid "Contents"
+msgstr "Contents"
+
+msgid "In this article"
+msgstr "In this article"
+
+msgid "%(n)s package"
+msgid_plural "%(n)s packages"
+msgstr[0] "%(n)s package"
+msgstr[1] "%(n)s packages"
+
+msgid "Blog categories"
+msgstr "Blog categories"
+
+msgid "All"
+msgstr "All"

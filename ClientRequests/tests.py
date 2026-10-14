@@ -570,10 +570,23 @@ class I18nTests(SiteHealthTests):
         from django.utils import translation
         from Home.models import Blogs
         from Places.models import DestinationsCategory
-        blog = Blogs.objects.create(title='Safari tips', title_fr='Conseils de safari')
-        cat = DestinationsCategory.objects.create(location='Diani', category='Beach')
+        with translation.override('en'):    # new rows are written to the active language's column
+            blog = Blogs.objects.create(title='Safari tips', title_fr='Conseils de safari')
+            cat = DestinationsCategory.objects.create(location='Diani', category='Beach')
         with translation.override('fr'):
             self.assertEqual(blog.title, 'Conseils de safari')
             self.assertEqual(cat.category, 'Beach')      # no French yet -> English fallback
         with translation.override('en'):
             self.assertEqual(blog.title, 'Safari tips')
+
+    def test_blog_category_filter(self):
+        from Home.models import Blogs, BlogCategory
+        from django.utils import translation
+        with translation.override('en'):
+            cat = BlogCategory.objects.create(name='Tips', name_fr='Conseils')
+            Blogs.objects.create(title='Tip one', author='A', content='<p>x</p>', category=cat)
+            Blogs.objects.create(title='Other one', author='A', content='<p>y</p>')
+        html = self.client.get(f'/fr/blog/?category={cat.slug}').content.decode()
+        self.assertIn('Tip one', html)
+        self.assertNotIn('Other one', html)
+        self.assertIn('Conseils', html)

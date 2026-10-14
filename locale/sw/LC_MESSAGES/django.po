@@ -4462,3 +4462,83 @@ msgid "%(d)s day"
 msgid_plural "%(d)s days"
 msgstr[0] "siku %(d)s"
 msgstr[1] "siku %(d)s"
+
+msgid "Type of trip"
+msgstr "Aina ya safari"
+
+msgid "All types of trips"
+msgstr "Aina zote za safari"
+
+msgid "Why Day Safaris"
+msgstr "Kwa nini Day Safaris"
+
+msgid "Why Travel With Day Safaris Adventures"
+msgstr "Kwa nini usafiri na Day Safaris Adventures"
+
+msgid "A local Nairobi team that plans every detail so you can simply enjoy the trip."
+msgstr "Timu ya wenyeji wa Nairobi inayopanga kila undani ili ufurahie safari tu."
+
+msgid "Local Nairobi experts"
+msgstr "Wataalamu wa Nairobi"
+
+msgid "We are based in Nairobi and know every park, route and lodge first-hand."
+msgstr "Tuko Nairobi na tunajua kila hifadhi, njia na lodji moja kwa moja."
+
+msgid "Tailor-made trips"
+msgstr "Safari zilizobuniwa kwa mahitaji"
+
+msgid "Your dates, your pace, your budget: every itinerary is built around you."
+msgstr "Tarehe zako, kasi yako, bajeti yako: kila ratiba imejengwa kukuzunguka."
+
+msgid "Clear, honest pricing"
+msgstr "Bei wazi na za uaminifu"
+
+msgid "See what is included before you pay, with no hidden extras."
+msgstr "Ona kinachojumuishwa kabla ya kulipa, bila gharama za siri."
+
+msgid "24/7 support"
+msgstr "Msaada saa 24 kila siku"
+
+msgid "Reach a real person by phone or WhatsApp before, during and after your trip."
+msgstr "Wasiliana na mtu halisi kwa simu au WhatsApp kabla, wakati na baada ya safari yako."
+
+msgid "Find your trip"
+msgstr "Tafuta safari yako"
+
+msgid "What kind of trip are you after?"
+msgstr "Unatafuta safari ya aina gani?"
+
+msgid "Pick a style and see the packages we offer."
+msgstr "Chagua mtindo uone vifurushi tunavyotoa."
+
+msgid "Not sure where to start?"
+msgstr "Huna uhakika wa kuanzia wapi?"
+
+msgid "Tell us your dates and budget and we will send you a free, no-obligation quote."
+msgstr "Tuambie tarehe na bajeti yako nasi tutakutumia bei ya bure bila wajibu."
+
+msgid "Get a Free Quote"
+msgstr "Pata Bei ya Bure"
+
+msgid "Chat on WhatsApp"
+msgstr "Ongea nasi WhatsApp"
+
+msgid "Call Us | 24/7"
+msgstr "Tupigie | Saa 24"
+
+msgid "Contents"
+msgstr "Yaliyomo"
+
+msgid "In this article"
+msgstr "Katika makala hii"
+
+msgid "%(n)s package"
+msgid_plural "%(n)s packages"
+msgstr[0] "kifurushi %(n)s"
+msgstr[1] "vifurushi %(n)s"
+
+msgid "Blog categories"
+msgstr "Makundi ya blogu"
+
+msgid "All"
+msgstr "Zote"

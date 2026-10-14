@@ -146,3 +146,29 @@ body{color:#555}
 .site-topbar .d-inline-flex a,.site-topbar .d-inline-flex small,.site-topbar .dropdown-toggle{display:inline-flex;align-items:center;line-height:1.2}
 .site-topbar .btn-sm-square{width:36px;height:36px}
 @media (max-width:1399.98px){.site-topbar{padding-left:1.25rem!important;padding-right:1.25rem!important}.site-topbar .d-inline-flex .me-3{margin-right:.55rem!important}}
+
+/* header phone block + floating WhatsApp button */
+.nav-call{align-items:center;gap:10px;text-decoration:none;color:var(--bs-white)}
+.nav-call i{font-size:22px;color:var(--bs-secondary,#f5b97a)}
+.nav-call span{display:flex;flex-direction:column;line-height:1.15}
+.nav-call small{font-size:11px;opacity:.85}
+.nav-call strong{font-size:14px;white-space:nowrap}
+.sticky-top.navbar-light .nav-call{color:var(--bs-dark)}
+.wa-float{position:fixed;right:30px;bottom:90px;z-index:99;width:48px;height:48px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 4px 14px rgba(0,0,0,.3);transition:transform .2s}
+.wa-float:hover{transform:scale(1.08);color:#fff}
+/* homepage: why us, trip types, closing call to action */
+.why-card{background:#fff;border-radius:14px;padding:26px 22px;height:100%;box-shadow:0 4px 18px rgba(0,0,0,.07);transition:transform .25s}
+.why-card:hover{transform:translateY(-4px)}
+.why-card i{font-size:28px;color:var(--bs-primary);margin-bottom:12px;display:block}
+.type-tile{display:block;position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#2a0a18 center/cover;color:#fff!important;text-decoration:none}
+.type-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.type-tile:hover img{transform:scale(1.08)}
+.type-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,.05) 60%)}
+.type-tile .type-label{position:absolute;left:16px;right:16px;bottom:14px;z-index:2}
+.type-tile .type-label strong{display:block;font-size:18px}
+.type-tile .type-label span{font-size:13px;opacity:.9}
+.cta-band{background:linear-gradient(rgba(66,13,36,.88),rgba(66,13,36,.88)),url(../img/tour-booking-bg.webp) center/cover}
+.nav-call i{color:#f5b97a!important}
+.sticky-top.navbar-light .nav-call i{color:var(--bs-primary)!important}
+.bg-breadcrumb .breadcrumb-item a{color:#fff}
+.bg-breadcrumb .breadcrumb-item+.breadcrumb-item::before{color:rgba(255,255,255,.7)}

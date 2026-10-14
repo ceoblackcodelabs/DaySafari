@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
-    BlogComments, Blogs, Brochure, ItineraryTreking,
+    BlogComments, Blogs, BlogCategory, Brochure, ItineraryTreking,
     Trekking, Ad, AboutImage, HeroSlide
 )
 
@@ -114,10 +114,16 @@ class BlogCommentsAdmin(admin.ModelAdmin):
     comment_preview.short_description = 'Comment'
 
 
+@admin.register(BlogCategory)
+class BlogCategoryAdmin(TranslationAdmin):
+    list_display = ['name', 'slug', 'order']
+    prepopulated_fields = {'slug': ('name',)}
+
+
 @admin.register(Blogs)
 class BlogsAdmin(TranslationAdmin):
-    list_display = ['id', 'title', 'author', 'published_date', 'image_preview', 'likes']
-    list_filter = ['published_date', 'author']
+    list_display = ['id', 'title', 'category', 'author', 'published_date', 'image_preview', 'likes']
+    list_filter = ['category', 'published_date', 'author']
     search_fields = ['title', 'content', 'author', 'slug']
     prepopulated_fields = {'slug': ('title',)}
     ordering = ['-published_date']
