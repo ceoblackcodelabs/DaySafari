@@ -59,7 +59,6 @@ urlpatterns += i18n_patterns(
     path('', include('Places.urls')),
     path('', include('ClientRequests.urls')),
     path('', include("Hotels.urls")),
-    path('', include('ChatBot.urls')),
     path('', include('Payments.urls')),
     path('Mpesa/', include('MpesaPayment.urls')),
 )

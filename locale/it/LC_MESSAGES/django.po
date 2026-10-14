@@ -4530,3 +4530,6 @@ msgstr "Usiamo i tuoi dati solo per rispondere riguardo al tuo viaggio."
 
 msgid "Please enter your name."
 msgstr "Inserisci il tuo nome."
+
+msgid "Get a Quote"
+msgstr "Richiedi un preventivo"

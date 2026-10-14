@@ -4662,3 +4662,6 @@ msgstr "Nous utilisons vos coordonnées uniquement pour répondre au sujet de vo
 
 msgid "Please enter your name."
 msgstr "Veuillez saisir votre nom."
+
+msgid "Get a Quote"
+msgstr "Demander un devis"

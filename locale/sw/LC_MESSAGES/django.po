@@ -4596,3 +4596,6 @@ msgstr "Tunatumia taarifa zako kujibu kuhusu safari yako tu."
 
 msgid "Please enter your name."
 msgstr "Tafadhali weka jina lako."
+
+msgid "Get a Quote"
+msgstr "Pata Bei"

@@ -215,3 +215,9 @@ body{color:#555}
 .lead-container .popup-button{border:0;cursor:pointer}
 @media (max-width:768px){.lead-slides{min-height:150px;max-width:100%!important;height:150px}.lead-container .popup-content-side{max-height:none}}
 @media (prefers-reduced-motion:reduce){.lead-slides .lead-slide{animation:none}.lead-slides .lead-slide:first-of-type{opacity:1}}
+
+/* bottom-left "Get a Quote" button (replaces the old chat widget) */
+.quote-fab{position:fixed;left:24px;bottom:28px;z-index:99;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 20px;background:var(--bs-primary);color:#fff;font-weight:600;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.3);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.quote-fab i{font-size:20px;color:#25d366}
+.quote-fab:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+@media (max-width:575.98px){.quote-fab{left:14px;bottom:18px;padding:11px 16px;font-size:14px}}

@@ -4060,3 +4060,6 @@ msgstr "We only use your details to reply about your trip."
 
 msgid "Please enter your name."
 msgstr "Please enter your name."
+
+msgid "Get a Quote"
+msgstr "Get a Quote"

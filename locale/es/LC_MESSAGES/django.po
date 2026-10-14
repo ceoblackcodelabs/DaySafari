@@ -4612,3 +4612,6 @@ msgstr "Solo usamos sus datos para responder sobre su viaje."
 
 msgid "Please enter your name."
 msgstr "Por favor, introduzca su nombre."
+
+msgid "Get a Quote"
+msgstr "Pedir presupuesto"

@@ -205,20 +205,6 @@ class SiteHealthTests(TestCase):
     def test_unknown_page_uses_custom_404(self):
         self.assertEqual(self.client.get('/en/no-such-page/').status_code, 404)
 
-    def test_chatbot_test_endpoints_require_staff(self):
-        for name in ('testchatbot', 'test_github_api'):
-            r = self.client.get(reverse(name))
-            self.assertEqual(r.status_code, 302)           # redirected to login, nothing leaked
-
-    def test_chatbot_api_is_rate_limited(self):
-        with mock.patch('ChatBot.views.get_ai_response', return_value='hi'), \
-                mock.patch('ChatBot.views.load_prompt_template', return_value=''):
-            codes = [self.client.post(reverse('chatbot_api'), '{"message": "hello"}',
-                                      content_type='application/json', REMOTE_ADDR='4.4.4.4').status_code
-                     for _ in range(10)]
-        self.assertEqual(codes[:8], [200] * 8)
-        self.assertEqual(codes[8], 429)
-
 
 
 @override_settings(CACHES=LOCMEM, ALLOWED_HOSTS=['*'])
@@ -625,6 +611,9 @@ class I18nTests(SiteHealthTests):
 
     def test_popups_only_where_intended(self):
         home = self.client.get('/en/').content.decode()
-        self.assertIn('id="leadOverlay"', home)
+        self.assertIn('id="leadOverlay" data-auto="1"', home)          # pops up by itself on normal pages
         self.assertNotIn('id="popupOverlay"', home)               # the discount popup is packages-page only
-        self.assertNotIn('id="leadOverlay"', self.client.get('/en/contact/').content.decode())
+        contact = self.client.get('/en/contact/').content.decode()
+        self.assertIn('id="leadOverlay" data-auto=""', contact)       # still opens from the Get a Quote button...
+        self.assertIn('data-open-lead', contact)                       # ...but never by itself on the contact page
+        self.assertNotIn('chatbot', home.lower())

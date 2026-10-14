@@ -1,5 +1,5 @@
 {% load i18n image_tags %}
-<div id="leadOverlay" class="popup-overlay lead-overlay" role="dialog" aria-modal="true" aria-labelledby="leadTitle" hidden>
+<div id="leadOverlay" data-auto="{% if auto %}1{% endif %}" class="popup-overlay lead-overlay" role="dialog" aria-modal="true" aria-labelledby="leadTitle" hidden>
     <div class="popup-container lead-container">
         <button type="button" class="popup-close" data-lead-close aria-label="{% trans "Close" %}"><i class="fas fa-times"></i></button>
         <div class="popup-layout">
@@ -38,13 +38,16 @@
     function get(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
     function put(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
     var st=get(), now=Date.now();
-    if((st.until||0)>now) return;                         // closed or used recently
+    var auto=ov.dataset.auto==='1' && !((st.until||0)>now) && !document.querySelector('.popup-overlay.active:not(.lead-overlay)');
     var timer, shown=false;
-    function show(){ if(shown||document.querySelector('.popup-overlay.active:not(.lead-overlay)')) return; shown=true; ov.hidden=false; ov.classList.add('active'); var n=form.elements.name; setTimeout(function(){n&&n.focus({preventScroll:true})},300); }
+    function show(force){ if(!force && (shown||document.querySelector('.popup-overlay.active:not(.lead-overlay)'))) return; shown=true; ov.hidden=false; ov.classList.add('active'); var n=form.elements.name; setTimeout(function(){n&&n.focus({preventScroll:true})},300); }
     function hide(days){ ov.classList.remove('active'); ov.hidden=true; clearTimeout(timer);
         var d=document.getElementById('leadDontShow').checked?3650:(days||3); put({until:Date.now()+d*DAY}); }
-    timer=setTimeout(show,9000);
-    window.addEventListener('scroll',function onS(){ if(window.scrollY>window.innerHeight*0.8){ window.removeEventListener('scroll',onS); clearTimeout(timer); timer=setTimeout(show,1500);} },{passive:true});
+    if(auto){
+        timer=setTimeout(show,9000);
+        window.addEventListener('scroll',function onS(){ if(window.scrollY>window.innerHeight*0.8){ window.removeEventListener('scroll',onS); clearTimeout(timer); timer=setTimeout(show,1500);} },{passive:true});
+    }
+    document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-open-lead]'); if(b){ e.preventDefault(); clearTimeout(timer); show(true); } });
     ov.addEventListener('click',function(e){ if(e.target===ov) hide(); });
     ov.querySelector('[data-lead-close]').addEventListener('click',function(){hide();});
     document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&ov.classList.contains('active')) hide(); });
