@@ -138,3 +138,11 @@ body{color:#555}
   .mega-grid{grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
   .mega-card .mega-title{font-size:13px}
 }
+
+/* Topbar: a little taller so the social icons, language box and links all fit on one line */
+.site-topbar{padding-top:10px;padding-bottom:10px}
+.site-topbar .row{align-items:center}
+.site-topbar .d-inline-flex{height:auto!important;min-height:38px;flex-wrap:nowrap;white-space:nowrap}
+.site-topbar .d-inline-flex a,.site-topbar .d-inline-flex small,.site-topbar .dropdown-toggle{display:inline-flex;align-items:center;line-height:1.2}
+.site-topbar .btn-sm-square{width:36px;height:36px}
+@media (max-width:1399.98px){.site-topbar{padding-left:1.25rem!important;padding-right:1.25rem!important}.site-topbar .d-inline-flex .me-3{margin-right:.55rem!important}}
