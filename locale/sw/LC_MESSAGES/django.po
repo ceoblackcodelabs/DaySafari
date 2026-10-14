@@ -4542,3 +4542,21 @@ msgstr "Makundi ya blogu"
 
 msgid "All"
 msgstr "Zote"
+
+msgid "Special Offers & Travel Deals"
+msgstr "Ofa Maalum na Mikataba ya Safari"
+
+msgid "Current holiday campaigns and quick-book travel deals from our consultants."
+msgstr "Kampeni za sasa za likizo na mikataba ya safari ya kuhifadhi haraka kutoka kwa washauri wetu."
+
+msgid "Active now"
+msgstr "Inapatikana sasa"
+
+msgid "Book Via WhatsApp"
+msgstr "Hifadhi kupitia WhatsApp"
+
+msgid "From %(d)s"
+msgstr "Kuanzia %(d)s"
+
+msgid "Until %(d)s"
+msgstr "Hadi %(d)s"

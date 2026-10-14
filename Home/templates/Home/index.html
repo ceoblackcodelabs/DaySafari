@@ -387,6 +387,44 @@
 </div>
 <!-- Packages End -->
 
+{% if offers_page.object_list %}
+<!-- Offers Start -->
+<div class="container-fluid offers py-5" id="offers">
+    <div class="container py-4">
+        <div class="mb-4">
+            <h2 class="mb-1">{% trans "Special Offers & Travel Deals" %}</h2>
+            <p class="text-muted mb-0">{% trans "Current holiday campaigns and quick-book travel deals from our consultants." %}</p>
+        </div>
+        <div class="row g-4">
+            {% for offer in offers_page %}
+            <div class="col-lg-3 col-md-6">
+                <article class="offer-card">
+                    <div class="offer-poster">
+                        <img src="{{ offer.image|thumb:640 }}" alt="{{ offer.title }}" loading="lazy" decoding="async" width="640" height="640">
+                        {% if offer.is_upcoming %}<span class="offer-badge upcoming">{% trans "Upcoming" %}</span>{% else %}<span class="offer-badge">{% trans "Active now" %}</span>{% endif %}
+                        {% if offer.is_upcoming and offer.start_date %}<span class="offer-date">{% blocktrans with d=offer.start_date|date:"M d, Y" %}From {{ d }}{% endblocktrans %}</span>
+                        {% elif offer.end_date %}<span class="offer-date">{% blocktrans with d=offer.end_date|date:"M d, Y" %}Until {{ d }}{% endblocktrans %}</span>{% endif %}
+                    </div>
+                    <h3 class="offer-title">{{ offer.title }}</h3>
+                    <a href="{{ offer.whatsapp_url }}" class="offer-btn" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {% trans "Book Via WhatsApp" %}</a>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+        {% if offers_page.paginator.num_pages > 1 %}
+        <nav class="mt-4" aria-label="{% trans "Special Offers & Travel Deals" %}">
+            <ul class="pagination justify-content-center mb-0">
+                {% if offers_page.has_previous %}<li class="page-item"><a class="page-link" href="?offers={{ offers_page.previous_page_number }}#offers">&laquo; {% trans "Previous" %}</a></li>{% endif %}
+                {% for n in offers_page.paginator.page_range %}<li class="page-item {% if n == offers_page.number %}active{% endif %}"><a class="page-link" href="?offers={{ n }}#offers">{{ n }}</a></li>{% endfor %}
+                {% if offers_page.has_next %}<li class="page-item"><a class="page-link" href="?offers={{ offers_page.next_page_number }}#offers">{% trans "Next" %} &raquo;</a></li>{% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+<!-- Offers End -->
+{% endif %}
+
 <!-- Tour Booking Start -->
 <div class="container-fluid booking py-5">
     <div class="container py-5">

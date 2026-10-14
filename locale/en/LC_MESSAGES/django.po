@@ -4006,3 +4006,21 @@ msgstr "Blog categories"
 
 msgid "All"
 msgstr "All"
+
+msgid "Special Offers & Travel Deals"
+msgstr "Special Offers & Travel Deals"
+
+msgid "Current holiday campaigns and quick-book travel deals from our consultants."
+msgstr "Current holiday campaigns and quick-book travel deals from our consultants."
+
+msgid "Active now"
+msgstr "Active now"
+
+msgid "Book Via WhatsApp"
+msgstr "Book Via WhatsApp"
+
+msgid "From %(d)s"
+msgstr "From %(d)s"
+
+msgid "Until %(d)s"
+msgstr "Until %(d)s"

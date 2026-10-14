@@ -1,7 +1,7 @@
 """Which model fields are translated per language (django-modeltranslation)."""
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import Services, GalleryCategory, AboutImage, HeroSlide, Testimonials, Blogs, BlogCategory, Brochure, ItineraryTreking, Trekking, Ad
+from .models import Services, GalleryCategory, AboutImage, HeroSlide, Testimonials, Blogs, BlogCategory, Offer, Brochure, ItineraryTreking, Trekking, Ad
 
 
 @register(Services)
@@ -57,3 +57,8 @@ class AdTranslationOptions(TranslationOptions):
 @register(BlogCategory)
 class BlogCategoryTranslationOptions(TranslationOptions):
     fields = ('name',)
+
+
+@register(Offer)
+class OfferTranslationOptions(TranslationOptions):
+    fields = ('title', 'whatsapp_message')

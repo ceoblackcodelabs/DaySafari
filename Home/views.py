@@ -11,7 +11,7 @@ from django.conf import settings
 from django.core.cache import cache
 from .models import (
     Brochure, Services, GalleryCategory, Gallery,
-    Testimonials, Blogs, BlogCategory, Trekking, ItineraryTreking,
+    Testimonials, Blogs, BlogCategory, Offer, Trekking, ItineraryTreking,
     Ad, AboutImage, HeroSlide
 )
 from Places.models import Destinations, DestinationsCategory, AwesomePackages, IncluisiveExcluisive
@@ -53,6 +53,13 @@ class HomeView(AntiSpamViewMixin, ListView):
                 initial_data['phone'] = user.phone
 
         context['booking_form'] = BookingsForm(initial=initial_data)
+        from datetime import date
+        from django.core.paginator import Paginator
+        from django.db.models import Q
+        today = date.today()
+        offers = Offer.objects.filter(is_active=True).filter(Q(end_date__isnull=True) | Q(end_date__gte=today))
+        offers_page = Paginator(offers, 8).get_page(request.GET.get('offers'))
+        context['offers_page'] = offers_page
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):

@@ -4608,3 +4608,21 @@ msgstr "Catégories du blog"
 
 msgid "All"
 msgstr "Tout"
+
+msgid "Special Offers & Travel Deals"
+msgstr "Offres spéciales et bons plans voyage"
+
+msgid "Current holiday campaigns and quick-book travel deals from our consultants."
+msgstr "Campagnes de vacances en cours et offres de voyage à réserver rapidement, proposées par nos conseillers."
+
+msgid "Active now"
+msgstr "Disponible maintenant"
+
+msgid "Book Via WhatsApp"
+msgstr "Réserver via WhatsApp"
+
+msgid "From %(d)s"
+msgstr "À partir du %(d)s"
+
+msgid "Until %(d)s"
+msgstr "Jusqu'au %(d)s"

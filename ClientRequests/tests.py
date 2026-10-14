@@ -590,3 +590,20 @@ class I18nTests(SiteHealthTests):
         self.assertIn('Tip one', html)
         self.assertNotIn('Other one', html)
         self.assertIn('Conseils', html)
+
+    def test_home_offers_paginate_by_8_and_hide_expired(self):
+        from datetime import date, timedelta
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from Home.models import Offer
+        gif = (b'GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04\x01\x00\x00\x00\x00,'
+               b'\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;')
+        with __import__('django.utils.translation', fromlist=['x']).override('en'):
+            for i in range(10):
+                Offer.objects.create(title=f'Deal {i}', image=SimpleUploadedFile(f'o{i}.gif', gif, 'image/gif'))
+            Offer.objects.create(title='Old deal', image=SimpleUploadedFile('old.gif', gif, 'image/gif'),
+                                 end_date=date.today() - timedelta(days=1))
+        h1 = self.client.get('/en/').content.decode()
+        h2 = self.client.get('/en/?offers=2').content.decode()
+        self.assertEqual(h1.count('class="offer-card"'), 8)
+        self.assertEqual(h2.count('class="offer-card"'), 2)
+        self.assertNotIn('Old deal', h1 + h2)

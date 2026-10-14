@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
-    BlogComments, Blogs, BlogCategory, Brochure, ItineraryTreking,
+    BlogComments, Blogs, BlogCategory, Offer, Brochure, ItineraryTreking,
     Trekking, Ad, AboutImage, HeroSlide
 )
 
@@ -404,3 +404,14 @@ class HeroSlideAdmin(TranslationAdmin):
 admin.site.site_header = "Day Safaris Adventures Admin"
 admin.site.site_title = "Day Safaris Admin Portal"
 admin.site.index_title = "Welcome to Day Safaris Adventures Dashboard"
+
+@admin.register(Offer)
+class OfferAdmin(TranslationAdmin):
+    list_display = ['title', 'poster', 'start_date', 'end_date', 'is_active', 'order']
+    list_editable = ['is_active', 'order']
+    list_filter = ['is_active']
+    search_fields = ['title']
+
+    def poster(self, obj):
+        from django.utils.html import format_html
+        return format_html('<img src="{}" style="height:50px;border-radius:4px">', obj.image.url) if obj.image else ''

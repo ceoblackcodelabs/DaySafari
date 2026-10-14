@@ -275,6 +275,35 @@ class Blogs(models.Model):
         super().save(*args, **kwargs)
 
 
+class Offer(models.Model):
+    """A poster-style travel offer shown in the homepage 'Special Offers' section."""
+    title = models.CharField(max_length=160)
+    image = models.ImageField(upload_to='offers/', validators=[validate_image_10mb], help_text="The poster. A square or 4:5 image works best.")
+    start_date = models.DateField(null=True, blank=True, help_text="Leave empty to show it as 'Active now' straight away.")
+    end_date = models.DateField(null=True, blank=True, help_text="The offer disappears after this day. Leave empty for no end.")
+    whatsapp_message = models.CharField(max_length=250, blank=True, help_text="Pre-filled WhatsApp message. Leave empty to use the title.")
+    is_active = models.BooleanField(default=True, help_text="Untick to hide it without deleting.")
+    order = models.PositiveSmallIntegerField(default=0, help_text="Lower numbers show first. Equal numbers: newest first.")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['order', '-created_at']
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def is_upcoming(self):
+        from datetime import date
+        return bool(self.start_date and self.start_date > date.today())
+
+    @property
+    def whatsapp_url(self):
+        from urllib.parse import quote
+        text = self.whatsapp_message or f"Hello Day Safaris, I am interested in: {self.title}"
+        return f"https://wa.me/254759379600?text={quote(text)}"
+
+
 class Brochure(models.Model):
     title = models.CharField(max_length=200, db_index=True)
     pdf_file = models.FileField(upload_to='brochures/', validators=[validate_document_20mb])
