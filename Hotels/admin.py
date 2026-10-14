@@ -1,17 +1,18 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from django.utils.html import format_html
 
 from .models import AirBNB, AirBNBImage, ApiKey, Hotel, HotelImage
 
 
-class HotelImageInline(admin.TabularInline):
+class HotelImageInline(TranslationTabularInline):
     model = HotelImage
     extra = 3
     fields = ['image', 'caption', 'is_featured', 'order']
 
 
 @admin.register(Hotel)
-class HotelAdmin(admin.ModelAdmin):
+class HotelAdmin(TranslationAdmin):
     list_display = ['thumb', 'name', 'country', 'location', 'property_type', 'star_rating', 'price_per_night',
                     'max_guests', 'is_featured', 'is_published']
     list_display_links = ['thumb', 'name']
@@ -39,14 +40,14 @@ class HotelAdmin(admin.ModelAdmin):
     thumb.short_description = 'Photo'
 
 
-class AirBNBImageInline(admin.TabularInline):
+class AirBNBImageInline(TranslationTabularInline):
     model = AirBNBImage
     extra = 2
     fields = ['image', 'caption', 'is_featured', 'order']
 
 
 @admin.register(AirBNB)
-class AirBNBAdmin(admin.ModelAdmin):
+class AirBNBAdmin(TranslationAdmin):
     list_display = ['title', 'location', 'specification', 'price_per_night', 'max_guests', 'created_at']
     search_fields = ['title', 'location']
     inlines = [AirBNBImageInline]

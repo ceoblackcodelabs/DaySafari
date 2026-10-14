@@ -564,3 +564,16 @@ class I18nTests(SiteHealthTests):
         from ClientRequests.forms import BookingsForm
         with translation.override('fr'):
             self.assertEqual(str(BookingsForm().fields['destination'].empty_label), 'Choisir une destination')
+
+    def test_database_content_is_translated(self):
+        """Packages, itineraries, hotels and blogs read from the <field>_<lang> columns, English is the fallback."""
+        from django.utils import translation
+        from Home.models import Blogs
+        from Places.models import DestinationsCategory
+        blog = Blogs.objects.create(title='Safari tips', title_fr='Conseils de safari')
+        cat = DestinationsCategory.objects.create(location='Diani', category='Beach')
+        with translation.override('fr'):
+            self.assertEqual(blog.title, 'Conseils de safari')
+            self.assertEqual(cat.category, 'Beach')      # no French yet -> English fallback
+        with translation.override('en'):
+            self.assertEqual(blog.title, 'Safari tips')

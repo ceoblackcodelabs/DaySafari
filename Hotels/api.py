@@ -14,7 +14,7 @@ from django import forms
 from django.core.cache import cache
 from django.db import transaction
 from django.http import JsonResponse
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.html import strip_tags
 from django.views.decorators.csrf import csrf_exempt
 
@@ -86,7 +86,14 @@ def api_view(*methods, public=False):
             request.api_key = key
             return view(request, key, *args, **kwargs)
         wrapper.__name__ = view.__name__
-        return wrapper
+
+        def english(request, *args, **kwargs):
+            # The API always reads and writes the English text (modeltranslation uses the active language).
+            with translation.override('en'):
+                return wrapper(request, *args, **kwargs)
+        english.__name__ = view.__name__
+        english.csrf_exempt = True
+        return english
     return decorator
 
 

@@ -45,7 +45,8 @@ class HotelListView(ListView):
             qs = qs.filter(property_type=params['type'])
         if params.get('q'):
             term = params['q'].strip()[:80]
-            qs = qs.filter(Q(name__icontains=term) | Q(location__icontains=term) | Q(summary__icontains=term))
+            qs = qs.filter(Q(name__icontains=term) | Q(location__icontains=term) | Q(location_en__icontains=term)
+                           | Q(summary__icontains=term) | Q(summary_en__icontains=term))
         return qs.order_by(*SORTS.get(params.get('sort'), SORTS['featured']))
 
     def get_context_data(self, **kwargs):

@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
 
 # ========== APPLICATION DEFINITION ==========
 INSTALLED_APPS = [
+    'modeltranslation',          # must come before django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -166,6 +167,14 @@ LANGUAGES = [
     ('es', _('Spanish')),
     ('it', _('Italian')),
 ]
+
+# Database content (packages, hotels, blog...) is translated per language with django-modeltranslation.
+# English is the source language; any missing translation falls back to English.
+import warnings
+warnings.filterwarnings('ignore', message=r'Index name .* exceeds 30 characters', module=r'modeltranslation\.translator')
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
+MODELTRANSLATION_CUSTOM_FIELDS = ('CKEditor5Field',)
 
 LOCALE_PATHS = [
     BASE_DIR / 'locale',

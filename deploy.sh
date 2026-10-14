@@ -5,7 +5,8 @@
 #   1. backs up the live database + media first (./backups/)
 #   2. pulls fast-forward only (never merges, never `reset --hard`, never discards local changes)
 #   3. if the incoming commits changed or deleted db.sqlite3, puts the live copy back
-#   4. migrates, collects static files, warms image thumbnails, restarts the app
+#   4. installs the content-translation package, migrates, applies the DB translations,
+#      collects static files, warms image thumbnails, restarts the app
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -39,7 +40,10 @@ fi
 [ -f db.sqlite3 ] || { echo "ERROR: db.sqlite3 is missing and no backup copy exists"; exit 1; }
 
 echo "==> 4/4 Updating the app"
+# Only this package: a blanket `pip install -r requirements.txt` could change the server's Django version.
+"$PY" -m pip install --quiet "django-modeltranslation==0.20.6"
 "$PY" manage.py migrate --noinput
+"$PY" manage.py apply_content_translations
 "$PY" manage.py collectstatic --noinput || true
 "$PY" manage.py warm_thumbnails || true
 mkdir -p tmp && touch tmp/restart.txt      # Passenger / cPanel restart

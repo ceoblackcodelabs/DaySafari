@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from django.utils.html import format_html
 from django.contrib import messages
 from .models import (
@@ -9,7 +10,7 @@ from .models import (
 
 
 @admin.register(Services)
-class ServicesAdmin(admin.ModelAdmin):
+class ServicesAdmin(TranslationAdmin):
     list_display = ['id', 'name', 'icon', 'description_preview']
     search_fields = ['name', 'description']
     ordering = ['name']
@@ -24,7 +25,7 @@ class ServicesAdmin(admin.ModelAdmin):
 
 
 @admin.register(GalleryCategory)
-class GalleryCategoryAdmin(admin.ModelAdmin):
+class GalleryCategoryAdmin(TranslationAdmin):
     list_display = ['id', 'name']
     search_fields = ['name']
     ordering = ['name']
@@ -53,7 +54,7 @@ class GalleryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Testimonials)
-class TestimonialsAdmin(admin.ModelAdmin):
+class TestimonialsAdmin(TranslationAdmin):
     list_display = ['id', 'name', 'location', 'star_rating', 'star_rating_display', 'feedback_preview', 'created_at']  # Added 'star_rating'
     list_filter = ['star_rating', 'created_at']
     search_fields = ['name', 'location', 'feedback']
@@ -114,7 +115,7 @@ class BlogCommentsAdmin(admin.ModelAdmin):
 
 
 @admin.register(Blogs)
-class BlogsAdmin(admin.ModelAdmin):
+class BlogsAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'author', 'published_date', 'image_preview', 'likes']
     list_filter = ['published_date', 'author']
     search_fields = ['title', 'content', 'author', 'slug']
@@ -161,7 +162,7 @@ class BlogsAdmin(admin.ModelAdmin):
 
 
 @admin.register(Brochure)
-class BrochureAdmin(admin.ModelAdmin):
+class BrochureAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'description_preview', 'created_at', 'pdf_link', 'image_preview']
     search_fields = ['title', 'description']
     ordering = ['-created_at']
@@ -211,7 +212,7 @@ class BrochureAdmin(admin.ModelAdmin):
     pdf_link.allow_tags = True
 
 
-class ItineraryTrekingInline(admin.TabularInline):
+class ItineraryTrekingInline(TranslationTabularInline):
     """Inline admin for Trekking Itinerary"""
     model = ItineraryTreking
     extra = 1
@@ -220,7 +221,7 @@ class ItineraryTrekingInline(admin.TabularInline):
 
 
 @admin.register(ItineraryTreking)
-class ItineraryTrekingAdmin(admin.ModelAdmin):
+class ItineraryTrekingAdmin(TranslationAdmin):
     list_display = ['id', 'package', 'day_number', 'title']
     list_filter = ['package']
     search_fields = ['title', 'description', 'package__name']
@@ -229,7 +230,7 @@ class ItineraryTrekingAdmin(admin.ModelAdmin):
 
 
 @admin.register(Trekking)
-class TrekkingAdmin(admin.ModelAdmin):
+class TrekkingAdmin(TranslationAdmin):
     list_display = [
         'id', 'name', 'category', 'location', 'star_rating_display',
         'days', 'price', 'price_formatted', 'persons', 'created_at'  # Added 'price'
@@ -279,7 +280,7 @@ class TrekkingAdmin(admin.ModelAdmin):
 
 
 @admin.register(Ad)
-class AdAdmin(admin.ModelAdmin):
+class AdAdmin(TranslationAdmin):
     list_display = [
         'id', 'title', 'get_package_name', 'discount_percentage',
         'is_active', 'start_date', 'end_date', 'image_preview'
@@ -339,7 +340,7 @@ class AdAdmin(admin.ModelAdmin):
 
 
 @admin.register(AboutImage)
-class AboutImageAdmin(admin.ModelAdmin):
+class AboutImageAdmin(TranslationAdmin):
     list_display = ['id', 'caption', 'order', 'is_active', 'image_preview', 'created_at']
     list_filter = ['is_active']
     list_editable = ['order', 'is_active']
@@ -357,7 +358,7 @@ class AboutImageAdmin(admin.ModelAdmin):
 
 
 @admin.register(HeroSlide)
-class HeroSlideAdmin(admin.ModelAdmin):
+class HeroSlideAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'media_type', 'order', 'is_active', 'preview', 'created_at']
     list_filter = ['media_type', 'is_active']
     list_editable = ['order', 'is_active']

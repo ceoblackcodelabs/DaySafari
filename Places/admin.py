@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import (
     DestinationsCategory, Destinations, Itinerary,
     AwesomePackages, PackagePurchase,
@@ -8,7 +9,7 @@ from django.utils.html import format_html
 from django.contrib import messages
 
 
-class ItineraryInline(admin.TabularInline):
+class ItineraryInline(TranslationTabularInline):
     model = Itinerary
     extra = 1
     fields = ['day_number', 'title', 'description', 'activities', 'accommodation', 'meals', 'image']
@@ -16,7 +17,7 @@ class ItineraryInline(admin.TabularInline):
 
 
 @admin.register(Itinerary)
-class ItineraryAdmin(admin.ModelAdmin):
+class ItineraryAdmin(TranslationAdmin):
     list_display = ['package', 'day_number', 'title']
     list_filter = ['package']
     search_fields = ['package__name', 'title', 'description']
@@ -24,7 +25,7 @@ class ItineraryAdmin(admin.ModelAdmin):
 
 
 @admin.register(IncluisiveExcluisive)
-class IncluisiveExcluisiveAdmin(admin.ModelAdmin):
+class IncluisiveExcluisiveAdmin(TranslationAdmin):
     list_display = ['package', 'name', 'is_inclusive', 'type_badge']
     list_filter = ['is_inclusive', 'package']
     search_fields = ['name', 'package__name']
@@ -42,7 +43,7 @@ class IncluisiveExcluisiveAdmin(admin.ModelAdmin):
 
 
 @admin.register(AwesomePackages)
-class AwesomePackagesAdmin(admin.ModelAdmin):
+class AwesomePackagesAdmin(TranslationAdmin):
     list_display = [
         'name', 'category', 'location', 'star_rating_display',
         'days', 'price_formatted', 'persons', 'slug', 'created_at'
@@ -113,7 +114,7 @@ class AwesomePackagesAdmin(admin.ModelAdmin):
 
 
 @admin.register(DestinationsCategory)
-class DestinationsCategoryAdmin(admin.ModelAdmin):
+class DestinationsCategoryAdmin(TranslationAdmin):
     list_display = ['id', 'category', 'location', 'image_orientation', 'image_preview']
     search_fields = ['category', 'location']
     list_filter = ['image_orientation']
@@ -139,21 +140,21 @@ class DestinationsCategoryAdmin(admin.ModelAdmin):
     make_portrait.short_description = "Set to portrait"
 
 
-class DestinationImageInline(admin.TabularInline):
+class DestinationImageInline(TranslationTabularInline):
     model = DestinationImage
     extra = 3
     fields = ['image', 'caption', 'is_featured', 'order']
     ordering = ['order']
 
 @admin.register(Destinations)
-class DestinationsAdmin(admin.ModelAdmin):
+class DestinationsAdmin(TranslationAdmin):
     list_display = ['name', 'category', 'price', 'created_at']
     list_filter = ['category', 'created_at']
     search_fields = ['name', 'description']
     inlines = [DestinationImageInline]
 
 @admin.register(DestinationImage)
-class DestinationImageAdmin(admin.ModelAdmin):
+class DestinationImageAdmin(TranslationAdmin):
     list_display = ['destination', 'caption', 'is_featured', 'order', 'created_at']
     list_filter = ['is_featured', 'destination', 'created_at']
     search_fields = ['caption', 'destination__name']
