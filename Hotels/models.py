@@ -200,3 +200,14 @@ class ApiKey(models.Model):
         if key and hmac.compare_digest(key.key_hash, cls.hash_token(token)):
             return key
         return None
+
+
+from ClientRequests.models import Bookings  # noqa: E402
+
+
+class HotelBooking(Bookings):
+    """Hotel enquiries only: the same rows as Client Requests > Bookings, shown next to the hotels in the admin."""
+    class Meta:
+        proxy = True
+        verbose_name = 'Hotel booking'
+        verbose_name_plural = 'Hotel bookings'
