@@ -543,3 +543,17 @@ html{scroll-behavior:smooth}
 .ab-call small{display:block;font-weight:400;color:#666;line-height:1}
 @media(max-width:991px){.ab-photo{margin:0 18px 18px 0}}
 @media(max-width:991px){.ab-photo img{aspect-ratio:4/3}}
+/* Phones: the video fills the hero (no thin band over a blurred backdrop) and the hero is shorter */
+@media(max-width:767px){
+  .hero-video-bg{display:none}
+  .hero-video-fg{object-fit:cover;object-position:center}
+  .carousel-header .carousel-inner .carousel-item{min-height:500px}
+  .carousel-header .carousel-inner .carousel-item .carousel-caption{padding:84px 16px 52px}
+  .hero-title{font-size:clamp(2rem,9vw,2.6rem);margin-bottom:12px}
+  .hero-sub{font-size:1rem;margin-bottom:18px}
+  .hero-eyebrow{font-size:.72rem;padding:5px 14px;margin-bottom:12px}
+  .hero-btn{padding:12px 26px}
+}
+.ab-photo img{height:auto!important}
+@media(max-width:991px){.ab-photo img{aspect-ratio:16/10!important;max-height:340px}.ab-photo::before{inset:12px -12px -12px 12px}}
+@media(max-width:575px){.ab-badge{max-width:190px;padding:7px 10px;left:10px;bottom:10px}.ab-badge small{display:none}.ab-badge i{width:30px;height:30px}.about .section-about-title::before{display:none}}
