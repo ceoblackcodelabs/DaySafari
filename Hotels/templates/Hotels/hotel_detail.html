@@ -16,8 +16,7 @@
 "description":"{{ hotel.card_summary|escapejs }}","url":"https://daysafarisadventures.co.ke{{ request.path }}",
 {% if main_image %}"image":"https://daysafarisadventures.co.ke{{ main_image.image|thumb:1200 }}",{% endif %}
 "address":{"@type":"PostalAddress","addressLocality":"{{ hotel.location|escapejs }}","addressCountry":"{{ hotel.country|escapejs }}"},
-"starRating":{"@type":"Rating","ratingValue":"{{ hotel.star_rating }}"}{% if hotel.price_per_night %},
-"priceRange":"From ${{ hotel.price_per_night|floatformat:'-2' }} per night"{% endif %}}
+"starRating":{"@type":"Rating","ratingValue":"{{ hotel.star_rating }}"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -117,7 +116,6 @@
                 <div class="rounded bg-white p-4 border">
                     <h2 class="h5">{% trans "Good to know" %}</h2>
                     <ul class="mb-0">
-                        <li>{% trans "Prices are per night, starting rates in US dollars, and change by season and room type." %}</li>
                         <li>{% trans "Send an enquiry with your dates and we confirm availability and your exact rate within 24 hours." %}</li>
                         <li>{% trans "We can combine this stay with a safari or tour. Just mention it in your message." %}</li>
                     </ul>
@@ -127,10 +125,6 @@
             <!-- ============ right column: enquiry ============ -->
             <div class="col-lg-4">
                 <div class="hotel-enquiry bg-white rounded p-4 border">
-                    {% if hotel.price_per_night %}
-                    <p class="mb-1"><small>{% trans "From" %}</small></p>
-                    <p class="h2 text-dark mb-3">${{ hotel.price_per_night|floatformat:"-2" }} <small class="fs-6">/ {% trans "night" %}</small></p>
-                    {% endif %}
                     <h2 class="h5 mb-3">{% trans "Check availability" %}</h2>
                     <form method="post" novalidate>
                         {% csrf_token %}

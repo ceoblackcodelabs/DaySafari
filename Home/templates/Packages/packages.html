@@ -43,7 +43,7 @@
                 {% for c in categories %}<a href="{{ c.url }}" class="pk-pill {% if c.active %}active{% endif %}">{% trans c.value %} <span>{{ c.n }}</span></a>{% endfor %}
             </nav>
 
-            <details class="pk-more" {% if current_filters.location or current_filters.min_price or current_filters.max_price or current_filters.days %}open{% endif %}>
+            <details class="pk-more" {% if current_filters.location or current_filters.days %}open{% endif %}>
                 <summary><i class="fas fa-sliders-h"></i> {% trans "More filters" %}</summary>
                 <div class="pk-fields">
                     <label><span>{% trans "Location" %}</span>
@@ -51,13 +51,9 @@
                             <option value="">{% trans "All Locations" %}</option>
                             {% for location in locations %}<option value="{{ location }}" {% if current_filters.location == location %}selected{% endif %}>{{ location }}</option>{% endfor %}
                         </select></label>
-                    <label><span>{% trans "Min Price ($)" %}</span><input type="number" name="min_price" min="0" step="50" inputmode="numeric" placeholder="{% trans 'Min' %}" value="{{ current_filters.min_price }}"></label>
-                    <label><span>{% trans "Max Price ($)" %}</span><input type="number" name="max_price" min="0" step="50" inputmode="numeric" placeholder="{% trans 'Max' %}" value="{{ current_filters.max_price }}"></label>
                     <label><span>{% trans "Max Days" %}</span><input type="number" name="days" min="1" max="365" inputmode="numeric" placeholder="{% trans 'Days' %}" value="{{ current_filters.days }}"></label>
                 </div>
                 <div class="pk-presets">
-                    <b>{% trans "Budget" %}</b>
-                    {% for label, url, on in price_presets %}<a href="{{ url }}" class="pk-chip {% if on %}active{% endif %}">{{ label }}</a>{% endfor %}
                     <b>{% trans "Length" %}</b>
                     {% for label, url, on in days_presets %}<a href="{{ url }}" class="pk-chip {% if on %}active{% endif %}">{{ label }}</a>{% endfor %}
                 </div>
@@ -100,7 +96,6 @@
                 <a class="pk-img" href="{% url 'package_detail' package.slug %}" tabindex="-1" aria-hidden="true">
                     <img src="{% if package.image %}{{ package.image|thumb:640 }}{% else %}{% static 'img/package-placeholder.jpg' %}{% endif %}" alt="" loading="{% if forloop.counter > 3 %}lazy{% else %}eager{% endif %}" decoding="async" width="640" height="480">
                     <span class="pk-badge">{% trans package.category %}</span>
-                    <span class="pk-price">{% trans "From" %} <b>${{ package.price|floatformat:"0g" }}</b></span>
                 </a>
                 <div class="pk-body">
                     <p class="pk-loc"><i class="fa fa-map-marker-alt"></i> {{ package.location }}</p>

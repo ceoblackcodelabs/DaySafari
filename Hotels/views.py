@@ -67,8 +67,7 @@ class HotelListView(ListView):
         context['sel_type'] = params.get('type', '')
         context['sel_sort'] = params.get('sort', 'featured')
         context['query'] = params.get('q', '')
-        context['sorts'] = [('featured', _('Featured')), ('price_low', _('Price: low to high')),
-                            ('price_high', _('Price: high to low')), ('rating', _('Star rating')), ('name', _('Name A-Z'))]
+        context['sorts'] = [('featured', _('Featured')), ('rating', _('Star rating')), ('name', _('Name A-Z'))]
         keep = params.copy()
         keep.pop('page', None)
         context['keep_params'] = keep.urlencode()

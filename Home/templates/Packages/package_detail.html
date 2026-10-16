@@ -14,8 +14,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"TouristTrip","name":"{{ package.name|escapejs }}",
 "description":"{{ package.description|striptags|truncatechars:300|escapejs }}",
-"touristType":"Safari","provider":{"@type":"TravelAgency","name":"Day Safaris Adventures","url":"https://daysafarisadventures.co.ke"}{% if package.price %},
-"offers":{"@type":"Offer","price":"{{ package.price|stringformat:"s" }}","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://daysafarisadventures.co.ke{{ request.path }}"}{% endif %}}
+"touristType":"Safari","provider":{"@type":"TravelAgency","name":"Day Safaris Adventures","url":"https://daysafarisadventures.co.ke"}}
 </script>
 {% endblock structured_data %}
 
@@ -359,7 +358,6 @@
                         {% else %}
                         <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 rounded-top" alt="{{ similar.name }}" style="height: 200px; object-fit: cover;" loading="lazy" decoding="async">
                         {% endif %}
-                        <div class="packages-price py-2 px-4">${{ similar.price|floatformat:2 }}</div>
                     </div>
                     <div class="packages-content bg-white rounded-bottom p-4">
                         <h2 class="h5">{{ similar.name }}</h2>

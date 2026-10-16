@@ -5,7 +5,6 @@
         <a class="pk-img" href="{% url 'kili_detail' package.id %}" tabindex="-1" aria-hidden="true">
             <img src="{% if package.image %}{{ package.image|thumb:640 }}{% else %}{% static 'img/placeholder-package.jpg' %}{% endif %}" alt="" loading="{% if forloop.counter > 3 %}lazy{% else %}eager{% endif %}" decoding="async" width="640" height="480">
             <span class="pk-badge">{{ package.category }}</span>
-            <span class="pk-price">{% trans "From" %} <b>${{ package.price|floatformat:"0g" }}</b></span>
         </a>
         <div class="pk-body">
             <p class="pk-loc"><i class="fa fa-map-marker-alt"></i> {{ package.location }}</p>

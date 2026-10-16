@@ -81,7 +81,6 @@
                 <a class="pk-img" href="{{ hotel.get_absolute_url }}" tabindex="-1" aria-hidden="true">
                     <img src="{% if photo %}{{ photo.image|thumb:640 }}{% else %}{% static 'img/hotel-placeholder.jpg' %}{% endif %}" alt="" loading="{% if forloop.counter > 3 %}lazy{% else %}eager{% endif %}" decoding="async" width="640" height="480">
                     <span class="pk-badge">{{ hotel.get_property_type_display }}</span>
-                    {% if hotel.price_per_night %}<span class="pk-price">{% trans "from" %} <b>${{ hotel.price_per_night|floatformat:"-2" }}</b> / {% trans "night" %}</span>{% else %}<span class="pk-price pk-price-ask">{% trans "Ask for rate" %}</span>{% endif %}
                 </a>
                 <div class="pk-body">
                     <p class="pk-loc"><i class="fa fa-map-marker-alt"></i> {{ hotel.location }}, {{ hotel.country }}</p>

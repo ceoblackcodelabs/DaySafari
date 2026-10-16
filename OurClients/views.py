@@ -578,15 +578,9 @@ class PackagesView(ListView):
         context['chips'] = chips
         context['clear_url'] = str(reverse_lazy('packages')) + (f"?{urlencode({'sort': f['sort']})}" if f['sort'] else '')
 
-        context['price_presets'] = [
-            (_('Under $1,000'), self._url(min_price=None, max_price=999), f['min_price'] is None and f['max_price'] == 999),
-            ('$1,000 - $2,000', self._url(min_price=1000, max_price=2000), f['min_price'] == 1000 and f['max_price'] == 2000),
-            ('$2,000 - $3,000', self._url(min_price=2000, max_price=3000), f['min_price'] == 2000 and f['max_price'] == 3000),
-            (_('$3,000 and up'), self._url(min_price=3000, max_price=None), f['min_price'] == 3000 and f['max_price'] is None),
-        ]
+        context['price_presets'] = []
         context['days_presets'] = [(_('Up to %(n)s days') % {'n': n}, self._url(days=n), f['days'] == n) for n in (3, 5, 7, 10, 14)]
-        labels = [('', _('Recommended')), ('price_asc', _('Price: Low to High')),
-                  ('price_desc', _('Price: High to Low')), ('rating', _('Rating: High to Low')),
+        labels = [('', _('Recommended')), ('rating', _('Rating: High to Low')),
                   ('days_asc', _('Duration: Short to Long')), ('days_desc', _('Duration: Long to Short')),
                   ('newest', _('Newest first'))]
         context['sort_options'] = [(key, label, self._url(sort=key), f['sort'] == key) for key, label in labels]

@@ -45,7 +45,7 @@
                         <h5 class="mb-2">{{ saved.destination.name }}</h5>
                         <p class="text-muted mb-3 small"><i class="fa fa-map-marker-alt text-primary me-1"></i>{{ saved.destination.category.location }}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold text-primary">${{ saved.destination.price|floatformat:2 }}</span>
+                            <span></span>
                             <a href="{% url 'destination_detail' saved.destination.id %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">{% trans "View" %}</a>
                         </div>
                         <p class="text-muted small mt-3 mb-0"><i class="fa fa-clock me-1"></i>{% blocktrans with t=saved.created_at|timesince %}Saved {{ t }} ago{% endblocktrans %}</p>

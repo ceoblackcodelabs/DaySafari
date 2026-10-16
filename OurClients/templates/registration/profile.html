@@ -163,7 +163,6 @@
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
                             <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ booking.date|date:"d M Y" }}</small>
                             <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-user text-primary me-2"></i>{{ booking.persons }} </a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-dollar-sign text-primary me-2"></i>{{ booking.destination.price }}</a>
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
@@ -217,7 +216,6 @@
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
                             <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ booking.date|date:"d M Y" }}</small>
                             <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-user text-primary me-2"></i>{{ booking.persons }} </a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-dollar-sign text-primary me-2"></i>{{ booking.destination.price }}</a>
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
@@ -264,7 +262,6 @@
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{% blocktrans with d=package.days %}{{ d }} days{% endblocktrans %}</small>
                         <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{% blocktrans with p=package.persons %}{{ p }} Persons{% endblocktrans %}</small>
                     </div>
-                    <div class="packages-price py-2 px-4">${{ package.price|floatformat:2 }}</div>
                 </div>
                 <div class="packages-content bg-light">
                     <div class="p-4 pb-0">
