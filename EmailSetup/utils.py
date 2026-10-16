@@ -94,7 +94,7 @@ def notify_staff_of_lead(lead):
     def _send():
         try:
             company = get_company()
-            to_email = company.booking_confirmation_email if company else 'info@daysafarisadventures.com'
+            to_email = company.booking_confirmation_email if company else 'info@daysafarisadventures.co.ke'
             is_booking = hasattr(lead, 'booking_type')
             if hasattr(lead, 'tour'):          # WhatsApp popup lead
                 title = f"New WhatsApp lead: {lead.name} - {lead.tour or 'general enquiry'}"
@@ -154,7 +154,7 @@ def send_booking_confirmation(booking):
             'booking': booking,
             'company_phone': company.company_phone if company else '+254759379600',
             'company_whatsapp': company.company_whatsapp if company else '+254140936286',
-            'company_email': company.booking_confirmation_email if company else 'info@daysafarisadventures.com',
+            'company_email': company.booking_confirmation_email if company else 'info@daysafarisadventures.co.ke',
             'current_year': 2026
         }
         html_content = render_to_string('Emails/booking_confirmation.html', context)
@@ -177,7 +177,7 @@ def send_booking_verification(booking):
         if not company:
             logger.info("Warning: Company profile not found, using default values")
 
-        logger.info(f"Preparing to send booking Verification email to {company.booking_confirmation_email if company else 'info@daysafarisadventures.com'} for booking ID {booking.id}...")
+        logger.info(f"Preparing to send booking Verification email to {company.booking_confirmation_email if company else 'info@daysafarisadventures.co.ke'} for booking ID {booking.id}...")
         mpesa_payment_link = f"{company.mpesa_payment_link if company else 'https://daysafarisadventures.co.ke'}/payment/from-bookings/{booking.id}/"
         price = booking.destination.price if booking.destination else 0
         total = booking.persons * (price or 0)
@@ -186,7 +186,7 @@ def send_booking_verification(booking):
             'booking': booking,
             'company_phone': company.company_phone if company else '+254759379600',
             'company_whatsapp': company.company_whatsapp if company else '+254140936286',
-            'company_email': company.booking_confirmation_email if company else 'info@daysafarisadventures.com',
+            'company_email': company.booking_confirmation_email if company else 'info@daysafarisadventures.co.ke',
             'current_year': 2026,
 
             # more
@@ -201,7 +201,7 @@ def send_booking_verification(booking):
         html_content = render_to_string('Emails/bookings_verification.html', context)
 
         return send_transactional_email(
-            company.booking_confirmation_email if company else 'info@daysafarisadventures.com',
+            company.booking_confirmation_email if company else 'info@daysafarisadventures.co.ke',
             booking.name,
             f"Booking Verification - #{booking.id}",
             html_content
@@ -292,7 +292,7 @@ def send_package_payment_email(package_purchase):
             'payment_link': payment_link,
             'company_phone': '+254 734 962 965',
             'company_whatsapp': '+254 783 457 058',
-            'company_email': 'info@daysafarisadventures.com',
+            'company_email': 'info@daysafarisadventures.co.ke',
             'current_year': '2025'
         }
 
@@ -318,7 +318,7 @@ def send_new_user_alert_to_admin(user):
         logger.info(f"Preparing to send new user alert to admin...")
 
         # Get admin email from company profile or settings
-        admin_email = company.booking_confirmation_email if company else 'info@daysafarisadventures.com'
+        admin_email = company.booking_confirmation_email if company else 'info@daysafarisadventures.co.ke'
 
         context = {
             'user': user,
@@ -330,7 +330,7 @@ def send_new_user_alert_to_admin(user):
             'admin_panel_link': 'https://daysafarisadventures.co.ke/admin/auth/user/',
             'company_phone': company.company_phone if company else '+254759379600',
             'company_whatsapp': company.company_whatsapp if company else '+254140936286',
-            'company_email': company.booking_confirmation_email if company else 'info@daysafarisadventures.com',
+            'company_email': company.booking_confirmation_email if company else 'info@daysafarisadventures.co.ke',
             'current_year': timezone.now().year
         }
 
