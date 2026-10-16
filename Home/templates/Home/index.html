@@ -204,12 +204,13 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
-                <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
+                <div class="ab-photo">
                     <img id="aboutLoopImage"
                          src="{% if about_images %}{{ about_images.0.image|thumb:900 }}{% else %}{% static 'img/about-img.webp' %}{% endif %}"
-                         class="img-fluid w-100 h-100 about-loop-img"
+                         class="about-loop-img"
                          alt="{% if about_images %}{{ about_images.0.caption|default:_('About Day Safaris') }}{% else %}{% trans 'About Day Safaris' %}{% endif %}"
-                         width="600" height="600" loading="eager">
+                         width="600" height="750" loading="eager">
+                    <div class="ab-badge"><i class="fa fa-map-marker-alt"></i><span><b>{% trans "Nairobi, Kenya" %}</b><small>{% trans "Destination management company" %}</small></span></div>
                 </div>
                 {% if about_images|length > 1 %}
                 <script id="about-loop-data" type="application/json">
@@ -220,30 +221,22 @@
             <div class="col-lg-7">
                 <p class="h5 section-about-title pe-3">{% trans "Welcome To Day Safaris Adventures" %}</p>
                 <h1 class="mb-4">{% trans "WHO WE ARE" %}</h1>
-                <p class="mb-4">{% trans "We are a premier destination management company headquartered in Nairobi, Kenya, dedicated to creating unforgettable travel experiences across Africa and beyond. Our team of experienced, informative, friendly, and professional guides ensures every client enjoys safe, reliable, personalized, and budget-friendly journeys." %}</p>
-                <p class="mb-4">{% trans "We specialize in both inbound and outbound travel services, offering a diverse range of tailor-made tours that showcase Africa’s breathtaking wildlife, stunning landscapes, rich cultural heritage, and iconic attractions, alongside exciting destinations across Europe, America, and Asia." %}</p>
+                <p class="ab-lead mb-3">{% trans "We are a premier destination management company headquartered in Nairobi, Kenya, dedicated to creating unforgettable travel experiences across Africa and beyond. Our team of experienced, informative, friendly, and professional guides ensures every client enjoys safe, reliable, personalized, and budget-friendly journeys." %}</p>
+                <p class="mb-3">{% trans "We specialize in both inbound and outbound travel services, offering a diverse range of tailor-made tours that showcase Africa’s breathtaking wildlife, stunning landscapes, rich cultural heritage, and iconic attractions, alongside exciting destinations across Europe, America, and Asia." %}</p>
                 <p class="mb-4">{% trans "Driven by passion and excellence, we go beyond ordinary travel by connecting our clients with authentic experiences, vibrant cultures, fascinating history, and unique cuisines that make every destination memorable. Our commitment is to deliver exceptional service, comfort, and meaningful adventures that leave lasting impressions." %}</p>
-                <div class="row gy-2 gx-4 mb-4">
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "First Class Flights" %}</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Handpicked Safari Lodges" %}</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "5 Star Accommodations" %}</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "Latest Model Safari Vehicles" %}</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "150+ Premium Safari Tours" %}</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>{% trans "24/7 Customer Support" %}</p>
-                    </div>
+                <ul class="ab-points">
+                    <li><i class="fa fa-plane"></i>{% trans "First Class Flights" %}</li>
+                    <li><i class="fa fa-hotel"></i>{% trans "Handpicked Safari Lodges" %}</li>
+                    <li><i class="fa fa-star"></i>{% trans "5 Star Accommodations" %}</li>
+                    <li><i class="fa fa-truck-monster"></i>{% trans "Latest Model Safari Vehicles" %}</li>
+                    <li><i class="fa fa-route"></i>{% trans "150+ Premium Safari Tours" %}</li>
+                    <li><i class="fa fa-headset"></i>{% trans "24/7 Customer Support" %}</li>
+                </ul>
+                <div class="ab-actions">
+                    <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'about' %}">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about Day Safaris Adventures" %}</span></a>
+                    <a class="ab-quote" href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20would%20like%20a%20quote" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</a>
+                    <a class="ab-call" href="tel:+254759379600"><i class="fa fa-phone-alt"></i><span><small>{% trans "Call us" %}</small>+254 759 379 600</span></a>
                 </div>
-                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="{% url 'about' %}">{% trans "Read More" %}<span class="visually-hidden"> {% trans "about Day Safaris Adventures" %}</span></a>
             </div>
         </div>
     </div>
