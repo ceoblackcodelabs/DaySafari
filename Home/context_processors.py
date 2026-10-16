@@ -83,7 +83,7 @@ def _badges():
 def mega_menu(request):
     """Pictures for the header's big hover menus (tours, trekking, cruises, packages). Cached for 10 minutes."""
     from django.core.cache import cache
-    data = cache.get('mega_menu_v4')
+    data = cache.get('mega_menu_v5')
     if data is None:
         from .models import Trekking
         from .templatetags.image_tags import thumb
@@ -106,6 +106,7 @@ def mega_menu(request):
                   AwesomePackages.objects.values_list('category').annotate(n=Count('id'))}
         data = {
             'pkg_count': counts,
+            'places': sorted({loc for loc in AwesomePackages.objects.values_list('location', flat=True) if loc})[:80],
             'stats': _site_stats(),
             'badges': _badges(),
             'lead_tours': list(AwesomePackages.objects.order_by('name').values_list('name', flat=True)[:80]),
@@ -116,7 +117,7 @@ def mega_menu(request):
             'cruises': [{'name': p.name, 'slug': p.slug, 'days': p.days, 'img': pic(p)}
                         for p in AwesomePackages.objects.filter(category='Cruises').order_by('id')[:5] if p.slug],
         }
-        cache.set('mega_menu_v4', data, 600)
+        cache.set('mega_menu_v5', data, 600)
     return {'mega': data}
 
 

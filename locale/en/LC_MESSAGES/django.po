@@ -4096,3 +4096,12 @@ msgstr "Flights & airline tickets"
 
 msgid "Hotels & stays"
 msgstr "Hotels & stays"
+
+msgid "Trip length"
+msgstr "Trip length"
+
+msgid "Any length"
+msgstr "Any length"
+
+msgid "Up to %(n)s days"
+msgstr "Up to %(n)s days"

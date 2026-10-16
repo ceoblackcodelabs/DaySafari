@@ -4632,3 +4632,12 @@ msgstr "Ndege na tiketi za ndege"
 
 msgid "Hotels & stays"
 msgstr "Hoteli na malazi"
+
+msgid "Trip length"
+msgstr "Muda wa safari"
+
+msgid "Any length"
+msgstr "Muda wowote"
+
+msgid "Up to %(n)s days"
+msgstr "Hadi siku %(n)s"

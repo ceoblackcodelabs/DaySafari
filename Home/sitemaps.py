@@ -38,6 +38,9 @@ class PackagesSitemap(_Base):
     def location(self, obj):
         return reverse('package_detail', args=[obj.slug])
 
+    def lastmod(self, obj):
+        return obj.created_at
+
 
 class DestinationsSitemap(_Base):
     priority, changefreq = 0.8, 'monthly'
@@ -67,6 +70,9 @@ class BlogSitemap(_Base):
 
     def location(self, obj):
         return reverse('blog_detail', args=[obj.slug])
+
+    def lastmod(self, obj):
+        return obj.published_date
 
 
 class HotelsSitemap(_Base):

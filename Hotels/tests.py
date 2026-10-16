@@ -460,3 +460,89 @@ class OffersApiTests(TestCase):
     def test_homepage_shows_api_created_offer(self):
         self.create(title='Zanzibar Escape')
         self.assertContains(self.client.get('/en/'), 'Zanzibar Escape')
+
+
+@override_settings(CACHES=LOCMEM, ALLOWED_HOSTS=['*'])
+class BlogsApiTests(TestCase):
+    """The blog publishing API."""
+
+    def setUp(self):
+        cache.clear()
+        self.media = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.media, True)
+        override = override_settings(MEDIA_ROOT=self.media)
+        override.enable()
+        self.addCleanup(override.disable)
+        self.key, self.token = ApiKey.create_key('tests')
+        self.auth = {'HTTP_AUTHORIZATION': f'Bearer {self.token}'}
+        self.body = ('<h2>Why go</h2><p>' + 'Wildlife and landscapes make Kenya special. ' * 40 + '</p>'
+                     '<p>[[image:1]]</p><h2>When</h2><p>' + 'Dry season is best for game viewing. ' * 30 + '</p>')
+
+    def create(self, query='', data=None, files=None):
+        from Home.models import BlogCategory
+        BlogCategory.objects.get_or_create(slug='planning-tips', defaults={'name': 'Planning & Tips'})
+        payload = {'title': 'Best Time to Visit Amboseli', 'content': self.body, 'category': 'planning-tips',
+                   'seo_title': 'Best Time to Visit Amboseli', 'seo_description': 'When to go to Amboseli.',
+                   **(data or {})}
+        body = {'data': json.dumps(payload), 'image': png(), 'images': [png(800, 500, 'inline.png')],
+                'alts': json.dumps(['Elephants in Amboseli']), 'captions': json.dumps(['Elephants, Amboseli'])}
+        body.update(files or {})
+        return self.client.post(f'/api/v1/blogs/{query}', body, **self.auth)
+
+    def test_requires_key_schema_public(self):
+        self.assertEqual(self.client.get('/api/v1/blogs/').status_code, 401)
+        self.assertEqual(self.client.get('/api/v1/blogs/schema/').status_code, 200)
+
+    def test_dry_run_then_create_with_inline_image_and_category(self):
+        from Home.models import Blogs
+        r = self.create('?dry_run=1')
+        self.assertEqual((r.status_code, r.json()['status']), (200, 'would_create'))
+        self.assertEqual(Blogs.objects.count(), 0)
+        r = self.create()
+        self.assertEqual(r.status_code, 201, r.content)
+        post = r.json()['post']
+        self.assertEqual(post['slug'], 'best-time-to-visit-amboseli')
+        self.assertEqual(post['category'], 'planning-tips')
+        blog = Blogs.objects.get()
+        self.assertIn('<figure><img src="', blog.content)
+        self.assertIn('Elephants, Amboseli', blog.content)
+        self.assertNotIn('[[image', blog.content)
+        self.assertTrue(blog.image.name.endswith('.png'))
+        page = self.client.get(f'/en/blog/{blog.slug}/')
+        self.assertContains(page, 'Best Time to Visit Amboseli')
+        self.assertEqual(self.create().status_code, 409)               # same title: no duplicate
+
+    def test_content_is_sanitised(self):
+        from Home.models import Blogs
+        evil = self.body + '<script>alert(1)</script><a href="javascript:alert(1)" onclick="x()">bad</a><img src="x" onerror="y()">'
+        self.assertEqual(self.create(data={'content': evil, 'title': 'Safe post'}).status_code, 201)
+        content = Blogs.objects.get().content
+        for bad in ('<script', 'javascript:', 'onclick', 'onerror'):
+            self.assertNotIn(bad, content)
+
+    def test_validation_errors(self):
+        r = self.create(data={'content': '<p>too short</p>'})
+        self.assertEqual(r.status_code, 400)
+        self.assertIn('content', r.json()['errors'])
+        r = self.create(data={'category': 'nope'})
+        self.assertIn('category', r.json()['errors'])
+        r = self.create(data={'title': 'x' * 101})
+        self.assertIn('title', r.json()['errors'])
+        r = self.client.post('/api/v1/blogs/', {'data': json.dumps({'title': 'No picture', 'content': self.body})}, **self.auth)
+        self.assertIn('image', r.json()['errors'])
+        r = self.create(data={'content': self.body + '<p>[[image:3]]</p>'})
+        self.assertIn('images', r.json()['errors'])
+
+    def test_translations_patch_and_no_delete(self):
+        from Home.models import Blogs
+        self.create()
+        r = self.client.patch('/api/v1/blogs/best-time-to-visit-amboseli/', json.dumps({
+            'seo_description': 'Updated.', 'translations': {'fr': {'title': 'Quand visiter Amboseli', 'content': self.body}}}),
+            content_type='application/json', **self.auth)
+        self.assertEqual(r.status_code, 200, r.content)
+        blog = Blogs.objects.get()
+        self.assertEqual(blog.title_fr, 'Quand visiter Amboseli')
+        self.assertEqual(blog.seo_description, 'Updated.')
+        self.assertEqual(blog.title, 'Best Time to Visit Amboseli')            # English untouched
+        self.assertContains(self.client.get('/fr/blog/best-time-to-visit-amboseli/'), 'Quand visiter Amboseli')
+        self.assertEqual(self.client.delete('/api/v1/blogs/best-time-to-visit-amboseli/', **self.auth).status_code, 405)

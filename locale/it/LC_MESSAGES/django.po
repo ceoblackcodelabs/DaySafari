@@ -4566,3 +4566,12 @@ msgstr "Voli e biglietti aerei"
 
 msgid "Hotels & stays"
 msgstr "Hotel e soggiorni"
+
+msgid "Trip length"
+msgstr "Durata del viaggio"
+
+msgid "Any length"
+msgstr "Qualsiasi durata"
+
+msgid "Up to %(n)s days"
+msgstr "Fino a %(n)s giorni"

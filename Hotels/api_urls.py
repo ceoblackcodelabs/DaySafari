@@ -1,9 +1,13 @@
 from django.urls import path
 
 from . import api
-from Home import offers_api
+from Home import blogs_api, offers_api
 
 urlpatterns = [
+    path('blogs/schema/', blogs_api.blogs_schema, name='api_blogs_schema'),
+    path('blogs/', blogs_api.blogs_collection, name='api_blogs'),
+    path('blogs/<slug:slug>/', blogs_api.blog_detail, name='api_blog_detail'),
+    path('blogs/<slug:slug>/image/', blogs_api.blog_image, name='api_blog_image'),
     path('offers/schema/', offers_api.offers_schema, name='api_offers_schema'),
     path('offers/', offers_api.offers_collection, name='api_offers'),
     path('offers/<int:pk>/', offers_api.offer_detail, name='api_offer_detail'),

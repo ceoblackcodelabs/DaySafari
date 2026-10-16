@@ -19,6 +19,12 @@
 "starRating":{"@type":"Rating","ratingValue":"{{ hotel.star_rating }}"}{% if hotel.price_per_night %},
 "priceRange":"From ${{ hotel.price_per_night|floatformat:'-2' }} per night"{% endif %}}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://daysafarisadventures.co.ke/{{ LANGUAGE_CODE }}/"},
+{"@type":"ListItem","position":2,"name":"Hotels","item":"https://daysafarisadventures.co.ke/{{ LANGUAGE_CODE }}/hotels/"},
+{"@type":"ListItem","position":3,"name":"{{ hotel.name|escapejs }}","item":"https://daysafarisadventures.co.ke{{ request.path }}"}]}
+</script>
 {% endblock structured_data %}
 
 {% block body %}

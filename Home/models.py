@@ -265,7 +265,8 @@ class Blogs(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug_base = self.title.lower().replace(' ', '-')
+            from django.utils.text import slugify
+            slug_base = slugify(self.title)[:70] or 'post'
             slug = slug_base
             counter = 1
             while Blogs.objects.filter(slug=slug).exists():

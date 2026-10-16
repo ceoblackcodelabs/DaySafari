@@ -16,6 +16,7 @@
 {% block twitter_description %}{% trans "Book Kenya safari packages from Nairobi. Expert-guided tours to Masai Mara, Amboseli, Kilimanjaro & East Africa. Tailor-made safaris for all budgets." %}{% endblock %}
 
 {% block carousel %}
+{% load hero_tags %}
 
 <div class="carousel-header">
     <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
@@ -36,16 +37,12 @@
             {% if hero_slides %}
             <!-- Dynamic slides, uploaded via Django Admin > Hero Slides -->
             {% for slide in hero_slides %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="{% if slide.media_type == 'video' and slide.video %}9000{% else %}6000{% endif %}">
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="{% if slide.media_type == 'video' and slide.video %}5000{% else %}6000{% endif %}">
                 {% if slide.media_type == 'video' and slide.video %}
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
-                    <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video{% if slide.fallback_image %} poster="{{ slide.fallback_image.url }}"{% endif %}>
-                            <source src="{{ slide.video.url }}" type="video/mp4">
-                            {% if slide.fallback_image %}
-                            <img src="{{ slide.fallback_image.url }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ slide.title }}">
-                            {% endif %}
-                        </video>
+                    <div class="hero-video">
+                        <video class="hero-video-bg" aria-hidden="true" tabindex="-1" muted loop playsinline preload="none" data-hero-video{% if slide.fallback_image %} poster="{{ slide.fallback_image.url }}"{% endif %}><source src="{{ slide.video.url }}" type="video/mp4"></video>
+                        <video class="hero-video-fg" muted loop playsinline preload="none" data-hero-video{% if slide.fallback_image %} poster="{{ slide.fallback_image.url }}"{% endif %}><source src="{{ slide.video.url }}" type="video/mp4"></video>
                     </div>
                 </div>
                 {% else %}
@@ -54,15 +51,16 @@
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
                         {% if slide.eyebrow_text %}
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{{ slide.eyebrow_text }}</h4>
+                        <p class="hero-eyebrow">{{ slide.eyebrow_text }}</p>
                         {% endif %}
-                        <h1 class="display-2 text-capitalize text-white mb-4">{{ slide.title }}</h1>
+                        <h1 class="hero-title">{{ slide.title|hero_title }}</h1>
                         {% if slide.subtitle %}
-                        <p class="mb-5 fs-5">{{ slide.subtitle }}</p>
+                        <p class="hero-sub">{{ slide.subtitle }}</p>
                         {% endif %}
                         {% if slide.button_text %}
-                        <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{{ slide.button_url|default:'#' }}">{{ slide.button_text }}</a>
+                        <div class="hero-actions">
+                            <a class="hero-btn hero-btn-main" href="{{ slide.button_url|default:'#' }}">{{ slide.button_text }}</a>
+                            <button type="button" class="hero-btn hero-btn-ghost" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button>
                         </div>
                         {% endif %}
                     </div>
@@ -76,14 +74,10 @@
                 <img src="{% static "img/carousel-2.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Explore The World" %}</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">
-                            {% trans "Kenya Safari Tours & East Africa Packages" %}
-                        </h1>
-                        <p class="mb-5 fs-5">{% trans "Adventure Awaits – Let's Go" %}</p>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
-                        </div>
+                        <p class="hero-eyebrow">{% trans "Explore The World" %}</p>
+                        {% trans "Kenya Safari Tours & East Africa Packages" as hero_t %}<h1 class="hero-title">{{ hero_t|hero_title }}</h1>
+                        <p class="hero-sub">{% trans "Adventure Awaits – Let's Go" %}</p>
+                        <div class="hero-actions"><a class="hero-btn hero-btn-main" href="{% url 'about' %}">{% trans "Discover Now" %}</a><button type="button" class="hero-btn hero-btn-ghost" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button></div>
                     </div>
                 </div>
             </div>
@@ -91,12 +85,10 @@
                 <img src="{% static "img/carousel-1.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Days Safaris Adventures" %}</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Travel With Us Today" %}</h1>
-                        <p class="mb-5 fs-5">{% trans "And Let Us Give You The Experience Of The World" %}</p>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
-                        </div>
+                        <p class="hero-eyebrow">{% trans "Days Safaris Adventures" %}</p>
+                        {% trans "Travel With Us Today" as hero_t %}<h1 class="hero-title">{{ hero_t|hero_title }}</h1>
+                        <p class="hero-sub">{% trans "And Let Us Give You The Experience Of The World" %}</p>
+                        <div class="hero-actions"><a class="hero-btn hero-btn-main" href="{% url 'about' %}">{% trans "Discover Now" %}</a><button type="button" class="hero-btn hero-btn-ghost" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button></div>
                     </div>
                 </div>
             </div>
@@ -104,78 +96,63 @@
                 <img src="{% static "img/carousel-3.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Sail Into Serenity" %}</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "At Days Safaris Adventures" %}</h1>
-                        <p class="mb-5 fs-5">{% trans "We Are Your Ultimate Cruise Escape" %}</p>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Discover Now" %}</a>
-                        </div>
+                        <p class="hero-eyebrow">{% trans "Sail Into Serenity" %}</p>
+                        {% trans "At Days Safaris Adventures" as hero_t %}<h1 class="hero-title">{{ hero_t|hero_title }}</h1>
+                        <p class="hero-sub">{% trans "We Are Your Ultimate Cruise Escape" %}</p>
+                        <div class="hero-actions"><a class="hero-btn hero-btn-main" href="{% url 'about' %}">{% trans "Discover Now" %}</a><button type="button" class="hero-btn hero-btn-ghost" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button></div>
                     </div>
                 </div>
             </div>
             <!-- Video Slide 1-->
-            <div class="carousel-itemNone" data-bs-interval="9000">
+            <div class="carousel-itemNone" data-bs-interval="5000">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
-                    <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
-                            <source src="{% static 'videos/gir.MP4' %}" type="video/mp4">
-                            <!-- Fallback image if video doesn't load -->
-                            <img src="{% static 'img/fallback-video-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="{% trans "Video Fallback" %}">
-                        </video>
+                    <div class="hero-video">
+                        <video class="hero-video-bg" aria-hidden="true" tabindex="-1" muted loop playsinline preload="none" data-hero-video><source src="{% static 'videos/gir.MP4' %}" type="video/mp4"></video>
+                        <video class="hero-video-fg" muted loop playsinline preload="none" data-hero-video><source src="{% static 'videos/gir.MP4' %}" type="video/mp4"></video>
                     </div>
                 </div>
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Witness The Wild" %}</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Experience The Magic of Masai Mara" %}</h1>
-                        <p class="mb-5 fs-5">{% trans "Watch the Great Migration in All Its Glory" %}</p>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'packages' %}">{% trans "Explore Packages" %}</a>
-                        </div>
+                        <p class="hero-eyebrow">{% trans "Witness The Wild" %}</p>
+                        {% trans "Experience The Magic of Masai Mara" as hero_t %}<h1 class="hero-title">{{ hero_t|hero_title }}</h1>
+                        <p class="hero-sub">{% trans "Watch the Great Migration in All Its Glory" %}</p>
+                        <div class="hero-actions"><a class="hero-btn hero-btn-main" href="{% url 'packages' %}">{% trans "Explore Packages" %}</a><button type="button" class="hero-btn hero-btn-ghost" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button></div>
                     </div>
                 </div>
             </div>
 
             <!-- Video Slide 2 - mp4 Embed -->
-            <div class="carousel-itemNone" data-bs-interval="9000">
+            <div class="carousel-itemNone" data-bs-interval="5000">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
-                    <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
-                            <source src="{% static 'videos/elephant.MP4' %}" type="video/mp4">
-                            <img src="{% static 'img/fallback-video-2.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="{% trans "Video Fallback" %}">
-                        </video>
+                    <div class="hero-video">
+                        <video class="hero-video-bg" aria-hidden="true" tabindex="-1" muted loop playsinline preload="none" data-hero-video><source src="{% static 'videos/elephant.MP4' %}" type="video/mp4"></video>
+                        <video class="hero-video-fg" muted loop playsinline preload="none" data-hero-video><source src="{% static 'videos/elephant.MP4' %}" type="video/mp4"></video>
                     </div>
                 </div>
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Explore East Africa" %}</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "From Kilimanjaro to Zanzibar" %}</h1>
-                        <p class="mb-5 fs-5">{% trans "Unforgettable Adventures Across East Africa" %}</p>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'packages' %}">{% trans "View Tours" %}</a>
-                        </div>
+                        <p class="hero-eyebrow">{% trans "Explore East Africa" %}</p>
+                        {% trans "From Kilimanjaro to Zanzibar" as hero_t %}<h1 class="hero-title">{{ hero_t|hero_title }}</h1>
+                        <p class="hero-sub">{% trans "Unforgettable Adventures Across East Africa" %}</p>
+                        <div class="hero-actions"><a class="hero-btn hero-btn-main" href="{% url 'packages' %}">{% trans "View Tours" %}</a><button type="button" class="hero-btn hero-btn-ghost" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button></div>
                     </div>
                 </div>
             </div>
 
             <!-- Video Slide 3-->
-            <div class="carousel-itemNone" data-bs-interval="9000">
+            <div class="carousel-itemNone" data-bs-interval="5000">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
-                    <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
-                            <source src="{% static 'videos/ostrich.MP4' %}" type="video/mp4">
-                            <img src="{% static 'img/fallback-video-3.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="{% trans "Video Fallback" %}">
-                        </video>
+                    <div class="hero-video">
+                        <video class="hero-video-bg" aria-hidden="true" tabindex="-1" muted loop playsinline preload="none" data-hero-video><source src="{% static 'videos/ostrich.MP4' %}" type="video/mp4"></video>
+                        <video class="hero-video-fg" muted loop playsinline preload="none" data-hero-video><source src="{% static 'videos/ostrich.MP4' %}" type="video/mp4"></video>
                     </div>
                 </div>
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">{% trans "Ultimate Safari Experience" %}</h4>
-                        <h1 class="display-2 text-capitalize text-white mb-4">{% trans "Luxury Safari Adventures Await" %}</h1>
-                        <p class="mb-5 fs-5">{% trans "Discover the Best of African Wildlife and Culture" %}</p>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{% url 'about' %}">{% trans "Learn More" %}<span class="visually-hidden"> {% trans "about Day Safaris Adventures" %}</span></a>
-                        </div>
+                        <p class="hero-eyebrow">{% trans "Ultimate Safari Experience" %}</p>
+                        {% trans "Luxury Safari Adventures Await" as hero_t %}<h1 class="hero-title">{{ hero_t|hero_title }}</h1>
+                        <p class="hero-sub">{% trans "Discover the Best of African Wildlife and Culture" %}</p>
+                        <div class="hero-actions"><a class="hero-btn hero-btn-main" href="{% url 'about' %}">{% trans "Learn More" %}<span class="visually-hidden"> {% trans "about Day Safaris Adventures" %}</span></a><button type="button" class="hero-btn hero-btn-ghost" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button></div>
                     </div>
                 </div>
             </div>
@@ -190,6 +167,29 @@
             <span class="visually-hidden">{% trans "Next" %}</span>
         </button>
     </div>
+    <form method="get" action="{% url 'packages' %}" role="search" class="hero-search">
+        <label class="visually-hidden" for="hs-where">{% trans "Search" %}</label>
+        <input id="hs-where" type="text" name="search" list="hs-places" autocomplete="off" placeholder="{% trans 'Eg: Masai Mara, Diani, Amboseli' %}">
+        <datalist id="hs-places">{% for place in mega.places %}<option value="{{ place }}">{% endfor %}</datalist>
+        <select name="category" aria-label="{% trans 'Type of trip' %}">
+            <option value="">{% trans "All types of trips" %}</option>
+            <option value="East Africa Tours">{% trans "East Africa Tours" %}</option>
+            <option value="South Africa">{% trans "South Africa" %}</option>
+            <option value="West Africa">{% trans "West Africa" %}</option>
+            <option value="Africa Tours">{% trans "Africa Tours" %}</option>
+            <option value="International Tours">{% trans "International Tours" %}</option>
+            <option value="Cruises">{% trans "Cruises" %}</option>
+        </select>
+        <select name="days" aria-label="{% trans 'Trip length' %}">
+            <option value="">{% trans "Any length" %}</option>
+            <option value="3">{% blocktrans with n=3 %}Up to {{ n }} days{% endblocktrans %}</option>
+            <option value="5">{% blocktrans with n=5 %}Up to {{ n }} days{% endblocktrans %}</option>
+            <option value="7">{% blocktrans with n=7 %}Up to {{ n }} days{% endblocktrans %}</option>
+            <option value="10">{% blocktrans with n=10 %}Up to {{ n }} days{% endblocktrans %}</option>
+            <option value="14">{% blocktrans with n=14 %}Up to {{ n }} days{% endblocktrans %}</option>
+        </select>
+        <button type="submit"><i class="fa fa-search"></i> {% trans "Search" %}</button>
+    </form>
 </div>
 
 {% endblock carousel %}
@@ -197,31 +197,6 @@
 {% load static %}
 {% block body %}
 
-<div class="container-fluid search-bar position-relative" style="top: -50%; transform: translateY(-50%);">
-    <div class="container">
-        <form method="get" action="{% url 'packages' %}" role="search" class="position-relative rounded-pill w-100 mx-auto p-4 p-lg-5" style="background: rgb(58 20 20 / 65%);">
-            <div class="row g-2 align-items-center">
-                <div class="col-lg-6">
-                    <input class="form-control border-0 rounded-pill w-100 py-3 ps-4" type="text" name="search" aria-label="{% trans 'Search' %}" placeholder="{% trans 'Eg: Masai Mara, Diani, Amboseli' %}">
-                </div>
-                <div class="col-lg-3">
-                    <select name="category" class="form-select border-0 rounded-pill w-100 py-3 ps-4" aria-label="{% trans 'Type of trip' %}">
-                        <option value="">{% trans "All types of trips" %}</option>
-                        <option value="East Africa Tours">{% trans "East Africa Tours" %}</option>
-                        <option value="South Africa">{% trans "South Africa" %}</option>
-                        <option value="West Africa">{% trans "West Africa" %}</option>
-                        <option value="Africa Tours">{% trans "Africa Tours" %}</option>
-                        <option value="International Tours">{% trans "International Tours" %}</option>
-                        <option value="Cruises">{% trans "Cruises" %}</option>
-                    </select>
-                </div>
-                <div class="col-lg-3 d-grid">
-                    <button type="submit" class="btn btn-primary rounded-pill py-3 px-4">{% trans "Search" %}</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 <!-- Navbar & Hero End -->
 
 <!-- About Start -->
@@ -711,15 +686,15 @@
     if (!carousel) return;
     function sync() {
         carousel.querySelectorAll('.carousel-item').forEach(function (item) {
-            var video = item.querySelector('video[data-hero-video]');
-            if (!video) return;
-            if (item.classList.contains('active')) { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
-            else { video.pause(); }
+            var active = item.classList.contains('active');
+            item.querySelectorAll('video[data-hero-video]').forEach(function (video) {
+                if (active) { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+                else { video.pause(); }
+            });
         });
     }
     carousel.addEventListener('slide.bs.carousel', function (e) {
-        var v = e.relatedTarget && e.relatedTarget.querySelector('video[data-hero-video]');
-        if (v) { try { v.currentTime = 0; } catch (x) {} }
+        if (e.relatedTarget) e.relatedTarget.querySelectorAll('video[data-hero-video]').forEach(function (v) { try { v.currentTime = 0; } catch (x) {} });
     });
     carousel.addEventListener('slid.bs.carousel', sync);
     window.addEventListener('load', sync);
