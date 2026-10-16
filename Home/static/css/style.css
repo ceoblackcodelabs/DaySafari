@@ -507,7 +507,10 @@ html{scroll-behavior:smooth}
 .pg-th:hover,.pg-th:focus-visible{opacity:1;outline:0}
 .pg-th.active{opacity:1;border-color:#420d24;transform:translateY(-2px)}
 @media(max-width:575px){.pg-th{flex-basis:78px}}
-/* Logo stays readable on any background: light pill while the header floats over the hero */
-.navbar-light .navbar-brand{background:rgba(255,255,255,.95);border-radius:14px;padding:4px 12px!important;box-shadow:0 4px 16px rgba(0,0,0,.28);transition:background .3s,box-shadow .3s}
-.sticky-top.navbar-light .navbar-brand{background:transparent;box-shadow:none;padding:0 6px!important}
-@media(max-width:991.98px){.navbar-light .navbar-brand{background:transparent;box-shadow:none;padding:0!important}}
+/* Logo stays readable on any background: a light-lettered copy while the header floats over the hero, the normal one once it turns light */
+.navbar-brand .logo-light{display:none}
+@media(min-width:992px){
+.navbar-light:not(.sticky-top) .navbar-brand .logo-light{display:block}
+.navbar-light:not(.sticky-top) .navbar-brand .logo-light+*,.navbar-light:not(.sticky-top) .navbar-brand img:not(.logo-light){display:none}
+.navbar-light:not(.sticky-top) .navbar-brand img{max-height:66px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
+}
