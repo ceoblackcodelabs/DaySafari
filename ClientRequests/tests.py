@@ -707,3 +707,32 @@ class UiPagesTests(TestCase):
 
     def test_pages_never_ship_the_old_carousel_for_treks(self):
         self.assertNotIn('packages-carousel', self.client.get('/en/trekking/Mt-Kenya/').content.decode())
+
+
+from django.utils import translation
+
+
+class PackageGalleryTests(TestCase):
+    def test_gallery_shows_thumbnails_only_when_extra_photos_exist(self):
+        import tempfile
+        from io import BytesIO
+        from PIL import Image
+        from django.core.files.base import ContentFile
+        from django.test import override_settings
+        from Places.models import AwesomePackages, PackageImage
+        with tempfile.TemporaryDirectory() as tmp, override_settings(MEDIA_ROOT=tmp):
+            def jpg(name):
+                buf = BytesIO(); Image.new('RGB', (800, 600), 'tan').save(buf, 'JPEG')
+                return ContentFile(buf.getvalue(), name)
+            with translation.override('en'):
+                pkg = AwesomePackages.objects.create(name='Gallery Trip', location='Kenya', days=3, price=100, persons=2,
+                                                     description='<p>x</p>', category='East Africa Tours')
+            pkg.image.save('main.jpg', jpg('main.jpg'))
+            url = f'/en/packages/{pkg.slug}/'
+            html = self.client.get(url).content.decode()
+            self.assertIn('id="pgMain"', html)
+            self.assertNotIn('pg-strip', html)
+            for n in range(3):
+                g = PackageImage(package=pkg, order=n); g.image.save(f'g{n}.jpg', jpg(f'g{n}.jpg'))
+            html = self.client.get(url).content.decode()
+            self.assertEqual(html.count('class="pg-th'), 4)       # main photo + 3 extras

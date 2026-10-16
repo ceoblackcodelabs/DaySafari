@@ -3,10 +3,16 @@ from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import (
     DestinationsCategory, Destinations, Itinerary,
     AwesomePackages, PackagePurchase,
-    IncluisiveExcluisive, DestinationImage
+    IncluisiveExcluisive, DestinationImage, PackageImage
 )
 from django.utils.html import format_html
 from django.contrib import messages
+
+
+class PackageImageInline(admin.TabularInline):
+    model = PackageImage
+    extra = 3
+    fields = ['image', 'caption', 'order']
 
 
 class ItineraryInline(TranslationTabularInline):
@@ -48,7 +54,7 @@ class AwesomePackagesAdmin(TranslationAdmin):
         'name', 'category', 'location', 'star_rating_display',
         'days', 'price_formatted', 'persons', 'slug', 'created_at'
     ]
-    inlines = [ItineraryInline]
+    inlines = [PackageImageInline, ItineraryInline]
     search_fields = ['name', 'category', 'location', 'slug', 'description']
     list_filter = ['category', 'location', 'star_rating']
     list_editable = ['category', 'days']

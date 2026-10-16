@@ -267,3 +267,18 @@ def clear_related_cache(sender, **kwargs):
     except AttributeError:
         # If using LocMemCache, clear everything
         cache.clear()
+
+class PackageImage(models.Model):
+    """Extra photos for a package; they appear under the main image on the package page."""
+    package = models.ForeignKey(AwesomePackages, on_delete=models.CASCADE, related_name='gallery')
+    image = models.ImageField(upload_to='package_gallery/')
+    caption = models.CharField(max_length=200, blank=True)
+    order = models.PositiveIntegerField(default=0, help_text='Smaller numbers show first')
+
+    class Meta:
+        ordering = ['order', 'id']
+        verbose_name = 'Package photo'
+        verbose_name_plural = 'Package photos'
+
+    def __str__(self):
+        return f'Photo {self.pk} for {self.package.name}'

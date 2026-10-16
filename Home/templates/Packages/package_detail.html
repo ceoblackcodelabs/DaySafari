@@ -37,14 +37,8 @@
 <div class="container-fluid about py-5">
     <div class="container py-5">
         <div class="row g-5 align-items-center">
-            <div class="col-lg-6">
-                <div class="h-100" style="border: 50px solid; border-color: transparent #420d24 transparent #420d24;">
-                    {% if package.image %}
-                    <img src="{{ package.image|thumb:640 }}" class="img-fluid w-100 h-100" alt="{{ package.name }}" style="object-fit: cover;" loading="lazy" decoding="async">
-                    {% else %}
-                    <img src="{% static 'img/placeholder-package.jpg' %}" class="img-fluid w-100 h-100" alt="{{ package.name }}" style="object-fit: cover;" loading="lazy" decoding="async">
-                    {% endif %}
-                </div>
+            <div class="col-lg-6 align-self-start">
+                {% include "Packages/_gallery.html" %}
             </div>
             <div class="col-lg-6" >
                 <div class="p-4">

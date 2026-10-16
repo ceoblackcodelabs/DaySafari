@@ -224,6 +224,7 @@ class PackagesDetailView(DetailView):
 
         # Get itineraries for this package
         context['itineraries'] = self.object.itineraries.all().order_by('day_number')
+        context['gallery'] = list(self.object.gallery.all()[:12])
 
         # Get similar packages
         similar_packages = AwesomePackages.objects.filter(

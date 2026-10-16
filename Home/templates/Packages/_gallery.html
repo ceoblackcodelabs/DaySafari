@@ -1,0 +1,50 @@
+{% load static image_tags i18n %}
+{# Main photo with a thumbnail strip underneath. The strip auto-advances; hovering or focusing a thumbnail shows it and pauses the rotation. #}
+<div class="pg" id="pg" data-count="{{ gallery|length|add:1 }}">
+    <div class="pg-main">
+        {% if package.image %}<img id="pgMain" src="{{ package.image|thumb:1200 }}" alt="{{ package.name }}" width="1200" height="900" fetchpriority="high" decoding="async">{% else %}<img id="pgMain" src="{% static 'img/placeholder-package.jpg' %}" alt="{{ package.name }}" width="1200" height="900">{% endif %}
+        <span class="pg-count" id="pgCount" aria-live="polite"></span>
+    </div>
+    {% if gallery %}
+    <div class="pg-strip" id="pgStrip" role="list" aria-label="{% trans 'More photos' %}">
+        <button type="button" class="pg-th active" role="listitem" data-full="{{ package.image|thumb:1200 }}" data-alt="{{ package.name }}" aria-label="{{ package.name }}"><img src="{{ package.image|thumb:640 }}" alt="" width="160" height="120" loading="lazy" decoding="async"></button>
+        {% for g in gallery %}<button type="button" class="pg-th" role="listitem" data-full="{{ g.image|thumb:1200 }}" data-alt="{{ g.caption|default:package.name }}" aria-label="{{ g.caption|default:package.name }}"><img src="{{ g.image|thumb:640 }}" alt="" width="160" height="120" loading="lazy" decoding="async"></button>{% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% if gallery %}
+<script>
+(function () {
+    var main = document.getElementById('pgMain'), strip = document.getElementById('pgStrip'), count = document.getElementById('pgCount');
+    if (!main || !strip) return;
+    var ths = Array.prototype.slice.call(strip.querySelectorAll('.pg-th')), i = 0, timer = null, paused = false;
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function show(n, user) {
+        i = (n + ths.length) % ths.length;
+        var t = ths[i];
+        ths.forEach(function (b) { b.classList.remove('active'); });
+        t.classList.add('active');
+        main.classList.add('fade');
+        setTimeout(function () { main.src = t.dataset.full; main.alt = t.dataset.alt; main.classList.remove('fade'); }, 120);
+        count.textContent = (i + 1) + ' / ' + ths.length;
+        if (user) return;           // never move the strip under the visitor's pointer
+        var left = t.offsetLeft - (strip.clientWidth - t.offsetWidth) / 2;
+        strip.scrollTo({left: left, behavior: still ? 'auto' : 'smooth'});
+    }
+    function start() { stop(); if (!still && !paused && !document.hidden) timer = setInterval(function () { show(i + 1); }, 4000); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    ths.forEach(function (b, n) {
+        ['mouseenter', 'focus', 'click'].forEach(function (ev) { b.addEventListener(ev, function () { paused = true; stop(); show(n, true); }); });
+    });
+    [strip, main.parentNode].forEach(function (el) {
+        el.addEventListener('mouseenter', function () { paused = true; stop(); });
+        el.addEventListener('mouseleave', function () { paused = false; start(); });
+        el.addEventListener('touchstart', function () { paused = true; stop(); }, {passive: true});
+    });
+    strip.addEventListener('focusout', function () { paused = false; start(); });
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+    count.textContent = '1 / ' + ths.length;
+    start();
+})();
+</script>
+{% endif %}
