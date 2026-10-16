@@ -4087,3 +4087,12 @@ msgstr "Across Kenya, Africa and beyond"
 
 msgid "Our Partners"
 msgstr "Our Partners"
+
+msgid "Visa assistance"
+msgstr "Visa assistance"
+
+msgid "Flights & airline tickets"
+msgstr "Flights & airline tickets"
+
+msgid "Hotels & stays"
+msgstr "Hotels & stays"

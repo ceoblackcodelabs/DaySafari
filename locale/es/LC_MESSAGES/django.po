@@ -4639,3 +4639,12 @@ msgstr "En Kenia, África y más allá"
 
 msgid "Our Partners"
 msgstr "Nuestros socios"
+
+msgid "Visa assistance"
+msgstr "Asistencia con visados"
+
+msgid "Flights & airline tickets"
+msgstr "Vuelos y billetes de avión"
+
+msgid "Hotels & stays"
+msgstr "Hoteles y estancias"

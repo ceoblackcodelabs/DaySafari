@@ -4557,3 +4557,12 @@ msgstr "In Kenya, Africa e oltre"
 
 msgid "Our Partners"
 msgstr "I nostri partner"
+
+msgid "Visa assistance"
+msgstr "Assistenza per i visti"
+
+msgid "Flights & airline tickets"
+msgstr "Voli e biglietti aerei"
+
+msgid "Hotels & stays"
+msgstr "Hotel e soggiorni"

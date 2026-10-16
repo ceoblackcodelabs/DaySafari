@@ -4623,3 +4623,12 @@ msgstr "Kenya, Afrika na kwingineko"
 
 msgid "Our Partners"
 msgstr "Washirika Wetu"
+
+msgid "Visa assistance"
+msgstr "Msaada wa visa"
+
+msgid "Flights & airline tickets"
+msgstr "Ndege na tiketi za ndege"
+
+msgid "Hotels & stays"
+msgstr "Hoteli na malazi"

@@ -1,10 +1,18 @@
-{% load i18n image_tags %}
+{% load i18n static image_tags %}
 <div id="leadOverlay" data-auto="{% if auto %}1{% endif %}" class="popup-overlay lead-overlay" role="dialog" aria-modal="true" aria-labelledby="leadTitle" hidden>
     <div class="popup-container lead-container">
         <button type="button" class="popup-close" data-lead-close aria-label="{% trans "Close" %}"><i class="fas fa-times"></i></button>
         <div class="popup-layout">
             <div class="popup-image-side lead-slides" aria-hidden="true">
-                {% for img in mega.lead_images %}{% if img %}<img src="{{ img }}" alt="" class="lead-slide" style="animation-delay:{{ forloop.counter0 }}s" loading="lazy" width="480" height="640">{% endif %}{% endfor %}
+                {% with imgs=mega.lead_images %}
+                {% if imgs.0 %}<figure class="lead-slide"><img src="{{ imgs.0 }}" alt="" loading="lazy" width="480" height="640"><figcaption>{% trans "Safari packages" %}</figcaption></figure>{% endif %}
+                <figure class="lead-slide"><img src="{% static 'img/passport.webp' %}" alt="" loading="lazy" width="480" height="640"><figcaption>{% trans "Visa assistance" %}</figcaption></figure>
+                <figure class="lead-slide"><img src="{% static 'img/Aeroplane.jpg' %}" alt="" loading="lazy" width="480" height="640"><figcaption>{% trans "Flights & airline tickets" %}</figcaption></figure>
+                <figure class="lead-slide"><img src="{% static 'img/crusabout.webp' %}" alt="" loading="lazy" width="480" height="640"><figcaption>{% trans "Cruises" %}</figcaption></figure>
+                <figure class="lead-slide"><img src="{% static 'img/hotel.webp' %}" alt="" loading="lazy" width="480" height="640"><figcaption>{% trans "Hotels & stays" %}</figcaption></figure>
+                <figure class="lead-slide"><img src="{% static 'img/tailor.webp' %}" alt="" loading="lazy" width="480" height="640"><figcaption>{% trans "Tailor-made holidays" %}</figcaption></figure>
+                {% if imgs.1 %}<figure class="lead-slide"><img src="{{ imgs.1 }}" alt="" loading="lazy" width="480" height="640"><figcaption>{% trans "Safari packages" %}</figcaption></figure>{% endif %}
+                {% endwith %}
                 <div class="discount-badge lead-badge"><span class="discount-percentage">{% trans "Free quote" %}</span><span class="discount-text">{% trans "Reply in minutes" %}</span></div>
             </div>
             <div class="popup-content-side">

@@ -578,6 +578,13 @@ class I18nTests(SiteHealthTests):
         self.assertIn('Conseils', html)
 
     def test_home_offers_paginate_by_8_and_hide_expired(self):
+        import shutil, tempfile
+        from django.test import override_settings
+        media = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, media, True)
+        override = override_settings(MEDIA_ROOT=media)     # never write test files into the real media folder
+        override.enable()
+        self.addCleanup(override.disable)
         from datetime import date, timedelta
         from django.core.files.uploadedfile import SimpleUploadedFile
         from Home.models import Offer

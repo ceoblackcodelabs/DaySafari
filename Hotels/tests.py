@@ -392,3 +392,71 @@ class RemoveSampleHotelsTests(TestCase):
         Hotel.objects.create(name='Eka Hotel Eldoret', country='Kenya', location='Eldoret')
         self.run_migration(); self.run_migration()
         self.assertEqual(Hotel.objects.count(), 1)
+
+
+@override_settings(CACHES=LOCMEM, ALLOWED_HOSTS=['*'])
+class OffersApiTests(TestCase):
+    """The homepage 'Special Offers' poster API."""
+
+    def setUp(self):
+        cache.clear()
+        self.media = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.media, True)
+        override = override_settings(MEDIA_ROOT=self.media)
+        override.enable()
+        self.addCleanup(override.disable)
+        self.key, self.token = ApiKey.create_key('tests')
+        self.auth = {'HTTP_AUTHORIZATION': f'Bearer {self.token}'}
+
+    def create(self, query='', title='Bali Island Tour', **fields):
+        data = {'title': title, 'end_date': '2099-12-31', **fields}
+        return self.client.post(f'/api/v1/offers/{query}', {'data': json.dumps(data), 'image': png()}, **self.auth)
+
+    def test_requires_a_key_and_schema_is_public(self):
+        self.assertEqual(self.client.get('/api/v1/offers/').status_code, 401)
+        self.assertEqual(self.client.get('/api/v1/offers/schema/').status_code, 200)
+
+    def test_dry_run_saves_nothing_then_create_and_duplicate(self):
+        from Home.models import Offer
+        r = self.create('?dry_run=1')
+        self.assertEqual((r.status_code, r.json()['status']), (200, 'would_create'))
+        self.assertEqual(Offer.objects.count(), 0)
+        r = self.create()
+        self.assertEqual(r.status_code, 201, r.content)
+        offer = r.json()['offer']
+        self.assertEqual((offer['title'], offer['status'], offer['is_active']), ('Bali Island Tour', 'active', True))
+        self.assertTrue(offer['image_url'].endswith('.png'))
+        self.assertIn('wa.me/254759379600', offer['whatsapp_url'])
+        self.assertEqual(self.create().status_code, 409)             # same title + end date -> no duplicate
+        self.assertEqual(Offer.objects.count(), 1)
+
+    def test_poster_is_required_and_validated(self):
+        r = self.client.post('/api/v1/offers/', {'data': json.dumps({'title': 'No poster'})}, **self.auth)
+        self.assertEqual(r.status_code, 400)
+        self.assertIn('image', r.json()['errors'])
+        r = self.client.post('/api/v1/offers/', {'data': json.dumps({'title': 'Tiny'}), 'image': png(300, 300)}, **self.auth)
+        self.assertEqual(r.status_code, 400)
+        r = self.create(start_date='2099-01-10', end_date='2099-01-01', title='Backwards')
+        self.assertEqual(r.status_code, 400)
+        self.assertIn('end_date', r.json()['errors'])
+
+    def test_hide_with_patch_and_replace_poster(self):
+        from Home.models import Offer
+        offer = self.create().json()['offer']
+        r = self.client.patch(f'/api/v1/offers/{offer["id"]}/', json.dumps({'is_active': False}),
+                              content_type='application/json', **self.auth)
+        self.assertEqual(r.status_code, 200, r.content)
+        self.assertEqual(r.json()['offer']['status'], 'hidden')
+        self.assertFalse(Offer.objects.get(pk=offer['id']).is_active)
+        r = self.client.post(f'/api/v1/offers/{offer["id"]}/image/', {'image': png(900, 900)}, **self.auth)
+        self.assertEqual((r.status_code, r.json()['status']), (200, 'image_replaced'))
+        self.assertEqual(self.client.delete(f'/api/v1/offers/{offer["id"]}/', **self.auth).status_code, 405)  # no delete
+
+    def test_upcoming_status_and_listing(self):
+        self.create(title='Future trip', start_date='2098-01-01')
+        r = self.client.get('/api/v1/offers/?status=upcoming', **self.auth).json()
+        self.assertEqual([o['title'] for o in r['offers']], ['Future trip'])
+
+    def test_homepage_shows_api_created_offer(self):
+        self.create(title='Zanzibar Escape')
+        self.assertContains(self.client.get('/en/'), 'Zanzibar Escape')

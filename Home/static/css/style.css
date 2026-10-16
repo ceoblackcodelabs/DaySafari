@@ -197,11 +197,16 @@ body{color:#555}
 .lead-overlay[hidden]{display:none!important}
 .lead-container{width:min(900px,94vw)}
 .lead-slides{overflow:hidden;min-height:340px;background:#2a0a18}
-.lead-slides .lead-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:leadFade 18s infinite;transform:scale(1.04)}
-@keyframes leadFade{0%{opacity:0;transform:scale(1.04)}4%{opacity:1}17%{opacity:1;transform:scale(1.12)}21%{opacity:0}100%{opacity:0}}
-.lead-slides .lead-slide:nth-child(1){animation-delay:0s}.lead-slides .lead-slide:nth-child(2){animation-delay:3s}.lead-slides .lead-slide:nth-child(3){animation-delay:6s}
-.lead-slides .lead-slide:nth-child(4){animation-delay:9s}.lead-slides .lead-slide:nth-child(5){animation-delay:12s}.lead-slides .lead-slide:nth-child(6){animation-delay:15s}
-.lead-slides .lead-slide:first-of-type{opacity:1}
+.lead-slides .lead-slide{position:absolute;inset:0;margin:0;opacity:0;animation:leadFade 21s infinite}
+.lead-slides .lead-slide img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.04);animation:leadZoom 21s infinite}
+.lead-slides .lead-slide figcaption{position:absolute;left:14px;bottom:14px;right:14px;color:#fff;font-weight:700;font-size:18px;text-shadow:0 2px 8px rgba(0,0,0,.65);padding-top:40px;background:linear-gradient(to top,rgba(0,0,0,.55),transparent)}
+@keyframes leadFade{0%{opacity:0}3%{opacity:1}13%{opacity:1}17%{opacity:0}100%{opacity:0}}
+@keyframes leadZoom{0%{transform:scale(1.04)}17%{transform:scale(1.12)}100%{transform:scale(1.12)}}
+.lead-slides .lead-slide:nth-child(1){animation-delay:0s}.lead-slides .lead-slide:nth-child(2){animation-delay:3s}.lead-slides .lead-slide:nth-child(3){animation-delay:6s}.lead-slides .lead-slide:nth-child(4){animation-delay:9s}
+.lead-slides .lead-slide:nth-child(5){animation-delay:12s}.lead-slides .lead-slide:nth-child(6){animation-delay:15s}.lead-slides .lead-slide:nth-child(7){animation-delay:18s}
+.lead-slides .lead-slide:nth-child(1),.lead-slides .lead-slide:nth-child(1) img{animation-delay:0s}
+.lead-slides .lead-slide:nth-child(2) img{animation-delay:3s}.lead-slides .lead-slide:nth-child(3) img{animation-delay:6s}.lead-slides .lead-slide:nth-child(4) img{animation-delay:9s}
+.lead-slides .lead-slide:nth-child(5) img{animation-delay:12s}.lead-slides .lead-slide:nth-child(6) img{animation-delay:15s}.lead-slides .lead-slide:nth-child(7) img{animation-delay:18s}
 .lead-badge{z-index:3}
 .lead-container .popup-content-side{flex:1.4}
 .lead-field{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #dcdfe4;border-radius:12px;padding:0 14px;margin-bottom:10px;transition:border-color .2s,box-shadow .2s}
@@ -214,7 +219,7 @@ body{color:#555}
 .lead-note{font-size:12px;color:#8a8f98;margin:10px 0 0}
 .lead-container .popup-button{border:0;cursor:pointer}
 @media (max-width:768px){.lead-slides{min-height:150px;max-width:100%!important;height:150px}.lead-container .popup-content-side{max-height:none}}
-@media (prefers-reduced-motion:reduce){.lead-slides .lead-slide{animation:none}.lead-slides .lead-slide:first-of-type{opacity:1}}
+@media (prefers-reduced-motion:reduce){.lead-slides .lead-slide,.lead-slides .lead-slide img{animation:none}.lead-slides .lead-slide:first-of-type{opacity:1}}
 
 /* bottom-left "Get a Quote" button (replaces the old chat widget) */
 .quote-fab{position:fixed;left:24px;bottom:28px;z-index:99;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 20px;background:var(--bs-primary);color:#fff;font-weight:600;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.3);cursor:pointer;transition:transform .2s,box-shadow .2s}
@@ -254,3 +259,14 @@ body{color:#555}
 .site-topbar .top-call small{font-size:10px}
 .site-topbar .top-call{gap:7px}
 .site-topbar .top-call small{display:none}
+
+/* hero slider: visible slide dashes, and the search box no longer covers the slide text on phones */
+.carousel-header .carousel .carousel-indicators{z-index:5;margin:0;bottom:150px;gap:6px}
+.carousel-header .carousel .carousel-indicators li{opacity:.55;width:34px;height:4px;border:0;border-radius:3px;background:#fff;cursor:pointer;transition:opacity .3s,width .3s}
+.carousel-header .carousel .carousel-indicators li.active{opacity:1;width:48px}
+@media (max-width:991.98px){
+  .carousel-header .carousel .carousel-indicators{bottom:18px}
+  .search-bar{top:0!important;transform:none!important;margin-top:0!important;padding-top:14px;padding-bottom:14px;background:#fff}
+  .search-bar form{background:#420d24!important;border-radius:18px!important;padding:14px!important}
+  .carousel-header .carousel-inner .carousel-item .carousel-caption{padding-bottom:50px}
+}

@@ -36,11 +36,11 @@
             {% if hero_slides %}
             <!-- Dynamic slides, uploaded via Django Admin > Hero Slides -->
             {% for slide in hero_slides %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="{% if slide.media_type == 'video' and slide.video %}9000{% else %}6000{% endif %}">
                 {% if slide.media_type == 'video' and slide.video %}
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
-                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
+                        <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video{% if slide.fallback_image %} poster="{{ slide.fallback_image.url }}"{% endif %}>
                             <source src="{{ slide.video.url }}" type="video/mp4">
                             {% if slide.fallback_image %}
                             <img src="{{ slide.fallback_image.url }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ slide.title }}">
@@ -72,7 +72,7 @@
             {% else %}
             <!-- Fallback static slides - shown only if no Hero Slides are uploaded in admin -->
             <!-- Existing Image Slides -->
-            <div class="carousel-item active">
+            <div class="carousel-item active" data-bs-interval="6000">
                 <img src="{% static "img/carousel-2.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
+            <div class="carousel-itemNone" data-bs-interval="6000">
                 <img src="{% static "img/carousel-1.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
+            <div class="carousel-itemNone" data-bs-interval="6000">
                 <img src="{% static "img/carousel-3.webp" %}" class="img-fluid" alt="{% trans "Image" %}" decoding="async">
                 <div class="carousel-caption">
                     <div class="p-3" style="max-width: 900px;">
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <!-- Video Slide 1-->
-            <div class="carousel-item">
+            <div class="carousel-itemNone" data-bs-interval="9000">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
                         <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
@@ -137,7 +137,7 @@
             </div>
 
             <!-- Video Slide 2 - mp4 Embed -->
-            <div class="carousel-item">
+            <div class="carousel-itemNone" data-bs-interval="9000">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
                         <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
@@ -159,7 +159,7 @@
             </div>
 
             <!-- Video Slide 3-->
-            <div class="carousel-item">
+            <div class="carousel-itemNone" data-bs-interval="9000">
                 <div class="video-container position-relative" style="height: 100vh; min-height: 600px; overflow: hidden;">
                     <div class="video-wrapper position-absolute w-100 h-100" style="top: 0; left: 0; background: #000;">
                         <video class="video-slide w-100 h-100" style="object-fit: cover;" muted loop playsinline preload="none" data-hero-video>
@@ -717,6 +717,10 @@
             else { video.pause(); }
         });
     }
+    carousel.addEventListener('slide.bs.carousel', function (e) {
+        var v = e.relatedTarget && e.relatedTarget.querySelector('video[data-hero-video]');
+        if (v) { try { v.currentTime = 0; } catch (x) {} }
+    });
     carousel.addEventListener('slid.bs.carousel', sync);
     window.addEventListener('load', sync);
 })();
