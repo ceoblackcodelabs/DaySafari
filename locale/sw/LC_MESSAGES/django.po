@@ -4695,3 +4695,24 @@ msgstr "Huwezi kupata safari sahihi?"
 
 msgid "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
 msgstr "Tuambie tarehe na bajeti yako nasi tutabuni ratiba maalum yenye bei ya bure."
+
+msgid "Filter hotels"
+msgstr "Chuja hoteli"
+
+msgid "Ask for rate"
+msgstr "Uliza bei"
+
+msgid "No results"
+msgstr "Hakuna matokeo"
+
+msgid "Still have questions?"
+msgstr "Bado una maswali?"
+
+msgid "Chat with a real person on WhatsApp or send us a message."
+msgstr "Ongea na mtu halisi kwenye WhatsApp auututumie ujumbe."
+
+msgid "Ready to plan your trip?"
+msgstr "Uko tayari kupanga safari yako?"
+
+msgid "Hotels, Lodges, Tented Camps & Beach Villas"
+msgstr "Hoteli, Lodji, Kambi za Mahema na Majumba ya Ufukweni"

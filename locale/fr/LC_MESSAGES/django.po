@@ -4761,3 +4761,24 @@ msgstr "Vous ne trouvez pas le bon voyage ?"
 
 msgid "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
 msgstr "Indiquez-nous vos dates et votre budget et nous créerons un itinéraire sur mesure avec un devis gratuit."
+
+msgid "Filter hotels"
+msgstr "Filtrer les hôtels"
+
+msgid "Ask for rate"
+msgstr "Tarif sur demande"
+
+msgid "No results"
+msgstr "Aucun résultat"
+
+msgid "Still have questions?"
+msgstr "Une autre question ?"
+
+msgid "Chat with a real person on WhatsApp or send us a message."
+msgstr "Discutez avec une vraie personne sur WhatsApp ou envoyez-nous un message."
+
+msgid "Ready to plan your trip?"
+msgstr "Prêt à planifier votre voyage ?"
+
+msgid "Hotels, Lodges, Tented Camps & Beach Villas"
+msgstr "Hôtels, lodges, camps de tentes et villas de plage"

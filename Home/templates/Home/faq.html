@@ -26,116 +26,59 @@
 
 
 <!-- FAQ Start -->
-<div class="container-fluid bg-light py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+<div class="container-fluid bg-light band-alt py-5">
+    <div class="container py-4">
+        <div class="mx-auto text-center mb-4" style="max-width: 900px;">
             <p class="h5 section-title px-3">{% trans "FAQ" %}</p>
-            <h1 class="mb-0">{% trans "Frequently Asked Questions" %}</h1>
+            <h1 class="mb-3">{% trans "Frequently Asked Questions" %}</h1>
         </div>
-
-        <div class="row g-4">
-
-            <!-- Left Column -->
-            <div class="col-lg-6">
-                <div class="row g-4">
-
-                    <div class="col-12">
-                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
-                            <div class="service-content text-end">
-                                <h2 class="h5 mb-3">{% trans "What does Day Safaris Adventures specialize in?" %}</h2>
-                                <p class="mb-0">
-                                    {% trans "We specialize in African wildlife safaris, tailor-made tours, beach holidays, mountain adventures, cultural experiences, airport transfers, hotel bookings, visa assistance, and international travel packages." %}
-                                </p>
-                            </div>
-                            <div class="service-icon p-4">
-                                <i class="fas fa-binoculars fa-4x text-primary"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
-                            <div class="service-content text-end">
-                                <h2 class="h5 mb-3">{% trans "Where are you located?" %}</h2>
-                                <p class="mb-0">
-                                    {% trans "Our head office is conveniently located at" %} <strong>{% trans "Nairobi Railways Museum, Nairobi, Kenya (00200)" %}</strong>{% trans ", making it easy for clients to visit us for travel consultations and bookings." %}
-                                </p>
-                            </div>
-                            <div class="service-icon p-4">
-                                <i class="fas fa-map-marker-alt fa-4x text-primary"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
-                            <div class="service-content text-end">
-                                <h2 class="h5 mb-3">{% trans "What are your business hours?" %}</h2>
-                                <p class="mb-0">
-                                    {% trans "We are open" %} <strong>{% trans "Monday to Sunday" %}</strong> {% trans "from" %} <strong>8:00 AM to 8:00 PM</strong>{% trans ". Our customer support team is available throughout these hours to assist with bookings and travel inquiries." %}
-                                </p>
-                            </div>
-                            <div class="service-icon p-4">
-                                <i class="fas fa-clock fa-4x text-primary"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+        <div class="faq-wrap">
+            <div class="faq-search"><i class="fa fa-search"></i><input type="search" id="faqSearch" placeholder="{% trans 'Search packages...' %}" aria-label="{% trans 'Search' %}" autocomplete="off"></div>
+            <div id="faqList">
+            <details class="faq-item">
+                <summary><i class="fas fa-binoculars"></i><span>{% trans "What does Day Safaris Adventures specialize in?" %}</span></summary>
+                <div class="faq-a"><p>{% trans "We specialize in African wildlife safaris, tailor-made tours, beach holidays, mountain adventures, cultural experiences, airport transfers, hotel bookings, visa assistance, and international travel packages." %}</p></div>
+            </details>
+            <details class="faq-item">
+                <summary><i class="fas fa-map-marker-alt"></i><span>{% trans "Where are you located?" %}</span></summary>
+                <div class="faq-a"><p>{% trans "Our head office is conveniently located at" %} <strong>{% trans "Nairobi Railways Museum, Nairobi, Kenya (00200)" %}</strong>{% trans ", making it easy for clients to visit us for travel consultations and bookings." %}</p></div>
+            </details>
+            <details class="faq-item">
+                <summary><i class="fas fa-clock"></i><span>{% trans "What are your business hours?" %}</span></summary>
+                <div class="faq-a"><p>{% trans "We are open" %} <strong>{% trans "Monday to Sunday" %}</strong> {% trans "from" %} <strong>8:00 AM to 8:00 PM</strong>{% trans ". Our customer support team is available throughout these hours to assist with bookings and travel inquiries." %}</p></div>
+            </details>
+            <details class="faq-item">
+                <summary><i class="fas fa-phone-alt"></i><span>{% trans "How can I contact Day Safaris Adventures?" %}</span></summary>
+                <div class="faq-a"><p>{% trans "You can reach us via email at" %} <strong>info@daysafarisadventures.com</strong> {% trans "or call us on" %} <strong>+254 759 379 600</strong>{% trans ". off - office number is" %} <strong>+254 734 962 965</strong>{% trans ". You may also visit our office during business hours." %}</p></div>
+            </details>
+            <details class="faq-item">
+                <summary><i class="fas fa-passport"></i><span>{% trans "Can you help with visa processing?" %}</span></summary>
+                <div class="faq-a"><p>{% trans "Yes. We provide professional visa processing assistance, helping clients prepare documents, complete applications, and track their visa status for various destinations." %}</p></div>
+            </details>
+            <details class="faq-item">
+                <summary><i class="fas fa-calendar-check"></i><span>{% trans "How do I book a safari?" %}</span></summary>
+                <div class="faq-a"><p>{% trans "Booking is easy. Simply fill out our online booking form, call our travel consultants, or send us an email. We'll help you choose the perfect package and customize your adventure to suit your budget and preferences." %}</p></div>
+            </details>
             </div>
-
-            <!-- Right Column -->
-            <div class="col-lg-6">
-                <div class="row g-4">
-
-                    <div class="col-12">
-                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 ps-0">
-                            <div class="service-icon p-4">
-                                <i class="fas fa-phone-alt fa-4x text-primary"></i>
-                            </div>
-                            <div class="service-content">
-                                <h2 class="h5 mb-3">{% trans "How can I contact Day Safaris Adventures?" %}</h2>
-                                <p class="mb-0">
-                                    {% trans "You can reach us via email at" %} <strong>info@daysafarisadventures.com</strong> {% trans "or call us on" %} <strong>+254 759 379 600</strong>{% trans ". off - office number is" %} <strong>+254 734 962 965</strong>{% trans ". You may also visit our office during business hours." %}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 ps-0">
-                            <div class="service-icon p-4">
-                                <i class="fas fa-passport fa-4x text-primary"></i>
-                            </div>
-                            <div class="service-content">
-                                <h2 class="h5 mb-3">{% trans "Can you help with visa processing?" %}</h2>
-                                <p class="mb-0">
-                                    {% trans "Yes. We provide professional visa processing assistance, helping clients prepare documents, complete applications, and track their visa status for various destinations." %}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 ps-0">
-                            <div class="service-icon p-4">
-                                <i class="fas fa-calendar-check fa-4x text-primary"></i>
-                            </div>
-                            <div class="service-content">
-                                <h2 class="h5 mb-3">{% trans "How do I book a safari?" %}</h2>
-                                <p class="mb-0">
-                                    {% trans "Booking is easy. Simply fill out our online booking form, call our travel consultants, or send us an email. We'll help you choose the perfect package and customize your adventure to suit your budget and preferences." %}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+            <p class="faq-none" id="faqNone" hidden>{% trans "No results" %}</p>
+            <div class="faq-help">
+                <div><b>{% trans "Still have questions?" %}</b><span>{% trans "Chat with a real person on WhatsApp or send us a message." %}</span></div>
+                <div class="d-flex gap-2 flex-wrap"><button type="button" class="pk-btn pk-btn-light" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button>
+                <a class="pk-btn pk-btn-ghost" href="{% url 'contact' %}">{% trans "Contact" %}</a></div>
             </div>
-
         </div>
     </div>
 </div>
+<script>
+(function(){
+    var box=document.getElementById('faqSearch'), items=[].slice.call(document.querySelectorAll('.faq-item')), none=document.getElementById('faqNone');
+    items.forEach(function(d){ d.addEventListener('toggle',function(){ if(d.open) items.forEach(function(o){ if(o!==d) o.open=false; }); }); });
+    if(items[0]) items[0].open=true;
+    box.addEventListener('input',function(){ var q=box.value.trim().toLowerCase(), n=0;
+        items.forEach(function(d){ var hit=!q||d.textContent.toLowerCase().indexOf(q)>-1; d.hidden=!hit; if(hit) n++; if(q&&hit) d.open=true; });
+        none.hidden=n>0; });
+})();
+</script>
 <!-- FAQ End -->
 
 

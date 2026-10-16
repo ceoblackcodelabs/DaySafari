@@ -133,4 +133,7 @@ def lead_popup(request):
     show = bool(name) and name not in LEAD_POPUP_SKIP and 'admin' not in app \
         and not request.path.startswith(('/Mpesa', '/i18n')) and '/admin/' not in request.path \
         and 'payment' not in (name or '')
-    return {'show_lead_popup': show}
+    cta_skip = LEAD_POPUP_SKIP | {'home', 'packages', 'legal_notice', 'privacy_policy', 'terms_and_conditions',
+                                 'cookie_policy', 'sitemap_page', 'faq', 'password_reset'}
+    return {'show_lead_popup': show, 'show_cta': bool(name) and name not in cta_skip and 'admin' not in app
+            and '/admin/' not in request.path and not request.path.startswith('/Mpesa')}

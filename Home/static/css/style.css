@@ -405,3 +405,65 @@ body{color:#555}
   .pk-view{display:none}
   .pk-cta{padding:22px}
 }
+
+/* ======================= Site-wide polish ======================= */
+html{scroll-behavior:smooth}
+::selection{background:#f6c582;color:#420d24}
+:focus-visible{outline:3px solid #f6c582;outline-offset:2px}
+/* page banner: brand-coloured overlay and a crisp title */
+.bg-breadcrumb{background-image:linear-gradient(rgba(36,6,20,.66),rgba(36,6,20,.5)),url(../img/breadcrumb-bg.webp)!important;position:relative}
+@media (max-width:768px){.bg-breadcrumb{background-image:linear-gradient(rgba(36,6,20,.66),rgba(36,6,20,.5)),url(../img/breadcrumb-bg-sm.webp)!important}}
+.bg-breadcrumb h3,.bg-breadcrumb h1{font-size:clamp(2rem,5vw,3.4rem);text-shadow:0 2px 14px rgba(0,0,0,.45);margin-bottom:.6rem!important}
+.bg-breadcrumb h3::after{content:"";display:block;width:64px;height:4px;border-radius:3px;background:#f6c582;margin:14px auto 0}
+.bg-breadcrumb .breadcrumb{background:rgba(255,255,255,.12);display:inline-flex;padding:6px 18px;border-radius:999px;backdrop-filter:blur(4px)}
+/* gentle lift on the older card styles so every page feels alive */
+.service-content-inner,.blog-item,.packages-item,.guide-item{transition:transform .25s,box-shadow .25s}
+.service-content-inner:hover{transform:translateY(-3px)}
+.blog-item:hover,.packages-item:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(66,13,36,.15)}
+/* scroll reveal (only when JS runs, and never for people who asked for less motion) */
+.js .rv{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+/* call-to-action band shown near the bottom of content pages */
+.cta-strip{background:linear-gradient(135deg,#420d24,#6b1c3d);color:#fff;padding:34px 0}
+.cta-strip .inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.cta-strip h2{color:#fff;font-size:clamp(1.3rem,3vw,1.8rem);margin:0 0 4px}
+.cta-strip p{margin:0;color:rgba(255,255,255,.85)}
+.cta-strip .acts{display:flex;flex-wrap:wrap;gap:10px}
+.pk-btn-ghost{background:transparent;color:#fff!important;border-color:rgba(255,255,255,.8)}
+.pk-btn-ghost:hover{background:#fff;color:#420d24!important}
+/* FAQ accordion */
+.faq-wrap{max-width:860px;margin:0 auto}
+.faq-search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #d9cdd3;border-radius:14px;padding:4px 16px;margin-bottom:16px}
+.faq-search input{flex:1;border:0;outline:0;height:46px;background:transparent}
+.faq-item{background:#fff;border:1px solid #e3d8dd;border-radius:14px;margin-bottom:10px;overflow:hidden}
+.faq-item[hidden]{display:none}
+.faq-item summary{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;font-weight:600;color:#14141f;list-style:none}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary i{color:#420d24;width:24px;text-align:center;font-size:1.15rem}
+.faq-item summary span{flex:1}
+.faq-item summary::after{content:"\f078";font-family:"Font Awesome 5 Free";font-weight:900;font-size:.8rem;color:#8c6b79;transition:transform .25s}
+.faq-item[open] summary::after{transform:rotate(180deg)}
+.faq-item[open]{border-color:#420d24;box-shadow:0 6px 20px rgba(66,13,36,.1)}
+.faq-a{padding:0 20px 18px 58px;color:#555}
+.faq-a p{margin:0}
+.faq-none{text-align:center;color:#8c6b79;padding:20px}
+.faq-help{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-top:22px;padding:20px 24px;border-radius:16px;background:linear-gradient(135deg,#420d24,#6b1c3d);color:#fff}
+.faq-help b{display:block;font-size:1.15rem}
+.faq-help span{color:rgba(255,255,255,.85)}
+@media (max-width:575.98px){.faq-a{padding-left:20px}}
+.pk-price-ask{background:#fff;font-weight:600}
+.pk-pills-sm{margin-top:10px;align-items:center}
+.pk-form .pk-sort{margin:0}
+.pk-sort{display:flex;align-items:center;gap:8px}
+/* quick contact cards */
+.qc-strip{margin-top:-34px;position:relative;z-index:3}
+.qc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.qc-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;background:#fff;border-radius:16px;padding:20px 12px;box-shadow:0 8px 24px rgba(66,13,36,.15);text-decoration:none;color:#14141f;transition:transform .2s,box-shadow .2s}
+.qc-card i{font-size:1.6rem;color:#420d24;margin-bottom:6px}
+.qc-card b{font-size:1rem}
+.qc-card span{font-size:.88rem;color:#6b5560;word-break:break-word}
+.qc-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(66,13,36,.22)}
+.qc-wa i{color:#25d366}
+@media (max-width:991.98px){.qc-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.qc-strip{margin-top:-20px}.qc-card{padding:16px 8px}}

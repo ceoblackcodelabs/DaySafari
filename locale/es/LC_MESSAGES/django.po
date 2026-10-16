@@ -4711,3 +4711,24 @@ msgstr "¿No encuentra el viaje adecuado?"
 
 msgid "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
 msgstr "Díganos sus fechas y presupuesto y crearemos un itinerario a medida con presupuesto gratuito."
+
+msgid "Filter hotels"
+msgstr "Filtrar hoteles"
+
+msgid "Ask for rate"
+msgstr "Consultar tarifa"
+
+msgid "No results"
+msgstr "Sin resultados"
+
+msgid "Still have questions?"
+msgstr "¿Tiene más preguntas?"
+
+msgid "Chat with a real person on WhatsApp or send us a message."
+msgstr "Hable con una persona real por WhatsApp o envíenos un mensaje."
+
+msgid "Ready to plan your trip?"
+msgstr "¿Listo para planificar su viaje?"
+
+msgid "Hotels, Lodges, Tented Camps & Beach Villas"
+msgstr "Hoteles, lodges, campamentos de tiendas y villas de playa"

@@ -4159,3 +4159,24 @@ msgstr "Can't find the right trip?"
 
 msgid "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
 msgstr "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
+
+msgid "Filter hotels"
+msgstr "Filter hotels"
+
+msgid "Ask for rate"
+msgstr "Ask for rate"
+
+msgid "No results"
+msgstr "No results"
+
+msgid "Still have questions?"
+msgstr "Still have questions?"
+
+msgid "Chat with a real person on WhatsApp or send us a message."
+msgstr "Chat with a real person on WhatsApp or send us a message."
+
+msgid "Ready to plan your trip?"
+msgstr "Ready to plan your trip?"
+
+msgid "Hotels, Lodges, Tented Camps & Beach Villas"
+msgstr "Hotels, Lodges, Tented Camps & Beach Villas"

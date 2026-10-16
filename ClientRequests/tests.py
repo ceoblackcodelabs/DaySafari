@@ -357,9 +357,9 @@ class HotelsTests(TestCase):
 
     def test_filter_pills_show_counts(self):
         r = self.client.get(reverse('hotels'))
-        self.assertContains(r, 'All Hotels (3)')
-        self.assertContains(r, 'Kenya (2)')
-        self.assertContains(r, 'Tanzania (1)')
+        self.assertContains(r, 'All Hotels <span>3</span>')
+        self.assertContains(r, 'Kenya <span>2</span>')
+        self.assertContains(r, 'Tanzania <span>1</span>')
 
     # ---- detail ------------------------------------------------------------
     def test_detail_page_content_and_no_internal_data_leak(self):
@@ -685,3 +685,25 @@ class PackagesFilterTests(TestCase):
         self.assertLess(html.index('pk-btn pk-btn-main'), html.index('pk-btn pk-btn-quiet'))
         self.assertIn('class="pk-tag"', html)
         self.assertNotIn('pk-btn-quiet', self.client.get('/en/packages/').content.decode())    # nothing to reset yet
+
+
+class UiPagesTests(TestCase):
+    """The upgraded list/info pages render and keep their key features."""
+
+    def test_faq_is_an_accordion_with_search(self):
+        html = self.client.get('/en/faq/').content.decode()
+        self.assertEqual(html.count('class="faq-item"'), 6)
+        self.assertIn('id="faqSearch"', html)
+
+    def test_cta_band_shows_on_content_pages_only(self):
+        self.assertIn('class="cta-strip"', self.client.get('/en/services/').content.decode())
+        for url in ('/en/', '/en/packages/', '/en/contact/', '/en/faq/', '/en/privacy-policy/'):
+            self.assertNotIn('class="cta-strip"', self.client.get(url).content.decode(), url)
+
+    def test_contact_has_quick_cards_and_trek_pages_use_cards(self):
+        self.assertIn('tel:+254759379600', self.client.get('/en/contact/').content.decode())
+        for url in ('/en/trekking/Mt-Kenya/', '/en/trekking/Mt-Meru/', '/en/hotels/', '/en/hotels/?page=99'):
+            self.assertEqual(self.client.get(url).status_code, 200, url)
+
+    def test_pages_never_ship_the_old_carousel_for_treks(self):
+        self.assertNotIn('packages-carousel', self.client.get('/en/trekking/Mt-Kenya/').content.decode())

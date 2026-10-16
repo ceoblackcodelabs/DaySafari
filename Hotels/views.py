@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.db.models import Count, Q
+from django.db.models import F, Count, Q
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -13,8 +13,8 @@ from .models import AirBNB, Hotel
 
 SORTS = {
     'featured': ('-is_featured', 'country', 'name'),
-    'price_low': ('price_per_night', 'name'),
-    'price_high': ('-price_per_night', 'name'),
+    'price_low': (F('price_per_night').asc(nulls_last=True), 'name'),       # hotels without a rate go last
+    'price_high': (F('price_per_night').desc(nulls_last=True), 'name'),
     'rating': ('-star_rating', 'name'),
     'name': ('name',),
 }
@@ -35,6 +35,11 @@ class HotelListView(ListView):
 
     def published(self):
         return Hotel.objects.filter(is_published=True)
+
+    def paginate_queryset(self, queryset, page_size):
+        paginator = self.get_paginator(queryset, page_size)       # a wrong ?page= shows the nearest real page
+        page = paginator.get_page(self.request.GET.get('page'))
+        return paginator, page, page.object_list, page.has_other_pages()
 
     def get_queryset(self):
         params = self.request.GET
