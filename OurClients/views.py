@@ -470,82 +470,126 @@ class ToggleFavoriteView(LoginRequiredMixin, View):
 
 
 class PackagesView(ListView):
+    """Packages list with filters (search, category, place, price, length) and sorting. Bad input never crashes it."""
     model = AwesomePackages
     template_name = 'Packages/packages.html'
     context_object_name = 'packages'
     paginate_by = 9
+    CATEGORY_ORDER = ['East Africa Tours', 'South Africa', 'West Africa', 'Africa Tours', 'International Tours', 'Cruises']
+    SORTS = {'price_asc': ('price', 'id'), 'price_desc': ('-price', 'id'), 'rating': ('-star_rating', 'id'),
+             'days_asc': ('days', 'id'), 'days_desc': ('-days', 'id'), 'newest': ('-created_at', 'id')}
 
-    def get_queryset(self):
-        queryset = AwesomePackages.objects.all()
+    # ---- reading the filters safely
+    @staticmethod
+    def _number(raw, kind=int, low=0, high=10**7):
+        try:
+            value = kind(str(raw).strip())
+        except (TypeError, ValueError, ArithmeticError):
+            return None
+        if value != value or value < low or value > high:      # NaN or out of range
+            return None
+        return value
 
-        # Filter by category
-        category = self.request.GET.get('category')
-        if category:
-            queryset = queryset.filter(category=category)
-
-        # Filter by location
-        location = self.request.GET.get('location')
-        if location:
-            queryset = queryset.filter(location__icontains=location)
-
-        # Filter by price range
-        min_price = self.request.GET.get('min_price')
-        max_price = self.request.GET.get('max_price')
-        if min_price:
-            queryset = queryset.filter(price__gte=min_price)
-        if max_price:
-            queryset = queryset.filter(price__lte=max_price)
-
-        # Filter by days
-        days = self.request.GET.get('days')
-        if days:
-            queryset = queryset.filter(days__lte=days)
-
-        # Search
-        search = self.request.GET.get('search')
-        if search:
-            queryset = queryset.filter(
-                Q(name__icontains=search) |
-                Q(location__icontains=search) |
-                Q(description__icontains=search)
-            )
-
-        # Sort - FIXED: starRating -> star_rating
-        sort_by = self.request.GET.get('sort')
-        if sort_by == 'price_asc':
-            queryset = queryset.order_by('price')
-        elif sort_by == 'price_desc':
-            queryset = queryset.order_by('-price')
-        elif sort_by == 'rating':
-            queryset = queryset.order_by('-star_rating')  # FIXED
-        elif sort_by == 'days_asc':
-            queryset = queryset.order_by('days')
-        else:
-            queryset = queryset.order_by('-star_rating')  # FIXED
-
-        # Only select necessary fields for performance
-        queryset = queryset.only(
-            'id', 'name', 'image', 'price', 'days', 'category',
-            'star_rating', 'location', 'slug', 'description'
-        )
-
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Our Safari Packages - Day Safaris Adventures'
-        context['categories'] = AwesomePackages.objects.values_list('category', flat=True).distinct()
-        context['locations'] = AwesomePackages.objects.values_list('location', flat=True).distinct()
-
-        # Add filter values to context for form persistence
-        context['current_filters'] = {
-            'category': self.request.GET.get('category', ''),
-            'location': self.request.GET.get('location', ''),
-            'min_price': self.request.GET.get('min_price', ''),
-            'max_price': self.request.GET.get('max_price', ''),
-            'days': self.request.GET.get('days', ''),
-            'search': self.request.GET.get('search', ''),
-            'sort': self.request.GET.get('sort', ''),
+    def filters(self):
+        from decimal import Decimal
+        get = self.request.GET
+        min_price = self._number(get.get('min_price'), Decimal)
+        max_price = self._number(get.get('max_price'), Decimal)
+        if min_price is not None and max_price is not None and min_price > max_price:
+            min_price, max_price = max_price, min_price          # forgiving: swap a reversed range
+        category = get.get('category', '').strip()
+        return {
+            'search': ' '.join(get.get('search', '').split())[:100],
+            'category': category if category in self.CATEGORY_ORDER else '',
+            'location': get.get('location', '').strip()[:100],
+            'min_price': min_price, 'max_price': max_price,
+            'days': self._number(get.get('days'), int, low=1, high=365),
+            'sort': get.get('sort') if get.get('sort') in self.SORTS else '',
         }
 
+    def paginate_queryset(self, queryset, page_size):
+        # a wrong or too-high ?page= shows the nearest real page instead of an error
+        paginator = self.get_paginator(queryset, page_size)
+        page = paginator.get_page(self.request.GET.get('page'))
+        return paginator, page, page.object_list, page.has_other_pages()
+
+    def get_queryset(self):
+        f = self.filters()
+        qs = AwesomePackages.objects.all()
+        if f['category']:
+            qs = qs.filter(category=f['category'])
+        if f['location']:
+            qs = qs.filter(location__icontains=f['location'])
+        if f['min_price'] is not None:
+            qs = qs.filter(price__gte=f['min_price'])
+        if f['max_price'] is not None:
+            qs = qs.filter(price__lte=f['max_price'])
+        if f['days'] is not None:
+            qs = qs.filter(days__lte=f['days'])
+        for term in [t for t in f['search'].split() if len(t) > 1][:6]:      # every word must match somewhere
+            qs = qs.filter(Q(name__icontains=term) | Q(location__icontains=term) |
+                           Q(description__icontains=term) | Q(category__icontains=term))
+        # a second key keeps pagination stable when many packages share the same value
+        qs = qs.order_by(*self.SORTS.get(f['sort'], ('-star_rating', '-created_at', 'id')))
+        return qs.only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug',
+                       'description', 'persons')
+
+    # ---- helpers for the template
+    def _url(self, **changes):
+        """The packages URL with the current filters, changing/removing the given ones (None removes). Resets paging."""
+        from urllib.parse import urlencode
+        params = {k: v for k, v in self.request.GET.items() if k != 'page' and v}
+        for key, value in changes.items():
+            if value in (None, ''):
+                params.pop(key, None)
+            else:
+                params[key] = value
+        base = str(reverse_lazy('packages'))
+        return f'{base}?{urlencode(params)}' if params else base
+
+    def get_context_data(self, **kwargs):
+        from urllib.parse import urlencode
+        context = super().get_context_data(**kwargs)
+        f = self.filters()
+        counts = dict(AwesomePackages.objects.order_by().values_list('category').annotate(n=Count('id')))
+        context['title'] = 'Our Safari Packages - Day Safaris Adventures'
+        context['categories'] = [{'value': c, 'n': counts[c], 'url': self._url(category=c), 'active': f['category'] == c}
+                                 for c in self.CATEGORY_ORDER if c in counts]
+        context['all_url'] = self._url(category=None)
+        context['total_all'] = sum(counts.values())
+        context['locations'] = sorted({l for l in AwesomePackages.objects.order_by().values_list('location', flat=True) if l})
+        context['current_filters'] = {k: ('' if v is None else v) for k, v in f.items()}
+
+        # chips for the filters that are switched on; each one removes itself
+        chips = []
+        if f['search']:
+            chips.append((_('Search') + ': ' + f['search'], self._url(search=None)))
+        if f['category']:
+            chips.append((_(f['category']), self._url(category=None)))
+        if f['location']:
+            chips.append((f['location'], self._url(location=None)))
+        if f['min_price'] is not None or f['max_price'] is not None:
+            lo = f"${f['min_price']:.0f}" if f['min_price'] is not None else ''
+            hi = f"${f['max_price']:.0f}" if f['max_price'] is not None else ''
+            label = f'{lo} - {hi}' if lo and hi else (f'{_("From")} {lo}' if lo else f'{_("Up to")} {hi}')
+            chips.append((label, self._url(min_price=None, max_price=None)))
+        if f['days'] is not None:
+            chips.append((_('Up to %(n)s days') % {'n': f['days']}, self._url(days=None)))
+        context['chips'] = chips
+        context['clear_url'] = str(reverse_lazy('packages')) + (f"?{urlencode({'sort': f['sort']})}" if f['sort'] else '')
+
+        context['price_presets'] = [
+            (_('Under $1,000'), self._url(min_price=None, max_price=999), f['min_price'] is None and f['max_price'] == 999),
+            ('$1,000 - $2,000', self._url(min_price=1000, max_price=2000), f['min_price'] == 1000 and f['max_price'] == 2000),
+            ('$2,000 - $3,000', self._url(min_price=2000, max_price=3000), f['min_price'] == 2000 and f['max_price'] == 3000),
+            (_('$3,000 and up'), self._url(min_price=3000, max_price=None), f['min_price'] == 3000 and f['max_price'] is None),
+        ]
+        context['days_presets'] = [(_('Up to %(n)s days') % {'n': n}, self._url(days=n), f['days'] == n) for n in (3, 5, 7, 10, 14)]
+        labels = [('', _('Recommended')), ('price_asc', _('Price: Low to High')),
+                  ('price_desc', _('Price: High to Low')), ('rating', _('Rating: High to Low')),
+                  ('days_asc', _('Duration: Short to Long')), ('days_desc', _('Duration: Long to Short')),
+                  ('newest', _('Newest first'))]
+        context['sort_options'] = [(key, label, self._url(sort=key), f['sort'] == key) for key, label in labels]
+        # the same query without "page", used by the pagination links
+        context['base_qs'] = urlencode({k: v for k, v in self.request.GET.items() if k != 'page' and v})
         return context

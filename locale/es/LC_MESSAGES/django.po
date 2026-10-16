@@ -4657,3 +4657,57 @@ msgstr "Cualquier duración"
 
 msgid "Up to %(n)s days"
 msgstr "Hasta %(n)s días"
+
+msgid "Filter packages"
+msgstr "Filtrar paquetes"
+
+msgid "More filters"
+msgstr "Más filtros"
+
+msgid "Budget"
+msgstr "Presupuesto"
+
+msgid "Length"
+msgstr "Duración"
+
+msgid "Layout"
+msgstr "Diseño"
+
+msgid "Grid view"
+msgstr "Vista de cuadrícula"
+
+msgid "List view"
+msgstr "Vista de lista"
+
+msgid "Active filters"
+msgstr "Filtros activos"
+
+msgid "Remove"
+msgstr "Quitar"
+
+msgid "Clear all"
+msgstr "Borrar todo"
+
+msgid "Up to"
+msgstr "Hasta"
+
+msgid "Under $1,000"
+msgstr "Menos de 1.000 $"
+
+msgid "$3,000 and up"
+msgstr "3.000 $ o más"
+
+msgid "Recommended"
+msgstr "Recomendado"
+
+msgid "Duration: Long to Short"
+msgstr "Duración: de larga a corta"
+
+msgid "Newest first"
+msgstr "Más recientes primero"
+
+msgid "Can't find the right trip?"
+msgstr "¿No encuentra el viaje adecuado?"
+
+msgid "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
+msgstr "Díganos sus fechas y presupuesto y crearemos un itinerario a medida con presupuesto gratuito."

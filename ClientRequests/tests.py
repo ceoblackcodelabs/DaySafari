@@ -624,3 +624,64 @@ class I18nTests(SiteHealthTests):
         self.assertIn('id="leadOverlay" data-auto=""', contact)       # still opens from the Get a Quote button...
         self.assertIn('data-open-lead', contact)                       # ...but never by itself on the contact page
         self.assertNotIn('chatbot', home.lower())
+
+
+class PackagesFilterTests(TestCase):
+    """The packages page filters, sorting and paging must work for every input, good or bad."""
+
+    @classmethod
+    def setUpTestData(cls):
+        from Places.models import AwesomePackages
+        from django.utils import translation
+        with translation.override('en'):
+            rows = [('Masai Mara Safari', 'Masai Mara', 'East Africa Tours', 900, 3, 5),
+                    ('Amboseli Elephant Trip', 'Amboseli', 'East Africa Tours', 1500, 5, 4),
+                    ('Cape Town Wine Tour', 'Cape Town', 'South Africa', 2400, 7, 5),
+                    ('Nile Cruise', 'Luxor', 'Cruises', 3500, 10, 5)]
+            for i, (name, loc, cat, price, days, stars) in enumerate(rows):
+                AwesomePackages.objects.create(name=name, location=loc, category=cat, price=price, days=days, persons=2,
+                                               star_rating=stars, description=f'<p>A trip number {i}</p>')
+            for i in range(10):     # enough packages to need a second page
+                AwesomePackages.objects.create(name=f'Filler {i}', location='Nairobi', category='East Africa Tours',
+                                               price=100 + i, days=1, persons=1, star_rating=3, description='<p>x</p>')
+
+    def names(self, query=''):
+        html = self.client.get('/en/packages/' + query).content.decode()
+        return re.findall(r'<h2 class="pk-title"><a [^>]*>([^<]*)</a>', html)
+
+    def test_each_filter(self):
+        self.assertEqual(self.names('?category=Cruises'), ['Nile Cruise'])
+        self.assertEqual(self.names('?location=amboseli'), ['Amboseli Elephant Trip'])
+        self.assertEqual(self.names('?min_price=2000&max_price=3000'), ['Cape Town Wine Tour'])
+        self.assertEqual(self.names('?days=3&search=mara'), ['Masai Mara Safari'])
+        self.assertEqual(self.names('?search=elephant%20amboseli'), ['Amboseli Elephant Trip'])   # words need not be next to each other
+        self.assertEqual(self.names('?search=zzzz'), [])
+
+    def test_combined_and_reversed_price_range(self):
+        self.assertEqual(self.names('?category=East+Africa+Tours&max_price=1000&days=3&search=masai'), ['Masai Mara Safari'])
+        self.assertEqual(self.names('?min_price=3000&max_price=2000'), ['Cape Town Wine Tour'])     # 3000/2000 is swapped, not empty
+
+    def test_sorting(self):
+        first = self.names('?category=East+Africa+Tours&sort=price_desc&search=trip')
+        self.assertEqual(first, ['Amboseli Elephant Trip', 'Masai Mara Safari'])
+        self.assertEqual(self.names('?sort=price_asc&min_price=1000')[:2], ['Amboseli Elephant Trip', 'Cape Town Wine Tour'])
+        self.assertEqual(self.names('?sort=days_desc&min_price=1000')[0], 'Nile Cruise')
+
+    def test_bad_input_never_errors(self):
+        for query in ['?min_price=abc', '?max_price=1e999', '?days=-5', '?days=x', '?page=abc', '?page=999', '?page=0',
+                      '?category=Nope', '?sort=hack', '?search=' + 'a' * 500, "?search='%3Bdrop%20table", '?location=%00']:
+            self.assertEqual(self.client.get('/en/packages/' + query).status_code, 200, query)
+
+    def test_paging_keeps_filters_and_never_repeats(self):
+        page1 = self.names('?category=East+Africa+Tours&sort=price_asc')
+        page2 = self.names('?category=East+Africa+Tours&sort=price_asc&page=2')
+        self.assertEqual(len(page1), 9)
+        self.assertFalse(set(page1) & set(page2))
+        html = self.client.get('/en/packages/?category=East+Africa+Tours&sort=price_asc').content.decode()
+        self.assertIn('category=East+Africa+Tours&amp;sort=price_asc&page=2', html)
+
+    def test_filter_button_is_the_strong_one_and_chips_show(self):
+        html = self.client.get('/en/packages/?category=Cruises').content.decode()
+        self.assertLess(html.index('pk-btn pk-btn-main'), html.index('pk-btn pk-btn-quiet'))
+        self.assertIn('class="pk-tag"', html)
+        self.assertNotIn('pk-btn-quiet', self.client.get('/en/packages/').content.decode())    # nothing to reset yet

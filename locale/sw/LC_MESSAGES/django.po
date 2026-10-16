@@ -4641,3 +4641,57 @@ msgstr "Muda wowote"
 
 msgid "Up to %(n)s days"
 msgstr "Hadi siku %(n)s"
+
+msgid "Filter packages"
+msgstr "Chuja vifurushi"
+
+msgid "More filters"
+msgstr "Vichujio zaidi"
+
+msgid "Budget"
+msgstr "Bajeti"
+
+msgid "Length"
+msgstr "Muda"
+
+msgid "Layout"
+msgstr "Mpangilio"
+
+msgid "Grid view"
+msgstr "Mwonekano wa gridi"
+
+msgid "List view"
+msgstr "Mwonekano wa orodha"
+
+msgid "Active filters"
+msgstr "Vichujio vinavyotumika"
+
+msgid "Remove"
+msgstr "Ondoa"
+
+msgid "Clear all"
+msgstr "Futa vyote"
+
+msgid "Up to"
+msgstr "Hadi"
+
+msgid "Under $1,000"
+msgstr "Chini ya $1,000"
+
+msgid "$3,000 and up"
+msgstr "$3,000 na zaidi"
+
+msgid "Recommended"
+msgstr "Inapendekezwa"
+
+msgid "Duration: Long to Short"
+msgstr "Muda: Ndefu hadi Fupi"
+
+msgid "Newest first"
+msgstr "Mpya kwanza"
+
+msgid "Can't find the right trip?"
+msgstr "Huwezi kupata safari sahihi?"
+
+msgid "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
+msgstr "Tuambie tarehe na bajeti yako nasi tutabuni ratiba maalum yenye bei ya bure."

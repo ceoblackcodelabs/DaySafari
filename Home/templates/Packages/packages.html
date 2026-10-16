@@ -1,13 +1,14 @@
 {% extends "Home/base.html" %}
 
-{% load static image_tags %}
-{% load i18n %}
+{% load static image_tags i18n %}
 
 {% block title %}{% trans "Our Safari Packages - Days Safaris Adventures" %}{% endblock title %}
 
 {% block meta_description %}{% trans "Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices." %}{% endblock meta_description %}
 {% block og_description %}{% trans "Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices." %}{% endblock og_description %}
 {% block twitter_description %}{% trans "Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices." %}{% endblock twitter_description %}
+{# filtered/paged views are variations of the same list: keep one canonical address and let Google follow the links #}
+{% block canonical_url %}https://daysafarisadventures.co.ke{% url 'packages' %}{% endblock canonical_url %}
 
 {% block body %}
 
@@ -23,208 +24,141 @@
 </div>
 <!-- Header End -->
 
-<!-- Filter Section Start -->
-<div class="container-fluid py-4 bg-light">
+<!-- Filters Start -->
+<section class="pk-toolbar" aria-label="{% trans 'Filter packages' %}">
     <div class="container">
-        <div class="row g-3 align-items-end">
-            <form method="GET" action="{% url 'packages' %}" class="w-100">
-                <div class="row g-3">
-                    <!-- Search -->
-                    <div class="col-md-3">
-                        <label class="form-label fw-bold">{% trans "Search" %}</label>
-                        <input type="text" name="search" class="form-control" placeholder="{% trans 'Search packages...' %}" value="{{ current_filters.search }}">
-                    </div>
+        <form method="get" action="{% url 'packages' %}#results" class="pk-form" id="pkForm">
+            {% if current_filters.category %}<input type="hidden" name="category" value="{{ current_filters.category }}">{% endif %}
+            {% if current_filters.sort %}<input type="hidden" name="sort" value="{{ current_filters.sort }}">{% endif %}
+            <div class="pk-search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="search" name="search" value="{{ current_filters.search }}" maxlength="100" autocomplete="off"
+                       placeholder="{% trans 'Search packages...' %}" aria-label="{% trans 'Search' %}">
+                <button type="submit" class="pk-btn pk-btn-main"><i class="fas fa-filter"></i><span>{% trans "Filter" %}</span></button>
+                {% if chips %}<a href="{{ clear_url }}" class="pk-btn pk-btn-quiet"><i class="fas fa-undo"></i><span>{% trans "Reset" %}</span></a>{% endif %}
+            </div>
 
-                    <!-- Category -->
-                    <div class="col-md-2">
-                        <label class="form-label fw-bold">{% trans "Category" %}</label>
-                        <select name="category" class="form-select" aria-label="{% trans "Category" %}">
-                            <option value="">{% trans "All Categories" %}</option>
-                            {% for category in categories %}
-                            <option value="{{ category }}" {% if current_filters.category == category %}selected{% endif %}>
-                                {% trans category %}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
+            <nav class="pk-pills" aria-label="{% trans 'Category' %}">
+                <a href="{{ all_url }}" class="pk-pill {% if not current_filters.category %}active{% endif %}">{% trans "All" %} <span>{{ total_all }}</span></a>
+                {% for c in categories %}<a href="{{ c.url }}" class="pk-pill {% if c.active %}active{% endif %}">{% trans c.value %} <span>{{ c.n }}</span></a>{% endfor %}
+            </nav>
 
-                    <!-- Location -->
-                    <div class="col-md-2">
-                        <label class="form-label fw-bold">{% trans "Location" %}</label>
-                        <select name="location" class="form-select" aria-label="{% trans "Location" %}">
+            <details class="pk-more" {% if current_filters.location or current_filters.min_price or current_filters.max_price or current_filters.days %}open{% endif %}>
+                <summary><i class="fas fa-sliders-h"></i> {% trans "More filters" %}</summary>
+                <div class="pk-fields">
+                    <label><span>{% trans "Location" %}</span>
+                        <select name="location">
                             <option value="">{% trans "All Locations" %}</option>
-                            {% for location in locations %}
-                            <option value="{{ location }}" {% if current_filters.location == location %}selected{% endif %}>
-                                {{ location }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <!-- Price Range -->
-                    <div class="col-md-2">
-                        <label class="form-label fw-bold">{% trans "Min Price ($)" %}</label>
-                        <input type="number" name="min_price" class="form-control" placeholder="{% trans 'Min' %}" value="{{ current_filters.min_price }}">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label fw-bold">{% trans "Max Price ($)" %}</label>
-                        <input type="number" name="max_price" class="form-control" placeholder="{% trans 'Max' %}" value="{{ current_filters.max_price }}">
-                    </div>
-
-                    <!-- Days -->
-                    <div class="col-md-2">
-                        <label class="form-label fw-bold">{% trans "Max Days" %}</label>
-                        <input type="number" name="days" class="form-control" placeholder="{% trans 'Days' %}" value="{{ current_filters.days }}">
-                    </div>
-
-                    <!-- Sort -->
-                    <div class="col-md-2">
-                        <label class="form-label fw-bold">{% trans "Sort By" %}</label>
-                        <select name="sort" class="form-select" aria-label="{% trans "Sort packages" %}">
-                            <option value="">{% trans "Default" %}</option>
-                            <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>{% trans "Price: Low to High" %}</option>
-                            <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>{% trans "Price: High to Low" %}</option>
-                            <option value="rating" {% if current_filters.sort == 'rating' %}selected{% endif %}>{% trans "Rating: High to Low" %}</option>
-                            <option value="days_asc" {% if current_filters.sort == 'days_asc' %}selected{% endif %}>{% trans "Duration: Short to Long" %}</option>
-                        </select>
-                    </div>
-
-                    <!-- Filter Buttons -->
-                    <div class="col-md-2 d-flex gap-2">
-                        <button type="submit" class="btn btn-primary w-100 mt-auto">
-                            <i class="fas fa-filter me-2"></i>{% trans "Filter" %}
-                        </button>
-                        <a href="{% url 'packages' %}" class="btn btn-secondary w-100 mt-auto">
-                            <i class="fas fa-undo me-2"></i>{% trans "Reset" %}
-                        </a>
-                    </div>
+                            {% for location in locations %}<option value="{{ location }}" {% if current_filters.location == location %}selected{% endif %}>{{ location }}</option>{% endfor %}
+                        </select></label>
+                    <label><span>{% trans "Min Price ($)" %}</span><input type="number" name="min_price" min="0" step="50" inputmode="numeric" placeholder="{% trans 'Min' %}" value="{{ current_filters.min_price }}"></label>
+                    <label><span>{% trans "Max Price ($)" %}</span><input type="number" name="max_price" min="0" step="50" inputmode="numeric" placeholder="{% trans 'Max' %}" value="{{ current_filters.max_price }}"></label>
+                    <label><span>{% trans "Max Days" %}</span><input type="number" name="days" min="1" max="365" inputmode="numeric" placeholder="{% trans 'Days' %}" value="{{ current_filters.days }}"></label>
                 </div>
-            </form>
-        </div>
+                <div class="pk-presets">
+                    <b>{% trans "Budget" %}</b>
+                    {% for label, url, on in price_presets %}<a href="{{ url }}" class="pk-chip {% if on %}active{% endif %}">{{ label }}</a>{% endfor %}
+                    <b>{% trans "Length" %}</b>
+                    {% for label, url, on in days_presets %}<a href="{{ url }}" class="pk-chip {% if on %}active{% endif %}">{{ label }}</a>{% endfor %}
+                </div>
+            </details>
+        </form>
     </div>
-</div>
-<!-- Filter Section End -->
+</section>
+<!-- Filters End -->
 
 <!-- Packages Start -->
-<div class="container-fluid blog py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3">{% trans "Our Packages" %}</p>
-            <h1 class="mb-4">{% trans "Discover Amazing Safari Adventures" %}</h1>
-            <p class="mb-0">{% trans "Explore our curated selection of safari packages across East Africa. From luxury wildlife safaris to budget-friendly adventures, we have the perfect journey for you." %}</p>
-        </div>
-
-        <!-- Results Count -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <p class="text-muted">
-                    {% trans "Showing" %} {{ page_obj.start_index }} - {{ page_obj.end_index }}
-                    {% trans "of" %} {{ page_obj.paginator.count }} {% trans "packages" %}
-                </p>
-            </div>
-        </div>
-
-        <div class="row g-4 justify-content-center">
-            {% for package in packages %}
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <div class="blog-img-inner">
-                            {% if package.image %}
-                            <img class="img-fluid w-100 rounded-top" src="{{ package.image|thumb:640 }}" alt="{{ package.name }}" loading="lazy" decoding="async">
-                            {% else %}
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/package-placeholder.jpg' %}" alt="{{ package.name }}" loading="lazy" decoding="async">
-                            {% endif %}
-                            <div class="blog-icon">
-                                <a href="{% url 'package_detail' package.slug %}" class="my-auto" aria-label="{% trans "View details" %}"><i class="fas fa-link fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2">
-                                <i class="fa fa-map-marker-alt text-primary me-2"></i>{{ package.location|truncatechars:15 }}
-                            </small>
-                            <small class="flex-fill text-center border-end py-2">
-                                <i class="fa fa-calendar-alt text-primary me-2"></i>{{ package.days }} {% trans "Days" %}
-                            </small>
-                            <small class="flex-fill text-center py-2">
-                                <i class="fa fa-star text-primary me-2"></i>{{ package.starRating }}
-                            </small>
-                        </div>
-                    </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-2">
-                            <span class="badge bg-primary">{% trans package.category %}</span>
-                        </p>
-                        <a href="{% url 'package_detail' package.slug %}" class="h4">{{ package.name|truncatechars:60 }}</a>
-                        <p class="my-3">{{ package.description|striptags|truncatewords:20 }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="{% url 'package_detail' package.slug %}" class="btn btn-primary rounded-pill py-2 px-4">
-                                {% trans "View Detail" %}
-                            </a>
-                        </div>
-                    </div>
+<section class="pk-results py-5" id="results">
+    <div class="container">
+        <div class="pk-head">
+            <p class="pk-count">
+                {% if page_obj.paginator.count %}{% trans "Showing" %} <b>{{ page_obj.start_index }}-{{ page_obj.end_index }}</b>
+                {% trans "of" %} <b>{{ page_obj.paginator.count }}</b> {% trans "packages" %}{% else %}{% trans "No packages found" %}{% endif %}
+            </p>
+            <div class="pk-tools">
+                <label class="pk-sort"><span>{% trans "Sort By" %}</span>
+                    <select onchange="window.location=this.value" aria-label="{% trans 'Sort packages' %}">
+                        {% for key, label, url, on in sort_options %}<option value="{{ url }}#results" {% if on %}selected{% endif %}>{{ label }}</option>{% endfor %}
+                    </select></label>
+                <div class="pk-view" role="group" aria-label="{% trans 'Layout' %}">
+                    <button type="button" data-view="grid" class="active" aria-label="{% trans 'Grid view' %}"><i class="fas fa-th-large"></i></button>
+                    <button type="button" data-view="list" aria-label="{% trans 'List view' %}"><i class="fas fa-list"></i></button>
                 </div>
             </div>
+        </div>
+
+        {% if chips %}
+        <div class="pk-active" aria-label="{% trans 'Active filters' %}">
+            {% for label, url in chips %}<a href="{{ url }}#results" class="pk-tag" title="{% trans 'Remove' %}">{{ label }} <i class="fas fa-times"></i></a>{% endfor %}
+            <a href="{{ clear_url }}#results" class="pk-clear">{% trans "Clear all" %}</a>
+        </div>
+        {% endif %}
+
+        <div class="pk-grid" id="pkGrid">
+            {% for package in packages %}
+            <article class="pk-card">
+                <a class="pk-img" href="{% url 'package_detail' package.slug %}" tabindex="-1" aria-hidden="true">
+                    <img src="{% if package.image %}{{ package.image|thumb:640 }}{% else %}{% static 'img/package-placeholder.jpg' %}{% endif %}" alt="" loading="{% if forloop.counter > 3 %}lazy{% else %}eager{% endif %}" decoding="async" width="640" height="480">
+                    <span class="pk-badge">{% trans package.category %}</span>
+                    <span class="pk-price">{% trans "From" %} <b>${{ package.price|floatformat:"0g" }}</b></span>
+                </a>
+                <div class="pk-body">
+                    <p class="pk-loc"><i class="fa fa-map-marker-alt"></i> {{ package.location }}</p>
+                    <h2 class="pk-title"><a href="{% url 'package_detail' package.slug %}">{{ package.name }}</a></h2>
+                    <ul class="pk-meta">
+                        <li><i class="far fa-calendar-alt"></i> {{ package.days }} {% trans "Days" %}</li>
+                        <li><i class="fas fa-user-friends"></i> {{ package.persons }}</li>
+                        <li class="pk-stars" title="{{ package.star_rating }}/5">{% for _ in "12345"|make_list %}<i class="fa fa-star {% if forloop.counter > package.star_rating %}off{% endif %}"></i>{% endfor %}</li>
+                    </ul>
+                    <p class="pk-desc">{{ package.description|striptags|truncatewords:22 }}</p>
+                    <div class="pk-actions">
+                        <a href="{% url 'package_detail' package.slug %}" class="pk-btn pk-btn-main">{% trans "View Detail" %}</a>
+                        <a href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20am%20interested%20in%3A%20{{ package.name|urlencode }}" target="_blank" rel="noopener" class="pk-btn pk-btn-wa" aria-label="{% trans 'Get a Quote' %}: {{ package.name }}"><i class="fab fa-whatsapp"></i><span>{% trans "Get a Quote" %}</span></a>
+                    </div>
+                </div>
+            </article>
             {% empty %}
-            <div class="text-center py-5">
-                <i class="fas fa-search fa-4x text-muted mb-3"></i>
+            <div class="pk-empty">
+                <i class="fas fa-search"></i>
                 <h3>{% trans "No packages found" %}</h3>
                 <p>{% trans "Try adjusting your filters or search criteria." %}</p>
-                <a href="{% url 'packages' %}" class="btn btn-primary rounded-pill py-2 px-4">
-                    {% trans "Clear All Filters" %}
-                </a>
+                <a href="{% url 'packages' %}" class="pk-btn pk-btn-main">{% trans "Clear All Filters" %}</a>
+                <div class="pk-pills justify-content-center mt-4">
+                    {% for c in categories %}<a href="{% url 'packages' %}?category={{ c.value|urlencode }}" class="pk-pill">{% trans c.value %} <span>{{ c.n }}</span></a>{% endfor %}
+                </div>
             </div>
             {% endfor %}
         </div>
 
-        <!-- Pagination -->
         {% if page_obj.paginator.num_pages > 1 %}
-        <div class="row mt-5">
-            <div class="col-12">
-                <nav aria-label="{% trans "Page navigation" %}">
-                    <ul class="pagination justify-content-center">
-                        {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link rounded-circle" href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="{% trans "First" %}">
-                                <i class="fas fa-angle-double-left"></i>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-circle" href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="{% trans "Previous" %}">
-                                <i class="fas fa-angle-left"></i>
-                            </a>
-                        </li>
-                        {% endif %}
-
-                        {% for num in page_obj.paginator.page_range %}
-                            {% if page_obj.number == num %}
-                            <li class="page-item active"><span class="page-link rounded-circle">{{ num }}</span></li>
-                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                            <li class="page-item">
-                                <a class="page-link rounded-circle" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ num }}</a>
-                            </li>
-                            {% endif %}
-                        {% endfor %}
-
-                        {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link rounded-circle" href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="{% trans "Next" %}">
-                                <i class="fas fa-angle-right"></i>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-circle" href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="{% trans "Last" %}">
-                                <i class="fas fa-angle-double-right"></i>
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </div>
-        </div>
+        <nav class="pk-pager" aria-label="{% trans 'Page navigation' %}">
+            {% if page_obj.has_previous %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ page_obj.previous_page_number }}#results" aria-label="{% trans 'Previous' %}"><i class="fas fa-angle-left"></i></a>{% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}<span class="active" aria-current="page">{{ num }}</span>
+                {% elif num == 1 or num == page_obj.paginator.num_pages or num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ num }}#results">{{ num }}</a>
+                {% elif num == page_obj.number|add:'-2' or num == page_obj.number|add:'2' %}<em>…</em>{% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ page_obj.next_page_number }}#results" aria-label="{% trans 'Next' %}"><i class="fas fa-angle-right"></i></a>{% endif %}
+        </nav>
         {% endif %}
+
+        <div class="pk-cta">
+            <div>
+                <h2>{% trans "Can't find the right trip?" %}</h2>
+                <p>{% trans "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote." %}</p>
+            </div>
+            <button type="button" class="pk-btn pk-btn-light" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button>
+        </div>
     </div>
-</div>
+</section>
 <!-- Packages End -->
 
+<script>
+(function () {
+    var grid = document.getElementById('pkGrid'), btns = document.querySelectorAll('.pk-view button');
+    function set(v) { grid.classList.toggle('is-list', v === 'list'); btns.forEach(function (b) { b.classList.toggle('active', b.dataset.view === v); }); try { localStorage.setItem('pkView', v); } catch (e) {} }
+    btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.view); }); });
+    try { var v = localStorage.getItem('pkView'); if (v === 'list') set('list'); } catch (e) {}
+})();
+</script>
 {% endblock body %}

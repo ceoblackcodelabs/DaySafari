@@ -4105,3 +4105,57 @@ msgstr "Any length"
 
 msgid "Up to %(n)s days"
 msgstr "Up to %(n)s days"
+
+msgid "Filter packages"
+msgstr "Filter packages"
+
+msgid "More filters"
+msgstr "More filters"
+
+msgid "Budget"
+msgstr "Budget"
+
+msgid "Length"
+msgstr "Length"
+
+msgid "Layout"
+msgstr "Layout"
+
+msgid "Grid view"
+msgstr "Grid view"
+
+msgid "List view"
+msgstr "List view"
+
+msgid "Active filters"
+msgstr "Active filters"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Clear all"
+msgstr "Clear all"
+
+msgid "Up to"
+msgstr "Up to"
+
+msgid "Under $1,000"
+msgstr "Under $1,000"
+
+msgid "$3,000 and up"
+msgstr "$3,000 and up"
+
+msgid "Recommended"
+msgstr "Recommended"
+
+msgid "Duration: Long to Short"
+msgstr "Duration: Long to Short"
+
+msgid "Newest first"
+msgstr "Newest first"
+
+msgid "Can't find the right trip?"
+msgstr "Can't find the right trip?"
+
+msgid "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
+msgstr "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote."
