@@ -778,7 +778,7 @@ class LeadBotTests(TestCase):
 
 
 class ServicePagesTests(TestCase):
-    def test_each_service_card_opens_its_own_page(self):
+    def test_service_cards_open_the_existing_page_or_a_generic_one(self):
         from django.core.cache import cache
         from Home.models import Services
         cache.clear()
@@ -786,8 +786,8 @@ class ServicePagesTests(TestCase):
             hotel = Services.objects.create(name='Hotel Accommodation', description='Comfort and luxury stays.', icon='fa fa-hotel')
             visa = Services.objects.create(name='Visa Processing Services', description='We guide your visa application.', icon='fa fa-passport')
         home = self.client.get('/en/').content.decode()
-        self.assertIn(f'/en/services/{hotel.pk}/', home)
-        self.assertIn(f'/en/services/{visa.pk}/', home)
+        self.assertIn('href="/en/hotels/" class="stretched-link"', home)       # has its own page already
+        self.assertIn(f'/en/services/{visa.pk}/', home)                         # no page of its own: generic one
         page = self.client.get(f'/en/services/{hotel.pk}/').content.decode()
         self.assertIn('Hotel Accommodation', page)
         self.assertIn('Comfort and luxury stays.', page)

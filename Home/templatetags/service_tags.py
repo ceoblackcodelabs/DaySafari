@@ -9,16 +9,22 @@ _PAGES = (('wildlife', 'african_wildlife_tours', 'Explore wildlife tours'), ('ho
           ('tailor', 'holiday_tailor_made_tours', 'See tailor-made holidays'))
 
 
+def _match(service):
+    name = (getattr(service, 'name_en', None) or getattr(service, 'name', '') or '').lower()
+    for key, url_name, label in _PAGES:
+        if key in name:
+            return url_name, label
+    return None
+
+
 @register.filter
 def service_url(service):
-    """Every service card opens that service's own page."""
-    return reverse('service_detail', args=[service.pk])
+    """The existing page for that service; a service with no page of its own (e.g. visa) gets a generic one."""
+    hit = _match(service)
+    return reverse(hit[0]) if hit else reverse('service_detail', args=[service.pk])
 
 
 @register.filter
 def service_related(service):
-    name = (getattr(service, 'name_en', None) or getattr(service, 'name', '') or '').lower()
-    for key, url_name, label in _PAGES:
-        if key in name:
-            return {'url': reverse(url_name), 'label': label}
-    return None
+    hit = _match(service)
+    return {'url': reverse(hit[0]), 'label': hit[1]} if hit else None
