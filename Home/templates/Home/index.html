@@ -257,14 +257,15 @@
                 <div class="row g-4">
                     {% for service in services1 %}
                     <div class="col-12">
-                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 pe-0">
+                        <div class="service-content-inner sc-card bg-white border border-primary rounded">
                             <a href="{{ service|service_url }}" class="stretched-link" aria-label="{{ service.name }}"></a>
-                            <div class="service-content text-end">
-                                <h2 class="h5 mb-4">{{ service.name }}</h2>
-                                <p class="mb-0">{{ service.description }}</p>
+                            <div class="sc-img">
+                                <img src="{% if service.image %}{{ service.image|thumb:480 }}{% else %}{% static service|service_image %}{% endif %}" alt="" width="240" height="180" loading="lazy" decoding="async">
+                                <i class="{{ service.icon }}"></i>
                             </div>
-                            <div class="service-icon p-4">
-                                <i class="{{ service.icon }} fa-4x text-primary"></i>
+                            <div class="service-content">
+                                <h2 class="h5 mb-2">{{ service.name }}</h2>
+                                <p class="mb-0">{{ service.description }}</p>
                             </div>
                         </div>
                     </div>
@@ -275,13 +276,14 @@
                 <div class="row g-4">
                     {% for service in services2 %}
                     <div class="col-12">
-                        <div class="service-content-inner d-flex align-items-center bg-white border border-primary rounded p-4 ps-0">
+                        <div class="service-content-inner sc-card bg-white border border-primary rounded">
                             <a href="{{ service|service_url }}" class="stretched-link" aria-label="{{ service.name }}"></a>
-                            <div class="service-icon p-4">
-                                <i class="{{ service.icon }} fa-4x text-primary"></i>
+                            <div class="sc-img">
+                                <img src="{% if service.image %}{{ service.image|thumb:480 }}{% else %}{% static service|service_image %}{% endif %}" alt="" width="240" height="180" loading="lazy" decoding="async">
+                                <i class="{{ service.icon }}"></i>
                             </div>
                             <div class="service-content">
-                                <h2 class="h5 mb-4">{{ service.name }}</h2>
+                                <h2 class="h5 mb-2">{{ service.name }}</h2>
                                 <p class="mb-0">{{ service.description }}</p>
                             </div>
                         </div>

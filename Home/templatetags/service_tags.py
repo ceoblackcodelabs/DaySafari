@@ -28,3 +28,17 @@ def service_url(service):
 def service_related(service):
     hit = _match(service)
     return {'url': reverse(hit[0]), 'label': hit[1]} if hit else None
+
+
+_IMAGES = (('wildlife', 'img/elephant.webp'), ('hotel', 'img/hotel.webp'), ('airport', 'img/air.webp'),
+           ('partner', 'img/partn.webp'), ('tailor', 'img/tailor.webp'), ('visa', 'img/passport.webp'))
+
+
+@register.filter
+def service_image(service):
+    """Fallback picture (a static file) for a service that has no photo uploaded in the admin."""
+    name = (getattr(service, 'name_en', None) or getattr(service, 'name', '') or '').lower()
+    for key, path in _IMAGES:
+        if key in name:
+            return path
+    return 'img/about-img.webp'

@@ -13,6 +13,7 @@ class Services(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.CharField(max_length=100, default='fa fa-globe')
+    image = models.ImageField(upload_to='services/', blank=True, null=True, help_text='Optional picture shown on the service card')
 
     class Meta:
         verbose_name = 'Service'
