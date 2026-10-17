@@ -608,3 +608,14 @@ html{scroll-behavior:smooth}
 .dest-pop-img img{width:100%;height:100%;object-fit:cover}
 .dest-pop h2{line-height:1.3;margin-bottom:2px}
 .packages-item .packages-content .row.bg-primary{border-radius:0 0 .25rem .25rem}
+
+/* "Similar" cards: two equal buttons side by side */
+.sim-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
+.sim-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:.65rem .5rem;border-radius:999px;font-weight:700;font-size:.92rem;line-height:1;text-align:center;white-space:nowrap;border:2px solid transparent;transition:transform .2s,box-shadow .2s,background .2s,color .2s}
+.sim-btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.sim-view{background:#420d24;color:#f6c582!important;border-color:#420d24}
+.sim-view:hover{background:#6b1c3d;border-color:#6b1c3d}
+.sim-wa{background:#25d366;color:#fff!important;border-color:#25d366}
+.sim-wa:hover{background:#128c4a;border-color:#128c4a}
+.sim-wa i{font-size:1.1rem}
+@media(max-width:400px){.sim-actions{grid-template-columns:1fr}}

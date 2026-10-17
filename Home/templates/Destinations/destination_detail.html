@@ -261,8 +261,10 @@
                             <small>{{ similar.category.location }}</small>
                         </div>
                         <p class="mb-3">{{ similar.description|striptags|truncatewords:15 }}</p>
-                        <a href="{% url 'destination_detail' similar.id %}" class="btn btn-primary rounded-pill py-2 px-4">{% trans "View Details" %}</a>
-                        <a href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20am%20interested%20in%3A%20{{ similar.name|urlencode }}" target="_blank" rel="noopener" class="btn btn-success rounded-pill py-2 px-3 ms-2" aria-label="{% trans 'Get a Quote' %}: {{ similar.name }}"><i class="fab fa-whatsapp"></i> {% trans "Get a Quote" %}</a>
+                        <div class="sim-actions">
+                        <a href="{% url 'destination_detail' similar.id %}" class="sim-btn sim-view">{% trans "View Details" %}</a>
+                        <a href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20am%20interested%20in%3A%20{{ similar.name|urlencode }}" target="_blank" rel="noopener" class="sim-btn sim-wa" aria-label="{% trans 'Get a Quote' %}: {{ similar.name }}"><i class="fab fa-whatsapp"></i> {% trans "Get a Quote" %}</a>
+                        </div>
                     </div>
                 </div>
             </div>
