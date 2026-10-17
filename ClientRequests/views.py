@@ -152,7 +152,7 @@ class ContactView(AntiSpamViewMixin, FormView):
 import re as _re
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from .antispam import rate_limited, get_client_ip
+from .antispam import rate_limited, get_client_ip, add_strike, lead_spam_reasons
 from .models import QuickLead
 
 
@@ -170,6 +170,12 @@ def lead_capture(request):
         return JsonResponse({'success': False, 'error': 'name'}, status=400)
     if not _re.fullmatch(r'\+?[0-9 ()\-]{7,22}', phone):
         return JsonResponse({'success': False, 'error': 'phone'}, status=400)
+    # Bots: judged on content, never told they failed, never saved and never emailed to the team.
+    ip = get_client_ip(request)
+    reasons = lead_spam_reasons(name, tour, message, data.get('form_ts'))
+    if reasons:
+        add_strike(ip, 'spam lead: ' + ', '.join(reasons))
+        return JsonResponse({'success': True})
     lead = QuickLead.objects.create(
         name=name, phone=phone, tour=tour, message=message,
         page_url=(data.get('page') or '')[:300], language=(data.get('lang') or '')[:8],

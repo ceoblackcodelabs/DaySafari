@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from ClientRequests.models import Bookings, Contact
+from ClientRequests.models import Bookings, Contact, QuickLead
 from ClientRequests.spamfilter import normalise, spam_reasons
 
 BOT_USER_EMAIL = ('seo', 'backlink', 'casino', 'crypto', 'escort')
@@ -34,7 +34,7 @@ class Command(BaseCommand):
         for obj in qs:
             reasons = spam_reasons(count_campaign=False, **{f: (getattr(obj, f, '') or '') for f in fields})
             key = normalise(f"{getattr(obj, 'subject', '')} {obj.message or ''}")[:400]
-            if counts[key] >= 3:
+            if len(key) >= 15 and counts[key] >= 3:      # empty/short texts repeat naturally; not a campaign
                 reasons = reasons + [f'same text sent {counts[key]} times']
             (spam if reasons else real).append((obj, reasons))
         return spam, real
@@ -42,14 +42,15 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **opts):
         for label, model, fields in (('contact messages', Contact, ('name', 'email', 'subject', 'message')),
-                                     ('bookings', Bookings, ('name', 'email', 'message'))):
+                                     ('bookings', Bookings, ('name', 'email', 'message')),
+                                     ('WhatsApp popup leads', QuickLead, ('name', 'message'))):
             quarantined = model.objects.filter(status__in=('Spam', 'spam'))
             qs = list(model.objects.exclude(status__in=('Spam', 'spam')))
             spam, real = self.classify(qs, fields)
             self.stdout.write(f'\n{label}: {len(qs)} checked, {len(spam)} spam, {len(real)} look genuine; '
                               f'{quarantined.count()} already quarantined as Spam')
             for obj, reasons in real[:25]:
-                self.stdout.write(f'   keep  #{obj.pk} {obj.name[:25]!r} <{obj.email[:35]}> {getattr(obj, "subject", "")[:40]!r}')
+                self.stdout.write(f'   keep  #{obj.pk} {obj.name[:25]!r} <{getattr(obj, 'email', getattr(obj, 'phone', ''))[:35]}> {getattr(obj, "subject", "")[:40]!r}')
             if opts['delete']:
                 # new spam found now + everything already quarantined by the live filter
                 total = quarantined.count() + len(spam)
@@ -57,7 +58,7 @@ class Command(BaseCommand):
                 quarantined.delete()
                 self.stdout.write(self.style.SUCCESS(f'   deleted {total} spam {label} (genuine ones untouched)'))
             elif opts['quarantine']:
-                status = 'Spam' if model is Contact else 'spam'
+                status = 'spam' if model is Bookings else 'Spam'
                 model.objects.filter(pk__in=[o.pk for o, _ in spam]).update(status=status)
                 self.stdout.write(self.style.SUCCESS(f'   quarantined {len(spam)} {label} (status {status})'))
 

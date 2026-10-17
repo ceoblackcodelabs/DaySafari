@@ -605,9 +605,14 @@ class I18nTests(SiteHealthTests):
         from unittest import mock
         from ClientRequests.models import QuickLead
         from EmailSetup import utils
+        import ClientRequests.antispam as a
+        from ClientRequests.antispam import lead_token
         url = '/en/lead/'
+        mock.patch.object(a, 'MIN_FILL_SECONDS', 0).start()
+        self.addCleanup(mock.patch.stopall)
         with mock.patch.object(utils, 'notify_staff_of_lead') as notify:
-            ok = self.client.post(url, {'name': 'Amina Test', 'phone': '+254 712 345 678', 'tour': 'Bali', 'message': 'Hi'})
+            ok = self.client.post(url, {'name': 'Amina Test', 'phone': '+254 712 345 678', 'tour': 'Bali', 'message': 'Hi',
+                                        'form_ts': lead_token()})
             self.assertEqual(ok.status_code, 200)
             self.assertEqual(QuickLead.objects.count(), 1)
             notify.assert_called_once()
@@ -736,3 +741,37 @@ class PackageGalleryTests(TestCase):
                 g = PackageImage(package=pkg, order=n); g.image.save(f'g{n}.jpg', jpg(f'g{n}.jpg'))
             html = self.client.get(url).content.decode()
             self.assertEqual(html.count('class="pg-th'), 4)       # main photo + 3 extras
+
+
+class LeadBotTests(TestCase):
+    """The WhatsApp popup endpoint: bots are swallowed silently, people still get through."""
+
+    def setUp(self):
+        cache.clear()
+
+    def post(self, ts=None, **over):
+        from ClientRequests.antispam import lead_token
+        import ClientRequests.antispam as a
+        data = {'name': 'Grace Wanjiru', 'phone': '0722123456', 'tour': 'Masai Mara', 'message': 'Two adults in March',
+                'form_ts': ts if ts is not None else lead_token()}
+        data.update(over)
+        with mock.patch.object(a, 'MIN_FILL_SECONDS', 0):
+            return self.client.post('/en/lead/', data)
+
+    def test_real_lead_is_saved(self):
+        from ClientRequests.models import QuickLead
+        with mock.patch('EmailSetup.utils.notify_staff_of_lead'):
+            r = self.post()
+        self.assertTrue(r.json()['success'])
+        self.assertEqual(QuickLead.objects.count(), 1)
+
+    def test_bot_spam_is_swallowed_not_saved(self):
+        from ClientRequests.models import QuickLead
+        with mock.patch('EmailSetup.utils.notify_staff_of_lead') as notify:
+            for kw in ({'message': 'Photos for my escort application are uploaded. Preview: https://tinyurl.com/4yf4mchz#2cQlWZ'},
+                       {'message': 'Check https://example.com/offer'},
+                       {'ts': 'forged-token'}):
+                r = self.post(**kw)
+                self.assertTrue(r.json()['success'])           # bots are never told
+            notify.assert_not_called()
+        self.assertEqual(QuickLead.objects.count(), 0)

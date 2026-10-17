@@ -20,6 +20,7 @@
                 <p class="popup-description">{% trans "Tell us where you dream of going and we will chat with you on WhatsApp with a free, no-obligation quote." %}</p>
                 <form id="leadForm" action="{% url 'lead_capture' %}" method="post" novalidate>
                     {% csrf_token %}
+                    <input type="hidden" name="form_ts" value="{{ lead_ts }}">
                     <input type="text" name="website" tabindex="-1" autocomplete="off" class="lead-hp" aria-hidden="true">
                     <div class="lead-field"><i class="fa fa-user"></i><input type="text" name="name" required maxlength="100" autocomplete="name" placeholder="{% trans "Your name" %}" aria-label="{% trans "Your name" %}"></div>
                     <div class="lead-field"><i class="fa fa-phone"></i><input type="tel" name="phone" required maxlength="25" autocomplete="tel" inputmode="tel" placeholder="{% trans "Phone / WhatsApp number" %}" aria-label="{% trans "Phone / WhatsApp number" %}"></div>

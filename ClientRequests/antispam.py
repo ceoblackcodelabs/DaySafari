@@ -281,3 +281,32 @@ class AntiSpamFormMixin(forms.Form):
         if not _PHONE_RE.match(phone) or sum(c.isdigit() for c in phone) < 9:
             raise forms.ValidationError(_('Please enter a valid phone number.'))
         return phone
+
+
+# --------------------------------------------------------------------------
+# WhatsApp lead popup (no email field, so it needs its own checks)
+# --------------------------------------------------------------------------
+def lead_token():
+    """Signed 'page was loaded at' stamp for the popup form."""
+    return signing.dumps(int(time.time()), salt=TS_SALT)
+
+
+_LEAD_URL = re.compile(r'(https?://|www\.|\b[\w-]+\.(?:com|net|org|ru|su|xyz|top|click|work|site|online|me|ly|gl|to|cc)\b|tinyurl|bit\.ly|t\.me|#\w{4,})', re.I)
+
+
+def lead_spam_reasons(name, tour, message, token):
+    """Why a popup lead looks like a bot (empty list = looks human). Genuine leads never need a link."""
+    from .spamfilter import spam_reasons
+    reasons = []
+    try:
+        age = time.time() - signing.loads(token or '', salt=TS_SALT)
+        if age < MIN_FILL_SECONDS:
+            reasons.append('too fast')
+        elif age > 3 * 24 * 3600:
+            pass                         # an old tab or a cached page: a human, leave it alone
+    except signing.BadSignature:
+        reasons.append('missing or forged page stamp')
+    if _LEAD_URL.search(f'{name} {tour} {message}'):
+        reasons.append('contains a link')
+    reasons += spam_reasons(name=name, subject=tour, message=message)
+    return reasons
