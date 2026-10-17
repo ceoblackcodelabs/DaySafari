@@ -4716,3 +4716,9 @@ msgstr "Uko tayari kupanga safari yako?"
 
 msgid "Hotels, Lodges, Tented Camps & Beach Villas"
 msgstr "Hoteli, Lodji, Kambi za Mahema na Majumba ya Ufukweni"
+
+msgid "Leave us a review on Google"
+msgstr "Tuachie maoni kwenye Google"
+
+msgid "Leave us a review"
+msgstr "Tuachie maoni"

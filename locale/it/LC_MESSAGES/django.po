@@ -4650,3 +4650,9 @@ msgstr "Pronto a pianificare il tuo viaggio?"
 
 msgid "Hotels, Lodges, Tented Camps & Beach Villas"
 msgstr "Hotel, lodge, campi tendati e ville sul mare"
+
+msgid "Leave us a review on Google"
+msgstr "Lasciaci una recensione su Google"
+
+msgid "Leave us a review"
+msgstr "Lasciaci una recensione"
