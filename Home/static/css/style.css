@@ -557,3 +557,9 @@ html{scroll-behavior:smooth}
 .ab-photo img{height:auto!important}
 @media(max-width:991px){.ab-photo img{aspect-ratio:16/10!important;max-height:340px}.ab-photo::before{inset:12px -12px -12px 12px}}
 @media(max-width:575px){.ab-badge{max-width:190px;padding:7px 10px;left:10px;bottom:10px}.ab-badge small{display:none}.ab-badge i{width:30px;height:30px}.about .section-about-title::before{display:none}}
+
+/* Service cards: whole card is a link; text stays readable on the maroon hover */
+.service-content-inner{position:relative}
+.service .service-content-inner:hover .service-content h2,.service .service-content-inner:hover .service-content h5,.service .service-content-inner:hover .service-content p,.service .service-content-inner:hover .service-icon i{color:#fff!important}
+.service .service-content-inner:hover .service-icon i{color:#f6c582!important}
+.service-content-inner .stretched-link:focus-visible::after{outline:3px solid #f6c582;outline-offset:-3px;border-radius:.25rem}
