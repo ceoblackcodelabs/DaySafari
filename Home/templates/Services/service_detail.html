@@ -1,0 +1,60 @@
+{% extends "Home/base.html" %}
+{% load i18n service_tags %}
+
+{% block title %}{{ service.name }} - Days Safaris Adventures{% endblock title %}
+{% block meta_description %}{{ service.description|truncatechars:155 }}{% endblock meta_description %}
+{% block og_description %}{{ service.description|truncatechars:155 }}{% endblock og_description %}
+{% block twitter_description %}{{ service.description|truncatechars:155 }}{% endblock twitter_description %}
+
+{% block body %}
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">{{ service.name }}</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'services' %}">{% trans "Services" %}</a></li>
+            <li class="breadcrumb-item active text-white">{{ service.name }}</li>
+        </ol>
+    </div>
+</div>
+
+<div class="container-fluid py-5">
+    <div class="container py-4">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <div class="sv-hero">
+                    <span class="sv-icon"><i class="{{ service.icon }}"></i></span>
+                    <div>
+                        <p class="h5 section-about-title pe-3 mb-2">{% trans "Services" %}</p>
+                        <h1 class="mb-0">{{ service.name }}</h1>
+                    </div>
+                </div>
+                <p class="sv-lead">{{ service.description }}</p>
+                {% with rel=service|service_related %}
+                {% if rel %}<a class="btn btn-primary rounded-pill py-3 px-5 mb-4" href="{{ rel.url }}">{% trans rel.label %} <i class="fa fa-arrow-right ms-2"></i></a>{% endif %}
+                {% endwith %}
+                <h2 class="h4 mt-4 mb-3">{% trans "How it works" %}</h2>
+                <ol class="sv-steps">
+                    <li><b>{% trans "Tell us what you need" %}</b><span>{% trans "Send your dates, group size and any special requests." %}</span></li>
+                    <li><b>{% trans "We plan it" %}</b><span>{% trans "A consultant replies with options and a clear quote, with no obligation." %}</span></li>
+                    <li><b>{% trans "You travel with confidence" %}</b><span>{% trans "We confirm every detail and support you before and during your trip." %}</span></li>
+                </ol>
+            </div>
+            <div class="col-lg-4">
+                <aside class="sv-side">
+                    <h2 class="h5 mb-3">{% trans "Enquire about this service" %}</h2>
+                    <a class="sv-btn sv-wa" href="https://wa.me/254759379600?text={{ service.name|urlencode }}%20-%20I%20would%20like%20a%20quote" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</a>
+                    <a class="sv-btn sv-call" href="tel:+254759379600"><i class="fa fa-phone-alt"></i> +254 759 379 600</a>
+                    <a class="sv-btn sv-mail" href="{% url 'contact' %}"><i class="fa fa-envelope"></i> {% trans "Contact" %}</a>
+                </aside>
+                {% if other_services %}
+                <aside class="sv-side mt-4">
+                    <h2 class="h5 mb-3">{% trans "Services" %}</h2>
+                    <ul class="sv-others">{% for s in other_services %}<li><a href="{% url 'service_detail' s.pk %}"><i class="{{ s.icon }}"></i> {{ s.name }}</a></li>{% endfor %}</ul>
+                </aside>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -616,3 +616,15 @@ class SitemapPageView(TemplateView):
         context['hotels'] = Hotel.objects.filter(is_published=True).only('name', 'slug', 'location')
         context['stays'] = AirBNB.objects.only('id', 'title', 'location')
         return context
+
+
+class ServiceDetailView(DetailView):
+    """One service on its own page: what it is, how to enquire, and the other services."""
+    model = Services
+    context_object_name = 'service'
+    template_name = 'Services/service_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['other_services'] = Services.objects.exclude(pk=self.object.pk).only('id', 'name', 'icon')[:8]
+        return context

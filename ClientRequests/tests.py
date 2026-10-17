@@ -775,3 +775,22 @@ class LeadBotTests(TestCase):
                 self.assertTrue(r.json()['success'])           # bots are never told
             notify.assert_not_called()
         self.assertEqual(QuickLead.objects.count(), 0)
+
+
+class ServicePagesTests(TestCase):
+    def test_each_service_card_opens_its_own_page(self):
+        from django.core.cache import cache
+        from Home.models import Services
+        cache.clear()
+        with translation.override('en'):
+            hotel = Services.objects.create(name='Hotel Accommodation', description='Comfort and luxury stays.', icon='fa fa-hotel')
+            visa = Services.objects.create(name='Visa Processing Services', description='We guide your visa application.', icon='fa fa-passport')
+        home = self.client.get('/en/').content.decode()
+        self.assertIn(f'/en/services/{hotel.pk}/', home)
+        self.assertIn(f'/en/services/{visa.pk}/', home)
+        page = self.client.get(f'/en/services/{hotel.pk}/').content.decode()
+        self.assertIn('Hotel Accommodation', page)
+        self.assertIn('Comfort and luxury stays.', page)
+        self.assertIn('/en/hotels/', page)                       # hotels also get a deeper link
+        self.assertIn('Visa Processing Services', page)          # sidebar lists the other services
+        self.assertEqual(self.client.get('/en/services/999999/').status_code, 404)

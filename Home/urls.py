@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (BrochureView, HomeView, AboutView, ServicesView,
+from .views import (BrochureView, HomeView, AboutView, ServicesView, ServiceDetailView,
                     CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
                     BlogDetailView, TanzaniaTrekking, KenyaTrekking, KilimanjaroTrekking, SuswaTrekking, LongonotTrekking,
@@ -18,6 +18,7 @@ urlpatterns = [
 
     # services
     path('services/', ServicesView.as_view(), name='services'),
+    path('services/<int:pk>/', ServiceDetailView.as_view(), name='service_detail'),
     path('african-wildlife-tours/', AfricanWildLifeToursView.as_view(), name='african_wildlife_tours'),
     path('travel-partnerships/', TravelPartnershipsView.as_view(), name='travel_partnerships'),
     path('holiday-tailor-made-tours/', HolidayTailorMadeToursView.as_view(), name='holiday_tailor_made_tours'),
