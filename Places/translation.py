@@ -26,7 +26,7 @@ class IncluisiveExcluisiveTranslationOptions(TranslationOptions):
 
 @register(AwesomePackages)
 class AwesomePackagesTranslationOptions(TranslationOptions):
-    fields = ('name', 'location', 'description',)
+    fields = ('name', 'location', 'description', 'seo_title', 'seo_description',)
 
 
 @register(Itinerary)

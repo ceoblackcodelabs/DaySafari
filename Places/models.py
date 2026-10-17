@@ -145,6 +145,8 @@ class AwesomePackages(models.Model):
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="East Africa Tours", db_index=True)
     image = models.ImageField(default='awesome_packages/default.jpg', upload_to='awesome_packages/')
     slug = models.SlugField(max_length=160, unique=True, blank=True, null=True, db_index=True)
+    seo_title = models.CharField('SEO title', max_length=70, blank=True, help_text='Google title, about 60 characters. Empty = the package name')
+    seo_description = models.CharField('SEO description', max_length=170, blank=True, help_text='Google snippet, about 155 characters. Empty = made from the description')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

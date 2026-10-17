@@ -794,3 +794,54 @@ class ServicePagesTests(TestCase):
         self.assertIn('/en/hotels/', page)                       # hotels also get a deeper link
         self.assertIn('Visa Processing Services', page)          # sidebar lists the other services
         self.assertEqual(self.client.get('/en/services/999999/').status_code, 404)
+
+
+class PackagesApiTests(TestCase):
+    def setUp(self):
+        cache.clear()
+        from Hotels.models import ApiKey
+        _, token = ApiKey.create_key('tests')
+        self.auth = {'HTTP_AUTHORIZATION': f'Bearer {token}'}
+        with translation.override('en'):
+            self.pkg = AwesomePackages.objects.create(name='Old Name', location='Kenya', days=2, price=100, persons=2,
+                                                      description='<p>short</p>', category='East Africa Tours')
+            from Places.models import Itinerary
+            Itinerary.objects.create(package=self.pkg, day_number=1, title='Arrive', description='old text')
+        self.url = f'/api/v1/packages/{self.pkg.slug}/'
+
+    def patch(self, body, query=''):
+        import json
+        return self.client.patch(self.url + query, json.dumps(body), content_type='application/json', **self.auth)
+
+    def test_needs_a_key(self):
+        self.assertEqual(self.client.get('/api/v1/packages/').status_code, 401)
+        self.assertEqual(self.client.get('/api/v1/packages/', **self.auth).json()['count'], 1)
+
+    def test_update_text_seo_and_days_keeps_slug_and_forgets_other_languages(self):
+        from Places.models import Itinerary
+        AwesomePackages.objects.filter(pk=self.pkg.pk).update(description_fr='<p>vieux</p>')
+        r = self.patch({'description': '<p>A much better description.</p>', 'seo_title': 'Great Safari | Day Safaris',
+                        'seo_description': 'Book it.', 'itineraries': [
+                            {'day_number': 1, 'title': 'Arrive in Nairobi', 'meals': 'Half Board'},
+                            {'day_number': 2, 'title': 'Depart', 'description': 'Fly home.'}]})
+        self.assertEqual(r.status_code, 200, r.content)
+        p = AwesomePackages.objects.get(pk=self.pkg.pk)
+        self.assertEqual(p.slug, self.pkg.slug)                         # web address untouched
+        with translation.override('en'):
+            self.assertEqual(p.seo_title, 'Great Safari | Day Safaris')
+        self.assertFalse(p.description_fr)                              # stale French text cleared -> English shown
+        days = {i.day_number: i for i in Itinerary.objects.filter(package=p)}
+        self.assertEqual(sorted(days), [1, 2])
+        self.assertEqual(days[1].meals, 'Half Board')
+        self.assertEqual(days[1].description, 'old text')               # untouched field kept
+        html = self.client.get(f'/en/packages/{p.slug}/').content.decode()
+        self.assertIn('<title>Great Safari | Day Safaris', html)
+        self.assertIn('content="Book it."', html)
+
+    def test_dry_run_and_validation(self):
+        r = self.patch({'seo_title': 'x' * 80}); self.assertEqual(r.status_code, 400)
+        r = self.patch({'itineraries': [{'day_number': 1, 'meals': 'Nope'}]}); self.assertEqual(r.status_code, 400)
+        r = self.patch({'name': 'New Name'}, '?dry_run=1')
+        self.assertEqual(r.json()['changes'], ['name'])
+        self.pkg.refresh_from_db(); self.assertEqual(self.pkg.name, 'Old Name')
+        r = self.patch({'price': 5}); self.assertEqual(r.json()['ignored_fields'], ['price'])   # prices never change here
