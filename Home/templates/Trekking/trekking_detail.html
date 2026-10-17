@@ -119,8 +119,8 @@
                         </div>
                     </div>
 
-                    <div class="d-flex gap-3">
-                        <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'booking_create' %}?package={{ package.id }}">{% trans "Book Now" %}</a>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a class="btn btn-success rounded-pill py-3 px-5" href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20would%20like%20to%20book%3A%20{{ package.name|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-whatsapp me-2"></i>{% trans "Book Now" %}</a>
                         <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="{% url 'packages' %}">{% trans "View All Packages" %}</a>
                     </div>
                 </div>
