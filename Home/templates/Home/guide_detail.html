@@ -158,11 +158,18 @@ section{padding:76px 0;position:relative}
 .mg{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 22px rgba(66,13,36,.12);transition:transform .25s}.mg:hover{transform:translateY(-6px)}
 .mg .p{aspect-ratio:4/3.4;background:var(--m);color:var(--g);display:flex;align-items:center;justify-content:center;font-size:2.6rem}.mg img{width:100%;height:100%;object-fit:cover;display:block}
 .mg .t{padding:12px 14px}.mg b{display:block;font-family:Jost,sans-serif}.mg small{color:var(--m3);font-weight:600}
-/* mobile bar */
-.mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.95);backdrop-filter:blur(10px);box-shadow:0 -6px 20px rgba(0,0,0,.15)}
-.mbar .btn{flex:1;padding:12px 10px;font-size:.92rem}
-@media(max-width:700px){.mbar{display:flex}}
-body.editing .mbar{display:none}
+/* floating quote button + modal */
+.qfab{position:fixed;left:16px;bottom:18px;z-index:45;display:inline-flex;align-items:center;gap:9px;padding:14px 22px;border-radius:999px;border:0;background:var(--m);color:var(--g);font:700 1rem Roboto,sans-serif;cursor:pointer;box-shadow:0 12px 28px rgba(66,13,36,.45);transition:transform .2s}
+.qfab:hover{transform:translateY(-3px)}.qfab i{color:#25d366}
+.wafab{position:fixed;right:16px;bottom:18px;z-index:45;width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 10px 24px rgba(0,0,0,.3);transition:transform .2s}.wafab:hover{transform:scale(1.08)}
+body.editing .qfab,body.editing .wafab{display:none}
+.modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(23,5,16,.68);backdrop-filter:blur(4px)}
+.modal.open{display:flex}
+.modal .form{width:min(480px,100%);max-height:92vh;overflow:auto;position:relative;animation:pop2 .3s}
+@keyframes pop2{from{opacity:0;transform:translateY(20px) scale(.97)}}
+.mx{position:absolute;right:12px;top:12px;width:36px;height:36px;border-radius:50%;border:0;background:var(--tint);color:var(--m);cursor:pointer;font-size:1rem;z-index:2}
+.modal .fgrid{grid-template-columns:1fr}
+.fld select{width:100%;border:1.5px solid #ecdfe4;border-radius:14px;padding:13px 14px 13px 40px;font:inherit;background:#fffafb;appearance:none}
 /* inline editing */
 .edbar{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:10px;background:#170510;color:#fff;padding:10px 12px 10px 20px;border-radius:999px;box-shadow:0 18px 40px rgba(0,0,0,.4);font-weight:600;font-size:.9rem;max-width:94vw;flex-wrap:wrap;justify-content:center}
 body.editing .edbar{display:flex}
@@ -304,7 +311,7 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
       </div>
     </div>
   </div>
-  <form class="form reveal" id="leadForm" novalidate data-url="{% url 'guide_lead' guide.slug %}">
+  <form class="form reveal" id="leadForm" novalidate data-lead data-url="{% url 'guide_lead' guide.slug %}">
     <div class="fields">
       <h3>{% trans "Send me your details" %}</h3>
       <p class="sub">{% trans "What are you most interested in?" %}</p>
@@ -328,7 +335,7 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
       <div class="tick"><i class="fa fa-check"></i></div>
       <h3>{% trans "Thank you!" %}</h3>
       <p class="sub" style="margin:8px auto 18px">{% trans "I have your details and will be in touch soon. Want to chat right now?" %}</p>
-      <a class="btn btn-wa" id="doneWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {% trans "Continue on WhatsApp" %}</a>
+      <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {% trans "Continue on WhatsApp" %}</a>
     </div>
   </form>
 </div></section>
@@ -343,7 +350,32 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
 {% endif %}
 </main>
 
-<div class="mbar"><a class="btn btn-wa" href="https://wa.me/{{ guide.whatsapp_digits }}?text=Hello%20{{ guide.name|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a><a class="btn btn-m" href="#connect"><i class="fa fa-paper-plane"></i> {% trans "Plan a trip" %}</a></div>
+<button type="button" class="qfab" id="qOpen"><i class="fab fa-whatsapp"></i> {% trans "Get Quote" %}</button>
+<a class="wafab" href="https://wa.me/{{ guide.whatsapp_digits }}?text=Hello%20{{ guide.name|urlencode }}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+<div class="modal" id="qModal" role="dialog" aria-modal="true" aria-label="{% trans 'Get Quote' %}">
+  <form class="form" data-lead data-url="{% url 'guide_lead' guide.slug %}" novalidate>
+    <button type="button" class="mx" id="qClose" aria-label="{% trans 'Close' %}"><i class="fa fa-times"></i></button>
+    <div class="fields">
+      <h3>{% trans "Get a free quote" %}</h3>
+      <p class="sub">{% trans "Tell me a little and I will get back to you personally." %}</p>
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="form_ts" value="{{ lead_token }}"><input type="hidden" name="src" value="{{ src }}"><input type="hidden" name="event" value="{{ event.pk|default:'' }}">
+      <div class="fgrid">
+        <div><div class="fld"><i class="fa fa-user"></i><input name="name" required maxlength="100" autocomplete="name" placeholder="{% trans 'Your name' %}" aria-label="{% trans 'Your name' %}"></div><div class="ferr" data-for="name"></div></div>
+        <div><div class="fld"><i class="fa fa-phone"></i><input name="phone" required type="tel" maxlength="25" inputmode="tel" autocomplete="tel" placeholder="{% trans 'Phone / WhatsApp number' %}" aria-label="{% trans 'Phone / WhatsApp number' %}"></div><div class="ferr" data-for="phone"></div></div>
+        <div class="fld"><i class="fa fa-binoculars"></i><select name="category" aria-label="{% trans 'What are you most interested in?' %}">{% for key, label, icon in categories %}<option value="{{ key }}">{{ label }}</option>{% endfor %}</select></div>
+        <div class="fld ta"><i class="fa fa-comment-dots"></i><textarea name="message" maxlength="800" placeholder="{% trans 'Tell me a little about your dream trip (optional)' %}" aria-label="{% trans 'Message' %}"></textarea></div>
+      </div>
+      <button class="btn btn-gold" type="submit"><i class="fa fa-paper-plane"></i> {% trans "Send to" %} {{ guide.name }}</button>
+      <p class="note"><i class="fa fa-lock"></i> {% trans "We only use your details to reply about your trip." %}</p>
+    </div>
+    <div class="done" role="status" aria-live="polite">
+      <div class="tick"><i class="fa fa-check"></i></div><h3>{% trans "Thank you!" %}</h3>
+      <p class="sub" style="margin:8px auto 18px">{% trans "I have your details and will be in touch soon. Want to chat right now?" %}</p>
+      <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {% trans "Continue on WhatsApp" %}</a>
+    </div>
+  </form>
+</div>
 
 {% if is_manager %}
 <div class="edbar" role="toolbar" aria-label="{% trans 'Edit profile' %}">
@@ -367,14 +399,15 @@ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es
 /* at-a-glance tabs */
 $$('.gl-tabs button').forEach(function(b){b.addEventListener('click',function(){$$('.gl-tabs button,.gl-panel').forEach(function(e){e.classList.remove('on')});b.classList.add('on');$('[data-panel='+b.dataset.tab+']').classList.add('on')})});
 var cp=$('#copyPhone');if(cp)cp.addEventListener('click',function(){(navigator.clipboard?navigator.clipboard.writeText(cp.dataset.copy):Promise.reject()).then(function(){cp.innerHTML='<i class="fa fa-check"></i> Copied'},function(){prompt('Copy',cp.dataset.copy)})});
-/* lead form */
-var form=$('#leadForm');
-if(form){form.addEventListener('submit',function(ev){ev.preventDefault();$$('.ferr',form).forEach(function(e){e.textContent=''});$$('.fld.err',form).forEach(function(e){e.classList.remove('err')});
+/* lead forms (the section form and the quote modal share this code) */
+$$('form[data-lead]').forEach(function(form){form.addEventListener('submit',function(ev){ev.preventDefault();$$('.ferr',form).forEach(function(e){e.textContent=''});$$('.fld.err',form).forEach(function(e){e.classList.remove('err')});
  var btn=$('button[type=submit]',form);btn.disabled=true;
  fetch(form.dataset.url,{method:'POST',body:new FormData(form),headers:{'X-CSRFToken':csrf},credentials:'same-origin'}).then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})}).then(function(x){btn.disabled=false;
-  if(x.ok&&x.j.ok){form.classList.add('sent');if(x.j.whatsapp)$('#doneWa').href=x.j.whatsapp;form.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})}
+  if(x.ok&&x.j.ok){form.classList.add('sent');if(x.j.whatsapp)$('[data-wa]',form).href=x.j.whatsapp;if(!form.closest('.modal'))form.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})}
   else{var er=x.j.errors||{};Object.keys(er).forEach(function(k){var m=$('.ferr[data-for='+k+']',form);if(m){m.textContent=er[k];m.previousElementSibling.classList.add('err')}});if(!x.j.errors){alert(x.j.error||'Something went wrong. Please try again.')}}
- }).catch(function(){btn.disabled=false;alert('Network problem. Please try again.')})})}
+ }).catch(function(){btn.disabled=false;alert('Network problem. Please try again.')})})});
+var qm=$('#qModal');function qOpen(){qm.classList.add('open');var f=$('input[name=name]',qm);if(f)setTimeout(function(){f.focus()},60)}function qClose(){qm.classList.remove('open')}
+$('#qOpen').addEventListener('click',qOpen);$('#qClose').addEventListener('click',qClose);qm.addEventListener('click',function(e){if(e.target===qm)qClose()});document.addEventListener('keydown',function(e){if(e.key==='Escape')qClose()});
 /* QR code (script loads only when the card is near the screen) */
 var qrCard=$('#qrCard'),qrBox=$('#qrBox'),qrLoaded=false,qrSvg='';
 function qrUrl(){var u=new URL(qrCard.dataset.url);var ev=($('#eventPick')||{}).value||'';u.searchParams.set('src',ev?'event':'qr');if(ev)u.searchParams.set('event',ev);return u.toString()}

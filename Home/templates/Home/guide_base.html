@@ -29,36 +29,42 @@ a{color:inherit;text-decoration:none}img{max-width:100%}
 .top li.hi a:hover,.top li.hi button:hover{background:var(--m2);color:#fff}
 .top li.back a{background:var(--g);color:var(--m);font-weight:700;box-shadow:inset 0 0 0 1.5px var(--m)}
 .top li.back a:hover{background:var(--m);color:var(--g)}
-.back-m{display:none}
+.burger{display:none;width:44px;height:44px;border-radius:12px;border:0;background:var(--m);color:var(--g);font-size:1.15rem;cursor:pointer;align-items:center;justify-content:center}
 @media(max-width:860px){
-.top .wrap{display:grid;grid-template-columns:1fr auto;gap:0 10px;padding:8px 0 0;min-height:0}
-.brand img{height:40px}.back-m{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--g);color:var(--m);font:700 .85rem Roboto,sans-serif;box-shadow:inset 0 0 0 1.5px var(--m)}
-.top nav{grid-column:1/-1;margin:6px -4vw 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 94%,transparent)}
-.top ul{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:6px;padding:4px 4vw 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.top ul::-webkit-scrollbar{display:none}
-.top li{flex:none}.top li a,.top li button{padding:7px 13px;font-size:.84rem;white-space:nowrap;background:var(--tint)}
-.top li.hi a,.top li.hi button{background:var(--m)}.top li.back{display:none}}
+.top .wrap{min-height:60px}.brand img{height:42px}
+.burger{display:inline-flex}
+.top nav{position:absolute;left:0;right:0;top:100%;background:#fff;box-shadow:0 18px 30px rgba(66,13,36,.18);max-height:0;overflow:hidden;transition:max-height .3s ease}
+.top.open nav{max-height:80vh;overflow:auto}
+.top ul{flex-direction:column;align-items:stretch;gap:2px;padding:10px 4vw 16px;justify-content:flex-start}
+.top li a,.top li button{width:100%;padding:13px 16px;border-radius:14px;font-size:1rem;background:var(--tint)}
+.top li.hi a,.top li.hi button{background:var(--m)}
+.top li.back a{justify-content:center}}
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 26px;border-radius:999px;font-weight:700;border:0;cursor:pointer;font-size:1rem;font-family:inherit;transition:transform .2s,box-shadow .2s,background .2s}
 .btn:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,.22)}
 .btn-wa{background:#25d366;color:#fff}.btn-white{background:#fff;color:var(--m)}.btn-gold{background:var(--g);color:var(--m)}.btn-m{background:var(--m);color:var(--g)}
 .btn-ghost{background:rgba(255,255,255,.12);color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
 /* ---------- footer ---------- */
-footer{background:#170510;color:rgba(255,255,255,.8);padding:34px 0 90px;text-align:center}
-footer a.pw{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--g);padding:9px 20px;border:1.5px solid rgba(246,197,130,.45);border-radius:999px;transition:background .2s,color .2s}
-footer a.pw:hover{background:var(--g);color:var(--m)}
-footer a.pw img{height:26px;background:#fff;border-radius:6px;padding:2px 6px}
-footer small{display:block;margin-top:14px;opacity:.7}footer small a{text-decoration:underline}
+footer{background:#170510;color:rgba(255,255,255,.8);padding:38px 0 96px;text-align:center}
+footer .wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+.soc{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.soc a{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.09);color:#fff;display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s,color .2s}
+.soc a:hover{background:var(--g);color:var(--m);transform:translateY(-3px)}
+footer a.rev{display:inline-flex;align-items:center;gap:9px;padding:9px 20px;border-radius:999px;background:var(--g);color:var(--m);font-weight:700;font-size:.92rem;transition:transform .2s}
+footer a.rev:hover{transform:translateY(-2px)}footer a.rev span{color:#b86f00;letter-spacing:1px;font-size:.78rem}
+footer a.pw{color:rgba(255,255,255,.75);font-size:.95rem;display:inline-flex;align-items:center;gap:8px;transition:color .2s}
+footer a.pw i{color:var(--g)}footer a.pw b{color:var(--g);letter-spacing:.02em}footer a.pw:hover{color:#fff}
+footer small{opacity:.65}footer small a{text-decoration:underline}
 {% block css %}{% endblock %}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<header class="top">
+<header class="top" id="top">
   <div class="wrap">
     <a class="brand" href="{% url 'home' %}" aria-label="{% trans 'Day Safaris Adventures' %}"><img src="{% static 'img/logo-nav.png' %}" alt="{% trans 'Days Safaris Adventures logo' %}" width="152" height="120"></a>
-    <a class="back-m" href="{% url 'home' %}"><i class="fa fa-arrow-left"></i> {% trans "Day Safaris" %}</a>
-    <nav aria-label="{{ guide.name }}"><ul>
+    <button class="burger" type="button" id="burger" aria-label="{% trans 'Menu' %}" aria-expanded="false" aria-controls="topnav"><i class="fa fa-bars"></i></button>
+    <nav aria-label="{{ guide.name }}" id="topnav"><ul>
       {% block nav %}{% endblock %}
       {% if is_manager %}
         {% if analytics %}<li class="hi"><a href="{{ guide.get_absolute_url }}"><i class="fa fa-user-circle"></i> {% trans "My profile" %}</a></li>
@@ -71,11 +77,20 @@ footer small{display:block;margin-top:14px;opacity:.7}footer small a{text-decora
 {% block body %}{% endblock %}
 <footer>
   <div class="wrap">
-    <a class="pw" href="{% url 'home' %}">{% trans "Powered by" %} <img src="{% static 'img/logo-nav.png' %}" alt="Day Safaris" width="152" height="120"> {% trans "Day Safaris" %}</a>
+    <div class="soc">
+      <a href="https://www.facebook.com/profile.php?id=1481097984" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/day_safaris" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://x.com/dayssafaris" target="_blank" rel="noopener" aria-label="X"><i class="fab fa-twitter"></i></a>
+      <a href="https://wa.me/254759379600" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="mailto:info@daysafarisadventures.co.ke" aria-label="Email"><i class="fa fa-envelope"></i></a>
+    </div>
+    <a class="rev" href="https://g.page/r/CZJs5SyNuHl5EBM/review" target="_blank" rel="noopener"><i class="fab fa-google"></i> {% trans "Leave us a review" %} <span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span></a>
+    <a class="pw" href="{% url 'home' %}"><i class="fa fa-compass" aria-hidden="true"></i> {% trans "Powered by" %} <b>Day Safaris</b></a>
     <small>&copy; Day Safaris Adventures &middot; {% trans "All right reserved" %}.
     {% if not user.is_authenticated %}&middot; <a href="{% url 'login' %}?next={{ request.path|urlencode }}">{% trans "Guide login" %}</a>{% endif %}</small>
   </div>
 </footer>
+<script>(function(){var t=document.getElementById('top'),b=document.getElementById('burger');if(!b)return;b.addEventListener('click',function(){var o=t.classList.toggle('open');b.setAttribute('aria-expanded',o);b.firstElementChild.className='fa '+(o?'fa-times':'fa-bars')});t.addEventListener('click',function(e){if(e.target.closest('nav a,nav button:not(#burger)')&&t.classList.contains('open')){t.classList.remove('open');b.setAttribute('aria-expanded','false');b.firstElementChild.className='fa fa-bars'}})})();</script>
 {% block scripts %}{% endblock %}
 </body>
 </html>
