@@ -1,7 +1,7 @@
 # Day Safaris Adventures
 
 Website and booking system for Day Safaris Adventures (Nairobi, Kenya): safari packages, trekking, cruises, **hotels**,
-Airbnb-style stays, blog, galleryand enquiries. Built with Django (SQLite, WhiteNoise, Brevo email).
+Airbnb-style stays, blog, gallery and enquiries. Built with Django (SQLite, WhiteNoise, Brevo email).
 
 Live site: https://daysafarisadventures.co.ke
 
