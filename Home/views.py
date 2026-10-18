@@ -12,7 +12,7 @@ from django.core.cache import cache
 from .models import (
     Brochure, Services, GalleryCategory, Gallery,
     Testimonials, Blogs, BlogCategory, Offer, Trekking, ItineraryTreking,
-    Ad, AboutImage, HeroSlide
+    Ad, AboutImage, HeroSlide, Guide
 )
 from Places.models import Destinations, DestinationsCategory, AwesomePackages, IncluisiveExcluisive
 from ClientRequests.forms import BookingsForm
@@ -229,6 +229,21 @@ class FAQView(TemplateView):
         return context
 
 
+class GuideDetailView(DetailView):
+    """A guide's own profile page."""
+    model = Guide
+    context_object_name = 'guide'
+    template_name = 'Home/guide_detail.html'
+
+    def get_queryset(self):
+        return Guide.objects.filter(is_active=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['other_guides'] = Guide.objects.filter(is_active=True).exclude(pk=self.object.pk)[:4]
+        return context
+
+
 class AboutView(ListView):
     model = Services
     context_object_name = 'services'
@@ -242,6 +257,7 @@ class AboutView(ListView):
         services = self.object_list
         context['services1'] = services[:3]
         context['services2'] = services[3:]
+        context['guides'] = list(Guide.objects.filter(is_active=True)[:12])
 
         cache_key = 'about_context_data'
         cached = cache.get(cache_key)

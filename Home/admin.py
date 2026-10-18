@@ -5,7 +5,7 @@ from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
     BlogComments, Blogs, BlogCategory, Offer, TrustBadge, Brochure, ItineraryTreking,
-    Trekking, Ad, AboutImage, HeroSlide
+    Trekking, Ad, AboutImage, HeroSlide, Guide
 )
 
 
@@ -426,3 +426,17 @@ class TrustBadgeAdmin(admin.ModelAdmin):
     def logo(self, obj):
         from django.utils.html import format_html
         return format_html('<img src="{}" style="height:36px">', obj.image.url) if obj.image else ''
+
+
+@admin.register(Guide)
+class GuideAdmin(TranslationAdmin):
+    list_display = ['name', 'role', 'years_experience', 'is_active', 'order']
+    list_editable = ['is_active', 'order']
+    search_fields = ['name', 'role', 'specializations', 'parks']
+    prepopulated_fields = {'slug': ('name',)}
+    list_filter = ['is_active']
+    fieldsets = (
+        (None, {'fields': ('name', 'slug', 'role', 'photo', 'is_active', 'order')}),
+        ('Card and profile', {'fields': ('short_bio', 'bio')}),
+        ('Details shown on the profile', {'fields': ('specializations', 'languages', 'parks', 'years_experience')}),
+    )

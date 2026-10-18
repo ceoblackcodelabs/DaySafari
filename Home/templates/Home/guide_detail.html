@@ -1,0 +1,90 @@
+{% extends "Home/base.html" %}
+{% load static i18n image_tags %}
+
+{% block title %}{{ guide.name }} - {{ guide.role }} | Day Safaris Adventures{% endblock title %}
+{% block meta_description %}{% if guide.short_bio %}{{ guide.short_bio }}{% else %}{{ guide.name }}, {{ guide.role }} at Day Safaris Adventures.{% endif %}{% endblock meta_description %}
+{% block og_title %}{{ guide.name }} - {{ guide.role }}{% endblock og_title %}
+{% block og_description %}{% if guide.short_bio %}{{ guide.short_bio }}{% else %}{{ guide.name }}, {{ guide.role }} at Day Safaris Adventures.{% endif %}{% endblock og_description %}
+{% block twitter_title %}{{ guide.name }} - {{ guide.role }}{% endblock twitter_title %}
+{% block twitter_description %}{% if guide.short_bio %}{{ guide.short_bio }}{% else %}{{ guide.name }}, {{ guide.role }} at Day Safaris Adventures.{% endif %}{% endblock twitter_description %}
+{% block og_image %}{% if guide.photo %}https://daysafarisadventures.co.ke{{ guide.photo.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}{% endblock og_image %}
+{% block structured_data %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"{{ guide.name|escapejs }}","jobTitle":"{{ guide.role|escapejs }}",
+"worksFor":{"@type":"TravelAgency","name":"Day Safaris Adventures","url":"https://daysafarisadventures.co.ke"}{% if guide.photo %},
+"image":"https://daysafarisadventures.co.ke{{ guide.photo.url }}"{% endif %}{% if guide.language_list %},
+"knowsLanguage":[{% for l in guide.language_list %}"{{ l|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}]{% endif %}{% if guide.specialization_list %},
+"knowsAbout":[{% for l in guide.specialization_list %}"{{ l|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}]{% endif %}}
+</script>
+{% endblock structured_data %}
+
+{% block body %}
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">{{ guide.name }}</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'about' %}">{% trans "About" %}</a></li>
+            <li class="breadcrumb-item active text-white">{{ guide.name }}</li>
+        </ol>
+    </div>
+</div>
+
+<div class="container-fluid py-5">
+    <div class="container py-4">
+        <div class="row g-5">
+            <div class="col-lg-4">
+                <div class="gd-profile-photo">
+                    {% if guide.photo %}<img src="{{ guide.photo|thumb:900 }}" alt="{{ guide.name }}" width="900" height="1050" fetchpriority="high" decoding="async">{% else %}<i class="fa fa-user"></i>{% endif %}
+                </div>
+                <a class="sv-btn sv-wa mt-3" href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20would%20like%20to%20plan%20a%20trip%20with%20{{ guide.name|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {% trans "Plan a trip with" %} {{ guide.name }}</a>
+                <a class="sv-btn sv-call" href="tel:+254759379600"><i class="fa fa-phone-alt"></i> +254 759 379 600</a>
+            </div>
+            <div class="col-lg-8">
+                <p class="h5 section-about-title pe-3 mb-2">{{ guide.role }}</p>
+                <h1 class="mb-3">{{ guide.name }}</h1>
+                {% if guide.short_bio %}<p class="sv-lead">{{ guide.short_bio }}</p>{% endif %}
+                <div class="gd-facts">
+                    {% if guide.years_experience %}<div><i class="fa fa-award"></i><b>{{ guide.years_experience }}+</b><span>{% trans "Years of experience" %}</span></div>{% endif %}
+                    {% if guide.language_list %}<div><i class="fa fa-language"></i><b>{{ guide.language_list|length }}</b><span>{% trans "Languages" %}</span></div>{% endif %}
+                    {% if guide.park_list %}<div><i class="fa fa-map-marked-alt"></i><b>{{ guide.park_list|length }}</b><span>{% trans "Parks and regions" %}</span></div>{% endif %}
+                </div>
+                {% if guide.specialization_list %}
+                <h2 class="h5 mt-4 mb-2">{% trans "Specializations" %}</h2>
+                <div class="gd-tags">{% for t in guide.specialization_list %}<span>{{ t }}</span>{% endfor %}</div>
+                {% endif %}
+                {% if guide.language_list %}
+                <h2 class="h5 mt-4 mb-2">{% trans "Languages spoken" %}</h2>
+                <div class="gd-tags gd-tags-soft">{% for t in guide.language_list %}<span>{{ t }}</span>{% endfor %}</div>
+                {% endif %}
+                {% if guide.park_list %}
+                <h2 class="h5 mt-4 mb-2">{% trans "Parks and regions" %}</h2>
+                <div class="gd-tags gd-tags-soft">{% for t in guide.park_list %}<span><i class="fa fa-map-marker-alt me-1"></i>{{ t }}</span>{% endfor %}</div>
+                {% endif %}
+                {% if guide.bio %}
+                <h2 class="h4 mt-5 mb-3">{% trans "About" %} {{ guide.name }}</h2>
+                <div class="gd-bio">{{ guide.bio|safe }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if other_guides %}
+<div class="container-fluid py-5 gd-band">
+    <div class="container py-3">
+        <h2 class="h3 text-center mb-4">{% trans "Meet more of our guides" %}</h2>
+        <div class="row g-4 justify-content-center">
+            {% for g in other_guides %}
+            <div class="col-6 col-md-3">
+                <a class="gd-card" href="{{ g.get_absolute_url }}">
+                    <span class="gd-photo">{% if g.photo %}<img src="{{ g.photo|thumb:480 }}" alt="{{ g.name }}" width="480" height="560" loading="lazy" decoding="async">{% else %}<i class="fa fa-user"></i>{% endif %}</span>
+                    <span class="gd-body"><b class="gd-name">{{ g.name }}</b><span class="gd-role">{{ g.role }}</span><span class="gd-more">{% trans "View profile" %} <i class="fa fa-arrow-right"></i></span></span>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock body %}

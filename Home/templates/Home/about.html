@@ -1,6 +1,6 @@
 {% extends "Home/base.html" %}
 {% load static %}
-{% load i18n %}
+{% load i18n image_tags %}
 
 {% block title %}{% trans "About Us - Days Safaris Adventures" %}{% endblock title %}
 
@@ -265,5 +265,35 @@
     </div>
 </div>
 <!-- Services End -->
+
+<!-- Guides Start -->
+{% if guides %}
+<div class="container-fluid py-5 gd-band">
+    <div class="container py-4">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <p class="h5 section-title px-3">{% trans "Our Team" %}</p>
+            <h1 class="mb-2">{% trans "Meet Our Guides" %}</h1>
+            <p class="mb-0 text-muted">{% trans "Local experts who know every park, trail and sighting. Tap a guide to read their story." %}</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            {% for g in guides %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <a class="gd-card" href="{{ g.get_absolute_url }}">
+                    <span class="gd-photo">{% if g.photo %}<img src="{{ g.photo|thumb:480 }}" alt="{{ g.name }}" width="480" height="560" loading="lazy" decoding="async">{% else %}<i class="fa fa-user"></i>{% endif %}</span>
+                    <span class="gd-body">
+                        <b class="gd-name">{{ g.name }}</b>
+                        <span class="gd-role">{{ g.role }}</span>
+                        {% if g.short_bio %}<span class="gd-short">{{ g.short_bio }}</span>{% endif %}
+                        <span class="gd-more">{% trans "View profile" %} <i class="fa fa-arrow-right"></i></span>
+                    </span>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- Guides End -->
+
 
 {% endblock body %}

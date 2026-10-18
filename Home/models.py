@@ -539,3 +539,56 @@ def clear_home_cache(sender, **kwargs):
     except Exception as e:
         # Don't break the application if cache clearing fails
         logger.warning(f"Cache clearing failed during migration: {e}")
+
+class Guide(models.Model):
+    """A member of the guiding team: shown on the About page, each with a profile page of their own."""
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=120, unique=True, blank=True)
+    role = models.CharField(max_length=120, help_text='e.g. Senior Safari Guide')
+    photo = models.ImageField(upload_to='guides/', validators=[validate_image_10mb], blank=True, null=True)
+    short_bio = models.CharField(max_length=200, blank=True, help_text='One line shown on the About page card')
+    bio = CKEditor5Field('Profile', config_name='default', blank=True)
+    specializations = models.CharField(max_length=300, blank=True, help_text='Separate with commas, e.g. Big Cats, Birding, Photography')
+    languages = models.CharField(max_length=200, blank=True, help_text='Separate with commas, e.g. English, Swahili, French')
+    years_experience = models.PositiveSmallIntegerField(null=True, blank=True)
+    parks = models.CharField('Parks and regions', max_length=300, blank=True, help_text='Separate with commas, e.g. Masai Mara, Amboseli')
+    is_active = models.BooleanField(default=True, help_text='Untick to hide this guide from the site')
+    order = models.PositiveSmallIntegerField(default=0, help_text='Lower numbers show first')
+
+    class Meta:
+        ordering = ['order', 'name']
+        verbose_name = 'Guide'
+        verbose_name_plural = 'Guides'
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            from django.utils.text import slugify
+            base = slugify(self.name) or 'guide'
+            slug, n = base, 2
+            while Guide.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug, n = f'{base}-{n}', n + 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('guide_detail', args=[self.slug])
+
+    @staticmethod
+    def _split(text):
+        return [x.strip() for x in (text or '').split(',') if x.strip()]
+
+    @property
+    def specialization_list(self):
+        return self._split(self.specializations)
+
+    @property
+    def language_list(self):
+        return self._split(self.languages)
+
+    @property
+    def park_list(self):
+        return self._split(self.parks)

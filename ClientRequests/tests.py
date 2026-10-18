@@ -845,3 +845,31 @@ class PackagesApiTests(TestCase):
         self.assertEqual(r.json()['changes'], ['name'])
         self.pkg.refresh_from_db(); self.assertEqual(self.pkg.name, 'Old Name')
         r = self.patch({'price': 5}); self.assertEqual(r.json()['ignored_fields'], ['price'])   # prices never change here
+
+
+class GuidesTests(TestCase):
+    def test_guides_on_about_page_with_their_own_profile_pages(self):
+        from Home.models import Guide
+        from django.core.cache import cache
+        cache.clear()
+        with translation.override('en'):
+            g = Guide.objects.create(name='Daniel Kiprop', role='Senior Safari Guide', short_bio='Big cats expert.',
+                                     bio='<p>Twelve years in the Mara.</p>', specializations='Big Cats, Birding',
+                                     languages='English, Swahili', years_experience=12)
+            Guide.objects.create(name='Hidden Guide', role='Driver', is_active=False)
+        self.assertEqual(g.slug, 'daniel-kiprop')
+        about = self.client.get('/en/about/').content.decode()
+        self.assertIn('Meet Our Guides', about)
+        self.assertIn('/en/guides/daniel-kiprop/', about)
+        self.assertNotIn('Hidden Guide', about)
+        page = self.client.get('/en/guides/daniel-kiprop/').content.decode()
+        for text in ('Daniel Kiprop', 'Senior Safari Guide', 'Big Cats', 'Birding', 'Swahili', 'Twelve years in the Mara.', '12+'):
+            self.assertIn(text, page)
+        self.assertIn('"@type":"Person"', page)
+        self.assertEqual(self.client.get('/en/guides/hidden-guide/').status_code, 404)
+        self.assertIn('/en/guides/daniel-kiprop/', self.client.get('/sitemap.xml').content.decode())
+
+    def test_about_page_without_guides_has_no_guides_section(self):
+        from django.core.cache import cache
+        cache.clear()
+        self.assertNotIn('Meet Our Guides', self.client.get('/en/about/').content.decode())

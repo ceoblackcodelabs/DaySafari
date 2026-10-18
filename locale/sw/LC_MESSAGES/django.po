@@ -4722,3 +4722,36 @@ msgstr "Tuachie maoni kwenye Google"
 
 msgid "Leave us a review"
 msgstr "Tuachie maoni"
+
+msgid "Our Team"
+msgstr "Timu yetu"
+
+msgid "Meet Our Guides"
+msgstr "Kutana na waongozaji wetu"
+
+msgid "Local experts who know every park, trail and sighting. Tap a guide to read their story."
+msgstr "Wataalamu wa ndani wanaojua kila hifadhi, njia na tukio. Gusa mwongozaji kusoma hadithi yake."
+
+msgid "View profile"
+msgstr "Tazama wasifu"
+
+msgid "Plan a trip with"
+msgstr "Panga safari na"
+
+msgid "Years of experience"
+msgstr "Miaka ya uzoefu"
+
+msgid "Languages"
+msgstr "Lugha"
+
+msgid "Parks and regions"
+msgstr "Hifadhi na maeneo"
+
+msgid "Specializations"
+msgstr "Utaalamu"
+
+msgid "Languages spoken"
+msgstr "Lugha zinazozungumzwa"
+
+msgid "Meet more of our guides"
+msgstr "Kutana na waongozaji wengine"

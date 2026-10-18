@@ -619,3 +619,27 @@ html{scroll-behavior:smooth}
 .sim-wa:hover{background:#128c4a;border-color:#128c4a}
 .sim-wa i{font-size:1.1rem}
 @media(max-width:400px){.sim-actions{grid-template-columns:1fr}}
+/* Guides */
+.gd-band{background:#f6e9ee}
+.gd-card{display:flex;flex-direction:column;height:100%;background:#fff;border-radius:18px;overflow:hidden;color:inherit;box-shadow:0 6px 20px rgba(66,13,36,.1);transition:transform .25s,box-shadow .25s}
+.gd-card:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(66,13,36,.2);color:inherit}
+.gd-photo{display:block;aspect-ratio:4/4.6;background:#420d24;color:#f6c582;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:3rem}
+.gd-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gd-card:hover .gd-photo img{transform:scale(1.06)}
+.gd-body{display:flex;flex-direction:column;gap:3px;padding:16px 16px 18px;flex:1}
+.gd-name{font-family:"Jost",sans-serif;font-size:1.12rem;color:#2a2230}
+.gd-role{color:#420d24;font-weight:600;font-size:.9rem}
+.gd-short{color:#666;font-size:.88rem;line-height:1.4;margin-top:4px}
+.gd-more{margin-top:auto;padding-top:10px;color:#420d24;font-weight:700;font-size:.88rem}
+.gd-more i{transition:transform .2s}.gd-card:hover .gd-more i{transform:translateX(4px)}
+.gd-profile-photo{border-radius:20px;overflow:hidden;background:#420d24;color:#f6c582;aspect-ratio:4/4.6;display:flex;align-items:center;justify-content:center;font-size:5rem;box-shadow:0 14px 34px rgba(66,13,36,.22)}
+.gd-profile-photo img{width:100%;height:100%;object-fit:cover}
+.gd-facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:1rem}
+.gd-facts div{flex:1 1 150px;background:#f6e9ee;border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center}
+.gd-facts i{grid-row:span 2;color:#420d24;font-size:1.4rem}
+.gd-facts b{font-size:1.4rem;color:#420d24;line-height:1}.gd-facts span{color:#555;font-size:.85rem}
+.gd-tags{display:flex;flex-wrap:wrap;gap:8px}
+.gd-tags span{background:#420d24;color:#f6c582;border-radius:999px;padding:6px 14px;font-weight:600;font-size:.88rem}
+.gd-tags-soft span{background:#f6e9ee;color:#420d24}
+.gd-bio{line-height:1.85;color:#2a2230}
+.gd-bio p{margin-bottom:1rem}

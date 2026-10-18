@@ -2,7 +2,7 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
 from Hotels.models import AirBNB, Hotel
-from Home.models import Blogs, Trekking
+from Home.models import Blogs, Guide, Trekking
 from Places.models import AwesomePackages, Destinations
 
 
@@ -75,6 +75,16 @@ class BlogSitemap(_Base):
         return obj.published_date
 
 
+class GuidesSitemap(_Base):
+    priority, changefreq = 0.5, 'monthly'
+
+    def items(self):
+        return Guide.objects.filter(is_active=True)
+
+    def location(self, obj):
+        return reverse('guide_detail', args=[obj.slug])
+
+
 class HotelsSitemap(_Base):
     priority, changefreq = 0.8, 'weekly'
 
@@ -100,5 +110,5 @@ class StaysSitemap(_Base):
 
 sitemaps = {
     'pages': StaticPagesSitemap, 'packages': PackagesSitemap, 'destinations': DestinationsSitemap,
-    'trekking': TrekkingSitemap, 'hotels': HotelsSitemap, 'blog': BlogSitemap, 'stays': StaysSitemap,
+    'trekking': TrekkingSitemap, 'hotels': HotelsSitemap, 'blog': BlogSitemap, 'stays': StaysSitemap, 'guides': GuidesSitemap,
 }

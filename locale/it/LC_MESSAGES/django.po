@@ -4656,3 +4656,36 @@ msgstr "Lasciaci una recensione su Google"
 
 msgid "Leave us a review"
 msgstr "Lasciaci una recensione"
+
+msgid "Our Team"
+msgstr "Il nostro team"
+
+msgid "Meet Our Guides"
+msgstr "Conosci le nostre guide"
+
+msgid "Local experts who know every park, trail and sighting. Tap a guide to read their story."
+msgstr "Esperti locali che conoscono ogni parco, sentiero e avvistamento. Tocca una guida per leggere la sua storia."
+
+msgid "View profile"
+msgstr "Vedi profilo"
+
+msgid "Plan a trip with"
+msgstr "Pianifica un viaggio con"
+
+msgid "Years of experience"
+msgstr "Anni di esperienza"
+
+msgid "Languages"
+msgstr "Lingue"
+
+msgid "Parks and regions"
+msgstr "Parchi e regioni"
+
+msgid "Specializations"
+msgstr "Specializzazioni"
+
+msgid "Languages spoken"
+msgstr "Lingue parlate"
+
+msgid "Meet more of our guides"
+msgstr "Conosci altre guide"
