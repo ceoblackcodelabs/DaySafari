@@ -995,6 +995,18 @@ class GuidesTests(TestCase):
             self.assertEqual(Image.open(BytesIO(b''.join(r.streaming_content))).size, (1200, 630))
             self.assertEqual(self.client.get('/en/guides/hidden-guide/og.jpg').status_code, 404)
 
+    def test_guide_page_shows_matching_packages_first(self):
+        from Places.models import AwesomePackages
+        with translation.override('en'):
+            AwesomePackages.objects.create(name='Beach Break', location='Diani', days=4, price=1, persons=2, description='<p>Sand</p>', category='East Africa Tours', star_rating=5)
+            AwesomePackages.objects.create(name='Mara Migration', location='Masai Mara', days=5, price=1, persons=2, description='<p>Herds</p>', category='East Africa Tours', star_rating=3)
+        self.g.parks = 'Masai Mara'
+        self.g.save()
+        page = self.client.get(self.url).content.decode()
+        self.assertIn('Awesome Safari Packages', page)
+        self.assertLess(page.index('Mara Migration'), page.index('Beach Break'))        # the guide's parks come first
+        self.assertIn(f'wa.me/{self.g.whatsapp_digits}?text=', page)
+
 
 class AuthPagesTests(TestCase):
     def setUp(self):
@@ -1027,16 +1039,3 @@ class AuthPagesTests(TestCase):
             g = Guide.objects.create(name='Amina Guide', user=self.user)
         ok = self.client.post(reverse('login'), {'username': 'amina', 'password': 'Str0ng!Passw0rd'})
         self.assertRedirects(ok, g.get_absolute_url(), fetch_redirect_response=False)
-
-
-    def test_guide_page_shows_matching_packages_first(self):
-        from Places.models import AwesomePackages
-        with translation.override('en'):
-            AwesomePackages.objects.create(name='Beach Break', location='Diani', days=4, price=1, persons=2, description='<p>Sand</p>', category='East Africa Tours', star_rating=5)
-            AwesomePackages.objects.create(name='Mara Migration', location='Masai Mara', days=5, price=1, persons=2, description='<p>Herds</p>', category='East Africa Tours', star_rating=3)
-        self.g.parks = 'Masai Mara'
-        self.g.save()
-        page = self.client.get(self.url).content.decode()
-        self.assertIn('Awesome Safari Packages', page)
-        self.assertLess(page.index('Mara Migration'), page.index('Beach Break'))        # the guide's parks come first
-        self.assertIn(f'wa.me/{self.g.whatsapp_digits}?text=', page)
