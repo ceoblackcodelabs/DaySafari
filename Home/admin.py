@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
-    BlogComments, Blogs, BlogCategory, Offer, TrustBadge, Brochure, ItineraryTreking,
+    Blogs, BlogCategory, Offer, TrustBadge, Brochure, ItineraryTreking,
     Trekking, Ad, AboutImage, HeroSlide, Guide, GuideLead, GuideEvent
 )
 
@@ -97,23 +97,6 @@ class TestimonialsAdmin(TranslationAdmin):
     feedback_preview.short_description = 'Feedback'
 
 
-@admin.register(BlogComments)
-class BlogCommentsAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'email', 'comment_preview', 'blog', 'created_date']
-    list_filter = ['created_date', 'blog']
-    search_fields = ['name', 'email', 'comment']
-    ordering = ['-created_date']
-    list_per_page = 20
-    autocomplete_fields = ['blog']
-
-    def comment_preview(self, obj):
-        """Show truncated comment in admin list"""
-        if obj.comment:
-            return obj.comment[:100] + '...' if len(obj.comment) > 100 else obj.comment
-        return 'No comment'
-    comment_preview.short_description = 'Comment'
-
-
 @admin.register(BlogCategory)
 class BlogCategoryAdmin(TranslationAdmin):
     list_display = ['name', 'slug', 'order']
@@ -144,10 +127,6 @@ class BlogsAdmin(TranslationAdmin):
         }),
         ('Media & Engagement', {
             'fields': ('image', 'likes')
-        }),
-        ('Comments', {
-            'fields': ('comments',),
-            'classes': ('collapse',)
         }),
         ('Metadata', {
             'fields': ('published_date',),

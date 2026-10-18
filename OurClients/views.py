@@ -13,7 +13,7 @@ from django.utils import timezone
 from Home.models import Destinations
 from Places.models import AwesomePackages
 from ClientRequests.models import Bookings
-from .models import UserRecommendations, SavedDestination
+from .models import SavedDestination
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
@@ -321,61 +321,6 @@ class PackageDetailView(DetailView):
 
         return context
 
-
-class BookPackageView(LoginRequiredMixin, CreateView):
-    model = Bookings
-    template_name = 'registration/book_package.html'
-    fields = ['name', 'email', 'phone', 'persons', 'date', 'message']
-
-    def dispatch(self, request, *args, **kwargs):
-        self.package = get_object_or_404(AwesomePackages, id=kwargs['package_id'])
-        return super().dispatch(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        # Find or create destination based on package location
-        destination, created = Destinations.objects.get_or_create(
-            name=self.package.location,
-            defaults={
-                'category_id': 1,  # Set a default category
-                'description': self.package.description[:200]
-            }
-        )
-
-        form.instance.destination = destination
-        form.instance.email = self.request.user.email
-
-        # Auto-fill name if not provided
-        if not form.instance.name:
-            form.instance.name = self.request.user.get_full_name() or self.request.user.username
-
-        response = super().form_valid(form)
-
-        # Create recommendation for future
-        UserRecommendations.objects.update_or_create(
-            user=self.request.user,
-            package=self.package,
-            defaults={'score': 1.0}
-        )
-
-        messages.success(self.request, _("Booking confirmed for %(package)s! Your safari adventure awaits!") % {'package': self.package.name})
-        return response
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['name'] = self.request.user.get_full_name() or self.request.user.username
-        initial['email'] = self.request.user.email
-        initial['persons'] = 2
-        initial['date'] = timezone.now().date() + timedelta(days=30)
-        return initial
-
-    def get_success_url(self):
-        return reverse_lazy('profile')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['package'] = self.package
-        context['title'] = f'Book {self.package.name} - Day Safaris Adventures'
-        return context
 
 
 class OffersView(LoginRequiredMixin, TemplateView):

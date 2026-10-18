@@ -269,45 +269,6 @@ def send_booking_reminder(booking):
         logger.info(f"Error: {e}")
         return False
 
-def send_package_payment_email(package_purchase):
-    """Send payment notification email for package purchase"""
-    try:
-        logger.info(f"Preparing to send payment email to {package_purchase.email} for package {package_purchase.package.name}...")
-
-        # Calculate amounts
-        package = package_purchase.package
-        package_price = package.price
-        total_amount = package_price * package_purchase.number_of_persons
-
-        # Generate payment link (adjust URL as needed)
-        # payment_link = f"https://daysafarisadventures.co.ke/payment/{package_purchase.id}/"
-        payment_link = f"http://127.0.0.1:8000/payment/{package_purchase.id}/"
-
-        context = {
-            'purchase': package_purchase,
-            'package': package,
-            'package_price': package_price,
-            'total_amount': total_amount,
-            'persons': package_purchase.number_of_persons,
-            'payment_link': payment_link,
-            'company_phone': '+254 734 962 965',
-            'company_whatsapp': '+254 783 457 058',
-            'company_email': 'info@daysafarisadventures.co.ke',
-            'current_year': '2025'
-        }
-
-        html_content = render_to_string('Emails/package_payment_email.html', context)
-
-        return send_transactional_email(
-            package_purchase.email,
-            package_purchase.full_name,
-            f"Complete Your Payment - {package.name} 🦁",
-            html_content
-        )
-    except Exception as e:
-        logger.info(f"Error sending package payment email: {e}")
-        return False
-
 def send_new_user_alert_to_admin(user):
     """Send alert email to admin when a new user registers"""
     try:

@@ -34,8 +34,6 @@ from DaySafaris.media import serve_media_with_range
 ROBOTS_TXT = """User-agent: *
 Allow: /
 Disallow: /*/admin/
-Disallow: /*/Mpesa/
-Disallow: /*/payment/
 Disallow: /ckeditor5/
 Disallow: /api/
 Disallow: /i18n/
@@ -59,8 +57,6 @@ urlpatterns += i18n_patterns(
     path('', include('Places.urls')),
     path('', include('ClientRequests.urls')),
     path('', include("Hotels.urls")),
-    path('', include('Payments.urls')),
-    path('Mpesa/', include('MpesaPayment.urls')),
 )
 
 # NOTE: django.conf.urls.static.static() is NOT used for MEDIA_URL. It has

@@ -28,6 +28,7 @@ ALLOWED_HOSTS = [
     "10.5.12.133",
     "10.5.3.50",
     "192.168.8.19",
+    "10.5.3.241",
 ]
 
 # ========== APPLICATION DEFINITION ==========
@@ -40,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
-    'django_daraja',
     'Home',
     'OurClients',
     'Places',
@@ -48,9 +48,6 @@ INSTALLED_APPS = [
     'Hotels',
     'Invoices',
     'EmailSetup',
-    'FinanceManagement',
-    'Payments',
-    'MpesaPayment',
     'django_ckeditor_5',
 ]
 
@@ -297,11 +294,6 @@ LOGOUT_REDIRECT_URL = 'home'
 # ========== DEFAULT FIELD ==========
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# django-daraja's own migrations plus the AutoField->BigAutoField follow-up (0003) that was
-# originally generated inside site-packages. Keeping them in the project makes every
-# environment (fresh venv, new server) build the same schema.
-MIGRATION_MODULES = {'django_daraja': 'DaySafaris.daraja_migrations'}
-
 # ========== CSRF CONFIGURATION ==========
 CSRF_TRUSTED_ORIGINS = [
     'https://daysafarisadventures.co.ke',
@@ -324,17 +316,6 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@daysafarisadventures.co.ke')
 EMAIL_FROM_NAME = config('EMAIL_FROM_NAME', default='Day Safaris Adventures')
 BREVO_API_KEY = config('BREVO_API_KEY', default='')
-
-# ========== M-PESA CONFIGURATION ==========
-MPESA_ENVIRONMENT = config("MPESA_ENVIRONMENT", default='sandbox')
-MPESA_CONSUMER_KEY = config("MPESA_CONSUMER_KEY", default='')
-MPESA_CONSUMER_SECRET = config("MPESA_CONSUMER_SECRET", default='')
-MPESA_SHORTCODE = config("MPESA_SHORTCODE", default='')
-MPESA_EXPRESS_SHORTCODE = config("MPESA_EXPRESS_SHORTCODE", default='')
-MPESA_SHORTCODE_TYPE = config("MPESA_SHORTCODE_TYPE", default='paybill')
-MPESA_PASSKEY = config("MPESA_PASSKEY", default='')
-MPESA_INITIATOR_USERNAME = config("MPESA_INITIATOR_USERNAME", default='')
-MPESA_INITIATOR_SECURITY_CREDENTIAL = config("MPESA_INITIATOR_SECURITY_CREDENTIAL", default='')
 
 # ========== ERROR LOGGING ==========
 # With DEBUG=False and no handler500/500.html previously defined, unhandled

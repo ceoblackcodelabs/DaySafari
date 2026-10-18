@@ -2,7 +2,7 @@ from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import (
     DestinationsCategory, Destinations, Itinerary,
-    AwesomePackages, PackagePurchase,
+    AwesomePackages,
     IncluisiveExcluisive, DestinationImage, PackageImage
 )
 from django.utils.html import format_html
@@ -166,60 +166,3 @@ class DestinationImageAdmin(TranslationAdmin):
     search_fields = ['caption', 'destination__name']
 
 
-@admin.register(PackagePurchase)
-class PackagePurchaseAdmin(admin.ModelAdmin):
-    list_display = [
-        'id', 'full_name', 'package', 'number_of_persons',
-        'amount_spent_formatted', 'travel_date', 'status',
-        'purchase_date'
-    ]
-    list_filter = ['status', 'package', 'travel_date', 'purchase_date']
-    search_fields = ['full_name', 'email', 'phone_number', 'package__name']
-    readonly_fields = ['amount_spent_calculated', 'purchase_date']
-    list_per_page = 20
-    date_hierarchy = 'travel_date'
-    list_editable = ['status']
-    autocomplete_fields = ['package', 'user']
-
-    def amount_spent_formatted(self, obj):
-        return f"${obj.amount_spent:,.2f}"
-    amount_spent_formatted.short_description = 'Amount'
-    amount_spent_formatted.admin_order_field = 'amount_spent'
-
-    def amount_spent_calculated(self, obj):
-        if obj.package and obj.package.price:
-            calculated = obj.package.price * obj.number_of_persons
-            return format_html(
-                '<strong>${:,.2f}</strong> <span style="color: #6c757d; font-size: 11px;">({} × ${:,.2f})</span>',
-                calculated, obj.number_of_persons, obj.package.price
-            )
-        return "N/A"
-    amount_spent_calculated.short_description = 'Calculated Amount'
-
-    actions = ['mark_as_confirmed', 'mark_as_cancelled', 'mark_as_pending']
-
-    def mark_as_confirmed(self, request, queryset):
-        updated = queryset.update(status='Confirmed')
-        self.message_user(request, f"✅ {updated} booking(s) confirmed.")
-    mark_as_confirmed.short_description = "Mark as Confirmed"
-
-    def mark_as_cancelled(self, request, queryset):
-        updated = queryset.update(status='Cancelled')
-        self.message_user(request, f"❌ {updated} booking(s) cancelled.")
-    mark_as_cancelled.short_description = "Mark as Cancelled"
-
-    def mark_as_pending(self, request, queryset):
-        updated = queryset.update(status='Pending')
-        self.message_user(request, f"⏳ {updated} booking(s) pending.")
-    mark_as_pending.short_description = "Mark as Pending"
-
-    def save_model(self, request, obj, form, change):
-        if not obj.amount_spent and obj.package:
-            obj.amount_spent = obj.package.price * obj.number_of_persons
-        super().save_model(request, obj, form, change)
-
-
-# Admin site headers
-admin.site.site_header = "Day Safaris Adventures Admin"
-admin.site.site_title = "Day Safaris Admin Portal"
-admin.site.index_title = "Welcome to Day Safaris Adventures Dashboard"

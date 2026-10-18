@@ -131,7 +131,7 @@ def lead_popup(request):
     name = match.url_name if match else ''
     app = (match.app_names if match else [])
     show = bool(name) and name not in LEAD_POPUP_SKIP and 'admin' not in app \
-        and not request.path.startswith(('/Mpesa', '/i18n')) and '/admin/' not in request.path \
+        and not request.path.startswith('/i18n') and '/admin/' not in request.path \
         and 'payment' not in (name or '')
     cta_skip = LEAD_POPUP_SKIP | {'home', 'packages', 'legal_notice', 'privacy_policy', 'terms_and_conditions',
                                  'cookie_policy', 'sitemap_page', 'faq', 'password_reset'}
@@ -140,4 +140,4 @@ def lead_popup(request):
         from ClientRequests.antispam import lead_token
         token = lead_token()
     return {'show_lead_popup': show, 'lead_ts': token, 'show_cta': bool(name) and name not in cta_skip and 'admin' not in app
-            and '/admin/' not in request.path and not request.path.startswith('/Mpesa')}
+            and '/admin/' not in request.path}

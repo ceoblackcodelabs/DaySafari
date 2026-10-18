@@ -188,22 +188,6 @@ class Testimonials(models.Model):
         return self.star_rating
 
 
-class BlogComments(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    comment = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
-    blog = models.ForeignKey('Blogs', on_delete=models.CASCADE, related_name='blog_comments', null=True)
-
-    class Meta:
-        verbose_name = 'Blog Comment'
-        verbose_name_plural = 'Blog Comments'
-        ordering = ['-created_date']
-
-    def __str__(self):
-        return f"Comment by {self.name} on {self.created_date}"
-
-
 class BlogCategory(models.Model):
     name = models.CharField(max_length=60, unique=True)
     slug = models.SlugField(max_length=70, unique=True, blank=True)
@@ -246,7 +230,6 @@ class Blogs(models.Model):
     category = models.ForeignKey(BlogCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='posts')
     content = CKEditor5Field('Content', config_name='default')
     likes = models.IntegerField(default=0)
-    comments = models.ManyToManyField(BlogComments, blank=True)
     published_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(default='blog_images/default.jpg', upload_to='blog_images/', blank=True, null=True, validators=[validate_image_10mb])
 

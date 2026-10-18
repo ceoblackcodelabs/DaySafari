@@ -187,45 +187,6 @@ class AwesomePackages(models.Model):
         return self.star_rating
 
 
-class PackagePurchase(models.Model):
-    STATUS_CHOICES = [
-        ('Pending', 'Pending'),
-        ('Confirmed', 'Confirmed'),
-        ('Cancelled', 'Cancelled')
-    ]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases')
-    package = models.ForeignKey(AwesomePackages, on_delete=models.CASCADE, related_name='purchases')
-    full_name = models.CharField(max_length=100, db_index=True)
-    email = models.EmailField(db_index=True)
-    phone_number = models.CharField(max_length=20)
-    number_of_persons = models.IntegerField()
-    travel_date = models.DateField(db_index=True)
-    special_requests = models.TextField(blank=True)
-    purchase_date = models.DateTimeField(auto_now_add=True)
-    amount_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending', db_index=True)
-
-    class Meta:
-        verbose_name = 'Package Purchase'
-        verbose_name_plural = 'Package Purchases'
-        ordering = ['-purchase_date']
-        indexes = [
-            models.Index(fields=['email']),
-            models.Index(fields=['status']),
-            models.Index(fields=['travel_date']),
-            models.Index(fields=['purchase_date']),
-        ]
-
-    def save(self, *args, **kwargs):
-        if self.package and not self.amount_spent:
-            self.amount_spent = self.package.price * self.number_of_persons
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.full_name} - {self.package.name}"
-
-
 class Itinerary(models.Model):
     MEAL_CHOICES = [
         ('Breakfast', 'Breakfast Only'),

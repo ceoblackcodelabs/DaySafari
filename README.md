@@ -1,7 +1,7 @@
 # Day Safaris Adventures
 
 Website and booking system for Day Safaris Adventures (Nairobi, Kenya): safari packages, trekking, cruises, **hotels**,
-Airbnb-style stays, blog, gallery, enquiries and M-Pesa payments. Built with Django (SQLite, WhiteNoise, Brevo email).
+Airbnb-style stays, blog, galleryand enquiries. Built with Django (SQLite, WhiteNoise, Brevo email).
 
 Live site: https://daysafarisadventures.co.ke
 
@@ -33,7 +33,6 @@ Secrets live in `.env`, which is **never committed**. Main variables:
 | `DEBUG` | `True` only on your own computer |
 | `BREVO_API_KEY` | Sends booking/enquiry emails (required) |
 | `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `DEFAULT_FROM_EMAIL` | SMTP settings (Brevo) |
-| `MPESA_*` | M-Pesa credentials (`MPESA_ENVIRONMENT=sandbox` or `production`) |
 | `github` | Token for the chatbot's AI provider |
 | `SECURE_SSL_REDIRECT`, `TRUST_PROXY_SSL_HEADER` | Set to `True` once HTTPS works behind your host's proxy |
 | `DB_PATH` | Optional: use a different SQLite file |
