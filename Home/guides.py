@@ -276,3 +276,90 @@ def guide_lead_status(request, slug, pk):
         return JsonResponse({'ok': False}, status=400)
     updated = GuideLead.objects.filter(pk=pk, guide=guide).update(status=status)
     return JsonResponse({'ok': bool(updated)})
+
+
+# ---------------------------------------------------------------------------------------------- link preview image
+OG_W, OG_H = 1200, 630
+
+
+def _wrap(draw, text, font, width):
+    lines, line = [], ''
+    for word in text.split():
+        trial = f'{line} {word}'.strip()
+        if draw.textlength(trial, font=font) <= width or not line:
+            line = trial
+        else:
+            lines.append(line)
+            line = word
+    if line:
+        lines.append(line)
+    return lines
+
+
+def _make_og(guide, path):
+    """1200x630 share card: the guide's photo on the right, name, role and brand on the left."""
+    from PIL import Image, ImageDraw, ImageFont, ImageOps
+    img = Image.new('RGB', (OG_W, OG_H), (66, 13, 36))
+    px = img.load()
+    for y in range(OG_H):                                   # soft diagonal maroon gradient
+        for x in range(0, OG_W, 4):
+            t = (x / OG_W + y / OG_H) / 2
+            c = (int(46 + 61 * t), int(8 + 20 * t), int(24 + 37 * t))
+            for dx in range(4):
+                px[x + dx, y] = c
+    d = ImageDraw.Draw(img)
+    panel = 460
+    if guide.photo:
+        try:
+            with Image.open(guide.photo.path) as src:
+                photo = ImageOps.fit(ImageOps.exif_transpose(src).convert('RGB'), (panel, OG_H), Image.LANCZOS, centering=(0.5, 0.35))
+            img.paste(photo, (OG_W - panel, 0))
+            d.rectangle([OG_W - panel - 6, 0, OG_W - panel, OG_H], fill=(246, 197, 130))
+        except Exception:
+            pass
+    else:                                                    # no photo yet: the Day Safaris logo on a light card
+        try:
+            from django.contrib.staticfiles import finders
+            logo = Image.open(finders.find('img/logo-nav.png')).convert('RGBA')
+            logo.thumbnail((340, 340))
+            cx, cy = OG_W - panel // 2, OG_H // 2
+            d.rounded_rectangle([cx - 190, cy - 190, cx + 190, cy + 190], radius=40, fill=(255, 255, 255))
+            img.paste(logo, (cx - logo.width // 2, cy - logo.height // 2), logo)
+        except Exception:
+            pass
+    f = lambda size: ImageFont.load_default(size=size)
+    left, width = 64, OG_W - panel - 64 - 56
+    d.text((left, 58), 'DAY SAFARIS ADVENTURES', font=f(26), fill=(246, 197, 130))
+    d.rectangle([left, 100, left + 70, 104], fill=(246, 197, 130))
+    y = 150
+    for line in _wrap(d, guide.name, f(84), width)[:2]:
+        d.text((left, y), line, font=f(84), fill=(255, 255, 255)); y += 96
+    y += 8
+    for line in _wrap(d, guide.role, f(38), width)[:2]:
+        d.text((left, y), line, font=f(38), fill=(246, 197, 130)); y += 48
+    tag = 'Plan your safari with me'
+    tw = d.textlength(tag, font=f(30)) + 56
+    d.rounded_rectangle([left, OG_H - 118, left + tw, OG_H - 56], radius=31, fill=(246, 197, 130))
+    d.text((left + 28, OG_H - 104), tag, font=f(30), fill=(66, 13, 36))
+    img.save(path, 'JPEG', quality=82, optimize=True, progressive=True)
+
+
+def guide_og(request, slug):
+    import hashlib
+    import os
+    from django.conf import settings
+    from django.http import FileResponse
+    guide = get_object_or_404(Guide, slug=slug, is_active=True)
+    try:
+        stamp = int(os.path.getmtime(guide.photo.path)) if guide.photo else 0
+    except OSError:
+        stamp = 0
+    key = hashlib.md5(f'{guide.name}|{guide.role}|{guide.photo.name if guide.photo else ""}|{stamp}'.encode()).hexdigest()[:12]
+    folder = os.path.join(settings.MEDIA_ROOT, 'og')
+    path = os.path.join(folder, f'guide-{guide.pk}-{key}.jpg')
+    if not os.path.exists(path):
+        os.makedirs(folder, exist_ok=True)
+        _make_og(guide, path)
+    response = FileResponse(open(path, 'rb'), content_type='image/jpeg')
+    response['Cache-Control'] = 'public, max-age=86400'
+    return response

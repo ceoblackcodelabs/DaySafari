@@ -7,11 +7,19 @@
 <link rel="canonical" href="https://daysafarisadventures.co.ke{{ request.path }}">
 {% load seo_tags %}{% hreflang_links request %}
 <meta property="og:type" content="profile">
+<meta property="og:site_name" content="Day Safaris Adventures">
 <meta property="og:title" content="{{ guide.name }} - {{ guide.role }}">
-<meta property="og:description" content="{% if guide.short_bio %}{{ guide.short_bio }}{% else %}{{ guide.name }}, {{ guide.role }}.{% endif %}">
+<meta property="og:description" content="{% if guide.short_bio %}{{ guide.short_bio }}{% else %}{{ guide.name }}, {{ guide.role }} at Day Safaris Adventures.{% endif %}">
 <meta property="og:url" content="https://daysafarisadventures.co.ke{{ request.path }}">
-<meta property="og:image" content="{% if guide.photo %}https://daysafarisadventures.co.ke{{ guide.photo.url }}{% else %}https://daysafarisadventures.co.ke{% static 'img/og-image.jpg' %}{% endif %}">
+<meta property="og:image" content="https://daysafarisadventures.co.ke{% url 'guide_og' guide.slug %}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ guide.name }}, {{ guide.role }}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ guide.name }} - {{ guide.role }}">
+<meta name="twitter:description" content="{% if guide.short_bio %}{{ guide.short_bio }}{% else %}{{ guide.name }}, {{ guide.role }} at Day Safaris Adventures.{% endif %}">
+<meta name="twitter:image" content="https://daysafarisadventures.co.ke{% url 'guide_og' guide.slug %}">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"{{ guide.name|escapejs }}","jobTitle":"{{ guide.role|escapejs }}",
 "worksFor":{"@type":"TravelAgency","name":"Day Safaris Adventures","url":"https://daysafarisadventures.co.ke"}{% if guide.photo %},

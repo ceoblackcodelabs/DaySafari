@@ -21,6 +21,7 @@ urlpatterns = [
     path('services/', ServicesView.as_view(), name='services'),
     path('services/<int:pk>/', ServiceDetailView.as_view(), name='service_detail'),
     path('guides/<slug:slug>/', guides.guide_detail, name='guide_detail'),
+    path('guides/<slug:slug>/og.jpg', guides.guide_og, name='guide_og'),
     path('guides/<slug:slug>/lead/', guides.guide_lead, name='guide_lead'),
     path('guides/<slug:slug>/edit/', guides.guide_edit, name='guide_edit'),
     path('guides/<slug:slug>/photo/', guides.guide_photo, name='guide_photo'),

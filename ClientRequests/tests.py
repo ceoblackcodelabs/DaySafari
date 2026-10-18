@@ -970,3 +970,26 @@ class GuidesTests(TestCase):
         lead = GuideLead.objects.first()
         self.assertTrue(self.client.post(f'{self.url}leads/{lead.pk}/status/', {'status': 'Contacted'}).json()['ok'])
         lead.refresh_from_db(); self.assertEqual(lead.status, 'Contacted')
+
+    def test_share_preview_image_and_meta(self):
+        import tempfile
+        from io import BytesIO
+        from PIL import Image
+        from django.core.files.base import ContentFile
+        from django.test import override_settings
+        with tempfile.TemporaryDirectory() as tmp, override_settings(MEDIA_ROOT=tmp):
+            buf = BytesIO(); Image.new('RGB', (900, 1100), (200, 150, 90)).save(buf, 'JPEG')
+            self.g.photo.save('face.jpg', ContentFile(buf.getvalue()))
+            page = self.client.get(self.url).content.decode()
+            self.assertIn(f'property="og:image" content="https://daysafarisadventures.co.ke{self.url}og.jpg"', page)
+            self.assertIn('og:image:width" content="1200"', page)
+            self.assertIn('twitter:card" content="summary_large_image"', page)
+            r = self.client.get(f'{self.url}og.jpg')
+            self.assertEqual((r.status_code, r['Content-Type']), (200, 'image/jpeg'))
+            data = b''.join(r.streaming_content)
+            self.assertEqual(Image.open(BytesIO(data)).size, (1200, 630))
+            self.assertLess(len(data), 300_000)                                  # small enough for WhatsApp previews
+            self.g.photo.delete(save=True)                                        # no photo: still a branded card
+            r = self.client.get(f'{self.url}og.jpg')
+            self.assertEqual(Image.open(BytesIO(b''.join(r.streaming_content))).size, (1200, 630))
+            self.assertEqual(self.client.get('/en/guides/hidden-guide/og.jpg').status_code, 404)
