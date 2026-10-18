@@ -616,8 +616,11 @@
                 {% if mega.badges.partner %}
                 <div class="why-partners mt-4">
                     <p class="partners-title"><span>{% trans "Our Partners" %}</span></p>
-                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-4">
-                        {% for b in mega.badges.partner %}{% if b.url %}<a href="{{ b.url }}" target="_blank" rel="noopener"><img src="{{ b.img }}" alt="{{ b.name }}" loading="lazy" height="56"></a>{% else %}<img src="{{ b.img }}" alt="{{ b.name }}" loading="lazy" height="56">{% endif %}{% endfor %}
+                    <div class="marquee" aria-label="{% trans 'Our Partners' %}">
+                        <div class="marquee-track">
+                            <div class="marquee-group">{% for b in mega.badges.partner %}{% if b.url %}<a href="{{ b.url }}" target="_blank" rel="noopener" ><img src="{{ b.img }}" alt="{{ b.name }}" loading="lazy" height="56"></a>{% else %}<img src="{{ b.img }}" alt="{{ b.name }}" loading="lazy" height="56">{% endif %}{% endfor %}</div>
+                            <div class="marquee-group" aria-hidden="true">{% for b in mega.badges.partner %}{% if b.url %}<a href="{{ b.url }}" target="_blank" rel="noopener" tabindex="-1"><img src="{{ b.img }}" alt="" loading="lazy" height="56"></a>{% else %}<img src="{{ b.img }}" alt="" loading="lazy" height="56">{% endif %}{% endfor %}</div>
+                        </div>
                     </div>
                 </div>
                 {% endif %}
