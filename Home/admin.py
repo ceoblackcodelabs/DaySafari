@@ -5,7 +5,7 @@ from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
     BlogComments, Blogs, BlogCategory, Offer, TrustBadge, Brochure, ItineraryTreking,
-    Trekking, Ad, AboutImage, HeroSlide, Guide, GuideLead
+    Trekking, Ad, AboutImage, HeroSlide, Guide, GuideLead, GuideEvent
 )
 
 
@@ -452,3 +452,15 @@ class GuideLeadAdmin(admin.ModelAdmin):
     search_fields = ['name', 'phone', 'email', 'message', 'event']
     date_hierarchy = 'created_at'
     readonly_fields = ['created_at', 'ip']
+
+
+@admin.register(GuideEvent)
+class GuideEventAdmin(admin.ModelAdmin):
+    list_display = ['name', 'event_date', 'location', 'is_active', 'lead_count']
+    list_editable = ['is_active']
+    date_hierarchy = 'event_date'
+    search_fields = ['name', 'location']
+
+    def lead_count(self, obj):
+        return GuideLead.objects.filter(event=obj.name).count()
+    lead_count.short_description = 'Leads'

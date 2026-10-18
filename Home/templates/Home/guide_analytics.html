@@ -68,7 +68,7 @@ td a.wa{display:inline-flex;gap:6px;align-items:center;color:#128c4a;font-weight
         <td>{{ l.created_at|date:"d M, H:i" }}</td><td><b>{{ l.name }}</b></td>
         <td><a class="wa" href="https://wa.me/{{ l.phone|cut:' '|cut:'+'|cut:'-'|cut:'('|cut:')' }}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {{ l.phone }}</a>{% if l.email %}<br><small>{{ l.email }}</small>{% endif %}</td>
         <td><span class="pill">{{ l.get_category_display }}</span></td>
-        <td>{% if l.group_size %}{% trans "Group of" %} {{ l.group_size }}{% endif %}{% if l.travel_month %} &middot; {{ l.travel_month }}{% endif %}{% if l.message %}<br><small>{{ l.message|truncatechars:90 }}</small>{% endif %}</td>
+        <td>{% if l.group_size %}{% trans "Group of" %} {{ l.group_size }}{% endif %}{% if l.travel_date %} &middot; {{ l.travel_date|date:'d M Y' }}{% endif %}{% if l.message %}<br><small>{{ l.message|truncatechars:90 }}</small>{% endif %}</td>
         <td>{{ l.get_source_display }}{% if l.event %}<br><small>{{ l.event }}</small>{% endif %}</td>
         <td><select data-url="{% url 'guide_lead_status' guide.slug l.pk %}" aria-label="status">{% for s in statuses %}<option{% if s == l.status %} selected{% endif %}>{{ s }}</option>{% endfor %}</select></td>
       </tr>{% endfor %}</tbody></table></div>

@@ -1,5 +1,6 @@
 """Guide profile pages: public profile, lead capture (form, QR code, events), owner inline editing and analytics."""
 import csv
+import datetime
 import json
 import logging
 import re
@@ -20,7 +21,7 @@ from ClientRequests.antispam import get_client_ip, hit_rate_limit, lead_spam_rea
 from EmailSetup.utils import get_company, send_transactional_email
 
 from .blogs_api import sanitise
-from .models import Guide, GuideDayStat, GuideLead
+from .models import Guide, GuideDayStat, GuideEvent, GuideLead
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +50,14 @@ def _count_view(request, guide):
     GuideDayStat.objects.filter(pk=row.pk).update(**fields)
 
 
+def _event(value):
+    """The active event an `?event=<id>` link points to (None when missing or unknown)."""
+    try:
+        return GuideEvent.objects.filter(pk=int(value), is_active=True).first()
+    except (TypeError, ValueError):
+        return None
+
+
 def guide_detail(request, slug):
     guide = get_object_or_404(Guide.objects.select_related('user'), slug=slug)
     manager = can_manage(request.user, guide)
@@ -60,7 +69,8 @@ def guide_detail(request, slug):
         'guide': guide, 'is_manager': manager,
         'other_guides': Guide.objects.filter(is_active=True).exclude(pk=guide.pk)[:4],
         'lead_token': lead_token(), 'categories': [(k, v, CATEGORY_ICONS[k]) for k, v in GuideLead.CATEGORIES],
-        'src': src if src in SOURCES else 'profile', 'event': (request.GET.get('event') or '')[:60],
+        'src': src if src in SOURCES else 'profile', 'event': _event(request.GET.get('event')),
+        'events': list(GuideEvent.objects.filter(is_active=True)[:30]) if manager else [],
         'profile_url': request.build_absolute_uri(request.path),
     }
     response = render(request, 'Home/guide_detail.html', context)
@@ -76,7 +86,7 @@ def _notify(lead):
         try:
             rows = [('Guide', guide.name), ('Name', lead.name), ('Phone', lead.phone), ('Email', lead.email or '-'),
                     ('Interested in', lead.get_category_display()), ('Group size', lead.group_size or '-'),
-                    ('Travelling', lead.travel_month or '-'), ('Message', lead.message or '-'),
+                    ('Travelling', lead.travel_date.strftime('%d %b %Y') if lead.travel_date else '-'), ('Message', lead.message or '-'),
                     ('Source', lead.get_source_display() + (f' ({lead.event})' if lead.event else ''))]
             body = ''.join(f"<tr><td style='padding:4px 12px 4px 0'><b>{escape(k)}</b></td>"
                            f"<td>{escape(str(v)).replace(chr(10), '<br>')}</td></tr>" for k, v in rows)
@@ -131,10 +141,17 @@ def guide_lead(request, slug):
         group = min(max(int(data.get('group_size') or 0), 0), 200) or None
     except ValueError:
         group = None
+    try:
+        travel_date = datetime.date.fromisoformat((data.get('travel_date') or '')[:10])
+    except ValueError:
+        travel_date = None
+    event = _event(data.get('event'))
+    if event:
+        source = 'event'
     lead = GuideLead.objects.create(
         guide=guide, name=name, phone=phone, email=email, category=category, group_size=group,
-        travel_month=(data.get('travel_month') or '')[:20], message=message, source=source,
-        event=(data.get('event') or '')[:60], ip=ip if ip != 'unknown' else None)
+        travel_date=travel_date, message=message, source=source,
+        event=event.name if event else '', ip=ip if ip != 'unknown' else None)
     _notify(lead)
     digits = ''.join(c for c in phone if c.isdigit())
     text = f"Hello {guide.name}, I am {name}. I am interested in: {lead.get_category_display()}."
@@ -214,7 +231,7 @@ def guide_analytics(request, slug):
         writer.writerow(['Date', 'Name', 'Phone', 'Email', 'Interest', 'Group', 'Travelling', 'Source', 'Event', 'Status', 'Message'])
         for l in leads:
             writer.writerow([l.created_at.strftime('%Y-%m-%d %H:%M'), l.name, l.phone, l.email, l.get_category_display(),
-                             l.group_size or '', l.travel_month, l.get_source_display(), l.event, l.status, l.message])
+                             l.group_size or '', l.travel_date or '', l.get_source_display(), l.event, l.status, l.message])
         return response
     today = timezone.localdate()
     start = today - timedelta(days=29)

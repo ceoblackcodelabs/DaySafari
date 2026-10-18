@@ -58,7 +58,7 @@
 @media(max-width:900px){.hero{padding:44px 0 100px}.hero .wrap{grid-template-columns:1fr;gap:38px;text-align:center}.arch{width:min(290px,78vw);margin:0 auto}.chip3.a{left:-22px;bottom:50px;font-size:.78rem;padding:8px 12px}.chip3.b{right:-22px;top:50px;font-size:.78rem;padding:8px 12px}.chip3 small{display:none}.chip3 i{width:28px;height:28px}.motto{padding-left:0;margin-inline:auto;padding-top:34px}.motto::before{left:50%;transform:translateX(-50%);top:-8px}.lead{margin-inline:auto}.cta{justify-content:center}}
 /* stats strip */
 .stats{position:relative;z-index:5;margin-top:-62px}
-.stats .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}@media(max-width:760px){.stats .wrap{grid-template-columns:1fr 1fr;gap:10px}.stat{padding:14px 12px;gap:10px}.stat i{width:40px;height:40px}.stat b{font-size:1.5rem}}.stat b.sm{font-size:1.15rem;padding:4px 0}
 .stat{background:#fff;border-radius:20px;padding:20px 18px;box-shadow:var(--sh);display:flex;align-items:center;gap:14px;border:1px solid rgba(66,13,36,.06)}
 .stat i{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--m),var(--m3));color:var(--g);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex:none}
 .stat b{display:block;font:700 1.8rem Jost,sans-serif;color:var(--m);line-height:1}.stat span{font-size:.82rem;color:var(--mut)}
@@ -75,11 +75,18 @@ section{padding:76px 0;position:relative}
 /* about */
 .about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:44px;align-items:start}
 .bio{font-size:1.07rem;line-height:1.9}.bio p{margin:0 0 1.1rem}
-.glance{background:linear-gradient(160deg,var(--m),#2b0816);color:#fff;border-radius:var(--r);padding:28px;box-shadow:var(--sh);position:sticky;top:96px}
-.glance h3{color:var(--g);font-size:1.3rem;margin-bottom:16px}
-.glance li{list-style:none;display:flex;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.12);align-items:flex-start}
-.glance ul{margin:0;padding:0}.glance li:last-child{border:0}
-.glance i{color:var(--g);width:20px;text-align:center;margin-top:4px}.glance small{display:block;color:rgba(255,255,255,.65);font-size:.76rem;text-transform:uppercase;letter-spacing:.08em}
+.glance{background:#fff;border-radius:var(--r);padding:8px;box-shadow:var(--sh);border:1px solid rgba(66,13,36,.08);position:sticky;top:96px}
+.gl-tabs{display:flex;gap:4px;background:var(--tint);border-radius:16px;padding:4px}
+.gl-tabs button{flex:1;border:0;background:none;padding:9px 6px;border-radius:12px;font:600 .82rem Roboto,sans-serif;color:var(--mut);cursor:pointer;transition:background .2s,color .2s}
+.gl-tabs button.on{background:var(--m);color:var(--g);box-shadow:0 4px 10px rgba(66,13,36,.25)}
+.gl-panel{display:none;padding:14px 14px 10px;animation:fade .25s}.gl-panel.on,body.editing .gl-panel{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+.gl-row{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid #f4e9ee;align-items:flex-start}.gl-row:last-child{border:0}
+.gl-row i{width:34px;height:34px;border-radius:10px;background:var(--tint);color:var(--m);display:flex;align-items:center;justify-content:center;flex:none}
+.gl-row small{display:block;color:var(--mut);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em}
+.gl-pills{display:flex;flex-wrap:wrap;gap:8px}.gl-pills span{padding:7px 15px;border-radius:999px;background:var(--m);color:var(--g);font-weight:600;font-size:.88rem}
+.gl-btn{display:flex;align-items:center;gap:10px;width:100%;padding:11px 14px;margin-bottom:8px;border-radius:12px;border:0;background:var(--tint);color:var(--m);font:600 .92rem Roboto,sans-serif;cursor:pointer;transition:transform .2s,background .2s}
+.gl-btn:hover{transform:translateX(4px);background:var(--g)}.gl-btn.wa{background:#25d366;color:#fff}.gl-btn.wa:hover{background:#128c4a}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr}.glance{position:static}}
 /* why me */
 .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}@media(max-width:900px){.feat{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.feat{grid-template-columns:1fr}}
@@ -120,7 +127,7 @@ section{padding:76px 0;position:relative}
 .qr .acts{display:flex;flex-wrap:wrap;gap:8px}
 .qr .acts button,.qr .acts a{background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:999px;padding:7px 14px;font:600 .8rem Roboto,sans-serif;cursor:pointer;transition:background .2s}
 .qr .acts button:hover,.qr .acts a:hover{background:var(--g);color:var(--m)}
-.qr input{width:100%;margin-bottom:8px;border-radius:10px;border:0;padding:8px 12px;font:inherit;font-size:.85rem}
+.qr select{width:100%;margin-bottom:8px;border-radius:10px;border:0;padding:8px 12px;font:inherit;font-size:.85rem;background:#fff;color:var(--ink)}
 .form{background:#fff;color:var(--ink);border-radius:26px;padding:30px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
 .form h3{font-size:1.5rem;color:var(--m);margin-bottom:4px}.form .sub{margin-bottom:18px;font-size:.92rem}
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:8px;margin-bottom:16px}
@@ -196,10 +203,10 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
 
 <!-- STATS -->
 <div class="stats reveal"><div class="wrap">
-  {% if guide.years_experience %}<div class="stat"><i class="fa fa-award"></i><div><b data-count="{{ guide.years_experience }}" data-plus="1">{{ guide.years_experience }}+</b><span>{% trans "Years of experience" %}</span></div></div>{% endif %}
+  {% if guide.years_experience %}<div class="stat"><i class="fa fa-award"></i><div><b data-count="{{ guide.years_experience }}" data-plus="1">{{ guide.years_experience }}+</b><span>{% trans "Years of experience" %}</span></div></div>{% else %}<div class="stat"><i class="fa fa-gift"></i><div><b class="sm">{% trans "Free quote" %}</b><span>{% trans "No obligation" %}</span></div></div>{% endif %}
   <div class="stat"><i class="fa fa-language"></i><div><b data-count="{{ guide.language_list|length }}">{{ guide.language_list|length }}</b><span>{% trans "Languages" %}</span></div></div>
   <div class="stat"><i class="fa fa-map-marked-alt"></i><div><b data-count="{{ guide.park_list|length }}">{{ guide.park_list|length }}</b><span>{% trans "Parks and regions" %}</span></div></div>
-  <div class="stat"><i class="fa fa-gift"></i><div><b style="font-size:1.25rem;padding:4px 0">{% trans "Free quote" %}</b><span>{% trans "No obligation" %}</span></div></div>
+  <div class="stat"><i class="fa fa-star"></i><div><b data-count="{{ guide.specialization_list|length }}">{{ guide.specialization_list|length }}</b><span>{% trans "Specializations" %}</span></div></div>
 </div></div>
 
 <!-- ABOUT -->
@@ -211,15 +218,24 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
     <div class="bio" data-edit="bio" data-rich="1" contenteditable="false">{{ guide.bio|safe }}</div>
   </div>
   <aside class="glance reveal">
-    <h3>{% trans "At a glance" %}</h3>
-    <ul>
-      <li><i class="fa fa-compass"></i><div><small>{% trans "Role" %}</small>{{ guide.role }}</div></li>
-      <li><i class="fa fa-language"></i><div><small>{% trans "Languages spoken" %}</small><span class="ed-hide">{{ guide.languages }}</span><input class="ed-input ed-only" data-field="languages" value="{{ guide.languages }}" aria-label="languages"><p class="ed-hint ed-only">{% trans "Separate with commas" %}</p></div></li>
-      <li><i class="fa fa-map-marker-alt"></i><div><small>{% trans "Based in" %}</small>Nairobi, Kenya</div></li>
-      <li><i class="fab fa-whatsapp"></i><div><small>WhatsApp</small><a class="ed-hide" href="https://wa.me/{{ guide.whatsapp_digits }}" target="_blank" rel="noopener">+{{ guide.whatsapp_digits }}</a><input class="ed-input ed-only" data-field="whatsapp" value="{{ guide.whatsapp }}" placeholder="254712345678" aria-label="whatsapp"></div></li>
-      {% if guide.email or is_manager %}<li class="{% if not guide.email %}ed-only{% endif %}"><i class="fa fa-envelope"></i><div><small>{% trans "Contact" %}</small>{% if guide.email %}<a class="ed-hide" href="mailto:{{ guide.email }}">{{ guide.email }}</a>{% endif %}<input class="ed-input ed-only" data-field="email" value="{{ guide.email }}" placeholder="you@example.com" aria-label="email"></div></li>{% endif %}
-      {% if is_manager %}<li class="ed-only"><i class="fa fa-award"></i><div><small>{% trans "Years of experience" %}</small><input class="ed-input" type="number" min="0" max="80" data-field="years_experience" value="{{ guide.years_experience|default:'' }}"></div></li>{% endif %}
-    </ul>
+    <div class="gl-tabs" role="tablist"><button type="button" class="on" data-tab="facts" role="tab"><i class="fa fa-id-card"></i> {% trans "Facts" %}</button><button type="button" data-tab="langs" role="tab"><i class="fa fa-language"></i> {% trans "Languages" %}</button><button type="button" data-tab="reach" role="tab"><i class="fa fa-comment-dots"></i> {% trans "Contact" %}</button></div>
+    <div class="gl-panel on" data-panel="facts">
+      <div class="gl-row"><i class="fa fa-compass"></i><div><small>{% trans "Role" %}</small>{{ guide.role }}</div></div>
+      <div class="gl-row"><i class="fa fa-map-marker-alt"></i><div><small>{% trans "Based in" %}</small>Nairobi, Kenya</div></div>
+      <div class="gl-row"><i class="fa fa-map-marked-alt"></i><div><small>{% trans "Parks and regions" %}</small>{{ guide.park_list|length }} {% trans "places" %}</div></div>
+      {% if is_manager %}<div class="gl-row ed-only"><i class="fa fa-award"></i><div><small>{% trans "Years of experience" %}</small><input class="ed-input" type="number" min="0" max="80" data-field="years_experience" value="{{ guide.years_experience|default:'' }}"></div></div>{% endif %}
+    </div>
+    <div class="gl-panel" data-panel="langs">
+      <div class="gl-pills ed-hide">{% for t in guide.language_list %}<span>{{ t }}</span>{% endfor %}</div>
+      <div class="ed-only"><input class="ed-input" data-field="languages" value="{{ guide.languages }}" aria-label="languages"><p class="ed-hint">{% trans "Separate with commas" %}</p></div>
+    </div>
+    <div class="gl-panel" data-panel="reach">
+      <a class="gl-btn wa ed-hide" href="https://wa.me/{{ guide.whatsapp_digits }}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> +{{ guide.whatsapp_digits }}</a>
+      <a class="gl-btn ed-hide" href="tel:+{{ guide.whatsapp_digits }}"><i class="fa fa-phone-alt"></i> {% trans "Call" %}</a>
+      {% if guide.email %}<a class="gl-btn ed-hide" href="mailto:{{ guide.email }}"><i class="fa fa-envelope"></i> {{ guide.email }}</a>{% endif %}
+      <button type="button" class="gl-btn ed-hide" id="copyPhone" data-copy="+{{ guide.whatsapp_digits }}"><i class="fa fa-copy"></i> {% trans "Copy number" %}</button>
+      {% if is_manager %}<div class="ed-only"><input class="ed-input" data-field="whatsapp" value="{{ guide.whatsapp }}" placeholder="254712345678" aria-label="whatsapp"><input class="ed-input" style="margin-top:8px" data-field="email" value="{{ guide.email }}" placeholder="you@example.com" aria-label="email"></div>{% endif %}
+    </div>
   </aside>
 </div></section>
 
@@ -279,7 +295,7 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
       <div>
         <b>{% trans "Scan to open my page" %}</b>
         <p>{% trans "Show this at events, on your phone or in print. Every scan is counted." %}</p>
-        {% if is_manager %}<input id="eventName" maxlength="60" placeholder="{% trans 'Event name (optional), e.g. Travel Expo 2027' %}" aria-label="event name">{% endif %}
+        {% if is_manager %}<select id="eventPick" aria-label="{% trans 'Event' %}"><option value="">{% trans "My profile QR (no event)" %}</option>{% for e in events %}<option value="{{ e.pk }}"{% if event and event.pk == e.pk %} selected{% endif %}>{{ e.name }}{% if e.event_date %} &middot; {{ e.event_date|date:"d M Y" }}{% endif %}</option>{% endfor %}</select>{% endif %}
         <div class="acts">
           <button type="button" id="copyLink"><i class="fa fa-link"></i> {% trans "Copy link" %}</button>
           <button type="button" id="shareLink"><i class="fa fa-share-alt"></i> {% trans "Share" %}</button>
@@ -296,13 +312,13 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
         {% for key, label, icon in categories %}<label><input type="radio" name="category" value="{{ key }}"{% if forloop.first %} checked{% endif %}><span><i class="fa {{ icon }}"></i>{{ label }}</span></label>{% endfor %}
       </div>
       <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <input type="hidden" name="form_ts" value="{{ lead_token }}"><input type="hidden" name="src" value="{{ src }}"><input type="hidden" name="event" value="{{ event }}">
+      <input type="hidden" name="form_ts" value="{{ lead_token }}"><input type="hidden" name="src" value="{{ src }}"><input type="hidden" name="event" value="{{ event.pk|default:'' }}">
       <div class="fgrid">
         <div><div class="fld"><i class="fa fa-user"></i><input name="name" required maxlength="100" autocomplete="name" placeholder="{% trans 'Your name' %}" aria-label="{% trans 'Your name' %}"></div><div class="ferr" data-for="name"></div></div>
         <div><div class="fld"><i class="fa fa-phone"></i><input name="phone" required type="tel" maxlength="25" inputmode="tel" autocomplete="tel" placeholder="{% trans 'Phone / WhatsApp number' %}" aria-label="{% trans 'Phone / WhatsApp number' %}"></div><div class="ferr" data-for="phone"></div></div>
         <div><div class="fld"><i class="fa fa-envelope"></i><input name="email" type="email" maxlength="254" autocomplete="email" placeholder="{% trans 'Email (optional)' %}" aria-label="Email"></div><div class="ferr" data-for="email"></div></div>
         <div class="fld"><i class="fa fa-users"></i><input name="group_size" type="number" min="1" max="200" inputmode="numeric" placeholder="{% trans 'How many people?' %}" aria-label="{% trans 'How many people?' %}"></div>
-        <div class="fld full"><i class="fa fa-calendar-alt"></i><input name="travel_month" type="month" aria-label="{% trans 'When are you travelling?' %}" title="{% trans 'When are you travelling?' %}"></div>
+        <div class="fld full"><i class="fa fa-calendar-alt"></i><input name="travel_date" type="date" aria-label="{% trans 'When are you travelling?' %}" title="{% trans 'When are you travelling?' %}"></div>
         <div class="fld ta full"><i class="fa fa-comment-dots"></i><textarea name="message" maxlength="800" placeholder="{% trans 'Tell me a little about your dream trip (optional)' %}" aria-label="{% trans 'Message' %}"></textarea></div>
       </div>
       <button class="btn btn-gold" type="submit"><i class="fa fa-paper-plane"></i> {% trans "Send to" %} {{ guide.name }}</button>
@@ -348,6 +364,9 @@ var csrf=($('meta[name=csrf-token]')||{}).content||'';
 var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 function countUp(el){var to=+el.dataset.count,plus=el.dataset.plus?'+':'';if(reduce||!to){el.textContent=to+plus;return}var t0=null;function step(t){t0=t0||t;var p=Math.min((t-t0)/900,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)))+plus;if(p<1)requestAnimationFrame(step)}requestAnimationFrame(step)}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');$$('[data-count]',e.target).forEach(countUp);io.unobserve(e.target)}})},{threshold:.12});$$('.reveal').forEach(function(el){io.observe(el)})}else{$$('.reveal').forEach(function(el){el.classList.add('in')})}
+/* at-a-glance tabs */
+$$('.gl-tabs button').forEach(function(b){b.addEventListener('click',function(){$$('.gl-tabs button,.gl-panel').forEach(function(e){e.classList.remove('on')});b.classList.add('on');$('[data-panel='+b.dataset.tab+']').classList.add('on')})});
+var cp=$('#copyPhone');if(cp)cp.addEventListener('click',function(){(navigator.clipboard?navigator.clipboard.writeText(cp.dataset.copy):Promise.reject()).then(function(){cp.innerHTML='<i class="fa fa-check"></i> Copied'},function(){prompt('Copy',cp.dataset.copy)})});
 /* lead form */
 var form=$('#leadForm');
 if(form){form.addEventListener('submit',function(ev){ev.preventDefault();$$('.ferr',form).forEach(function(e){e.textContent=''});$$('.fld.err',form).forEach(function(e){e.classList.remove('err')});
@@ -358,11 +377,11 @@ if(form){form.addEventListener('submit',function(ev){ev.preventDefault();$$('.fe
  }).catch(function(){btn.disabled=false;alert('Network problem. Please try again.')})})}
 /* QR code (script loads only when the card is near the screen) */
 var qrCard=$('#qrCard'),qrBox=$('#qrBox'),qrLoaded=false,qrSvg='';
-function qrUrl(){var u=new URL(qrCard.dataset.url);var ev=($('#eventName')||{}).value||'';u.searchParams.set('src',ev.trim()?'event':'qr');if(ev.trim())u.searchParams.set('event',ev.trim());return u.toString()}
+function qrUrl(){var u=new URL(qrCard.dataset.url);var ev=($('#eventPick')||{}).value||'';u.searchParams.set('src',ev?'event':'qr');if(ev)u.searchParams.set('event',ev);return u.toString()}
 function drawQr(){if(!window.qrcode)return;var q=qrcode(0,'M');q.addData(qrUrl());q.make();qrSvg=q.createSvgTag({cellSize:6,margin:2,scalable:true});qrBox.innerHTML=qrSvg}
 function loadQr(){if(qrLoaded)return;qrLoaded=true;var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js';s.onload=drawQr;s.onerror=function(){qrBox.textContent='Open the link instead'};document.head.appendChild(s)}
 if(qrCard){if('IntersectionObserver' in window){new IntersectionObserver(function(es,o){if(es[0].isIntersecting){loadQr();o.disconnect()}},{rootMargin:'400px'}).observe(qrCard)}else loadQr();
- var ev=$('#eventName');if(ev)ev.addEventListener('input',function(){if(window.qrcode)drawQr()});
+ var ev=$('#eventPick');if(ev)ev.addEventListener('change',function(){if(window.qrcode)drawQr()});
  $('#copyLink').addEventListener('click',function(){var u=qrUrl();(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){$('#copyLink').innerHTML='<i class="fa fa-check"></i> Copied'},function(){prompt('Copy this link',u)})});
  $('#shareLink').addEventListener('click',function(){var u=qrUrl();if(navigator.share){navigator.share({title:document.title,url:u}).catch(function(){})}else{prompt('Copy this link',u)}});
  $('#dlQr').addEventListener('click',function(){if(!qrSvg){loadQr();return}var img=new Image(),b=new Blob([qrSvg],{type:'image/svg+xml'}),url=URL.createObjectURL(b);img.onload=function(){var c=document.createElement('canvas');c.width=c.height=640;var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,640,640);x.drawImage(img,0,0,640,640);var a=document.createElement('a');a.download='{{ guide.slug }}-qr.png';a.href=c.toDataURL('image/png');a.click();URL.revokeObjectURL(url)};img.src=url})}

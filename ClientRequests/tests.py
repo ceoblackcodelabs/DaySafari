@@ -904,8 +904,10 @@ class GuidesTests(TestCase):
     def post_lead(self, **over):
         import ClientRequests.antispam as a
         from ClientRequests.antispam import lead_token
+        from Home.models import GuideEvent
+        ev = GuideEvent.objects.filter(name='Travel Expo').first() or GuideEvent.objects.create(name='Travel Expo')
         data = {'name': 'Grace Wanjiru', 'phone': '0722123456', 'category': 'trekking', 'group_size': '4', 'src': 'qr',
-                'event': 'Travel Expo', 'message': 'Mt Kenya in August', 'form_ts': lead_token()}
+                'event': str(ev.pk), 'travel_date': '2027-03-14', 'message': 'Mt Kenya in August', 'form_ts': lead_token()}
         data.update(over)
         with mock.patch.object(a, 'MIN_FILL_SECONDS', 0), mock.patch('Home.guides._notify'):
             return self.client.post(f'{self.url}lead/', data)
@@ -917,7 +919,12 @@ class GuidesTests(TestCase):
         self.assertIn('wa.me/', r.json()['whatsapp'])
         lead = GuideLead.objects.get()
         self.assertEqual((lead.category, lead.source, lead.event, lead.group_size, lead.guide_id),
-                         ('trekking', 'qr', 'Travel Expo', 4, self.g.pk))
+                         ('trekking', 'event', 'Travel Expo', 4, self.g.pk))         # a real event id makes it an event lead
+        self.assertEqual(str(lead.travel_date), '2027-03-14')
+        self.assertEqual(GuideLead.objects.exclude(event='').count(), 1)
+        self.post_lead(event='9999', name='No Event')                                   # unknown event ids are ignored
+        self.assertEqual(GuideLead.objects.get(name='No Event').event, '')
+        GuideLead.objects.filter(name='No Event').delete()
         self.assertEqual(self.post_lead(name='A').status_code, 400)                      # validation
         self.assertEqual(self.post_lead(phone='abc').status_code, 400)
         for bot in ({'message': 'Visit https://tinyurl.com/abc now'}, {'website': 'x'}, {'form_ts': 'forged'}):
@@ -928,6 +935,7 @@ class GuidesTests(TestCase):
         self.client.login(username='daniel', password='pw12345!')
         page = self.client.get(self.url).content.decode()
         self.assertIn('editToggle', page)
+        self.assertIn('id="eventPick"', page)                                             # agents pick an admin-created event
         self.assertIn(f'{self.url}analytics/', page)
         r = self.client.post(f'{self.url}edit/', '{"role": "Lead Guide", "years_experience": 15, "bio": "<p>New</p><script>x</script>", "parks": "Mara, Tsavo"}',
                              content_type='application/json')
@@ -946,6 +954,7 @@ class GuidesTests(TestCase):
     def test_analytics_counts_leads_views_and_exports(self):
         from Home.models import GuideLead, GuideDayStat
         self.post_lead(); self.post_lead(category='safari', src='profile', event='')
+        self.assertEqual(GuideLead.objects.count(), 2)
         self.client.get(self.url, **self.UA); self.client.get(self.url + '?src=qr', **self.UA)
         self.client.get(self.url, HTTP_USER_AGENT='Googlebot/2.1')                       # bots are not counted
         stat = GuideDayStat.objects.get()

@@ -624,6 +624,22 @@ class Guide(models.Model):
         return digits or '254759379600'
 
 
+class GuideEvent(models.Model):
+    """An event the team attends (expo, fair, roadshow). Agents pick one to get an event-specific QR code."""
+    name = models.CharField(max_length=80)
+    event_date = models.DateField(null=True, blank=True)
+    location = models.CharField(max_length=100, blank=True)
+    is_active = models.BooleanField(default=True, help_text='Only active events can be picked by agents')
+
+    class Meta:
+        ordering = ['-event_date', 'name']
+        verbose_name = 'Guide event'
+        verbose_name_plural = 'Guide events'
+
+    def __str__(self):
+        return f"{self.name} ({self.event_date:%d %b %Y})" if self.event_date else self.name
+
+
 class GuideLead(models.Model):
     """A visitor who asked a guide for a trip through the guide's profile page, QR code or an event."""
     CATEGORIES = [
@@ -639,7 +655,7 @@ class GuideLead(models.Model):
     email = models.EmailField(blank=True)
     category = models.CharField(max_length=12, choices=CATEGORIES, default='safari', db_index=True)
     group_size = models.PositiveSmallIntegerField(null=True, blank=True)
-    travel_month = models.CharField(max_length=20, blank=True, help_text='When they plan to travel')
+    travel_date = models.DateField(null=True, blank=True, help_text='When they plan to travel')
     message = models.TextField(blank=True)
     source = models.CharField(max_length=10, choices=SOURCES, default='profile', db_index=True)
     event = models.CharField(max_length=60, blank=True, help_text='Event name, when the lead came from an event QR')

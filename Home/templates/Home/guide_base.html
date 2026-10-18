@@ -29,7 +29,15 @@ a{color:inherit;text-decoration:none}img{max-width:100%}
 .top li.hi a:hover,.top li.hi button:hover{background:var(--m2);color:#fff}
 .top li.back a{background:var(--g);color:var(--m);font-weight:700;box-shadow:inset 0 0 0 1.5px var(--m)}
 .top li.back a:hover{background:var(--m);color:var(--g)}
-@media(max-width:860px){.top .wrap{flex-direction:column;gap:2px;padding:8px 0 10px}.brand img{height:42px}.top ul{justify-content:center;gap:3px}.top li a,.top li button{padding:6px 11px;font-size:.84rem}}
+.back-m{display:none}
+@media(max-width:860px){
+.top .wrap{display:grid;grid-template-columns:1fr auto;gap:0 10px;padding:8px 0 0;min-height:0}
+.brand img{height:40px}.back-m{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--g);color:var(--m);font:700 .85rem Roboto,sans-serif;box-shadow:inset 0 0 0 1.5px var(--m)}
+.top nav{grid-column:1/-1;margin:6px -4vw 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 94%,transparent)}
+.top ul{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:6px;padding:4px 4vw 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.top ul::-webkit-scrollbar{display:none}
+.top li{flex:none}.top li a,.top li button{padding:7px 13px;font-size:.84rem;white-space:nowrap;background:var(--tint)}
+.top li.hi a,.top li.hi button{background:var(--m)}.top li.back{display:none}}
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 26px;border-radius:999px;font-weight:700;border:0;cursor:pointer;font-size:1rem;font-family:inherit;transition:transform .2s,box-shadow .2s,background .2s}
 .btn:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,.22)}
@@ -49,6 +57,7 @@ footer small{display:block;margin-top:14px;opacity:.7}footer small a{text-decora
 <header class="top">
   <div class="wrap">
     <a class="brand" href="{% url 'home' %}" aria-label="{% trans 'Day Safaris Adventures' %}"><img src="{% static 'img/logo-nav.png' %}" alt="{% trans 'Days Safaris Adventures logo' %}" width="152" height="120"></a>
+    <a class="back-m" href="{% url 'home' %}"><i class="fa fa-arrow-left"></i> {% trans "Day Safaris" %}</a>
     <nav aria-label="{{ guide.name }}"><ul>
       {% block nav %}{% endblock %}
       {% if is_manager %}
