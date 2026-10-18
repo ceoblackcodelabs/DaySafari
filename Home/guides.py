@@ -50,6 +50,16 @@ def _count_view(request, guide):
     GuideDayStat.objects.filter(pk=row.pk).update(**fields)
 
 
+def _packages_for(guide, limit=6):
+    """Packages to show on a guide's page: the ones that match the parks they guide in come first."""
+    from Places.models import AwesomePackages
+    parks = [p.lower() for p in guide.park_list]
+    items = list(AwesomePackages.objects.exclude(slug__isnull=True).exclude(slug='')
+                 .only('id', 'name', 'slug', 'image', 'location', 'days', 'persons', 'star_rating', 'description')[:80])
+    items.sort(key=lambda p: (-sum(1 for k in parks if k in f'{p.location} {p.name}'.lower()), -p.star_rating, -p.id))
+    return items[:limit]
+
+
 def _event(value):
     """The active event an `?event=<id>` link points to (None when missing or unknown)."""
     try:
@@ -71,6 +81,7 @@ def guide_detail(request, slug):
         'lead_token': lead_token(), 'categories': [(k, v, CATEGORY_ICONS[k]) for k, v in GuideLead.CATEGORIES],
         'src': src if src in SOURCES else 'profile', 'event': _event(request.GET.get('event')),
         'events': list(GuideEvent.objects.filter(is_active=True)[:30]) if manager else [],
+        'packages': _packages_for(guide),
         'profile_url': request.build_absolute_uri(request.path),
     }
     response = render(request, 'Home/guide_detail.html', context)

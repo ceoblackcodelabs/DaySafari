@@ -33,7 +33,7 @@
 <li><a href="#about">{% trans "About" %}</a></li>
 <li><a href="#why">{% trans "Why me" %}</a></li>
 <li><a href="#skills">{% trans "Specializations" %}</a></li>
-<li><a href="#places">{% trans "Parks and regions" %}</a></li>
+<li><a href="#packages">{% trans "Packages" %}</a></li>
 <li class="hi"><a href="#connect"><i class="fa fa-paper-plane"></i> {% trans "Plan a trip" %}</a></li>
 {% if is_manager %}<li><button type="button" id="editToggle"><i class="fa fa-pen"></i> {% trans "Edit profile" %}</button></li>{% endif %}
 {% endblock %}
@@ -112,11 +112,21 @@ section{padding:76px 0;position:relative}
 .skill.v1{background:linear-gradient(135deg,#420d24,#8e2a52)}.skill.v2{background:linear-gradient(135deg,#6b1c3d,#b34a6f)}.skill.v3{background:linear-gradient(135deg,#2e0818,#6b1c3d)}.skill.v4{background:linear-gradient(135deg,#8a5a1e,#c98a3c)}
 .langs{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
 .langs span{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;background:#fff;border:1.5px solid var(--m);color:var(--m);font-weight:700}
-.parks{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;counter-reset:p}
-.park{counter-increment:p;position:relative;display:flex;align-items:center;gap:14px;background:#fff;border-radius:18px;padding:16px 18px;border:1px solid rgba(66,13,36,.1);box-shadow:0 6px 18px rgba(66,13,36,.08);font-weight:700;transition:transform .25s,border-color .25s}
-.park:hover{transform:translateY(-4px);border-color:var(--g)}
-.park::before{content:counter(p,decimal-leading-zero);font:700 1.5rem Jost,sans-serif;color:var(--g);-webkit-text-stroke:1px var(--m3);min-width:34px}
-.park i{margin-left:auto;color:var(--m3)}
+.pkgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;margin-top:8px}
+.pkg{background:#f4f1f3;border-radius:14px;overflow:hidden;box-shadow:0 8px 24px rgba(66,13,36,.12);display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+.pkg:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(66,13,36,.22)}
+.pimg{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#ddd}
+.pimg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}.pkg:hover .pimg img{transform:scale(1.07)}
+.pinfo{position:absolute;left:0;right:0;bottom:0;display:flex;background:rgba(20,10,15,.5);color:#fff;font-size:.78rem}
+.pinfo span{flex:1;padding:9px 6px;text-align:center;border-left:1px solid rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pinfo span:first-child{border:0;flex:1.5}
+.pinfo i{margin-right:5px}
+.pbody{padding:18px 20px 14px;flex:1}.pbody h3{font-size:1.2rem;color:var(--ink);margin-bottom:2px}.pbody h3 a:hover{color:var(--m3)}
+.ptype{display:block;text-transform:uppercase;color:var(--mut);font-size:.72rem;letter-spacing:.04em}
+.stars{color:var(--g);margin:5px 0 8px;font-size:.82rem}.stars .off{color:#5b6670}
+.pbody p{margin:0;color:var(--mut);font-size:.92rem;line-height:1.55}
+.pbar{display:flex;justify-content:space-between;background:var(--m);color:#fff}
+.pbar a{padding:12px 18px;font-weight:700;font-size:.95rem;transition:background .2s,color .2s}.pbar a:hover{background:var(--g);color:var(--m)}
+@media(max-width:640px){.pkgs{grid-auto-flow:column;grid-auto-columns:82%;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:none;margin-inline:-4vw;padding-inline:4vw}.pkgs::-webkit-scrollbar{display:none}.pkg{scroll-snap-align:center}}
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;counter-reset:s}
 .step{counter-increment:s;background:#fff;border-radius:var(--r);padding:30px 24px 24px;box-shadow:0 8px 24px rgba(66,13,36,.1);position:relative}
@@ -278,11 +288,34 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
   <div class="langs ed-hide reveal">{% for t in guide.language_list %}<span><i class="fa fa-comment-dots"></i> {{ t }}</span>{% endfor %}</div>
 </div></section>
 
-<!-- PARKS -->
-<section id="places" class="alt"><div class="wrap">
-  <div class="center reveal"><span class="eyebrow">{% trans "Parks and regions" %}</span><h2 class="h2">{% trans "Where I guide" %}</h2></div>
-  <div class="parks ed-hide">{% for t in guide.park_list %}<div class="park reveal">{{ t }} <i class="fa fa-map-marker-alt"></i></div>{% endfor %}</div>
-  <div class="ed-only"><input class="ed-input" data-field="parks" value="{{ guide.parks }}" aria-label="parks"><p class="ed-hint">{% trans "Separate with commas" %}</p></div>
+<!-- PACKAGES -->
+<section id="packages" class="alt"><div class="wrap">
+  <div class="center reveal"><span class="eyebrow">{% trans "Packages" %}</span><h2 class="h2">{% trans "Awesome Safari Packages" %}</h2>
+    {% if guide.park_list %}<p class="sub ed-hide">{% trans "Parks and regions" %}: {% for t in guide.park_list %}<b>{{ t }}</b>{% if not forloop.last %} &middot; {% endif %}{% endfor %}</p>{% endif %}</div>
+  <div class="ed-only"><input class="ed-input" data-field="parks" value="{{ guide.parks }}" aria-label="parks"><p class="ed-hint">{% trans "Parks and regions" %}: {% trans "Separate with commas" %}</p></div>
+  {% if packages %}
+  <div class="pkgs">
+    {% for p in packages %}
+    <article class="pkg reveal">
+      <a class="pimg" href="{% url 'package_detail' p.slug %}">
+        <img src="{% if p.image %}{{ p.image|thumb:640 }}{% else %}{% static 'img/package-placeholder.jpg' %}{% endif %}" alt="{{ p.name }}" width="640" height="480" loading="lazy" decoding="async">
+        <span class="pinfo"><span><i class="fa fa-map-marker-alt"></i> {{ p.location }}</span><span><i class="fa fa-calendar-alt"></i> {{ p.days }} {% trans "days" %}</span><span><i class="fa fa-user"></i> {{ p.persons }} {% trans "Persons" %}</span></span>
+      </a>
+      <div class="pbody">
+        <h3><a href="{% url 'package_detail' p.slug %}">{{ p.name }}</a></h3>
+        <small class="ptype">{% trans "Safari Package" %}</small>
+        <div class="stars" aria-label="{{ p.star_rating }}/5">{% for i in "12345" %}<i class="fa fa-star{% if forloop.counter > p.star_rating %} off{% endif %}"></i>{% endfor %}</div>
+        <p>{{ p.description|striptags|truncatewords:24 }}</p>
+      </div>
+      <div class="pbar">
+        <a href="https://wa.me/{{ guide.whatsapp_digits }}?text=Hello%20{{ guide.name|urlencode }}%2C%20I%20am%20interested%20in%3A%20{{ p.name|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> {% trans "Get a Quote" %}</a>
+        <a href="{% url 'package_detail' p.slug %}">{% trans "Book Now" %}</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  <div class="center" style="margin-top:30px"><a class="btn btn-m" href="{% url 'packages' %}">{% trans "View All Packages" %} <i class="fa fa-arrow-right"></i></a></div>
+  {% endif %}
 </div></section>
 
 <!-- HOW IT WORKS -->
