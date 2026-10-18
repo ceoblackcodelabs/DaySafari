@@ -229,21 +229,6 @@ class FAQView(TemplateView):
         return context
 
 
-class GuideDetailView(DetailView):
-    """A guide's own profile page."""
-    model = Guide
-    context_object_name = 'guide'
-    template_name = 'Home/guide_detail.html'
-
-    def get_queryset(self):
-        return Guide.objects.filter(is_active=True)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['other_guides'] = Guide.objects.filter(is_active=True).exclude(pk=self.object.pk)[:4]
-        return context
-
-
 class AboutView(ListView):
     model = Services
     context_object_name = 'services'

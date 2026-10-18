@@ -5,7 +5,7 @@ from django.contrib import messages
 from .models import (
     Services, GalleryCategory, Gallery, Testimonials,
     BlogComments, Blogs, BlogCategory, Offer, TrustBadge, Brochure, ItineraryTreking,
-    Trekking, Ad, AboutImage, HeroSlide, Guide
+    Trekking, Ad, AboutImage, HeroSlide, Guide, GuideLead
 )
 
 
@@ -435,8 +435,20 @@ class GuideAdmin(TranslationAdmin):
     search_fields = ['name', 'role', 'specializations', 'parks']
     prepopulated_fields = {'slug': ('name',)}
     list_filter = ['is_active']
+    raw_id_fields = ['user']
     fieldsets = (
         (None, {'fields': ('name', 'slug', 'role', 'photo', 'is_active', 'order')}),
-        ('Card and profile', {'fields': ('short_bio', 'bio')}),
+        ('Login and contact', {'fields': ('user', 'whatsapp', 'email')}),
+        ('Card and profile', {'fields': ('motto', 'short_bio', 'bio')}),
         ('Details shown on the profile', {'fields': ('specializations', 'languages', 'parks', 'years_experience')}),
     )
+
+
+@admin.register(GuideLead)
+class GuideLeadAdmin(admin.ModelAdmin):
+    list_display = ['created_at', 'guide', 'name', 'phone', 'category', 'source', 'event', 'status']
+    list_filter = ['guide', 'category', 'source', 'status']
+    list_editable = ['status']
+    search_fields = ['name', 'phone', 'email', 'message', 'event']
+    date_hierarchy = 'created_at'
+    readonly_fields = ['created_at', 'ip']

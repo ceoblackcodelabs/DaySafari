@@ -66,4 +66,4 @@ class OfferTranslationOptions(TranslationOptions):
 
 @register(Guide)
 class GuideTranslationOptions(TranslationOptions):
-    fields = ('role', 'short_bio', 'bio', 'specializations', 'languages', 'parks',)
+    fields = ('role', 'short_bio', 'bio', 'specializations', 'languages', 'parks', 'motto',)

@@ -848,45 +848,116 @@ class PackagesApiTests(TestCase):
 
 
 class GuidesTests(TestCase):
-    def test_guides_on_about_page_with_their_own_profile_pages(self):
-        from Home.models import Guide
+    UA = {'HTTP_USER_AGENT': 'Mozilla/5.0 (X11; Linux x86_64) Chrome/120 Safari/537.36'}
+
+    def setUp(self):
         from django.core.cache import cache
+        from django.contrib.auth.models import User
+        from Home.models import Guide
         cache.clear()
+        self.owner = User.objects.create_user('daniel', 'd@example.com', 'pw12345!')
+        self.other = User.objects.create_user('someone', 's@example.com', 'pw12345!')
         with translation.override('en'):
-            g = Guide.objects.create(name='Daniel Kiprop', role='Senior Safari Guide', short_bio='Big cats expert.',
-                                     bio='<p>Twelve years in the Mara.</p>', specializations='Big Cats, Birding',
-                                     languages='English, Swahili', years_experience=12)
+            self.g = Guide.objects.create(name='Daniel Kiprop', role='Senior Safari Guide', short_bio='Big cats expert.',
+                                          bio='<p>Twelve years in the Mara.</p>', specializations='Big Cats, Birding',
+                                          languages='English, Swahili', years_experience=12, user=self.owner)
             Guide.objects.create(name='Hidden Guide', role='Driver', is_active=False)
-        self.assertEqual(g.slug, 'daniel-kiprop')
+        self.url = f'/en/guides/{self.g.slug}/'
+
+    def test_guides_on_about_page_with_their_own_profile_pages(self):
+        self.assertEqual(self.g.slug, 'daniel-kiprop')
         about = self.client.get('/en/about/').content.decode()
         self.assertIn('Meet Our Guides', about)
-        self.assertIn('/en/guides/daniel-kiprop/', about)
+        self.assertIn(self.url, about)
         self.assertNotIn('Hidden Guide', about)
-        page = self.client.get('/en/guides/daniel-kiprop/').content.decode()
-        for text in ('Daniel Kiprop', 'Senior Safari Guide', 'Big Cats', 'Birding', 'Swahili', 'Twelve years in the Mara.', '12+'):
+        page = self.client.get(self.url).content.decode()
+        for text in ('Daniel Kiprop', 'Senior Safari Guide', 'Big Cats', 'Birding', 'Swahili', 'Twelve years in the Mara.'):
             self.assertIn(text, page)
         self.assertIn('"@type":"Person"', page)
         self.assertNotIn('Subscribe for Safari Updates', page)          # standalone page: no site header/footer
         self.assertIn('Powered by', page)
-        self.assertIn('href="/en/"', page)                               # logo, header link and footer all lead back
-        self.assertEqual(page.count('href="/en/"') >= 4, True)
+        self.assertGreaterEqual(page.count('href="/en/"'), 3)            # logo, header link and footer lead back
+        self.assertIn('id="leadForm"', page)                             # lead form + QR card for everyone
+        self.assertIn('id="qrCard"', page)
+        self.assertNotIn('editToggle', page)                             # ...but no editing or analytics for visitors
+        self.assertNotIn('/analytics/', page)
         self.assertEqual(self.client.get('/en/guides/hidden-guide/').status_code, 404)
-        self.assertIn('/en/guides/daniel-kiprop/', self.client.get('/sitemap.xml').content.decode())
+        self.assertIn(self.url, self.client.get('/sitemap.xml').content.decode())
 
     def test_about_page_without_guides_has_no_guides_section(self):
-        from django.core.cache import cache
-        cache.clear()
+        from Home.models import Guide
+        Guide.objects.all().delete()
         self.assertNotIn('Meet Our Guides', self.client.get('/en/about/').content.decode())
-
 
     def test_new_guide_gets_comprehensive_defaults(self):
         from Home.models import Guide
         with translation.override('en'):
             g = Guide.objects.create(name='Fresh Guide')
-        self.assertTrue(g.role and g.short_bio and g.bio and g.years_experience)
+        self.assertTrue(g.role and g.short_bio and g.bio and g.years_experience and g.motto)
         self.assertGreaterEqual(len(g.specialization_list), 4)
         self.assertGreaterEqual(len(g.language_list), 2)
         self.assertGreaterEqual(len(g.park_list), 4)
         page = self.client.get(f'/en/guides/{g.slug}/').content.decode()
         self.assertIn('Professional Safari Guide', page)
         self.assertIn('Birdwatching', page)
+
+    def post_lead(self, **over):
+        import ClientRequests.antispam as a
+        from ClientRequests.antispam import lead_token
+        data = {'name': 'Grace Wanjiru', 'phone': '0722123456', 'category': 'trekking', 'group_size': '4', 'src': 'qr',
+                'event': 'Travel Expo', 'message': 'Mt Kenya in August', 'form_ts': lead_token()}
+        data.update(over)
+        with mock.patch.object(a, 'MIN_FILL_SECONDS', 0), mock.patch('Home.guides._notify'):
+            return self.client.post(f'{self.url}lead/', data)
+
+    def test_lead_form_saves_with_category_source_and_event_and_swallows_bots(self):
+        from Home.models import GuideLead
+        r = self.post_lead()
+        self.assertTrue(r.json()['ok'])
+        self.assertIn('wa.me/', r.json()['whatsapp'])
+        lead = GuideLead.objects.get()
+        self.assertEqual((lead.category, lead.source, lead.event, lead.group_size, lead.guide_id),
+                         ('trekking', 'qr', 'Travel Expo', 4, self.g.pk))
+        self.assertEqual(self.post_lead(name='A').status_code, 400)                      # validation
+        self.assertEqual(self.post_lead(phone='abc').status_code, 400)
+        for bot in ({'message': 'Visit https://tinyurl.com/abc now'}, {'website': 'x'}, {'form_ts': 'forged'}):
+            self.assertTrue(self.post_lead(**bot).json()['ok'])                          # bots are never told
+        self.assertEqual(GuideLead.objects.count(), 1)
+
+    def test_owner_gets_edit_and_analytics_others_do_not(self):
+        self.client.login(username='daniel', password='pw12345!')
+        page = self.client.get(self.url).content.decode()
+        self.assertIn('editToggle', page)
+        self.assertIn(f'{self.url}analytics/', page)
+        r = self.client.post(f'{self.url}edit/', '{"role": "Lead Guide", "years_experience": 15, "bio": "<p>New</p><script>x</script>", "parks": "Mara, Tsavo"}',
+                             content_type='application/json')
+        self.assertTrue(r.json()['ok'])
+        self.g.refresh_from_db()
+        self.assertEqual((self.g.role, self.g.years_experience, self.g.parks), ('Lead Guide', 15, 'Mara, Tsavo'))
+        self.assertNotIn('script', self.g.bio)
+        self.client.logout()
+        self.client.login(username='someone', password='pw12345!')
+        self.assertEqual(self.client.post(f'{self.url}edit/', '{"role": "Hacked"}', content_type='application/json').status_code, 403)
+        self.assertEqual(self.client.get(f'{self.url}analytics/').status_code, 404)
+        self.assertNotIn('editToggle', self.client.get(self.url).content.decode())
+        self.client.logout()
+        self.assertEqual(self.client.get(f'{self.url}analytics/').status_code, 302)      # sent to login
+
+    def test_analytics_counts_leads_views_and_exports(self):
+        from Home.models import GuideLead, GuideDayStat
+        self.post_lead(); self.post_lead(category='safari', src='profile', event='')
+        self.client.get(self.url, **self.UA); self.client.get(self.url + '?src=qr', **self.UA)
+        self.client.get(self.url, HTTP_USER_AGENT='Googlebot/2.1')                       # bots are not counted
+        stat = GuideDayStat.objects.get()
+        self.assertEqual((stat.views, stat.qr_scans), (2, 1))
+        self.client.login(username='daniel', password='pw12345!')
+        self.client.get(self.url, **self.UA)                                              # the owner's own visits are not counted
+        self.assertEqual(GuideDayStat.objects.get().views, 2)
+        page = self.client.get(f'{self.url}analytics/').content.decode()
+        self.assertIn('Total leads', page)
+        self.assertIn('Trekking', page)
+        csv_page = self.client.get(f'{self.url}analytics/?export=csv')
+        self.assertIn('Grace Wanjiru', csv_page.content.decode())
+        lead = GuideLead.objects.first()
+        self.assertTrue(self.client.post(f'{self.url}leads/{lead.pk}/status/', {'status': 'Contacted'}).json()['ok'])
+        lead.refresh_from_db(); self.assertEqual(lead.status, 'Contacted')

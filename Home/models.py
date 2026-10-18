@@ -555,6 +555,7 @@ GUIDE_DEFAULT_BIO = (
     "prepare a free, no-obligation quote for your safari.</p>"
 )
 GUIDE_DEFAULT_SPECIALIZATIONS = 'Big Five Game Viewing, Wildlife Photography, Birdwatching, Family Safaris, Cultural Experiences'
+GUIDE_DEFAULT_MOTTO = 'A great safari is more than a sighting: it is a story you will tell for the rest of your life.'
 GUIDE_DEFAULT_LANGUAGES = 'English, Swahili'
 GUIDE_DEFAULT_PARKS = 'Masai Mara, Amboseli, Lake Nakuru, Tsavo, Nairobi National Park'
 
@@ -571,6 +572,11 @@ class Guide(models.Model):
     languages = models.CharField(max_length=200, blank=True, default=GUIDE_DEFAULT_LANGUAGES, help_text='Separate with commas, e.g. English, Swahili, French')
     years_experience = models.PositiveSmallIntegerField(null=True, blank=True, default=5)
     parks = models.CharField('Parks and regions', max_length=300, blank=True, default=GUIDE_DEFAULT_PARKS, help_text='Separate with commas, e.g. Masai Mara, Amboseli')
+    motto = models.CharField(max_length=200, blank=True, default=GUIDE_DEFAULT_MOTTO, help_text='A personal quote shown in the profile header')
+    whatsapp = models.CharField('WhatsApp number', max_length=25, blank=True, help_text="Digits with country code, e.g. 254712345678. Empty = the company number")
+    email = models.EmailField(blank=True, help_text='Where new leads are emailed to (optional)')
+    user = models.OneToOneField('auth.User', null=True, blank=True, on_delete=models.SET_NULL, related_name='guide_profile',
+                                help_text='Link a login account: that person can edit this profile and see its analytics')
     is_active = models.BooleanField(default=True, help_text='Untick to hide this guide from the site')
     order = models.PositiveSmallIntegerField(default=0, help_text='Lower numbers show first')
 
@@ -611,3 +617,52 @@ class Guide(models.Model):
     @property
     def park_list(self):
         return self._split(self.parks)
+
+    @property
+    def whatsapp_digits(self):
+        digits = ''.join(c for c in (self.whatsapp or '') if c.isdigit())
+        return digits or '254759379600'
+
+
+class GuideLead(models.Model):
+    """A visitor who asked a guide for a trip through the guide's profile page, QR code or an event."""
+    CATEGORIES = [
+        ('safari', 'Safari / game drives'), ('trekking', 'Trekking & hiking'), ('beach', 'Beach & coast holiday'),
+        ('hotel', 'Hotels & stays'), ('cruise', 'Cruises'), ('flights', 'Flights'), ('visa', 'Visa help'),
+        ('transfer', 'Airport transfers'), ('custom', 'Tailor-made trip'), ('other', 'Something else'),
+    ]
+    SOURCES = [('profile', 'Profile page'), ('qr', 'QR code'), ('event', 'Event'), ('share', 'Shared link')]
+    STATUS = [('New', 'New'), ('Contacted', 'Contacted'), ('Booked', 'Booked'), ('Closed', 'Closed'), ('Spam', 'Spam')]
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, related_name='leads')
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=25)
+    email = models.EmailField(blank=True)
+    category = models.CharField(max_length=12, choices=CATEGORIES, default='safari', db_index=True)
+    group_size = models.PositiveSmallIntegerField(null=True, blank=True)
+    travel_month = models.CharField(max_length=20, blank=True, help_text='When they plan to travel')
+    message = models.TextField(blank=True)
+    source = models.CharField(max_length=10, choices=SOURCES, default='profile', db_index=True)
+    event = models.CharField(max_length=60, blank=True, help_text='Event name, when the lead came from an event QR')
+    ip = models.GenericIPAddressField(null=True, blank=True)
+    status = models.CharField(max_length=12, choices=STATUS, default='New', db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Guide lead'
+        verbose_name_plural = 'Guide leads'
+
+    def __str__(self):
+        return f'{self.name} -> {self.guide.name} ({self.get_category_display()})'
+
+
+class GuideDayStat(models.Model):
+    """Profile views and QR scans per guide per day (for the analytics page)."""
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, related_name='daily_stats')
+    date = models.DateField(db_index=True)
+    views = models.PositiveIntegerField(default=0)
+    qr_scans = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        unique_together = ['guide', 'date']
+        ordering = ['-date']
