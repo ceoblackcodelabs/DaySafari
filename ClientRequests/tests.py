@@ -993,3 +993,36 @@ class GuidesTests(TestCase):
             r = self.client.get(f'{self.url}og.jpg')
             self.assertEqual(Image.open(BytesIO(b''.join(r.streaming_content))).size, (1200, 630))
             self.assertEqual(self.client.get('/en/guides/hidden-guide/og.jpg').status_code, 404)
+
+
+class AuthPagesTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth.models import User
+        self.user = User.objects.create_user('amina', 'amina@example.com', 'Str0ng!Passw0rd')
+
+    def test_pages_use_the_new_design(self):
+        for name, text in (('login', 'Welcome back'), ('register', 'Start planning your dream safari')):
+            html = self.client.get(reverse(name)).content.decode()
+            self.assertIn(text, html)
+            self.assertIn('class="shell"', html)
+            self.assertIn('name="csrfmiddlewaretoken"', html)
+        reg = self.client.get(reverse('register')).content.decode()
+        for field in ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'form_ts', 'website'):
+            self.assertIn(f'name="{field}"', reg)
+
+    def test_login_errors_show_and_next_is_respected(self):
+        bad = self.client.post(reverse('login'), {'username': 'amina', 'password': 'nope'})
+        self.assertEqual(bad.status_code, 200)
+        self.assertIn('Invalid username or password', bad.content.decode())
+        ok = self.client.post(reverse('login'), {'username': 'amina', 'password': 'Str0ng!Passw0rd', 'next': '/en/about/'})
+        self.assertRedirects(ok, '/en/about/', fetch_redirect_response=False)
+        self.client.logout()
+        evil = self.client.post(reverse('login'), {'username': 'amina', 'password': 'Str0ng!Passw0rd', 'next': 'https://evil.example/'})
+        self.assertNotIn('evil.example', evil['Location'])                                  # open redirects are refused
+
+    def test_guide_lands_on_their_own_profile(self):
+        from Home.models import Guide
+        with translation.override('en'):
+            g = Guide.objects.create(name='Amina Guide', user=self.user)
+        ok = self.client.post(reverse('login'), {'username': 'amina', 'password': 'Str0ng!Passw0rd'})
+        self.assertRedirects(ok, g.get_absolute_url(), fetch_redirect_response=False)

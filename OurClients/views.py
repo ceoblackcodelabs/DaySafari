@@ -65,7 +65,14 @@ class CustomLoginView(LoginView):
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return self.success_url
+        """Go back to the page that asked for the login; guides land on their own profile; everyone else on the home page."""
+        target = self.get_redirect_url()
+        if target:
+            return target
+        guide = getattr(self.request.user, 'guide_profile', None)
+        if guide and guide.is_active:
+            return guide.get_absolute_url()
+        return str(self.success_url)
 
 
 class CustomLogoutView(LogoutView):
