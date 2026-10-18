@@ -4755,3 +4755,12 @@ msgstr "Lugha zinazozungumzwa"
 
 msgid "Meet more of our guides"
 msgstr "Kutana na waongozaji wengine"
+
+msgid "Powered by"
+msgstr "Imewezeshwa na"
+
+msgid "Day Safaris"
+msgstr "Day Safaris"
+
+msgid "Visit Day Safaris"
+msgstr "Tembelea Day Safaris"

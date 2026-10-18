@@ -540,18 +540,37 @@ def clear_home_cache(sender, **kwargs):
         # Don't break the application if cache clearing fails
         logger.warning(f"Cache clearing failed during migration: {e}")
 
+GUIDE_DEFAULT_ROLE = 'Professional Safari Guide'
+GUIDE_DEFAULT_SHORT_BIO = "Friendly, knowledgeable and safety-focused, with deep local knowledge of East Africa's parks and wildlife."
+GUIDE_DEFAULT_BIO = (
+    "<p>As a member of the Day Safaris Adventures guiding team, I take guests beyond the sightings and into the story of the land: "
+    "how animals live, how the seasons change the landscape, and how local communities and conservation work together.</p>"
+    "<p>Every trip starts with listening. Whether you dream of watching big cats at dawn, photographing elephants against "
+    "Kilimanjaro, or enjoying a relaxed family getaway, I plan each day around your interests, pace and comfort, "
+    "and I always put your safety first.</p>"
+    "<p>I am trained in first aid and wildlife safety, I know the best viewpoints and quiet corners of the parks, "
+    "and I enjoy sharing practical photography and birdwatching tips along the way. Guests travel with a well-maintained 4x4 "
+    "safari vehicle, cold drinking water and clear information at every stop.</p>"
+    "<p>I would be delighted to guide you. Send us a message on WhatsApp with your dates and interests, and our team will "
+    "prepare a free, no-obligation quote for your safari.</p>"
+)
+GUIDE_DEFAULT_SPECIALIZATIONS = 'Big Five Game Viewing, Wildlife Photography, Birdwatching, Family Safaris, Cultural Experiences'
+GUIDE_DEFAULT_LANGUAGES = 'English, Swahili'
+GUIDE_DEFAULT_PARKS = 'Masai Mara, Amboseli, Lake Nakuru, Tsavo, Nairobi National Park'
+
+
 class Guide(models.Model):
     """A member of the guiding team: shown on the About page, each with a profile page of their own."""
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=120, unique=True, blank=True)
-    role = models.CharField(max_length=120, help_text='e.g. Senior Safari Guide')
+    role = models.CharField(max_length=120, default=GUIDE_DEFAULT_ROLE, help_text='e.g. Senior Safari Guide')
     photo = models.ImageField(upload_to='guides/', validators=[validate_image_10mb], blank=True, null=True)
-    short_bio = models.CharField(max_length=200, blank=True, help_text='One line shown on the About page card')
-    bio = CKEditor5Field('Profile', config_name='default', blank=True)
-    specializations = models.CharField(max_length=300, blank=True, help_text='Separate with commas, e.g. Big Cats, Birding, Photography')
-    languages = models.CharField(max_length=200, blank=True, help_text='Separate with commas, e.g. English, Swahili, French')
-    years_experience = models.PositiveSmallIntegerField(null=True, blank=True)
-    parks = models.CharField('Parks and regions', max_length=300, blank=True, help_text='Separate with commas, e.g. Masai Mara, Amboseli')
+    short_bio = models.CharField(max_length=200, blank=True, default=GUIDE_DEFAULT_SHORT_BIO, help_text='One line shown on the About page card')
+    bio = CKEditor5Field('Profile', config_name='default', blank=True, default=GUIDE_DEFAULT_BIO)
+    specializations = models.CharField(max_length=300, blank=True, default=GUIDE_DEFAULT_SPECIALIZATIONS, help_text='Separate with commas, e.g. Big Cats, Birding, Photography')
+    languages = models.CharField(max_length=200, blank=True, default=GUIDE_DEFAULT_LANGUAGES, help_text='Separate with commas, e.g. English, Swahili, French')
+    years_experience = models.PositiveSmallIntegerField(null=True, blank=True, default=5)
+    parks = models.CharField('Parks and regions', max_length=300, blank=True, default=GUIDE_DEFAULT_PARKS, help_text='Separate with commas, e.g. Masai Mara, Amboseli')
     is_active = models.BooleanField(default=True, help_text='Untick to hide this guide from the site')
     order = models.PositiveSmallIntegerField(default=0, help_text='Lower numbers show first')
 

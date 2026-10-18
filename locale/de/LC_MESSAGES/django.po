@@ -4788,3 +4788,12 @@ msgstr "Gesprochene Sprachen"
 
 msgid "Meet more of our guides"
 msgstr "Weitere Guides kennenlernen"
+
+msgid "Powered by"
+msgstr "Bereitgestellt von"
+
+msgid "Day Safaris"
+msgstr "Day Safaris"
+
+msgid "Visit Day Safaris"
+msgstr "Day Safaris besuchen"

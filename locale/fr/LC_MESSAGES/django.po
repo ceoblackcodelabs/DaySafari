@@ -4821,3 +4821,12 @@ msgstr "Langues parlées"
 
 msgid "Meet more of our guides"
 msgstr "Découvrez nos autres guides"
+
+msgid "Powered by"
+msgstr "Propulsé par"
+
+msgid "Day Safaris"
+msgstr "Day Safaris"
+
+msgid "Visit Day Safaris"
+msgstr "Visiter Day Safaris"

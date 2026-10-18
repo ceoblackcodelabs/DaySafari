@@ -866,6 +866,10 @@ class GuidesTests(TestCase):
         for text in ('Daniel Kiprop', 'Senior Safari Guide', 'Big Cats', 'Birding', 'Swahili', 'Twelve years in the Mara.', '12+'):
             self.assertIn(text, page)
         self.assertIn('"@type":"Person"', page)
+        self.assertNotIn('Subscribe for Safari Updates', page)          # standalone page: no site header/footer
+        self.assertIn('Powered by', page)
+        self.assertIn('href="/en/"', page)                               # logo, header link and footer all lead back
+        self.assertEqual(page.count('href="/en/"') >= 4, True)
         self.assertEqual(self.client.get('/en/guides/hidden-guide/').status_code, 404)
         self.assertIn('/en/guides/daniel-kiprop/', self.client.get('/sitemap.xml').content.decode())
 
@@ -873,3 +877,16 @@ class GuidesTests(TestCase):
         from django.core.cache import cache
         cache.clear()
         self.assertNotIn('Meet Our Guides', self.client.get('/en/about/').content.decode())
+
+
+    def test_new_guide_gets_comprehensive_defaults(self):
+        from Home.models import Guide
+        with translation.override('en'):
+            g = Guide.objects.create(name='Fresh Guide')
+        self.assertTrue(g.role and g.short_bio and g.bio and g.years_experience)
+        self.assertGreaterEqual(len(g.specialization_list), 4)
+        self.assertGreaterEqual(len(g.language_list), 2)
+        self.assertGreaterEqual(len(g.park_list), 4)
+        page = self.client.get(f'/en/guides/{g.slug}/').content.decode()
+        self.assertIn('Professional Safari Guide', page)
+        self.assertIn('Birdwatching', page)
