@@ -643,3 +643,8 @@ html{scroll-behavior:smooth}
 .gd-tags-soft span{background:#f6e9ee;color:#420d24}
 .gd-bio{line-height:1.85;color:#2a2230}
 .gd-bio p{margin-bottom:1rem}
+
+/* floating Get a Quote / WhatsApp buttons wait 6 seconds so they never cover the first thing a visitor reads */
+.fab-wait{opacity:0!important;visibility:hidden!important;transform:translateY(18px)!important;pointer-events:none}
+.fab-in{animation:fabIn .5s ease both}
+@keyframes fabIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
