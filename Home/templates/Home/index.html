@@ -374,7 +374,10 @@
             <div class="col-lg-3 col-md-6">
                 <article class="offer-card">
                     <div class="offer-poster">
-                        <img src="{{ offer.image|thumb:640 }}" alt="{{ offer.title }}" loading="lazy" decoding="async" width="640" height="640">
+                        <a class="offer-zoom" href="{{ offer.image|thumb:1400 }}" data-lightbox="offers" data-title="{{ offer.title }}" aria-label="{% trans 'View photo' %}: {{ offer.title }}">
+                            <img src="{{ offer.image|thumb:640 }}" alt="{{ offer.title }}" loading="lazy" decoding="async" width="640" height="640">
+                            <span class="zoom-ic" aria-hidden="true"><i class="fa fa-search-plus"></i></span>
+                        </a>
                         {% if offer.is_upcoming %}<span class="offer-badge upcoming">{% trans "Upcoming" %}</span>{% else %}<span class="offer-badge">{% trans "Active now" %}</span>{% endif %}
                         {% if offer.is_upcoming and offer.start_date %}<span class="offer-date">{% blocktrans with d=offer.start_date|date:"M d, Y" %}From {{ d }}{% endblocktrans %}</span>
                         {% elif offer.end_date %}<span class="offer-date">{% blocktrans with d=offer.end_date|date:"M d, Y" %}Until {{ d }}{% endblocktrans %}</span>{% endif %}

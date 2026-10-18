@@ -657,3 +657,9 @@ html{scroll-behavior:smooth}
 .marquee-group img{height:56px;width:auto;max-width:150px;object-fit:contain;flex:none}
 @keyframes marquee{to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.marquee{-webkit-mask-image:none;mask-image:none;overflow:visible}.marquee-track{animation:none;width:auto;flex-wrap:wrap;justify-content:center}.marquee-group[aria-hidden]{display:none}.marquee-group{min-width:0;flex-wrap:wrap;justify-content:center}}
+
+/* Offer posters open in a large lightbox */
+.offer-zoom{display:block;position:relative;cursor:zoom-in}
+.offer-zoom .zoom-ic{position:absolute;right:12px;bottom:12px;width:40px;height:40px;border-radius:50%;background:rgba(66,13,36,.85);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.8);transition:opacity .2s,transform .2s}
+.offer-zoom:hover .zoom-ic,.offer-zoom:focus-visible .zoom-ic{opacity:1;transform:none}
+@media(hover:none){.offer-zoom .zoom-ic{opacity:1;transform:none}}
