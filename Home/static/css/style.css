@@ -663,3 +663,6 @@ html{scroll-behavior:smooth}
 .offer-zoom .zoom-ic{position:absolute;right:12px;bottom:12px;width:40px;height:40px;border-radius:50%;background:rgba(66,13,36,.85);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.8);transition:opacity .2s,transform .2s}
 .offer-zoom:hover .zoom-ic,.offer-zoom:focus-visible .zoom-ic{opacity:1;transform:none}
 @media(hover:none){.offer-zoom .zoom-ic{opacity:1;transform:none}}
+/* Gallery tiles: one fixed, shorter height so tall portrait photos no longer stretch the row */
+.gallery .gallery-item img{height:270px!important;min-height:0!important;width:100%;object-fit:cover;object-position:center 25%}
+@media(max-width:575.98px){.gallery .gallery-item img{height:230px!important}}
