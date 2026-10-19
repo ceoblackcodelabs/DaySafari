@@ -868,7 +868,7 @@ class GuidesTests(TestCase):
     def test_guides_on_about_page_with_their_own_profile_pages(self):
         self.assertEqual(self.g.slug, 'daniel-kiprop')
         about = self.client.get('/en/about/').content.decode()
-        self.assertIn('Meet Our Guides', about)
+        self.assertIn('Meet Our Travel Consultants', about)
         self.assertIn(self.url, about)
         self.assertNotIn('Hidden Guide', about)
         page = self.client.get(self.url).content.decode()
@@ -889,7 +889,7 @@ class GuidesTests(TestCase):
     def test_about_page_without_guides_has_no_guides_section(self):
         from Home.models import Guide
         Guide.objects.all().delete()
-        self.assertNotIn('Meet Our Guides', self.client.get('/en/about/').content.decode())
+        self.assertNotIn('Meet Our Travel Consultants', self.client.get('/en/about/').content.decode())
 
     def test_new_guide_gets_comprehensive_defaults(self):
         from Home.models import Guide

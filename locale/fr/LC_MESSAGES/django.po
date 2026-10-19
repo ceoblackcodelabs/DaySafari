@@ -4830,3 +4830,12 @@ msgstr "Day Safaris"
 
 msgid "Visit Day Safaris"
 msgstr "Visiter Day Safaris"
+
+msgid "Meet Our Travel Consultants"
+msgstr "Rencontrez nos conseillers voyage"
+
+msgid "Local experts who know every park, trail and sighting. Tap a consultant to read their story."
+msgstr "Des experts locaux qui connaissent chaque parc, sentier et observation. Touchez un conseiller pour lire son histoire."
+
+msgid "Meet more of our travel consultants"
+msgstr "Découvrez nos autres conseillers"

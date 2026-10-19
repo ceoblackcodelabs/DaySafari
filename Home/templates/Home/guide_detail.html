@@ -384,7 +384,7 @@ body.editing [data-edit]:focus{outline-style:solid;background:rgba(246,197,130,.
 
 {% if other_guides %}
 <section class="alt"><div class="wrap">
-  <div class="center reveal"><span class="eyebrow">{% trans "Our Team" %}</span><h2 class="h2">{% trans "Meet more of our guides" %}</h2></div>
+  <div class="center reveal"><span class="eyebrow">{% trans "Our Team" %}</span><h2 class="h2">{% trans "Meet more of our travel consultants" %}</h2></div>
   <div class="more">
     {% for g in other_guides %}<a class="mg reveal" href="{{ g.get_absolute_url }}"><div class="p">{% if g.photo %}<img src="{{ g.photo|thumb:480 }}" alt="{{ g.name }}" width="480" height="408" loading="lazy" decoding="async">{% else %}<i class="fa fa-user"></i>{% endif %}</div><div class="t"><b>{{ g.name }}</b><small>{{ g.role }}</small></div></a>{% endfor %}
   </div>

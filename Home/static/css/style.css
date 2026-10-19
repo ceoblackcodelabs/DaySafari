@@ -689,3 +689,22 @@ html{scroll-behavior:smooth}
 .gallery .gallery-item img{position:relative;height:320px!important;object-fit:contain!important;object-position:center!important}
 .gallery .gallery-item .gallery-content,.gallery .gallery-item .gallery-plus-icon{z-index:2}
 @media(max-width:575.98px){.gallery .gallery-item img{height:280px!important}}
+
+/* Travel consultants: one row, three cards per page (2 on tablets, 1 on phones), snapping and auto-advancing */
+.gslider{position:relative}
+.gtrack{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 2px 14px}
+.gtrack::-webkit-scrollbar{display:none}
+.gcard{flex:0 0 calc((100% - 48px)/3);scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;color:inherit;box-shadow:0 10px 30px rgba(66,13,36,.14);transition:transform .3s,box-shadow .3s}
+.gcard:hover{transform:translateY(-6px);box-shadow:0 20px 42px rgba(66,13,36,.24);color:inherit}
+.gphoto{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:4/4.4;background:#420d24;color:#f6c582;font-size:4rem;overflow:hidden}
+.gphoto img{width:100%;height:100%;object-fit:cover;object-position:center 20%;transition:transform .5s}.gcard:hover .gphoto img{transform:scale(1.06)}
+.gphoto::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,rgba(30,6,18,.78))}
+.grole{position:absolute;left:16px;bottom:14px;z-index:2;background:#f6c582;color:#420d24;font-weight:700;font-size:.8rem;padding:5px 14px;border-radius:999px}
+.gbody{display:flex;flex-direction:column;gap:6px;padding:20px 22px 22px;flex:1}
+.gname{font-family:"Jost",sans-serif;font-size:1.35rem;color:#2a2230}
+.gshort{color:#625a66;line-height:1.55;font-size:.95rem}
+.gcta{margin-top:auto;padding-top:10px;font-weight:700;color:#420d24}.gcta i{transition:transform .2s}.gcard:hover .gcta i{transform:translateX(5px)}
+.gdots{display:flex;justify-content:center;gap:8px;margin-top:10px}
+.gdots button{width:10px;height:10px;border-radius:99px;border:0;background:#d9c3cc;padding:0;cursor:pointer;transition:width .3s,background .3s}.gdots button.on{width:28px;background:#420d24}
+@media(max-width:991.98px){.gcard{flex-basis:calc((100% - 24px)/2)}}
+@media(max-width:639.98px){.gcard{flex-basis:86%}.gtrack{gap:16px}}

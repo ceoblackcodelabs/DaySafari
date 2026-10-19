@@ -4764,3 +4764,12 @@ msgstr "Day Safaris"
 
 msgid "Visit Day Safaris"
 msgstr "Tembelea Day Safaris"
+
+msgid "Meet Our Travel Consultants"
+msgstr "Kutana na washauri wetu wa safari"
+
+msgid "Local experts who know every park, trail and sighting. Tap a consultant to read their story."
+msgstr "Wataalamu wa ndani wanaojua kila hifadhi, njia na tukio. Gusa mshauri kusoma hadithi yake."
+
+msgid "Meet more of our travel consultants"
+msgstr "Kutana na washauri wengine"
