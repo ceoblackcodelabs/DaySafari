@@ -21,6 +21,30 @@ echo "==> 1/4 Backing up live data"
 
 echo "==> 2/4 Pulling (fast-forward only)"
 OLD_HEAD="$(git rev-parse HEAD)"
+git fetch -q origin || true
+
+# (a) logs are not tracked any more: a local edit to the old tracked log must not block the pull (a copy is kept in backups/)
+if git ls-files --error-unmatch logs/django-error.log >/dev/null 2>&1 && ! git diff --quiet -- logs/django-error.log; then
+    cp -p logs/django-error.log "backups/django-error-$STAMP.log"
+    git checkout -- logs/django-error.log
+    echo "    old tracked log reset (copy kept in backups/django-error-$STAMP.log)"
+fi
+
+# (b) files the pull would ADD that already exist here as untracked files (typically media uploaded straight to the server):
+#     identical to the repo copy -> removed (the pull brings the same file back);
+#     different from the repo copy -> moved to backups/ so nothing live is ever lost, and listed below.
+CLASH="backups/media-clash-$STAMP"
+git diff --name-only --diff-filter=A HEAD '@{u}' 2>/dev/null | while IFS= read -r f; do
+    [ -e "$f" ] || continue
+    git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 && continue
+    if [ "$(git hash-object -- "$f")" = "$(git rev-parse "@{u}:$f")" ]; then
+        rm -f -- "$f"
+    else
+        mkdir -p "$CLASH/$(dirname "$f")"
+        mv -- "$f" "$CLASH/$f"
+        echo "    differs from the repo copy, kept in $CLASH/: $f"
+    fi
+done
 if ! git pull --ff-only; then
     cat <<MSG
 
