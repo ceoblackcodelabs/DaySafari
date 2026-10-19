@@ -682,3 +682,10 @@ html{scroll-behavior:smooth}
 @keyframes oleft{to{transform:translateX(-50%)}}
 @keyframes oright{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.orow{-webkit-mask-image:none;mask-image:none;overflow-x:auto}.otrack{animation:none}.ogroup[aria-hidden]{display:none}}
+
+/* Gallery tiles show the whole picture (never cropped away); a blurred copy fills the spare space */
+.gallery .gallery-item{position:relative;overflow:hidden;background:#1d0a12}
+.gallery .gallery-item::before{content:"";position:absolute;inset:-20px;background:var(--bg) center/cover;filter:blur(18px) brightness(.8);transform:scale(1.1)}
+.gallery .gallery-item img{position:relative;height:320px!important;object-fit:contain!important;object-position:center!important}
+.gallery .gallery-item .gallery-content,.gallery .gallery-item .gallery-plus-icon{z-index:2}
+@media(max-width:575.98px){.gallery .gallery-item img{height:280px!important}}

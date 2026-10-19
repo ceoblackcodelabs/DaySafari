@@ -50,7 +50,7 @@
                 <div class="row g-2">
                     {% for gallery in all_galleries %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
+                        <div class="gallery-item h-100" style="--bg:url('{{ gallery.image|thumb:160 }}')">
                             <img src="{{ gallery.image|thumb:640 }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;" loading="lazy" decoding="async">
                             <div class="gallery-content">
                                 <div class="gallery-info">
@@ -79,7 +79,7 @@
                     {% with galleries=galleries_by_category|get_item:category.id %}
                     {% for gallery in galleries %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
+                        <div class="gallery-item h-100" style="--bg:url('{{ gallery.image|thumb:160 }}')">
                             <img src="{{ gallery.image|thumb:640 }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;" loading="lazy" decoding="async">
                             <div class="gallery-content">
                                 <div class="gallery-info">
