@@ -708,3 +708,10 @@ html{scroll-behavior:smooth}
 .gdots button{width:10px;height:10px;border-radius:99px;border:0;background:#d9c3cc;padding:0;cursor:pointer;transition:width .3s,background .3s}.gdots button.on{width:28px;background:#420d24}
 @media(max-width:991.98px){.gcard{flex-basis:calc((100% - 24px)/2)}}
 @media(max-width:639.98px){.gcard{flex-basis:86%}.gtrack{gap:16px}}
+/* Offer flyers: smaller cards */
+.ocard{flex-basis:190px;width:190px;border-radius:14px}
+@media(min-width:992px){.ocard{flex-basis:210px;width:210px}}
+.ocard .offer-title{font-size:13px;margin:8px 10px}
+.ocard .offer-btn{margin:0 10px;padding:7px;font-size:13px}
+.ocard .offer-badge,.ocard .offer-date{font-size:10px;top:6px;padding:2px 7px}.ocard .offer-badge{left:6px}.ocard .offer-date{right:6px}
+.ogroup{gap:14px;padding-right:14px}
