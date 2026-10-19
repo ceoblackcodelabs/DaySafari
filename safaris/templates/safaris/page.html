@@ -1,8 +1,11 @@
 {% extends "Home/base.html" %}
+{% load safari %}
 {% block title %}{{ page.title }}{% endblock %}
 {% block meta_description %}{{ page.description }}{% endblock %}
 {% block og_title_inner %}{{ page.title }}{% endblock %}
 {% block og_description %}{{ page.description }}{% endblock %}
+{% block og_image %}https://daysafarisadventures.co.ke{% asset 'images/og/'|add:hero_image|add:'.jpg' %}{% endblock %}
+{% block og_image_alt %}{{ page.alt }}{% endblock %}
 {% block structured_data %}<script type="application/ld+json">{{ schema|safe }}</script>{% endblock %}
 {% block body %}
 <section class="hero">

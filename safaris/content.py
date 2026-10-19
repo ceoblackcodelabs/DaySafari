@@ -6,7 +6,7 @@ from urllib.parse import quote
 
 DATA = Path(__file__).resolve().parent / 'data'
 WHATSAPP = '254759379600'
-EMAIL = 'info@daysafarisadventures.com'
+EMAIL = 'info@daysafarisadventures.co.ke'
 GOOGLE_REVIEWS_URL = 'https://maps.app.goo.gl/tian1a39WNTSTz3U8'
 
 _raw = json.loads((DATA / 'content.json').read_text(encoding='utf-8'))

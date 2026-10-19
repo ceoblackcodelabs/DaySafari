@@ -11,8 +11,17 @@
 <meta property="og:site_name" content="Day Safaris Adventures">
 <meta property="og:title" content="{% block og_title %}{% block og_title_inner %}{% trans "Day Safaris Adventures" %}{% endblock %}{% endblock %}">
 <meta property="og:description" content="{% block og_description %}{% trans "Safaris, trekking, cruises and hotels across East Africa." %}{% endblock %}">
-<meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% asset 'images/amboseli.webp' %}{% endblock %}">
+<meta property="og:url" content="https://daysafarisadventures.co.ke{{ request.path }}">
+<meta property="og:locale" content="{{ LANGUAGE_CODE|default:'en' }}">
+<meta property="og:image" content="{% block og_image %}https://daysafarisadventures.co.ke{% asset 'images/og-default.jpg' %}{% endblock %}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{% block og_image_alt %}Day Safaris Adventures{% endblock %}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@dayssafaris">
+<meta name="google-site-verification" content="FYE36tMPMQWqtERNU2ogcGLfww4TGJiKOOZJBW5j2Fk">
+<meta name="author" content="Day Safaris Adventures">
 <meta name="theme-color" content="#420d24">
 <link rel="icon" href="{% asset 'img/favicon.ico' %}" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="{% asset 'img/favicon-32x32.png' %}">
@@ -25,6 +34,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"></noscript>
 {% block lcp_preload %}{% endblock %}
 {% block extra_head %}{% endblock %}
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TravelAgency","@id":"https://daysafarisadventures.co.ke/#org","name":"Day Safaris Adventures","url":"https://daysafarisadventures.co.ke/","logo":"https://daysafarisadventures.co.ke/static/img/android-chrome-512x512.png","image":"https://daysafarisadventures.co.ke/static/images/og-default.jpg","slogan":"Where Everyday is An Exploration","email":"info@daysafarisadventures.co.ke","telephone":"+254759379600","address":{"@type":"PostalAddress","addressLocality":"Nairobi","addressCountry":"KE"},"areaServed":["Kenya","Tanzania","Uganda","Rwanda","South Africa"],"sameAs":["https://www.facebook.com/profile.php?id=1481097984","https://www.instagram.com/day_safaris","https://x.com/dayssafaris","https://g.page/r/CZJs5SyNuHl5EBM/review"]},{"@type":"WebSite","@id":"https://daysafarisadventures.co.ke/#site","url":"https://daysafarisadventures.co.ke/","name":"Day Safaris Adventures","publisher":{"@id":"https://daysafarisadventures.co.ke/#org"},"inLanguage":["en","fr","sw","es","de","it"]}]}</script>
 {% block structured_data %}{% endblock %}
 </head>
 <body>

@@ -85,6 +85,17 @@ class GuidesSitemap(_Base):
         return reverse('guide_detail', args=[obj.slug])
 
 
+class LandingSitemap(_Base):
+    priority, changefreq = 0.9, 'weekly'
+
+    def items(self):
+        from safaris.content import LANDING_PAGES
+        return [p['slug'] for p in LANDING_PAGES]
+
+    def location(self, slug):
+        return reverse(f'landing_{slug}')
+
+
 class HotelsSitemap(_Base):
     priority, changefreq = 0.8, 'weekly'
 
@@ -100,5 +111,5 @@ class HotelsSitemap(_Base):
 
 sitemaps = {
     'pages': StaticPagesSitemap, 'packages': PackagesSitemap, 'destinations': DestinationsSitemap,
-    'trekking': TrekkingSitemap, 'hotels': HotelsSitemap, 'blog': BlogSitemap, 'guides': GuidesSitemap,
+    'trekking': TrekkingSitemap, 'hotels': HotelsSitemap, 'blog': BlogSitemap, 'guides': GuidesSitemap, 'landing': LandingSitemap,
 }
