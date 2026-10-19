@@ -1039,3 +1039,27 @@ class AuthPagesTests(TestCase):
             g = Guide.objects.create(name='Amina Guide', user=self.user)
         ok = self.client.post(reverse('login'), {'username': 'amina', 'password': 'Str0ng!Passw0rd'})
         self.assertRedirects(ok, g.get_absolute_url(), fetch_redirect_response=False)
+
+
+class GalleryApiTests(TestCase):
+    def test_add_picture_to_category(self):
+        import json, tempfile
+        from io import BytesIO
+        from PIL import Image
+        from django.test import override_settings
+        from Hotels.models import ApiKey
+        from Home.models import Gallery, GalleryCategory
+        _, token = ApiKey.create_key('t')
+        auth = {'HTTP_AUTHORIZATION': f'Bearer {token}'}
+        cat = GalleryCategory.objects.create(name='Wildlife Safari')
+        self.assertEqual(self.client.get('/api/v1/gallery/').status_code, 401)
+        def post(q='', **d):
+            buf = BytesIO(); Image.new('RGB', (1200, 800), 'tan').save(buf, 'JPEG'); buf.seek(0); buf.name = 'x.jpg'
+            return self.client.post('/api/v1/gallery/' + q, {'data': json.dumps({'name': 'Giraffe', 'category': 'wildlife safari', **d}), 'image': buf}, **auth)
+        with tempfile.TemporaryDirectory() as tmp, override_settings(MEDIA_ROOT=tmp):
+            self.assertEqual(post('?dry_run=1').json()['status'], 'would_create')
+            self.assertEqual(Gallery.objects.count(), 0)
+            self.assertEqual(post().status_code, 201)
+            self.assertEqual(post().status_code, 409)
+            self.assertEqual(post(category='nope').status_code, 400)
+        self.assertEqual(Gallery.objects.get().category, cat)
