@@ -577,7 +577,7 @@ class I18nTests(SiteHealthTests):
         self.assertNotIn('Other one', html)
         self.assertIn('Conseils', html)
 
-    def test_home_offers_paginate_by_8_and_hide_expired(self):
+    def test_home_offers_form_two_rows_and_hide_expired(self):
         import shutil, tempfile
         from django.test import override_settings
         media = tempfile.mkdtemp()
@@ -596,10 +596,11 @@ class I18nTests(SiteHealthTests):
             Offer.objects.create(title='Old deal', image=SimpleUploadedFile('old.gif', gif, 'image/gif'),
                                  end_date=date.today() - timedelta(days=1))
         h1 = self.client.get('/en/').content.decode()
-        h2 = self.client.get('/en/?offers=2').content.decode()
-        self.assertEqual(h1.count('class="offer-card"'), 8)
-        self.assertEqual(h2.count('class="offer-card"'), 2)
-        self.assertNotIn('Old deal', h1 + h2)
+        self.assertEqual(h1.count('class="orow '), 2)                  # two rows: one drifts right, one left
+        self.assertIn('orow-r', h1); self.assertIn('orow-l', h1)
+        self.assertEqual(h1.count('class="ocard"'), 20)                # 10 deals, each shown twice for the endless loop
+        self.assertEqual(h1.count('data-lightbox="offers"'), 10)       # only the first copy opens the viewer
+        self.assertNotIn('Old deal', h1)
 
     def test_quick_lead_popup_saves_lead(self):
         from unittest import mock

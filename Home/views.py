@@ -58,8 +58,9 @@ class HomeView(AntiSpamViewMixin, ListView):
         from django.db.models import Q
         today = date.today()
         offers = Offer.objects.filter(is_active=True).filter(Q(end_date__isnull=True) | Q(end_date__gte=today))
-        offers_page = Paginator(offers, 8).get_page(request.GET.get('offers'))
-        context['offers_page'] = offers_page
+        offers = list(offers[:30])
+        context['offers_page'] = offers
+        context['offers_row1'], context['offers_row2'] = (offers[0::2], offers[1::2]) if len(offers) > 2 else (offers, [])
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):

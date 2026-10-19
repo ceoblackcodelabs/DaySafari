@@ -666,3 +666,19 @@ html{scroll-behavior:smooth}
 /* Gallery tiles: one fixed, shorter height so tall portrait photos no longer stretch the row */
 .gallery .gallery-item img{height:270px!important;min-height:0!important;width:100%;object-fit:cover;object-position:center 25%}
 @media(max-width:575.98px){.gallery .gallery-item img{height:230px!important}}
+/* Offers: two endless rows, the first drifts right, the second left; pauses on hover/touch */
+.orow{overflow:hidden;padding:8px 0 14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.otrack{display:flex;width:max-content;animation:oleft 70s linear infinite}
+.orow-r .otrack{animation-name:oright}
+.orow:hover .otrack,.orow:active .otrack{animation-play-state:paused}
+.ogroup{display:flex;gap:18px;padding-right:18px;min-width:max(100vw,560px)}
+.ocard{flex:0 0 250px;width:250px;background:#fff;border-radius:16px;display:flex;flex-direction:column;box-shadow:0 4px 18px rgba(0,0,0,.12);overflow:hidden;padding-bottom:12px}
+.opos{position:relative;aspect-ratio:4/5;background:#f1f1f1}
+.opos img{width:100%;height:100%;object-fit:cover;display:block}
+.ocard .offer-title{font-size:15px;margin:10px 12px 10px;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ocard .offer-btn{margin:0 12px;padding:9px;font-size:14px}
+.ocard .offer-badge,.ocard .offer-date{top:8px;font-size:11px;padding:2px 8px}.ocard .offer-badge{left:8px}.ocard .offer-date{right:8px}
+@media(min-width:992px){.ocard{flex-basis:290px;width:290px}}
+@keyframes oleft{to{transform:translateX(-50%)}}
+@keyframes oright{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.orow{-webkit-mask-image:none;mask-image:none;overflow-x:auto}.otrack{animation:none}.ogroup[aria-hidden]{display:none}}
