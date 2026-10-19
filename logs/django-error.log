@@ -2011,3 +2011,211 @@ Traceback (most recent call last):
   File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/template/base.py", line 568, in invalid_block_tag
     raise self.error(
 django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 169: 'trans', expected 'empty' or 'endfor'. Did you forget to register or load this tag?
+2026-10-14 06:16:41,885 ERROR django.security.DisallowedHost Invalid HTTP_HOST header: '10.5.3.50:8001'. You may need to add '10.5.3.50' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/http/request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '10.5.3.50:8001'. You may need to add '10.5.3.50' to ALLOWED_HOSTS.
+2026-10-14 06:16:42,090 ERROR django.security.DisallowedHost Invalid HTTP_HOST header: '10.5.3.50:8001'. You may need to add '10.5.3.50' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/http/request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '10.5.3.50:8001'. You may need to add '10.5.3.50' to ALLOWED_HOSTS.
+2026-10-15 08:47:39,487 ERROR django.security.DisallowedHost Invalid HTTP_HOST header: '192.168.8.19:8001'. You may need to add '192.168.8.19' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/http/request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '192.168.8.19:8001'. You may need to add '192.168.8.19' to ALLOWED_HOSTS.
+2026-10-15 08:47:39,593 ERROR django.security.DisallowedHost Invalid HTTP_HOST header: '192.168.8.19:8001'. You may need to add '192.168.8.19' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/http/request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '192.168.8.19:8001'. You may need to add '192.168.8.19' to ALLOWED_HOSTS.
+2026-10-16 08:35:44,706 ERROR django.request Internal Server Error: /en/packages/
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py", line 1817, in to_python
+    decimal_value = decimal.Decimal(value)
+                    ^^^^^^^^^^^^^^^^^^^^^^
+decimal.InvalidOperation: [<class 'decimal.ConversionSyntax'>]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/views/generic/list.py", line 158, in get
+    self.object_list = self.get_queryset()
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/DaySafari/OurClients/views.py", line 495, in get_queryset
+    queryset = queryset.filter(price__gte=min_price)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/query.py", line 1495, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/modeltranslation/manager.py", line 332, in _filter_or_exclude
+    return super()._filter_or_exclude(negate, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/query.py", line 1513, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/query.py", line 1523, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1648, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1680, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1590, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1417, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/lookups.py", line 38, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/lookups.py", line 96, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py", line 1840, in get_prep_value
+    return self.to_python(value)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py", line 1819, in to_python
+    raise exceptions.ValidationError(
+django.core.exceptions.ValidationError: ['“abc” value must be a decimal number.']
+2026-10-16 08:35:44,706 ERROR django.request Internal Server Error: /en/packages/
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py", line 1817, in to_python
+    decimal_value = decimal.Decimal(value)
+                    ^^^^^^^^^^^^^^^^^^^^^^
+decimal.InvalidOperation: [<class 'decimal.ConversionSyntax'>]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/views/generic/list.py", line 158, in get
+    self.object_list = self.get_queryset()
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/DaySafari/OurClients/views.py", line 495, in get_queryset
+    queryset = queryset.filter(price__gte=min_price)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/query.py", line 1495, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/modeltranslation/manager.py", line 332, in _filter_or_exclude
+    return super()._filter_or_exclude(negate, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/query.py", line 1513, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/query.py", line 1523, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1648, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1680, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1590, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1417, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/lookups.py", line 38, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/lookups.py", line 96, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py", line 1840, in get_prep_value
+    return self.to_python(value)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py", line 1819, in to_python
+    raise exceptions.ValidationError(
+django.core.exceptions.ValidationError: ['“abc” value must be a decimal number.']
+2026-10-18 10:55:40,408 ERROR django.security.DisallowedHost Invalid HTTP_HOST header: '10.5.3.241:8000'. You may need to add '10.5.3.241' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/http/request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '10.5.3.241:8000'. You may need to add '10.5.3.241' to ALLOWED_HOSTS.
+2026-10-18 10:55:40,585 ERROR django.security.DisallowedHost Invalid HTTP_HOST header: '10.5.3.241:8000'. You may need to add '10.5.3.241' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/blacksheep/CODES/venv/lib/python3.12/site-packages/django/http/request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '10.5.3.241:8000'. You may need to add '10.5.3.241' to ALLOWED_HOSTS.
