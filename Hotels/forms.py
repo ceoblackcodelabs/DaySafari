@@ -10,51 +10,6 @@ from ClientRequests.models import Bookings
 _LINKISH = re.compile(r'https?|www|\.[a-z]{2,}', re.I)
 
 
-class BNBbookingsForm(AntiSpamFormMixin, forms.ModelForm):
-    """Airbnb enquiry; saved as a Bookings lead (booking_type='airbnb')."""
-
-    class Meta:
-        model = Bookings
-        fields = ['name', 'email', 'phone', 'persons', 'date', 'check_out']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control bg-white border-0',
-                                           'placeholder': _('Your Full Name'), 'required': 'required'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control bg-white border-0',
-                                             'placeholder': _('Your Email'), 'required': 'required'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control bg-white border-0',
-                                            'placeholder': _('Phone / WhatsApp'), 'required': 'required'}),
-            'persons': forms.NumberInput(attrs={'class': 'form-control bg-white border-0',
-                                                'placeholder': _('Number of Guests'), 'min': 1,
-                                                'required': 'required'}),
-            'date': forms.DateInput(attrs={'class': 'form-control bg-white border-0', 'type': 'date',
-                                           'required': 'required', 'min': date.today().isoformat()}),
-            'check_out': forms.DateInput(attrs={'class': 'form-control bg-white border-0', 'type': 'date',
-                                                'required': 'required', 'min': date.today().isoformat()}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.initial['date'] = None            # don't pre-fill today's date
-        self.fields['check_out'].required = True
-        for f in ('name', 'email', 'phone', 'persons', 'date', 'check_out'):
-            self.fields[f].label = False
-
-    def clean_persons(self):
-        persons = self.cleaned_data.get('persons')
-        if persons is None or not 1 <= persons <= 50:
-            raise forms.ValidationError(_('Guests must be between 1 and 50.'))
-        return persons
-
-    def clean(self):
-        cleaned = super().clean()
-        check_in, check_out = cleaned.get('date'), cleaned.get('check_out')
-        if check_in and check_in < date.today():
-            self.add_error('date', _('Check-in cannot be in the past.'))
-        if check_in and check_out and check_out <= check_in:
-            self.add_error('check_out', _('Check-out date must be after check-in date'))
-        return cleaned
-
-
 class HotelEnquiryForm(AntiSpamFormMixin, forms.ModelForm):
     """Hotel enquiry; saved as a Bookings lead (booking_type='hotel')."""
 

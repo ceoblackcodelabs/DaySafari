@@ -1,17 +1,27 @@
+# secrets and local settings
 .env
-/migrations
-*.pyc
-*.zip
-media/thumbs/
 
-# Live data: never commit (customer data, password hashes, uploads cache)
-db.sqlite3
-db.sqlite3-journal
-db.sqlite3-wal
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# generated at runtime
 db.sqlite3-shm
-data.json
-full_data.json
+db.sqlite3-wal
+staticfiles/
+logs/*.log
 var/
+static/**/*.gz
+media/thumbs/
+media/og/
 backups/
-logs/hotels-api.log
-logs/
+tmp/
+.DS_Store
+
+# never commit live data or archives
+db.sqlite3
+db.sqlite3-*
+*.zip
+backups/

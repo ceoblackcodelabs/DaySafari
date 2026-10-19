@@ -141,9 +141,7 @@ class HomeView(AntiSpamViewMixin, ListView):
             context['tab_destinations'][category.id] = self._organize_destinations(cat_destinations)
 
         # Packages with only necessary fields - FIXED: use star_rating not starRating
-        context['awesome_packages'] = AwesomePackages.objects.only(
-            'id', 'name', 'image', 'price', 'days', 'star_rating'
-        ).all()[:4]
+        context['awesome_packages'] = list(AwesomePackages.objects.exclude(slug__isnull=True).order_by('-id')[:4])
 
         # Testimonials
         context['testimonials'] = Testimonials.objects.only(
@@ -297,12 +295,10 @@ class CruisesView(ListView):
                 'inclusions',  # Changed from 'incluisiveexcluisive_set' to 'inclusions'
                 queryset=IncluisiveExcluisive.objects.only('id', 'name', 'is_inclusive', 'package')
             )
-        ).only('id', 'name', 'image', 'price', 'days', 'category').order_by('?')[:3]
+        ).order_by('?')[:3]
 
         context["cruise_carousels"] = cruise_qs
-        context['awesome_packages'] = AwesomePackages.objects.filter(
-            category="Cruises"
-        ).only('id', 'name', 'image', 'price', 'days')
+        context['awesome_packages'] = AwesomePackages.objects.filter(category="Cruises").exclude(slug__isnull=True)
 
         return context
 
@@ -615,9 +611,8 @@ class SitemapPageView(TemplateView):
         context['destinations'] = Destinations.objects.only('id', 'name').order_by('name')
         context['trekking'] = Trekking.objects.only('id', 'name').order_by('name')
         context['blogs'] = Blogs.objects.exclude(slug__isnull=True).exclude(slug='').only('title', 'slug').order_by('-published_date')[:30]
-        from Hotels.models import AirBNB, Hotel
+        from Hotels.models import Hotel
         context['hotels'] = Hotel.objects.filter(is_published=True).only('name', 'slug', 'location')
-        context['stays'] = AirBNB.objects.only('id', 'title', 'location')
         return context
 
 

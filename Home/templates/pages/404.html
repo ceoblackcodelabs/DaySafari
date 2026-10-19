@@ -1,39 +1,8 @@
 {% extends "Home/base.html" %}
 {% load i18n %}
-
-{% load static %}
-
-{% block title %}{% trans "Page Not Found" %}{% endblock title %}
-
+{% block title %}{% trans "Page not found" %} | {% trans "Day Safaris Adventures" %}{% endblock %}
+{% block meta_robots %}noindex{% endblock %}
 {% block body %}
-
-<!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
-    <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% trans "404 Page" %}</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url "home" %}">{% trans "Home" %}</a></li>
-            <li class="breadcrumb-item"><a href="{% url "register" %}">{% trans "Regiter" %}</a></li>
-            <li class="breadcrumb-item active text-white">{% trans "404 Page" %}</li>
-        </ol>
-    </div>
-</div>
-<!-- Header End -->
-
-<!-- 404 Start -->
-<div class="container-fluid py-5" style="background: linear-gradient(rgba(19, 53, 123, 0.3), rgba(19, 53, 153, 0.3)); object-fit: cover;">
-    <div class="container py-5 text-center">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <i class="fas fa-exclamation-triangle display-1 text-primary"></i>
-                <h1 class="display-1">404</h1>
-                <h1 class="mb-4 text-dark">{% trans "Page Not Found" %}</h1>
-                <p class="mb-4 text-dark">{% trans "We’re sorry, the page you have looked for does not exist in our website! Maybe go to our home page or try to use a search?" %}</p>
-                <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url "home" %}">{% trans "Go Back To Home" %}</a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 404 End -->
-
-{% endblock body %}
+<section class="section" style="min-height:58vh;display:grid;align-content:center"><div class="split even" style="align-items:center"><div><p class="eyebrow dark">404</p><h1 style="font-size:54px;margin:10px 0 14px">{% trans "We couldn’t find that page." %}</h1><p class="prose">{% trans "The page may have moved. Try one of our destinations, or message the team and we’ll point you in the right direction." %}</p></div>
+<div class="btn-row"><a class="button primary" href="{% url 'home' %}">{% icon 'home' 16 %} {% trans "Back home" %}</a><a class="button outline" href="{% url 'packages' %}">{% trans "Browse packages" %}</a><a class="button outline" href="https://wa.me/254759379600" target="_blank" rel="noopener noreferrer">{% icon 'message-circle' 16 %} WhatsApp</a></div></div></section>
+{% endblock %}

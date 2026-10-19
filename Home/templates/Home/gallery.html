@@ -1,110 +1,11 @@
 {% extends "Home/base.html" %}
-{% load static i18n custom_filters image_tags %}
-
-{% block title %}{% trans "Gallery - Days Safaris Adventures" %}{% endblock title %}
-
-{% block meta_description %}{% trans "Photo gallery of safari game drives, wildlife, lodges and travellers from Day Safaris Adventures tours across East Africa." %}{% endblock meta_description %}
-{% block og_description %}{% trans "Photo gallery of safari game drives, wildlife, lodges and travellers from Day Safaris Adventures tours across East Africa." %}{% endblock og_description %}
-{% block twitter_description %}{% trans "Photo gallery of safari game drives, wildlife, lodges and travellers from Day Safaris Adventures tours across East Africa." %}{% endblock twitter_description %}
-
+{% load i18n image_tags custom_filters %}
+{% block title %}{% trans "Gallery - Days Safaris Adventures" %}{% endblock %}
+{% block meta_description %}{% trans "Photos from our safaris, treks, cruises and stays across East Africa." %}{% endblock %}
+{% block og_title_inner %}{% trans "Gallery" %}{% endblock %}
 {% block body %}
-
-<!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
-    <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% trans "Our Gallery" %}</h3>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
-            <li class="breadcrumb-item active text-white">{% trans "Gallery" %}</li>
-        </ol>
-    </div>
-</div>
-<!-- Header End -->
-
-<!-- Gallery Start -->
-<div class="container-fluid gallery py-5 my-5">
-    <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-        <p class="h5 section-title px-3">{% trans "Our Gallery" %}</p>
-        <h1 class="mb-4">{% trans "Unforgettable Safari Moments Captured" %}</h1>
-        <p class="mb-0">{% trans "Explore stunning images from our recent safaris across East Africa. From breathtaking wildlife encounters to beautiful landscapes and cultural experiences, our gallery showcases the magic of African adventures." %}</p>
-    </div>
-    <div class="tab-class text-center">
-        <ul class="nav nav-pills d-inline-flex justify-content-center mb-5 flex-wrap">
-            <li class="nav-item">
-                <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-all">
-                    <span class="text-dark" style="width: 150px;">{% trans "All Photos" %}</span>
-                </a>
-            </li>
-            {% for category in categories %}
-            <li class="nav-item">
-                <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-{{ category.id }}">
-                    <span class="text-dark" style="width: 150px;">{{ category.name }}</span>
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-        <div class="tab-content">
-            <!-- All Photos Tab -->
-            <div id="tab-all" class="tab-pane fade show p-0 active">
-                <div class="row g-2">
-                    {% for gallery in all_galleries %}
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100" style="--bg:url('{{ gallery.image|thumb:160 }}')">
-                            <img src="{{ gallery.image|thumb:640 }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;" loading="lazy" decoding="async">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h2 class="h5 text-white text-uppercase mb-2">{{ gallery.name }}</h2>
-                                    <a href="#" class="btn-hover text-white">{% trans "View Gallery" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ gallery.image.url }}" data-lightbox="gallery-{{ gallery.id }}" class="my-auto" aria-label="{% trans "View details" %}"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <div class="col-12 text-center py-5">
-                        <h3>{% trans "No images available" %}</h3>
-                        <p>{% trans "Check back soon for amazing gallery photos!" %}</p>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Dynamic Category Tabs -->
-            {% for category in categories %}
-            <div id="tab-{{ category.id }}" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    {% with galleries=galleries_by_category|get_item:category.id %}
-                    {% for gallery in galleries %}
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100" style="--bg:url('{{ gallery.image|thumb:160 }}')">
-                            <img src="{{ gallery.image|thumb:640 }}" class="img-fluid w-100 h-100 rounded" alt="{{ gallery.name }}" style="object-fit: cover; min-height: 250px;" loading="lazy" decoding="async">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h2 class="h5 text-white text-uppercase mb-2">{{ gallery.name }}</h2>
-                                    <a href="#" class="btn-hover text-white">{% trans "View Gallery" %} <i class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ gallery.image.url }}" data-lightbox="gallery-{{ gallery.id }}" class="my-auto" aria-label="{% trans "View details" %}"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <div class="col-12 text-center py-5">
-                        <h3>{% trans "No images in this category" %}</h3>
-                        <p>{% trans "Check back soon for amazing photos!" %}</p>
-                    </div>
-                    {% endfor %}
-                    {% endwith %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<!-- Gallery End -->
-
-{% endblock body %}
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "Gallery" %}</span></nav><h1>{% trans "Moments from" %} <em>{% trans "the road." %}</em></h1></div></section>
+<section class="section"><div data-tabs><div class="chips" style="margin-bottom:24px"><button type="button" class="selected" data-tab="all" aria-pressed="true">{% trans "All" %}</button>{% for category in categories %}<button type="button" data-tab="c{{ category.id }}" aria-pressed="false">{{ category.name }}</button>{% endfor %}</div>
+<div data-pane="all"><div class="gallery-grid">{% for g in all_galleries %}<a href="{{ g.image|thumb:1600 }}" data-lightbox data-title="{{ g.name }}"><img src="{{ g.image|thumb:640 }}" alt="{{ g.name }}" loading="lazy" decoding="async" width="640" height="530"></a>{% empty %}<p class="empty" style="grid-column:1/-1">{% trans "No photos yet." %}</p>{% endfor %}</div></div>
+{% for category in categories %}<div data-pane="c{{ category.id }}" hidden><div class="gallery-grid">{% with items=galleries_by_category|get_item:category.id %}{% for g in items %}<a href="{{ g.image|thumb:1600 }}" data-lightbox data-title="{{ g.name }}"><img src="{{ g.image|thumb:640 }}" alt="{{ g.name }}" loading="lazy" decoding="async" width="640" height="530"></a>{% endfor %}{% endwith %}</div></div>{% endfor %}</div></section>
+{% endblock %}

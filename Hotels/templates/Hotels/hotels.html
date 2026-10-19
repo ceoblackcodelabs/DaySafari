@@ -1,131 +1,20 @@
 {% extends "Home/base.html" %}
-{% load static i18n image_tags %}
-
-{% block title %}{% trans "Hotels & Lodges in East Africa - Day Safaris Adventures" %}{% endblock title %}
-{% block meta_description %}{% trans "Browse hand-picked hotels, safari lodges, camps and beach villas in Kenya, Tanzania, Uganda and Rwanda. Compare prices and book with Day Safaris Adventures." %}{% endblock meta_description %}
-{% block og_description %}{% trans "Hand-picked hotels, safari lodges, camps and beach villas in Kenya, Tanzania, Uganda and Rwanda." %}{% endblock og_description %}
-{% block twitter_description %}{% trans "Hand-picked hotels, safari lodges, camps and beach villas in East Africa." %}{% endblock twitter_description %}
-{% block canonical_url %}https://daysafarisadventures.co.ke{% url 'hotels' %}{% endblock canonical_url %}
-
+{% load i18n image_tags %}
+{% block title %}{% trans "Hotels & Lodges - Days Safaris Adventures" %}{% endblock %}
+{% block meta_description %}{% trans "Hand-picked hotels, safari lodges and beach resorts across East Africa, booked with Day Safaris Adventures." %}{% endblock %}
+{% block og_title_inner %}{% trans "Hotels & Lodges" %}{% endblock %}
 {% block body %}
-<!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
-    <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% trans "Hotels" %}</h3>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-            <li class="breadcrumb-item active text-white">{% trans "Hotels" %}</li>
-        </ol>
-    </div>
-</div>
-<!-- Header End -->
-
-<!-- Filters Start -->
-<section class="pk-toolbar" aria-label="{% trans 'Filter hotels' %}">
-    <div class="container">
-        <form method="get" action="{% url 'hotels' %}#results" class="pk-form">
-            {% if sel_country %}<input type="hidden" name="country" value="{{ sel_country }}">{% endif %}
-            {% if sel_type %}<input type="hidden" name="type" value="{{ sel_type }}">{% endif %}
-            {% if sel_sort and sel_sort != 'featured' %}<input type="hidden" name="sort" value="{{ sel_sort }}">{% endif %}
-            <div class="pk-search">
-                <i class="fa fa-search" aria-hidden="true"></i>
-                <input id="hotel-q" type="search" name="q" value="{{ query }}" maxlength="80" autocomplete="off" placeholder="{% trans 'Hotel name or place...' %}" aria-label="{% trans 'Search' %}">
-                <button type="submit" class="pk-btn pk-btn-main"><i class="fas fa-search"></i><span>{% trans "Search" %}</span></button>
-                {% if sel_country or sel_type or query %}<a href="{% url 'hotels' %}" class="pk-btn pk-btn-quiet"><i class="fas fa-undo"></i><span>{% trans "Reset" %}</span></a>{% endif %}
-            </div>
-            <nav class="pk-pills" aria-label="{% trans 'Filter by country' %}">
-                <a class="pk-pill {% if not sel_country %}active{% endif %}" href="?{% if sel_type %}type={{ sel_type|urlencode }}{% endif %}">{% trans "All Hotels" %} <span>{{ total_all }}</span></a>
-                {% for c in countries %}<a class="pk-pill {% if sel_country|lower == c.country|lower %}active{% endif %}" href="?country={{ c.country|urlencode }}{% if sel_type %}&type={{ sel_type|urlencode }}{% endif %}">{{ c.country }} <span>{{ c.n }}</span></a>{% endfor %}
-            </nav>
-            <nav class="pk-pills pk-pills-sm" aria-label="{% trans 'Filter by type' %}">
-                {% for t in types %}<a class="pk-chip {% if sel_type == t.key %}active{% endif %}" href="?type={{ t.key|urlencode }}{% if sel_country %}&country={{ sel_country|urlencode }}{% endif %}">{{ t.label }} ({{ t.n }})</a>{% endfor %}
-                {% if sel_type %}<a class="pk-clear" href="{% if sel_country %}?country={{ sel_country|urlencode }}{% else %}{% url 'hotels' %}{% endif %}">{% trans "Clear type" %}</a>{% endif %}
-            </nav>
-        </form>
-    </div>
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "Hotels" %}</span></nav><h1>{% trans "Wake up" %} <em>{% trans "somewhere special." %}</em></h1><p class="lead">{% trans "Safari lodges, tented camps and beach hotels, hand-picked across East Africa." %}</p></div></section>
+<section class="section">
+<form method="get" class="filter-bar" role="search"><label>{% trans "Search" %}<input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Hotel or place' %}"></label>
+<label>{% trans "Country" %}<select name="country"><option value="">{% trans "All countries" %}</option>{% for c in countries %}<option value="{{ c.country }}" {% if c.country == sel_country %}selected{% endif %}>{{ c.country }} ({{ c.n }})</option>{% endfor %}</select></label>
+<label>{% trans "Type" %}<select name="type"><option value="">{% trans "All types" %}</option>{% for t in types %}<option value="{{ t.key }}" {% if t.key == sel_type %}selected{% endif %}>{{ t.label }} ({{ t.n }})</option>{% endfor %}</select></label>
+<label>{% trans "Sort" %}<select name="sort">{% for key, label in sorts %}<option value="{{ key }}" {% if key == sel_sort %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<button class="button primary" type="submit">{% icon 'search' 15 %} {% trans "Filter" %}</button></form>
+<p class="form-intro" style="margin-top:0">{{ page_obj.paginator.count }} / {{ total_all }} {% trans "hotels" %}</p>
+<div class="card-grid">{% for hotel in hotels %}{% with photo=hotel.main_image %}<article class="card"><a class="card-photo" href="{{ hotel.get_absolute_url }}" aria-label="{{ hotel.name }}">{% if photo %}<img src="{{ photo.image|thumb:640 }}" alt="{{ photo.caption|default:hotel.name }}" loading="lazy" decoding="async" width="640" height="440">{% else %}<img src="{% asset 'img/hotel-placeholder.jpg' %}" alt="" loading="lazy" width="640" height="440">{% endif %}<span class="tag">{{ hotel.get_property_type_display }}</span></a>
+<div class="card-body"><div class="card-meta"><span>{% icon 'map-pin' 12 %}{{ hotel.location }}, {{ hotel.country }}</span><span>{% icon 'users' 12 %}{{ hotel.max_guests }}</span></div><h3><a href="{{ hotel.get_absolute_url }}">{{ hotel.name }}</a></h3>{% stars hotel.star_rating 13 %}<p>{{ hotel.card_summary }}</p>
+<div class="card-foot"><div><small>{% trans "Price" %}</small><strong style="font-size:14px">{% trans "On request" %}</strong></div><a class="button primary sm" href="{{ hotel.get_absolute_url }}">{% trans "View" %} {% icon 'arrow-up-right' 14 %}</a></div></div></article>{% endwith %}{% empty %}<p class="empty" style="grid-column:1/-1">{% trans "No hotels match your filters yet." %}</p>{% endfor %}</div>
+{% if is_paginated %}<nav class="pager" aria-label="Pagination">{% if page_obj.has_previous %}<a href="?{% if keep_params %}{{ keep_params }}&{% endif %}page={{ page_obj.previous_page_number }}">‹</a>{% endif %}{% for n in paginator.page_range %}{% if n == page_obj.number %}<span class="cur">{{ n }}</span>{% else %}<a href="?{% if keep_params %}{{ keep_params }}&{% endif %}page={{ n }}">{{ n }}</a>{% endif %}{% endfor %}{% if page_obj.has_next %}<a href="?{% if keep_params %}{{ keep_params }}&{% endif %}page={{ page_obj.next_page_number }}">›</a>{% endif %}</nav>{% endif %}
 </section>
-<!-- Filters End -->
-
-<!-- Hotels Start -->
-<section class="pk-results hotels-page py-5" id="results">
-    <div class="container">
-        <div class="mx-auto text-center mb-4" style="max-width: 900px;">
-            <p class="h5 section-title px-3">{% trans "Where to stay" %}</p>
-            <h1 class="mb-3">{% trans "Hotels, Lodges, Tented Camps & Beach Villas" %}</h1>
-            <p class="mb-0">{% trans "Hand-picked places to stay across East Africa, from safari camps on the edge of the Mara to beach villas on the Indian Ocean. Pick a country, compare, and send us your dates. We confirm availability and rates within 24 hours." %}</p>
-        </div>
-
-        <div class="pk-head">
-            <p class="pk-count">{% blocktrans with n=paginator.count %}Showing {{ n }} hotels{% endblocktrans %}</p>
-            <div class="pk-tools">
-                <form method="get" class="pk-sort">
-                    {% if sel_country %}<input type="hidden" name="country" value="{{ sel_country }}">{% endif %}
-                    {% if sel_type %}<input type="hidden" name="type" value="{{ sel_type }}">{% endif %}
-                    {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
-                    <span>{% trans "Sort by" %}</span>
-                    <select name="sort" id="hotel-sort" aria-label="{% trans 'Sort by' %}" onchange="this.form.submit()">
-                        {% for key, label in sorts %}<option value="{{ key }}" {% if sel_sort == key %}selected{% endif %}>{{ label }}</option>{% endfor %}
-                    </select>
-                </form>
-                <div class="pk-view" role="group" aria-label="{% trans 'Layout' %}">
-                    <button type="button" data-view="grid" class="active" aria-label="{% trans 'Grid view' %}"><i class="fas fa-th-large"></i></button>
-                    <button type="button" data-view="list" aria-label="{% trans 'List view' %}"><i class="fas fa-list"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <div class="pk-grid" id="pkGrid">
-            {% for hotel in hotels %}
-            {% with photo=hotel.main_image %}
-            <article class="pk-card">
-                <a class="pk-img" href="{{ hotel.get_absolute_url }}" tabindex="-1" aria-hidden="true">
-                    <img src="{% if photo %}{{ photo.image|thumb:640 }}{% else %}{% static 'img/hotel-placeholder.jpg' %}{% endif %}" alt="" loading="{% if forloop.counter > 3 %}lazy{% else %}eager{% endif %}" decoding="async" width="640" height="480">
-                    <span class="pk-badge">{{ hotel.get_property_type_display }}</span>
-                </a>
-                <div class="pk-body">
-                    <p class="pk-loc"><i class="fa fa-map-marker-alt"></i> {{ hotel.location }}, {{ hotel.country }}</p>
-                    <h2 class="pk-title"><a href="{{ hotel.get_absolute_url }}">{{ hotel.name }}</a></h2>
-                    <ul class="pk-meta">
-                        <li class="pk-stars" title="{{ hotel.star_rating }}/5">{% for _ in "12345"|make_list %}<i class="fa fa-star {% if forloop.counter > hotel.star_rating %}off{% endif %}"></i>{% endfor %}</li>
-                        <li><i class="fas fa-user-friends"></i> {{ hotel.max_guests }} {% trans "Guests" %}</li>
-                    </ul>
-                    <p class="pk-desc">{{ hotel.card_summary }}</p>
-                    <div class="pk-actions">
-                        <a href="{{ hotel.get_absolute_url }}" class="pk-btn pk-btn-main">{% trans "View Hotel" %}<span class="visually-hidden"> {{ hotel.name }}</span></a>
-                        <a href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20am%20interested%20in%3A%20{{ hotel.name|urlencode }}" target="_blank" rel="noopener" class="pk-btn pk-btn-wa" aria-label="{% trans 'Get a Quote' %}: {{ hotel.name }}"><i class="fab fa-whatsapp"></i><span>{% trans "Get a Quote" %}</span></a>
-                    </div>
-                </div>
-            </article>
-            {% endwith %}
-            {% empty %}
-            <div class="pk-empty">
-                <i class="fas fa-hotel"></i>
-                <h2 class="h3">{% trans "No hotels match your filters" %}</h2>
-                <p>{% trans "Try another country or type, or" %} <a href="{% url 'hotels' %}">{% trans "see all hotels" %}</a>. {% trans "Can't find what you need? We'll find the right place for your dates and budget." %}</p>
-                <button type="button" class="pk-btn pk-btn-main" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button>
-            </div>
-            {% endfor %}
-        </div>
-
-        {% if is_paginated %}
-        <nav class="pk-pager" aria-label="{% trans 'Page navigation' %}">
-            {% if page_obj.has_previous %}<a href="?{% if keep_params %}{{ keep_params }}&{% endif %}page={{ page_obj.previous_page_number }}#results" aria-label="{% trans 'Previous' %}"><i class="fas fa-angle-left"></i></a>{% endif %}
-            {% for num in page_obj.paginator.page_range %}
-                {% if page_obj.number == num %}<span class="active" aria-current="page">{{ num }}</span>
-                {% else %}<a href="?{% if keep_params %}{{ keep_params }}&{% endif %}page={{ num }}#results">{{ num }}</a>{% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}<a href="?{% if keep_params %}{{ keep_params }}&{% endif %}page={{ page_obj.next_page_number }}#results" aria-label="{% trans 'Next' %}"><i class="fas fa-angle-right"></i></a>{% endif %}
-        </nav>
-        {% endif %}
-    </div>
-</section>
-<!-- Hotels End -->
-<script>
-(function () {
-    var grid = document.getElementById('pkGrid'), btns = document.querySelectorAll('.pk-view button');
-    function set(v) { grid.classList.toggle('is-list', v === 'list'); btns.forEach(function (b) { b.classList.toggle('active', b.dataset.view === v); }); try { localStorage.setItem('pkView', v); } catch (e) {} }
-    btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.view); }); });
-    try { if (localStorage.getItem('pkView') === 'list') set('list'); } catch (e) {}
-})();
-</script>
-{% endblock body %}
+{% endblock %}

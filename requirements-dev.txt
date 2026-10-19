@@ -1,3 +1,0 @@
--r requirements.txt
-# Only for the one-off 'brochures' management command (generates sample PDFs)
-reportlab==4.4.9

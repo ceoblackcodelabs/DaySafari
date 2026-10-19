@@ -1,34 +1,18 @@
 {% extends "registration/auth_base.html" %}
 {% load i18n %}
-{% block title %}{% trans "Create Account" %}{% endblock %}
+{% block auth_title %}{% trans "Create Account" %}{% endblock %}
 {% block pitch_title %}{% trans "Start planning your dream safari" %}{% endblock %}
 {% block pitch_text %}{% trans "Create a free account in under a minute and keep everything about your trip in one place." %}{% endblock %}
 {% block form %}
-<h2>{% trans "Create Account" %}</h2>
-<p class="lead">{% trans "Join us and start planning your dream safari." %}</p>
-{% for message in messages %}<div class="msg {{ message.tags }}"><i class="fa fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i><span>{{ message }}</span></div>{% endfor %}
-<form method="post" data-auth novalidate>
-  {% csrf_token %}
-  {{ form.website }}{{ form.form_ts }}
-  <div class="row2">
-    <div class="f{% if form.first_name.errors %} bad{% endif %}"><label for="id_first_name">{% trans "First Name" %}</label><div class="in"><i class="ic fa fa-user"></i><input type="text" name="first_name" id="id_first_name" value="{{ form.first_name.value|default:'' }}" required autocomplete="given-name" placeholder="{% trans 'First Name' %}"></div>{% for e in form.first_name.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>
-    <div class="f{% if form.last_name.errors %} bad{% endif %}"><label for="id_last_name">{% trans "Last Name" %}</label><div class="in"><i class="ic fa fa-user"></i><input type="text" name="last_name" id="id_last_name" value="{{ form.last_name.value|default:'' }}" required autocomplete="family-name" placeholder="{% trans 'Last Name' %}"></div>{% for e in form.last_name.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>
-  </div>
-  <div class="f{% if form.username.errors %} bad{% endif %}"><label for="id_username">{% trans "Username" %}</label><div class="in"><i class="ic fa fa-at"></i><input type="text" name="username" id="id_username" value="{{ form.username.value|default:'' }}" required autocomplete="username" autocapitalize="none" placeholder="{% trans 'Choose a username' %}"></div>{% for e in form.username.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>
-  <div class="f{% if form.email.errors %} bad{% endif %}"><label for="id_email">{% trans "Email Address" %}</label><div class="in"><i class="ic fa fa-envelope"></i><input type="email" name="email" id="id_email" value="{{ form.email.value|default:'' }}" required autocomplete="email" placeholder="{% trans 'Enter your email address' %}"></div>{% for e in form.email.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>
-  <div class="f{% if form.password1.errors %} bad{% endif %}"><label for="id_password1">{% trans "Password" %}</label><div class="in"><i class="ic fa fa-lock"></i><input type="password" name="password1" id="id_password1" required autocomplete="new-password" placeholder="{% trans 'Enter your password' %}"><button type="button" class="eye" aria-label="{% trans 'Show or hide password' %}"><i class="fa fa-eye"></i></button></div>
-    <div class="meter" aria-hidden="true"><i id="meterFill"></i></div><p class="hint" id="meterText">{% trans "Use 8 or more characters with letters and numbers." %}</p>
-    {% for e in form.password1.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>
-  <div class="f{% if form.password2.errors %} bad{% endif %}"><label for="id_password2">{% trans "Confirm your password" %}</label><div class="in"><i class="ic fa fa-check-double"></i><input type="password" name="password2" id="id_password2" required autocomplete="new-password" placeholder="{% trans 'Confirm your password' %}"><button type="button" class="eye" aria-label="{% trans 'Show or hide password' %}"><i class="fa fa-eye"></i></button></div>{% for e in form.password2.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>
-  {% for e in form.non_field_errors %}<div class="msg error"><i class="fa fa-exclamation-circle"></i><span>{{ e }}</span></div>{% endfor %}
-  <button class="btn" type="submit"><i class="fa fa-user-plus"></i> {% trans "Create Account" %}</button>
-  <p class="legal">{% trans "By creating an account you agree to our" %} <a href="{% url 'terms_and_conditions' %}">{% trans "Terms and Conditions" %}</a> {% trans "and" %} <a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}</a>.</p>
-</form>
-<p class="alt">{% trans "Already have an account?" %} <a href="{% url 'login' %}">{% trans "Login" %}</a></p>
-{% endblock %}
-{% block js %}
-var p=document.getElementById('id_password1'),mf=document.getElementById('meterFill'),mt=document.getElementById('meterText');
-if(p)p.addEventListener('input',function(){var v=p.value,s=0;if(v.length>=8)s++;if(/[a-z]/.test(v)&&/[A-Z]/.test(v))s++;if(/\d/.test(v))s++;if(/[^A-Za-z0-9]/.test(v)||v.length>=12)s++;
- var c=['#c0392b','#e67e22','#d4a017','#27ae60'],t=['{% trans "Too weak" %}','{% trans "Getting there" %}','{% trans "Good" %}','{% trans "Strong" %}'];
- mf.style.width=(v?(s||1)*25:0)+'%';mf.style.background=c[Math.max(0,s-1)];mt.textContent=v?t[Math.max(0,s-1)]:'{% trans "Use 8 or more characters with letters and numbers." %}'});
+<h2>{% trans "Create Account" %}</h2><p class="form-intro">{% trans "Join us and start planning your dream safari." %}</p>
+<form method="post" novalidate>{% csrf_token %}{{ form.website }}{{ form.form_ts }}
+<div class="row2"><div class="field"><label for="id_first_name">{% trans "First Name" %}{{ form.first_name }}</label>{{ form.first_name.errors }}</div><div class="field"><label for="id_last_name">{% trans "Last Name" %}{{ form.last_name }}</label>{{ form.last_name.errors }}</div></div>
+<div class="field"><label for="id_username">{% trans "Username" %}{{ form.username }}</label>{{ form.username.errors }}</div>
+<div class="field"><label for="id_email">{% trans "Email Address" %}{{ form.email }}</label>{{ form.email.errors }}</div>
+<div class="field"><label for="id_password1">{% trans "Password" %}{{ form.password1 }}</label><p class="help" id="meterText">{% trans "Use 8 or more characters with letters and numbers." %}</p>{{ form.password1.errors }}</div>
+<div class="field"><label for="id_password2">{% trans "Confirm your password" %}{{ form.password2 }}</label>{{ form.password2.errors }}</div>
+{% for e in form.non_field_errors %}<div class="notice warn">{{ e }}</div>{% endfor %}
+<button class="button primary submit" type="submit">{% icon 'user' 16 %} {% trans "Create Account" %}</button>
+<p class="form-privacy" style="font-size:11px">{% trans "By creating an account you agree to our" %} <a href="{% url 'terms_and_conditions' %}">{% trans "Terms and Conditions" %}</a> {% trans "and" %} <a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}</a>.</p></form>
+<p class="form-privacy" style="font-size:12px;margin-top:10px">{% trans "Already have an account?" %} <a href="{% url 'login' %}"><strong>{% trans "Login" %}</strong></a></p>
 {% endblock %}

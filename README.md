@@ -1,128 +1,39 @@
-# Day Safaris Adventures
+# Day Safaris Adventures (Django)
 
-Website and booking system for Day Safaris Adventures (Nairobi, Kenya): safari packages, trekking, cruises, **hotels**,
-Airbnb-style stays, blog, gallery and enquiries. Built with Django (SQLite, WhiteNoise, Brevo email).
+Green-theme site with the full backend of the original DaySafaris project: packages, tours, trekking, hotels,
+blog, gallery, brochures, guides, accounts, bookings/contact forms with anti-spam + Brevo emails, i18n (en/sw/fr/de/es/it)
+and the JSON API (`/api/v1/...`). Plus landing pages (Kenya, Tanzania, Uganda, Masai Mara, Kilimanjaro, safari + beach,
+cruise pages) with an enquiry form that is saved as a booking lead.
 
-Live site: https://daysafarisadventures.co.ke
-
-## Contents
-1. [Run it locally](#run-it-locally)
-2. [Settings (`.env`)](#settings-env)
-3. [Deploying to the server](#deploying-to-the-server)
-4. [Backups](#backups)
-5. [Hotels API: create an API key](#hotels-api-create-an-api-key)
-6. [Useful commands](#useful-commands)
-
-## Run it locally
+## Run
 ```bash
-python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env        # or create .env by hand (see below)
+source ~/CODES/venv/bin/activate     # your virtualenv (Django, whitenoise, ckeditor5, modeltranslation ...)
+pip install -r requirements.txt      # only if something is missing
 python manage.py migrate
-python manage.py runserver
-python manage.py test        # runs the whole test suite
-```
-Put `DEBUG=True` in your local `.env` for development. The default is `False` (production-safe).
-
-## Settings (`.env`)
-Secrets live in `.env`, which is **never committed**. Main variables:
-
-| Variable | Purpose |
-|---|---|
-| `SECRET_KEY` | Django secret. Set a long random value on the server |
-| `DEBUG` | `True` only on your own computer |
-| `BREVO_API_KEY` | Sends booking/enquiry emails (required) |
-| `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `DEFAULT_FROM_EMAIL` | SMTP settings (Brevo) |
-| `github` | Token for the chatbot's AI provider |
-| `SECURE_SSL_REDIRECT`, `TRUST_PROXY_SSL_HEADER` | Set to `True` once HTTPS works behind your host's proxy |
-| `DB_PATH` | Optional: use a different SQLite file |
-
-## Deploying to the server
-The database (`db.sqlite3`), uploaded `media/` and `.env` live on the server and are **not** replaced by deploys.
-
-```bash
-cd ~/DaySafaris
-./deploy.sh        # backs up, pulls, protects the live database, migrates, restarts
-```
-or by hand: `git pull`, `python manage.py migrate`, `python manage.py collectstatic --noinput`, `touch tmp/restart.txt`.
-
-Never run `git reset --hard`, `git checkout .` or `git stash` on the server: they can destroy live data.
-`rsync` is not installed on the host; use `cp -a` to copy folders.
-
-## Backups
-```bash
-python manage.py backup_data            # database + media into ./backups/ (keeps the newest 14)
-python manage.py backup_data --no-media # database only
-```
-Copy `backups/` off the server regularly. To schedule it daily at 02:30 add this cron line:
-`30 2 * * * cd ~/DaySafaris && python manage.py backup_data`
-
-## Hotels API: create an API key
-Hotels can be added, edited and given photos without the admin, through a secure JSON API
-(`/api/v1/hotels/`). Anyone using it needs an **API key**, which you create on the server.
-
-### 1. Create a key
-SSH into the server, activate the app's virtualenv, then run:
-```bash
-cd ~/DaySafaris
-python manage.py create_api_key --name "Claude assistant"
-```
-Use a name that says who or what will use the key. The command prints something like:
-```
-API key created for "Claude assistant" (prefix 1a2b3c4d).
-
-Copy this token now. It is shown only once and cannot be recovered:
-
-    dsa_1a2b3c4d_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-**Copy the token immediately.** Only a hash is stored, so it can never be shown again. If you lose it, create a new
-key and revoke the old one.
-
-### 2. Use it
-Send it as a header on every request: `Authorization: Bearer <token>`.
-```bash
-export HOTELS_API_URL=https://daysafarisadventures.co.ke
-export HOTELS_API_KEY=dsa_1a2b3c4d_xxxx...
-
-python tools/hotels_api.py list                              # see the hotels on the site
-python tools/hotels_api.py add hotels.json --dry-run         # validate, save nothing
-python tools/hotels_api.py add hotels.json --photos-dir pics # create hotels and upload their photos
-```
-Full guide, every field and curl examples: [docs/HOTELS_API.md](docs/HOTELS_API.md).
-A public description of the fields is available without a key at `/api/v1/hotels/schema/`.
-
-### 3. Manage and revoke keys
-```bash
-python manage.py create_api_key --list                # who has keys, and when each was last used
-python manage.py create_api_key --revoke 1a2b3c4d     # stops working immediately (use the prefix)
-```
-Keys can also be switched off in the admin under **Hotels → API keys** (untick *Is active*).
-
-### Keep keys safe
-- Treat a key like a password: share it only with the person or tool that needs it, never in public places,
-  screenshots, the repository or `.env.example`.
-- Create **one key per user or tool**, so you can revoke one without affecting the others.
-- **Revoke a key when the work is finished** and create a new one next time.
-- A key can add and edit hotels and upload photos. It **cannot delete anything** and cannot read bookings, contacts
-  or users. Every write is recorded in `logs/hotels-api.log`.
-- Always try `--dry-run` first: it validates exactly like a real request but saves nothing.
-
-### Add the researched hotels without a key
-The 16 researched hotels ship with the project and can be loaded straight from the server:
-```bash
-python manage.py seed_hotels --dry-run     # preview
-python manage.py seed_hotels               # create the missing ones (safe to repeat)
+python manage.py runserver           # http://127.0.0.1:8000/
 ```
 
-## Useful commands
-| Command | What it does |
-|---|---|
-| `python manage.py test` | Run the test suite |
-| `python manage.py backup_data` | Back up the database and media |
-| `python manage.py warm_thumbnails` | Pre-generate WebP image thumbnails |
-| `python manage.py purge_spam` | Dry run: find spam enquiries and bot accounts (`--delete`, `--deactivate-users`) |
-| `python manage.py seed_package_details` | Fill star ratings and inclusions on safari packages |
-| `python manage.py create_api_key --name "..."` | Create a hotels-API key |
+* `.env` holds local settings (`DEBUG=True`). Copy your secrets (`BREVO_API_KEY`, `EMAIL_HOST_*`, `SECRET_KEY`...) into it
+  from the old project's `.env` to enable emails. Never commit it.
+* Database: `db.sqlite3` (SQLite, WAL mode). Uploads: `media/`.
+* Theme: `static/css/site.css`, `static/js/site.js`. Static files are indexed at start-up: restart the server after
+  editing CSS/JS (or run with `STATIC_AUTOREFRESH=1`).
+* Admin: `python manage.py createsuperuser`, then `/en/admin/`. Enquiries from every form land in **Client Requests**.
+* Hotels/blog/offers API keys: `python manage.py create_api_key --name "..."` (see `docs/*_API.md`).
+* Tests: `python manage.py test`.
 
-## Brand colours
-`#420d24` (maroon), `#f6c582` (gold), `#cba280`, `#eb9e31`
+## Layout
+`DaySafaris/` settings + urls · `Home/` pages, blog, gallery, guides · `Places/` packages & destinations ·
+`Hotels/` hotels, API · `ClientRequests/` bookings, contact, anti-spam · `OurClients/` accounts ·
+`EmailSetup/` emails · `safaris/` landing pages, shared icons/tags · `Home/templates/Home/base.html` is the shared layout.
+
+## Deploy checklist
+1. Upload the project (without `.env`, `__pycache__`, `staticfiles/`) and create the server `.env` from `.env.example`:
+   `DEBUG=False`, a long random `SECRET_KEY`, `BREVO_API_KEY`, `EMAIL_HOST_USER/PASSWORD`, and
+   `SECURE_SSL_REDIRECT=True` + `TRUST_PROXY_SSL_HEADER=True` once HTTPS works.
+2. `pip install -r requirements.txt`
+3. `python manage.py migrate`
+4. `python manage.py collectstatic --noinput`
+5. Point the host (Passenger: `passenger_wsgi.py`) at `DaySafaris.wsgi`; `touch tmp/restart.txt` after each deploy.
+6. Hosts allowed in production are listed in `DaySafaris/settings.py` (`ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`).
+7. `db.sqlite3` and `media/` are the live data: back them up (`python manage.py backup_data`) and do not overwrite them on deploy.

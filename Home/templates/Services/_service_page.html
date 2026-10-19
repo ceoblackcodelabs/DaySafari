@@ -1,0 +1,11 @@
+{% extends "Home/base.html" %}
+{% load i18n image_tags %}
+{% block title %}{% block st_title %}{% endblock %} - Days Safaris Adventures{% endblock %}
+{% block meta_description %}{% block st_desc %}{% endblock %}{% endblock %}
+{% block og_title_inner %}{% block st_og %}{% endblock %}{% endblock %}
+{% block body %}
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><a href="{% url 'services' %}">{% trans "Services" %}</a><span>{% block st_crumb %}{% endblock %}</span></nav><h1>{% block st_h1 %}{% endblock %}</h1></div></section>
+<section class="section"><div class="split"><div><p class="eyebrow dark">{% trans "Welcome to Day Safaris Adventures" %}</p><h2 style="font-size:38px;margin:10px 0 18px">{% block st_h2 %}{% endblock %}</h2><div class="prose wide">{% block st_body %}{% endblock %}</div>
+<div class="btn-row" style="margin-top:22px"><button type="button" class="button primary" data-open-lead>{% icon 'message-circle' 16 %} {% trans "Get a free quote" %}</button><a class="button outline" href="{% url 'contact' %}">{% trans "Contact us" %}</a></div></div>
+<aside class="side-card"><div class="panel"><h3>{% trans "Our services" %}</h3><ul class="checklist"><li>{% icon 'check' 16 %}<a href="{% url 'african_wildlife_tours' %}">{% trans "African Wildlife Safaris" %}</a></li><li>{% icon 'check' 16 %}<a href="{% url 'travel_partnerships' %}">{% trans "Travel Partnership Programs" %}</a></li><li>{% icon 'check' 16 %}<a href="{% url 'airport_transfers' %}">{% trans "Airport Transfers & Shuttles" %}</a></li><li>{% icon 'check' 16 %}<a href="{% url 'holiday_tailor_made_tours' %}">{% trans "Custom Tailor-Made Tours" %}</a></li><li>{% icon 'check' 16 %}<a href="{% url 'hotels' %}">{% trans "Hotels" %}</a></li></ul><p style="margin-top:14px"><a class="text-link" href="{% url 'services' %}">{% trans "View all services" %} {% icon 'arrow-right' 14 %}</a></p></div></aside></div></section>
+{% endblock %}

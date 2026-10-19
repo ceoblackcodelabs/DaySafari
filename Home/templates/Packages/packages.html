@@ -1,159 +1,21 @@
 {% extends "Home/base.html" %}
-
-{% load static image_tags i18n %}
-
-{% block title %}{% trans "Our Safari Packages - Days Safaris Adventures" %}{% endblock title %}
-
-{% block meta_description %}{% trans "Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices." %}{% endblock meta_description %}
-{% block og_description %}{% trans "Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices." %}{% endblock og_description %}
-{% block twitter_description %}{% trans "Browse safari packages across Kenya, Tanzania, Uganda, Rwanda and South Africa with Day Safaris Adventures. Custom itineraries, expert guides, best prices." %}{% endblock twitter_description %}
-{# filtered/paged views are variations of the same list: keep one canonical address and let Google follow the links #}
-{% block canonical_url %}https://daysafarisadventures.co.ke{% url 'packages' %}{% endblock canonical_url %}
-
+{% load i18n image_tags %}
+{% block title %}{% trans "Safari Packages - Days Safaris Adventures" %}{% endblock %}
+{% block meta_description %}{% trans "Browse safari packages, tours and cruises. Filter by destination and length." %}{% endblock %}
 {% block body %}
-
-<!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
-    <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% trans "Our Safari Packages" %}</h3>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-            <li class="breadcrumb-item active text-white">{% trans "Packages" %}</li>
-        </ol>
-    </div>
-</div>
-<!-- Header End -->
-
-<!-- Filters Start -->
-<section class="pk-toolbar" aria-label="{% trans 'Filter packages' %}">
-    <div class="container">
-        <form method="get" action="{% url 'packages' %}#results" class="pk-form" id="pkForm">
-            {% if current_filters.category %}<input type="hidden" name="category" value="{{ current_filters.category }}">{% endif %}
-            {% if current_filters.sort %}<input type="hidden" name="sort" value="{{ current_filters.sort }}">{% endif %}
-            <div class="pk-search">
-                <i class="fa fa-search" aria-hidden="true"></i>
-                <input type="search" name="search" value="{{ current_filters.search }}" maxlength="100" autocomplete="off"
-                       placeholder="{% trans 'Search packages...' %}" aria-label="{% trans 'Search' %}">
-                <button type="submit" class="pk-btn pk-btn-main"><i class="fas fa-filter"></i><span>{% trans "Filter" %}</span></button>
-                {% if chips %}<a href="{{ clear_url }}" class="pk-btn pk-btn-quiet"><i class="fas fa-undo"></i><span>{% trans "Reset" %}</span></a>{% endif %}
-            </div>
-
-            <nav class="pk-pills" aria-label="{% trans 'Category' %}">
-                <a href="{{ all_url }}" class="pk-pill {% if not current_filters.category %}active{% endif %}">{% trans "All" %} <span>{{ total_all }}</span></a>
-                {% for c in categories %}<a href="{{ c.url }}" class="pk-pill {% if c.active %}active{% endif %}">{% trans c.value %} <span>{{ c.n }}</span></a>{% endfor %}
-            </nav>
-
-            <details class="pk-more" {% if current_filters.location or current_filters.days %}open{% endif %}>
-                <summary><i class="fas fa-sliders-h"></i> {% trans "More filters" %}</summary>
-                <div class="pk-fields">
-                    <label><span>{% trans "Location" %}</span>
-                        <select name="location">
-                            <option value="">{% trans "All Locations" %}</option>
-                            {% for location in locations %}<option value="{{ location }}" {% if current_filters.location == location %}selected{% endif %}>{{ location }}</option>{% endfor %}
-                        </select></label>
-                    <label><span>{% trans "Max Days" %}</span><input type="number" name="days" min="1" max="365" inputmode="numeric" placeholder="{% trans 'Days' %}" value="{{ current_filters.days }}"></label>
-                </div>
-                <div class="pk-presets">
-                    <b>{% trans "Length" %}</b>
-                    {% for label, url, on in days_presets %}<a href="{{ url }}" class="pk-chip {% if on %}active{% endif %}">{{ label }}</a>{% endfor %}
-                </div>
-            </details>
-        </form>
-    </div>
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "Packages" %}</span></nav><h1>{% trans "Our safari" %} <em>{% trans "packages" %}</em></h1><p class="lead">{% trans "Find the journey that feels like you. Filter by destination and trip length." %}</p></div></section>
+<section class="section">
+<form method="get" action="{% url 'packages' %}" class="filter-bar" role="search">
+<label>{% trans "Search" %}<input type="text" name="search" value="{{ current_filters.search }}" placeholder="{% trans 'Masai Mara, Diani…' %}"></label>
+<label>{% trans "Place" %}<select name="location"><option value="">{% trans "Any place" %}</option>{% for l in locations %}<option value="{{ l }}" {% if l == current_filters.location %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></label>
+{% if current_filters.category %}<input type="hidden" name="category" value="{{ current_filters.category }}">{% endif %}{% if current_filters.days %}<input type="hidden" name="days" value="{{ current_filters.days }}">{% endif %}{% if current_filters.sort %}<input type="hidden" name="sort" value="{{ current_filters.sort }}">{% endif %}
+<button class="button primary" type="submit">{% icon 'search' 15 %} {% trans "Apply" %}</button></form>
+<div class="chips" style="margin-bottom:14px"><a href="{{ all_url }}" class="{% if not current_filters.category %}selected{% endif %}">{% trans "All" %} ({{ total_all }})</a>{% for c in categories %}<a href="{{ c.url }}" class="{% if c.active %}selected{% endif %}">{% trans c.value %} ({{ c.n }})</a>{% endfor %}</div>
+<div class="chips" style="margin-bottom:22px">{% for label, url, on in days_presets %}<a href="{{ url }}" class="{% if on %}selected{% endif %}">{{ label }}</a>{% endfor %}</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px"><div class="chips">{% for label, url in chips %}<a href="{{ url }}">{{ label }} ✕</a>{% endfor %}{% if chips %}<a href="{{ clear_url }}">{% trans "Clear all" %}</a>{% endif %}</div>
+<label style="display:flex;align-items:center;gap:8px;font-size:12px">{% trans "Sort" %}<select onchange="location.href=this.value" style="width:auto;margin:0;height:38px">{% for key, label, url, on in sort_options %}<option value="{{ url }}" {% if on %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label></div>
+<p class="form-intro" style="margin-top:0">{{ page_obj.paginator.count }} {% trans "packages found" %}</p>
+<div class="card-grid">{% for p in packages %}{% include "Home/partials/package_card.html" %}{% empty %}<p class="empty" style="grid-column:1/-1">{% trans "No packages match your filters. Try widening your search or" %} <a class="text-link" href="{{ clear_url }}">{% trans "clear all filters" %}</a>.</p>{% endfor %}</div>
+{% if is_paginated %}<nav class="pager" aria-label="Pagination">{% if page_obj.has_previous %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Previous">‹</a>{% endif %}{% for n in page_obj.paginator.page_range %}{% if n == page_obj.number %}<span class="cur">{{ n }}</span>{% else %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ n }}">{{ n }}</a>{% endif %}{% endfor %}{% if page_obj.has_next %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ page_obj.next_page_number }}" aria-label="Next">›</a>{% endif %}</nav>{% endif %}
 </section>
-<!-- Filters End -->
-
-<!-- Packages Start -->
-<section class="pk-results py-5" id="results">
-    <div class="container">
-        <div class="pk-head">
-            <p class="pk-count">
-                {% if page_obj.paginator.count %}{% trans "Showing" %} <b>{{ page_obj.start_index }}-{{ page_obj.end_index }}</b>
-                {% trans "of" %} <b>{{ page_obj.paginator.count }}</b> {% trans "packages" %}{% else %}{% trans "No packages found" %}{% endif %}
-            </p>
-            <div class="pk-tools">
-                <label class="pk-sort"><span>{% trans "Sort By" %}</span>
-                    <select onchange="window.location=this.value" aria-label="{% trans 'Sort packages' %}">
-                        {% for key, label, url, on in sort_options %}<option value="{{ url }}#results" {% if on %}selected{% endif %}>{{ label }}</option>{% endfor %}
-                    </select></label>
-                <div class="pk-view" role="group" aria-label="{% trans 'Layout' %}">
-                    <button type="button" data-view="grid" class="active" aria-label="{% trans 'Grid view' %}"><i class="fas fa-th-large"></i></button>
-                    <button type="button" data-view="list" aria-label="{% trans 'List view' %}"><i class="fas fa-list"></i></button>
-                </div>
-            </div>
-        </div>
-
-        {% if chips %}
-        <div class="pk-active" aria-label="{% trans 'Active filters' %}">
-            {% for label, url in chips %}<a href="{{ url }}#results" class="pk-tag" title="{% trans 'Remove' %}">{{ label }} <i class="fas fa-times"></i></a>{% endfor %}
-            <a href="{{ clear_url }}#results" class="pk-clear">{% trans "Clear all" %}</a>
-        </div>
-        {% endif %}
-
-        <div class="pk-grid" id="pkGrid">
-            {% for package in packages %}
-            <article class="pk-card">
-                <a class="pk-img" href="{% url 'package_detail' package.slug %}" tabindex="-1" aria-hidden="true">
-                    <img src="{% if package.image %}{{ package.image|thumb:640 }}{% else %}{% static 'img/package-placeholder.jpg' %}{% endif %}" alt="" loading="{% if forloop.counter > 3 %}lazy{% else %}eager{% endif %}" decoding="async" width="640" height="480">
-                    <span class="pk-badge">{% trans package.category %}</span>
-                </a>
-                <div class="pk-body">
-                    <p class="pk-loc"><i class="fa fa-map-marker-alt"></i> {{ package.location }}</p>
-                    <h2 class="pk-title"><a href="{% url 'package_detail' package.slug %}">{{ package.name }}</a></h2>
-                    <ul class="pk-meta">
-                        <li><i class="far fa-calendar-alt"></i> {{ package.days }} {% trans "Days" %}</li>
-                        <li><i class="fas fa-user-friends"></i> {{ package.persons }}</li>
-                        <li class="pk-stars" title="{{ package.star_rating }}/5">{% for _ in "12345"|make_list %}<i class="fa fa-star {% if forloop.counter > package.star_rating %}off{% endif %}"></i>{% endfor %}</li>
-                    </ul>
-                    <p class="pk-desc">{{ package.description|striptags|truncatewords:22 }}</p>
-                    <div class="pk-actions">
-                        <a href="{% url 'package_detail' package.slug %}" class="pk-btn pk-btn-main">{% trans "View Detail" %}</a>
-                        <a href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20am%20interested%20in%3A%20{{ package.name|urlencode }}" target="_blank" rel="noopener" class="pk-btn pk-btn-wa" aria-label="{% trans 'Get a Quote' %}: {{ package.name }}"><i class="fab fa-whatsapp"></i><span>{% trans "Get a Quote" %}</span></a>
-                    </div>
-                </div>
-            </article>
-            {% empty %}
-            <div class="pk-empty">
-                <i class="fas fa-search"></i>
-                <h3>{% trans "No packages found" %}</h3>
-                <p>{% trans "Try adjusting your filters or search criteria." %}</p>
-                <a href="{% url 'packages' %}" class="pk-btn pk-btn-main">{% trans "Clear All Filters" %}</a>
-                <div class="pk-pills justify-content-center mt-4">
-                    {% for c in categories %}<a href="{% url 'packages' %}?category={{ c.value|urlencode }}" class="pk-pill">{% trans c.value %} <span>{{ c.n }}</span></a>{% endfor %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        {% if page_obj.paginator.num_pages > 1 %}
-        <nav class="pk-pager" aria-label="{% trans 'Page navigation' %}">
-            {% if page_obj.has_previous %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ page_obj.previous_page_number }}#results" aria-label="{% trans 'Previous' %}"><i class="fas fa-angle-left"></i></a>{% endif %}
-            {% for num in page_obj.paginator.page_range %}
-                {% if page_obj.number == num %}<span class="active" aria-current="page">{{ num }}</span>
-                {% elif num == 1 or num == page_obj.paginator.num_pages or num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ num }}#results">{{ num }}</a>
-                {% elif num == page_obj.number|add:'-2' or num == page_obj.number|add:'2' %}<em>…</em>{% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}<a href="?{% if base_qs %}{{ base_qs }}&{% endif %}page={{ page_obj.next_page_number }}#results" aria-label="{% trans 'Next' %}"><i class="fas fa-angle-right"></i></a>{% endif %}
-        </nav>
-        {% endif %}
-
-        <div class="pk-cta">
-            <div>
-                <h2>{% trans "Can't find the right trip?" %}</h2>
-                <p>{% trans "Tell us your dates and budget and we will build a tailor-made itinerary with a free quote." %}</p>
-            </div>
-            <button type="button" class="pk-btn pk-btn-light" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button>
-        </div>
-    </div>
-</section>
-<!-- Packages End -->
-
-<script>
-(function () {
-    var grid = document.getElementById('pkGrid'), btns = document.querySelectorAll('.pk-view button');
-    function set(v) { grid.classList.toggle('is-list', v === 'list'); btns.forEach(function (b) { b.classList.toggle('active', b.dataset.view === v); }); try { localStorage.setItem('pkView', v); } catch (e) {} }
-    btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.view); }); });
-    try { var v = localStorage.getItem('pkView'); if (v === 'list') set('list'); } catch (e) {}
-})();
-</script>
-{% endblock body %}
+{% endblock %}

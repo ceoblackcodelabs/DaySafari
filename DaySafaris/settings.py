@@ -20,7 +20,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-i9#fnbul=t8lgg$(zv1x^
 # Local development: put DEBUG=True in your .env.
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = ["*"] if DEBUG else [
     "daysafarisadventures.co.ke",
     "www.daysafarisadventures.co.ke",
     "localhost",
@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 
 # ========== APPLICATION DEFINITION ==========
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',  # WhiteNoise serves static files under runserver too (compression + cache headers)
     'modeltranslation',          # must come before django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'Invoices',
     'EmailSetup',
     'django_ckeditor_5',
+    'safaris',                   # landing pages (Kenya, Tanzania, Uganda, cruises...) + enquiry form
 ]
 
 # ========== MIDDLEWARE ==========
@@ -93,6 +95,7 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
+            'builtins': ['safaris.templatetags.safari'],
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -101,6 +104,7 @@ TEMPLATES = [
                 'Home.context_processors.footer_gallery',
                 'Home.context_processors.mega_menu',
                 'Home.context_processors.lead_popup',
+                'safaris.context_processors.nav',
             ],
         },
     },
@@ -113,6 +117,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': config('DB_PATH', default=str(BASE_DIR / 'db.sqlite3')),
+        'CONN_MAX_AGE': 60,
+        'OPTIONS': {
+            'timeout': 10,
+            'init_command': 'PRAGMA journal_mode=WAL; PRAGMA synchronous=NORMAL; PRAGMA temp_store=MEMORY;',
+        },
     }
 }
 
@@ -130,7 +139,8 @@ DATABASES = {
 # higher traffic -- same "shared across processes" requirement either way.
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        # In-memory cache on your own computer (fastest); shared file cache in production (many worker processes).
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache' if DEBUG else 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': str(BASE_DIR / 'var' / 'django_cache'),
         'TIMEOUT': 300,  # 5 minutes default
         'OPTIONS': {
@@ -190,10 +200,12 @@ STATIC_URL = '/static/'
 
 # Directory where static files will be collected for production
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT.mkdir(exist_ok=True)
 
 # Directories where Django will look for static files
 STATICFILES_DIRS = [
-    BASE_DIR / 'Home' / 'static',  # Your app's static folder with videos
+    BASE_DIR / 'static',           # site theme (css/js/images)
+    BASE_DIR / 'Home' / 'static',  # legacy static folder (videos, logos)
 ]
 
 # Storages (Django 5.1+ ignores STATICFILES_STORAGE; STORAGES is the setting).
@@ -302,7 +314,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://www.daysafarisadventures.co.ke',
 ]
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
 

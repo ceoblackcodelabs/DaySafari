@@ -18,7 +18,7 @@ def group_destinations_by_category(categories):
     PER category (an N+1 query per page load) used across the tour views
     below."""
     all_destinations = Destinations.objects.select_related('category').only(
-        'id', 'name', 'image', 'price', 'category__id', 'category__category'
+        'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__location'
     )
     grouped = defaultdict(list)
     for destination in all_destinations:
@@ -68,7 +68,7 @@ class AfricaTourView(ListView):
     def get_queryset(self):
         return AwesomePackages.objects.filter(
             category__in=['East Africa Tours', 'South Africa', 'West Africa', 'Africa Tours']
-        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location')[:12]
+        )[:12]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -79,7 +79,7 @@ class AfricaTourView(ListView):
 
         # Get all destinations with select_related for optimization
         all_destinations = Destinations.objects.select_related('category').only(
-            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__location', 'category__image_orientation'
         )[:9]
         context['all_destinations'] = all_destinations
 
@@ -98,7 +98,7 @@ class EastAfricaTourView(ListView):
     def get_queryset(self):
         return AwesomePackages.objects.filter(
             category='East Africa Tours'
-        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug')
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -109,7 +109,7 @@ class EastAfricaTourView(ListView):
 
         # Get all destinations
         all_destinations = Destinations.objects.select_related('category').only(
-            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__location', 'category__image_orientation'
         )[:9]
         context['all_destinations'] = all_destinations
 
@@ -128,7 +128,7 @@ class SouthAfricaTourView(ListView):
     def get_queryset(self):
         return AwesomePackages.objects.filter(
             category='South Africa'
-        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug')
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -139,7 +139,7 @@ class SouthAfricaTourView(ListView):
 
         # Get all destinations
         all_destinations = Destinations.objects.select_related('category').only(
-            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__location', 'category__image_orientation'
         )[:9]
         context['all_destinations'] = all_destinations
 
@@ -158,7 +158,7 @@ class WestAfricaTourView(ListView):
     def get_queryset(self):
         return AwesomePackages.objects.filter(
             category='West Africa'
-        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug')
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -169,7 +169,7 @@ class WestAfricaTourView(ListView):
 
         # Get all destinations
         all_destinations = Destinations.objects.select_related('category').only(
-            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__location', 'category__image_orientation'
         )[:9]
         context['all_destinations'] = all_destinations
 
@@ -188,7 +188,7 @@ class InternationalAfricaTourView(ListView):
     def get_queryset(self):
         return AwesomePackages.objects.filter(
             category='International Tours'
-        ).only('id', 'name', 'image', 'price', 'days', 'category', 'star_rating', 'location', 'slug')
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -199,7 +199,7 @@ class InternationalAfricaTourView(ListView):
 
         # Get all destinations
         all_destinations = Destinations.objects.select_related('category').only(
-            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__image_orientation'
+            'id', 'name', 'image', 'price', 'category__id', 'category__category', 'category__location', 'category__image_orientation'
         )[:9]
         context['all_destinations'] = all_destinations
 

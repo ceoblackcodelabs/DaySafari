@@ -30,6 +30,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView
 from Home.sitemaps import sitemaps
 from DaySafaris.media import serve_media_with_range
+from safaris.urls import api_urlpatterns as safaris_api_urls, urlpatterns as safaris_urls
 
 ROBOTS_TXT = """User-agent: *
 Allow: /
@@ -48,6 +49,7 @@ urlpatterns = [
     path('sitemap.xml', cache_page(3600)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('i18n/', include('django.conf.urls.i18n')),  # Language switcher endpoint
     path('ckeditor5/', include('django_ckeditor_5.urls')),
+    *safaris_api_urls,
 ]
 
 urlpatterns += i18n_patterns(
@@ -57,6 +59,7 @@ urlpatterns += i18n_patterns(
     path('', include('Places.urls')),
     path('', include('ClientRequests.urls')),
     path('', include("Hotels.urls")),
+    *safaris_urls,
 )
 
 # NOTE: django.conf.urls.static.static() is NOT used for MEDIA_URL. It has

@@ -1,0 +1,6 @@
+{% load i18n image_tags %}<article class="card">
+<a class="card-photo" href="{% url 'package_detail' p.slug %}" aria-label="{{ p.name }}"><img src="{{ p.image|thumb:640 }}" alt="{{ p.name }}" loading="lazy" decoding="async" width="640" height="440">{% if p.category %}<span class="tag">{{ p.category }}</span>{% endif %}</a>
+<div class="card-body"><div class="card-meta"><span>{% icon 'map-pin' 12 %}{{ p.location }}</span><span>{% icon 'clock' 12 %}{{ p.days }} {% trans "days" %}</span><span>{% icon 'users' 12 %}{{ p.persons }}</span></div>
+<h3><a href="{% url 'package_detail' p.slug %}">{{ p.name }}</a></h3>{% stars p.star_rating 13 %}
+<p>{{ p.description|striptags|truncatewords:22 }}</p>
+<div class="card-foot"><div><small>{% trans "Price" %}</small><strong style="font-size:14px">{% trans "On request" %}</strong></div><a class="button primary sm" href="{% url 'package_detail' p.slug %}">{% trans "View" %} {% icon 'arrow-up-right' 14 %}</a></div></div></article>

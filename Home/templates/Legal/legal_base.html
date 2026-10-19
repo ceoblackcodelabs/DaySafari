@@ -1,27 +1,12 @@
 {% extends "Home/base.html" %}
 {% load i18n %}
-
+{% block og_title_inner %}{% block legal_og %}{% endblock %}{% endblock %}
 {% block body %}
-<!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
-    <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% block legal_heading %}{% endblock legal_heading %}</h3>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-            <li class="breadcrumb-item active text-white">{% block legal_crumb %}{% endblock legal_crumb %}</li>
-        </ol>
-    </div>
-</div>
-<!-- Header End -->
-
-<div class="container-fluid bg-light py-5">
-    <div class="container py-4">
-        <div class="mx-auto bg-white rounded p-4 p-md-5 legal-page" style="max-width: 900px;">
-            {% block legal_updated %}<p class="small mb-4">{% trans "Last updated:" %} 5 {% trans "October" %} 2026</p>{% endblock legal_updated %}
-            {% get_current_language as LEGAL_LANG %}
-            {% if LEGAL_LANG != 'en' %}<div class="alert alert-secondary small" role="note">{% trans "This legal text is provided in English. If a translation and the English text differ, the English text prevails." %}</div>{% endif %}
-            {% block legal_content %}{% endblock legal_content %}
-        </div>
-    </div>
-</div>
-{% endblock body %}
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% block legal_crumb %}{% endblock %}</span></nav><h1>{% block legal_heading %}{% endblock %}</h1></div></section>
+<section class="section"><div class="prose legal-page" style="max-width:860px">
+{% block legal_updated %}<p style="color:var(--muted);font-size:13px">{% trans "Last updated:" %} 5 {% trans "October" %} 2026</p>{% endblock %}
+{% get_current_language as LEGAL_LANG %}
+{% if LEGAL_LANG != 'en' %}<div class="notice" role="note">{% trans "This legal text is provided in English. If a translation and the English text differ, the English text prevails." %}</div>{% endif %}
+{% block legal_content %}{% endblock %}
+</div></section>
+{% endblock %}

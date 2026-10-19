@@ -1,7 +1,7 @@
 """Which model fields are translated per language (django-modeltranslation)."""
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import Hotel, HotelImage, AirBNB, AirBNBImage
+from .models import Hotel, HotelImage
 
 
 @register(Hotel)
@@ -11,14 +11,4 @@ class HotelTranslationOptions(TranslationOptions):
 
 @register(HotelImage)
 class HotelImageTranslationOptions(TranslationOptions):
-    fields = ('caption',)
-
-
-@register(AirBNB)
-class AirBNBTranslationOptions(TranslationOptions):
-    fields = ('title', 'location', 'description',)
-
-
-@register(AirBNBImage)
-class AirBNBImageTranslationOptions(TranslationOptions):
     fields = ('caption',)

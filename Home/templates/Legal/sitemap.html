@@ -1,7 +1,7 @@
 {% extends "Legal/legal_base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Sitemap - Day Safaris Adventures" %}{% endblock title %}
-{% block meta_description %}{% trans "Browse every page of Day Safaris Adventures: safari packages, destinations, trekking, cruises, Airbnb stays, services, blog and support pages." %}{% endblock meta_description %}
+{% block meta_description %}{% trans "Browse every page of Day Safaris Adventures: safari packages, destinations, trekking, cruises, services, blog and support pages." %}{% endblock meta_description %}
 {% block og_description %}{% trans "Browse every page of Day Safaris Adventures." %}{% endblock og_description %}
 {% block twitter_description %}{% trans "Browse every page of Day Safaris Adventures." %}{% endblock twitter_description %}
 {% block legal_heading %}{% trans "Sitemap" %}{% endblock %}
@@ -9,10 +9,10 @@
 {% block legal_updated %}{% endblock legal_updated %}
 
 {% block legal_content %}
-<div class="row g-4">
-    <div class="col-md-6">
-        <h2 class="h4">{% trans "Main pages" %}</h2>
-        <ul class="list-unstyled lh-lg">
+<div class="card-grid cols-2" style="align-items:start">
+    <div>
+        <h2 >{% trans "Main pages" %}</h2>
+        <ul class="plain-list">
             <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
             <li><a href="{% url 'about' %}">{% trans "About us" %}</a></li>
             <li><a href="{% url 'services' %}">{% trans "Services" %}</a></li>
@@ -25,8 +25,8 @@
             <li><a href="{% url 'contact' %}">{% trans "Contact" %}</a></li>
         </ul>
 
-        <h2 class="h4 mt-4">{% trans "Tours by region" %}</h2>
-        <ul class="list-unstyled lh-lg">
+        <h2 style="margin-top:28px">{% trans "Tours by region" %}</h2>
+        <ul class="plain-list">
             <li><a href="{% url 'east_africa_tours' %}">{% trans "East Africa tours" %}</a></li>
             <li><a href="{% url 'south_africa_tours' %}">{% trans "South Africa tours" %}</a></li>
             <li><a href="{% url 'west_africa_tours' %}">{% trans "West Africa tours" %}</a></li>
@@ -36,8 +36,8 @@
             <li><a href="{% url 'holiday_tailor_made_tours' %}">{% trans "Tailor-made holidays" %}</a></li>
         </ul>
 
-        <h2 class="h4 mt-4">{% trans "Trekking" %}</h2>
-        <ul class="list-unstyled lh-lg">
+        <h2 style="margin-top:28px">{% trans "Trekking" %}</h2>
+        <ul class="plain-list">
             <li><a href="{% url 'trekking_kenya' %}">{% trans "Mount Kenya" %}</a></li>
             <li><a href="{% url 'trekking_kilimanjaro' %}">{% trans "Mount Kilimanjaro" %}</a></li>
             <li><a href="{% url 'trekking_meru' %}">{% trans "Mount Meru" %}</a></li>
@@ -46,19 +46,18 @@
             {% for trek in trekking %}<li><a href="{% url 'kili_detail' trek.id %}">{{ trek.name }}</a></li>{% endfor %}
         </ul>
 
-        <h2 class="h4 mt-4">{% trans "Other services" %}</h2>
-        <ul class="list-unstyled lh-lg">
+        <h2 style="margin-top:28px">{% trans "Other services" %}</h2>
+        <ul class="plain-list">
             <li><a href="{% url 'airport_transfers' %}">{% trans "Airport transfers" %}</a></li>
             <li><a href="{% url 'airline' %}">{% trans "Flights" %}</a></li>
             <li><a href="{% url 'travel_partnerships' %}">{% trans "Travel partnerships" %}</a></li>
             <li><a href="{% url 'hotels' %}">{% trans "Hotels" %}</a></li>
-            {% for hotel in hotels %}<li class="ms-3"><a href="{% url 'hotel_detail' hotel.slug %}">{{ hotel.name }}</a></li>{% endfor %}
-            <li><a href="{% url 'airbnb' %}">{% trans "Airbnb stays" %}</a></li>
-            {% for stay in stays %}<li><a href="{% url 'bnb_detail' stay.id %}">{{ stay.title|default:stay.location }}</a></li>{% endfor %}
+            {% for hotel in hotels %}<li style="margin-left:14px"><a href="{% url 'hotel_detail' hotel.slug %}">{{ hotel.name }}</a></li>{% endfor %}
+            <li></li>
         </ul>
 
-        <h2 class="h4 mt-4">{% trans "Support" %}</h2>
-        <ul class="list-unstyled lh-lg">
+        <h2 style="margin-top:28px">{% trans "Support" %}</h2>
+        <ul class="plain-list">
             <li><a href="{% url 'legal_notice' %}">{% trans "Legal Notice" %}</a></li>
             <li><a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}</a></li>
             <li><a href="{% url 'terms_and_conditions' %}">{% trans "Terms and Conditions" %}</a></li>
@@ -67,9 +66,9 @@
         </ul>
     </div>
 
-    <div class="col-md-6">
-        <h2 class="h4">{% trans "Safari packages" %}</h2>
-        <ul class="list-unstyled lh-lg">
+    <div>
+        <h2 >{% trans "Safari packages" %}</h2>
+        <ul class="plain-list">
             {% regroup packages by category as groups %}
             {% for group in groups %}
             <li class="fw-bold mt-2">{{ group.grouper }}</li>
@@ -77,14 +76,14 @@
             {% endfor %}
         </ul>
 
-        <h2 class="h4 mt-4">{% trans "Destinations" %}</h2>
-        <ul class="list-unstyled lh-lg">
+        <h2 style="margin-top:28px">{% trans "Destinations" %}</h2>
+        <ul class="plain-list">
             {% for destination in destinations %}<li><a href="{% url 'destination_detail' destination.id %}">{{ destination.name }}</a></li>{% endfor %}
         </ul>
 
         {% if blogs %}
-        <h2 class="h4 mt-4">{% trans "Latest articles" %}</h2>
-        <ul class="list-unstyled lh-lg">
+        <h2 style="margin-top:28px">{% trans "Latest articles" %}</h2>
+        <ul class="plain-list">
             {% for blog in blogs %}<li><a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a></li>{% endfor %}
         </ul>
         {% endif %}

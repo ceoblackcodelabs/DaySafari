@@ -1,0 +1,42 @@
+<script type="application/json" id="questions-data">{{ questions_json|to_json }}</script>
+<section id="enquire" class="enquiry-card" aria-labelledby="form-title" data-slug="{{ page.slug }}" data-fixed="{% if page.destination %}1{% endif %}">
+<div class="form-view">
+<div class="form-heading"><span class="eyebrow dark">Make it your own</span><span class="form-pill">No commitment</span></div>
+<h2 id="form-title">Let’s plan your {% if page.destination == 'kilimanjaro' %}trek{% else %}adventure{% endif %}.</h2>
+<p class="form-intro">A few details. A trip shaped around you.</p>
+<div class="selected-trip" id="selected-trip" {% if not selected %}hidden{% endif %}>{% icon 'check' 14 %}<span>{% if selected %}{{ selected.name }} · {{ selected.days }}{% endif %}</span><button type="button" id="clear-trip" aria-label="Clear selected itinerary">Change</button></div>
+<form method="post" action="/api/enquiry/" id="lead-form">
+{% csrf_token %}
+<input type="hidden" name="submission_id" value="{{ submission_id }}">
+<input type="hidden" name="page_slug" value="{{ page.slug }}">
+<input type="hidden" name="trip_id" id="trip-id" value="{% if selected %}{{ selected.id }}{% endif %}">
+{% if page.destination %}<input type="hidden" name="destination_key" id="destination" value="{{ page.destination }}">{% endif %}
+<div class="form-grid">
+<label>Your name<input name="full_name" autocomplete="name" placeholder="Full name" required minlength="2" maxlength="100"></label>
+<label>Email or WhatsApp<input name="contact" autocomplete="email" placeholder="Email or +country code" required maxlength="120" aria-describedby="contact-note"></label>
+{% if not page.destination %}<label class="span-2">What would you love to experience?<select name="destination_key" id="destination"><option value="">Help me choose</option>{% for d in select_options %}<option value="{{ d.key }}" {% if d.key == form_destination %}selected{% endif %}>{{ d.label }}</option>{% endfor %}</select></label>{% endif %}
+<label class="span-2" id="q0-wrap" {% if not form_questions %}hidden{% endif %}><span id="q0-label">{{ form_questions.0.label }}</span><select id="q0" name="answer__{{ form_questions.0.key }}"><option value="">Choose an option</option>{% for o in form_questions.0.options %}<option>{{ o }}</option>{% endfor %}</select></label>
+<label>When would you travel?<select name="travel_month"><option selected>Still deciding</option>{% for m in months %}<option value="{{ m.value }}">{{ m.label }}</option>{% endfor %}</select></label>
+<label>Travellers<input name="travellers" type="number" min="1" max="50" value="2" required inputmode="numeric"></label>
+</div>
+<span id="contact-note" class="sr-only">For WhatsApp, include your country code.</span>
+<div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<button type="button" class="refine" id="refine" aria-expanded="false">Add trip preferences <span>(optional)</span>{% icon 'chevron-down' 14 %}</button>
+<div class="refinement" id="refinement" hidden>
+<label id="q1-wrap" {% if not form_questions.1 %}hidden{% endif %}><span id="q1-label">{{ form_questions.1.label }}</span><select id="q1" name="answer__{{ form_questions.1.key }}"><option value="">Choose an option</option>{% for o in form_questions.1.options %}<option>{{ o }}</option>{% endfor %}</select></label>
+<label>Anything else we should know?<textarea name="notes" rows="2" maxlength="1200" placeholder="{% if page.destination == 'kilimanjaro' %}Your route, previous hiking or safari extension…{% elif page.destination == 'uganda' %}Your trekking plans or questions about permits…{% elif form_dest.group == 'hotel' %}Preferred area, room types or budget…{% elif form_dest.group == 'cruise' %}Preferred dates, children travelling or a special occasion…{% else %}Your budget, children travelling or special requests…{% endif %}"></textarea></label>
+</div>
+<noscript><style>.refinement[hidden],#q0-wrap[hidden],#q1-wrap[hidden]{display:block!important}</style></noscript>
+<div class="form-error" id="form-error" role="alert" hidden><span id="form-error-text"></span><small id="form-error-ref" hidden></small><a href="{{ whatsapp }}" target="_blank" rel="noopener noreferrer">Contact us on WhatsApp</a></div>
+<button class="button primary submit" id="submit-btn" type="submit"><span class="idle">Get my {% if page.destination == 'kilimanjaro' %}trek plan{% elif page.destination == 'mara' %}Mara safari plan{% elif form_dest.group == 'cruise' %}cruise quote{% elif page.destination == 'hotels' %}stay suggestions{% elif page.destination == 'services' %}service quote{% else %}safari plan{% endif %}{% icon 'arrow-right' 17 %}</span><span class="busy" hidden>{% icon 'loader' 17 'spin' %}Sending your enquiry…</span></button>
+<p class="form-privacy">{% icon 'lock' 11 %}We use your details to respond to this enquiry. <a href="https://daysafarisadventures.co.ke/en/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy</a></p>
+</form>
+</div>
+<div class="success-view" aria-live="polite" hidden>
+<span class="success-mark">{% icon 'check' 28 %}</span><p class="eyebrow dark">Your adventure is taking shape</p><h2>Thank you for reaching out.</h2>
+<p>Your <span id="success-label">trip</span> enquiry has been sent to our team. We’ll contact you using the details you shared to discuss your itinerary and quotation.</p>
+<div class="success-next"><strong>What happens next?</strong><span>We discuss your plans, then provide a written quotation. This enquiry does not confirm a booking.</span></div>
+<a class="button primary" href="{{ whatsapp }}" target="_blank" rel="noopener noreferrer">Continue on WhatsApp {% icon 'arrow-right' 16 %}</a>
+<p class="reference">Reference: <span id="success-ref"></span></p>
+</div>
+</section>

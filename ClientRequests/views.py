@@ -69,7 +69,7 @@ class BookingCreateView(AntiSpamViewMixin, CreateView):
                 'name': f"{self.request.user.first_name} {self.request.user.last_name}".strip() or self.request.user.username,
                 'email': self.request.user.email,
             }
-            context['form'] = BookingsForm(initial=initial)
+            context['form'] = BookingsForm(initial={**self.get_initial(), **initial})
 
         return context
 

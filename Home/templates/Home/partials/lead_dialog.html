@@ -1,0 +1,23 @@
+{% load i18n %}{% if show_lead_popup %}
+<div id="leadOverlay" class="modal-overlay" data-auto="1" role="dialog" aria-modal="true" aria-labelledby="leadTitle" hidden>
+<div class="modal-card">
+<button type="button" class="modal-close" data-lead-close aria-label="{% trans 'Close' %}">{% icon 'x' 20 %}</button>
+<p class="eyebrow dark">{% trans "Free quote · reply in minutes" %}</p>
+<h2 id="leadTitle">{% trans "Hello! What's your next adventure?" %}</h2>
+<p class="form-intro">{% trans "Tell us where you dream of going and we will chat with you on WhatsApp with a free, no-obligation quote." %}</p>
+<form id="leadForm" action="{% url 'lead_capture' %}" method="post" novalidate>{% csrf_token %}
+<input type="hidden" name="form_ts" value="{{ lead_ts }}">
+<div class="honeypot" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+<div class="form-grid">
+<label>{% trans "Your name" %}<input type="text" name="name" required maxlength="100" autocomplete="name"></label>
+<label>{% trans "Phone / WhatsApp" %}<input type="tel" name="phone" required maxlength="25" autocomplete="tel" inputmode="tel" placeholder="+254…"></label>
+<label class="span-2">{% trans "Which safari or tour?" %}<input type="text" name="tour" list="leadTours" maxlength="160" placeholder="{% trans 'Pick or type your own' %}"></label>
+<datalist id="leadTours">{% for t in mega.lead_tours %}<option value="{{ t }}">{% endfor %}</datalist>
+<label class="span-2">{% trans "A short message (optional)" %}<textarea name="message" rows="2" maxlength="600"></textarea></label>
+</div>
+<p class="form-error" id="leadError" role="alert" hidden></p>
+<button type="submit" class="button primary submit">{% icon 'message-circle' 17 %} {% trans "Send on WhatsApp" %}</button>
+<label class="dont-show"><input type="checkbox" id="leadDontShow"> {% trans "Don't show again" %}</label>
+</form>
+<p class="form-privacy">{% icon 'lock' 11 %}{% trans "We only use your details to reply about your trip." %}</p>
+</div></div>{% endif %}

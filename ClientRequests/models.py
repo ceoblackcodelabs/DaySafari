@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Bookings(models.Model):
-    """Every booking lead on the site: safari, trekking and Airbnb enquiries."""
-    TYPE_CHOICES = [('safari', 'Safari'), ('trekking', 'Trekking'), ('airbnb', 'Airbnb'), ('hotel', 'Hotel')]
+    """Every booking lead on the site: safari, trekking and hotel enquiries."""
+    TYPE_CHOICES = [('safari', 'Safari'), ('trekking', 'Trekking'), ('hotel', 'Hotel')]
     STATUS_CHOICES = [('new', 'New'), ('contacted', 'Contacted'), ('confirmed', 'Confirmed'),
                       ('cancelled', 'Cancelled'), ('spam', 'Spam')]
 
@@ -18,13 +18,11 @@ class Bookings(models.Model):
     destination = models.ForeignKey(Destinations, on_delete=models.CASCADE, blank=True, null=True)
     trekking_package = models.ForeignKey('Home.Trekking', on_delete=models.SET_NULL, blank=True, null=True,
                                          related_name='bookings')
-    airbnb = models.ForeignKey('Hotels.AirBNB', on_delete=models.SET_NULL, blank=True, null=True,
-                               related_name='bookings')
     hotel = models.ForeignKey('Hotels.Hotel', on_delete=models.SET_NULL, blank=True, null=True,
                               related_name='enquiries')
     persons = models.IntegerField(default=1)
     date = models.DateField(default=timezone.now)          # travel date / check-in
-    check_out = models.DateField(null=True, blank=True)    # Airbnb / hotel stays
+    check_out = models.DateField(null=True, blank=True)    # hotel stays
     has_children = models.BooleanField(null=True, blank=True)      # hotel enquiries: travelling with kids?
     children_count = models.PositiveSmallIntegerField(null=True, blank=True)
     children_ages = models.CharField(max_length=60, blank=True)
@@ -47,7 +45,7 @@ class Bookings(models.Model):
     @property
     def item_name(self):
         """What was booked, whichever type it is."""
-        item = self.destination or self.trekking_package or self.hotel or self.airbnb
+        item = self.destination or self.trekking_package or self.hotel
         return str(item) if item else 'General enquiry'
 
     def __str__(self):

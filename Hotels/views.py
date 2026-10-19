@@ -8,8 +8,8 @@ from django.views.generic import DetailView, ListView
 from ClientRequests.antispam import AntiSpamViewMixin
 from EmailSetup.utils import handle_new_lead, send_booking_confirmation
 
-from .forms import BNBbookingsForm, HotelEnquiryForm
-from .models import AirBNB, Hotel
+from .forms import HotelEnquiryForm
+from .models import Hotel
 
 SORTS = {
     'featured': ('-is_featured', 'country', 'name'),
@@ -117,48 +117,3 @@ class HotelDetailView(AntiSpamViewMixin, DetailView):
                                     'We will confirm availability and rates within 24 hours.')
                          % {'name': booking.name, 'hotel': hotel.name})
         return redirect(hotel.get_absolute_url())
-
-
-# ---------------------------------------------------------------- airbnb stays
-class AirBNBView(ListView):
-    model = AirBNB
-    context_object_name = 'bnbs'
-    template_name = 'BNB/bnbs.html'
-
-
-class AirBNBDetailView(AntiSpamViewMixin, DetailView):
-    antispam_scope = 'airbnb'
-    model = AirBNB
-    context_object_name = 'bnb'
-    template_name = 'BNB/bnbs_detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['all_images'] = self.object.images.all().order_by('order')
-        context['featured_image'] = context['all_images'].filter(is_featured=True).first() or context['all_images'].first()
-        if 'booking_form' not in context:
-            context['booking_form'] = BNBbookingsForm(initial=_initial_for(self.request.user))
-        return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = BNBbookingsForm(request.POST)
-        if not form.is_valid():
-            if form.spam_detected:
-                return self.form_invalid(form)  # AntiSpamViewMixin: strike + 400
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, f'{field}: {error}')
-            return self.render_to_response(self.get_context_data(booking_form=form))
-
-        booking = form.save(commit=False)
-        booking.booking_type = 'airbnb'
-        booking.airbnb = self.object
-        if request.user.is_authenticated:
-            booking.client = request.user
-        booking.save()
-        handle_new_lead(booking, send_booking_confirmation)
-        messages.success(request, _('Thank you %(name)s! Your request for %(place)s was received. '
-                                    'We will contact you shortly to confirm availability.')
-                         % {'name': booking.name, 'place': self.object.title or self.object.location})
-        return redirect(reverse('bnb_detail', kwargs={'pk': self.object.id}))

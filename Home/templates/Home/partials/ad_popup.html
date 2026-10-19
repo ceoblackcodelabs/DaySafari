@@ -1,0 +1,12 @@
+{% load i18n image_tags %}{% with ad=popup_ads|first %}
+<div id="popupOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="adTitle" hidden>
+<div class="modal-card modal-ad">
+<button type="button" class="modal-close" data-ad-close aria-label="{% trans 'Close' %}">{% icon 'x' 20 %}</button>
+{% if ad.image %}<img src="{{ ad.image|thumb:640 }}" alt="{{ ad.title }}" loading="lazy" decoding="async" class="ad-img">{% endif %}
+{% if ad.discount_percentage %}<span class="form-pill">{{ ad.discount_percentage }}% OFF</span>{% endif %}
+<h2 id="adTitle">{{ ad.title }}</h2>
+<p class="form-intro">{{ ad.description|truncatewords:30 }}</p>
+<p class="reference">{% blocktrans with dt=ad.end_date|date:"F d, Y" %}Valid until {{ dt }}{% endblocktrans %}</p>
+<div class="ad-actions"><a href="{{ ad.get_package_url }}" class="button primary">{% trans "View details" %}</a><a href="https://wa.me/254759379600?text={{ ad.get_whatsapp_message|urlencode }}" class="button light-outline" target="_blank" rel="noopener noreferrer">{% trans "Book now" %}</a></div>
+<label class="dont-show"><input type="checkbox" id="dontShowAgain"> {% trans "Don't show again" %}</label>
+</div></div>{% endwith %}

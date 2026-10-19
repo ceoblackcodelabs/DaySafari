@@ -1,131 +1,20 @@
 {% extends "Home/base.html" %}
-{% load static image_tags %}
-{% load i18n %}
-{% load custom_filters %}
-
-{% block title %}{% trans "FAQ - Days Safaris Adventures" %}{% endblock title %}
-
-{% block meta_description %}{% trans "Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures." %}{% endblock meta_description %}
-{% block og_description %}{% trans "Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures." %}{% endblock og_description %}
-{% block twitter_description %}{% trans "Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures." %}{% endblock twitter_description %}
-
+{% load i18n image_tags %}
+{% block title %}{% trans "FAQ - Days Safaris Adventures" %}{% endblock %}
+{% block meta_description %}{% trans "Answers to common questions about booking a safari, visas, payments, best time to travel and what to pack, from Day Safaris Adventures." %}{% endblock %}
+{% block og_title_inner %}{% trans "Frequently Asked Questions" %}{% endblock %}
 {% block body %}
-
-<!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
-    <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% trans "Frequently Asked Questions" %}</h3>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url "home" %}">{% trans "Home" %}</a></li>
-            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
-            <li class="breadcrumb-item active text-white">{% trans "FAQ" %}</li>
-        </ol>
-    </div>
-</div>
-<!-- Header End -->
-
-
-<!-- FAQ Start -->
-<div class="container-fluid bg-light band-alt py-5">
-    <div class="container py-4">
-        <div class="mx-auto text-center mb-4" style="max-width: 900px;">
-            <p class="h5 section-title px-3">{% trans "FAQ" %}</p>
-            <h1 class="mb-3">{% trans "Frequently Asked Questions" %}</h1>
-        </div>
-        <div class="faq-wrap">
-            <div class="faq-search"><i class="fa fa-search"></i><input type="search" id="faqSearch" placeholder="{% trans 'Search packages...' %}" aria-label="{% trans 'Search' %}" autocomplete="off"></div>
-            <div id="faqList">
-            <details class="faq-item">
-                <summary><i class="fas fa-binoculars"></i><span>{% trans "What does Day Safaris Adventures specialize in?" %}</span></summary>
-                <div class="faq-a"><p>{% trans "We specialize in African wildlife safaris, tailor-made tours, beach holidays, mountain adventures, cultural experiences, airport transfers, hotel bookings, visa assistance, and international travel packages." %}</p></div>
-            </details>
-            <details class="faq-item">
-                <summary><i class="fas fa-map-marker-alt"></i><span>{% trans "Where are you located?" %}</span></summary>
-                <div class="faq-a"><p>{% trans "Our head office is conveniently located at" %} <strong>{% trans "Nairobi Railways Museum, Nairobi, Kenya (00200)" %}</strong>{% trans ", making it easy for clients to visit us for travel consultations and bookings." %}</p></div>
-            </details>
-            <details class="faq-item">
-                <summary><i class="fas fa-clock"></i><span>{% trans "What are your business hours?" %}</span></summary>
-                <div class="faq-a"><p>{% trans "We are open" %} <strong>{% trans "Monday to Sunday" %}</strong> {% trans "from" %} <strong>8:00 AM to 8:00 PM</strong>{% trans ". Our customer support team is available throughout these hours to assist with bookings and travel inquiries." %}</p></div>
-            </details>
-            <details class="faq-item">
-                <summary><i class="fas fa-phone-alt"></i><span>{% trans "How can I contact Day Safaris Adventures?" %}</span></summary>
-                <div class="faq-a"><p>{% trans "You can reach us via email at" %} <strong>info@daysafarisadventures.co.ke</strong> {% trans "or call us on" %} <strong>+254 759 379 600</strong>{% trans ". off - office number is" %} <strong>+254 734 962 965</strong>{% trans ". You may also visit our office during business hours." %}</p></div>
-            </details>
-            <details class="faq-item">
-                <summary><i class="fas fa-passport"></i><span>{% trans "Can you help with visa processing?" %}</span></summary>
-                <div class="faq-a"><p>{% trans "Yes. We provide professional visa processing assistance, helping clients prepare documents, complete applications, and track their visa status for various destinations." %}</p></div>
-            </details>
-            <details class="faq-item">
-                <summary><i class="fas fa-calendar-check"></i><span>{% trans "How do I book a safari?" %}</span></summary>
-                <div class="faq-a"><p>{% trans "Booking is easy. Simply fill out our online booking form, call our travel consultants, or send us an email. We'll help you choose the perfect package and customize your adventure to suit your budget and preferences." %}</p></div>
-            </details>
-            </div>
-            <p class="faq-none" id="faqNone" hidden>{% trans "No results" %}</p>
-            <div class="faq-help">
-                <div><b>{% trans "Still have questions?" %}</b><span>{% trans "Chat with a real person on WhatsApp or send us a message." %}</span></div>
-                <div class="d-flex gap-2 flex-wrap"><button type="button" class="pk-btn pk-btn-light" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button>
-                <a class="pk-btn pk-btn-ghost" href="{% url 'contact' %}">{% trans "Contact" %}</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-(function(){
-    var box=document.getElementById('faqSearch'), items=[].slice.call(document.querySelectorAll('.faq-item')), none=document.getElementById('faqNone');
-    items.forEach(function(d){ d.addEventListener('toggle',function(){ if(d.open) items.forEach(function(o){ if(o!==d) o.open=false; }); }); });
-    if(items[0]) items[0].open=true;
-    box.addEventListener('input',function(){ var q=box.value.trim().toLowerCase(), n=0;
-        items.forEach(function(d){ var hit=!q||d.textContent.toLowerCase().indexOf(q)>-1; d.hidden=!hit; if(hit) n++; if(q&&hit) d.open=true; });
-        none.hidden=n>0; });
-})();
-</script>
-<!-- FAQ End -->
-
-
-<!-- Testimonial Start -->
-<div class="container-fluid testimonial py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3">{% trans "Testimonial" %}</p>
-            <h1 class="mb-0">{% trans "What Our Clients Say About Us" %}</h1>
-        </div>
-        <div class="testimonial-carousel owl-carousel">
-            {% for testimonial in testimonials %}
-            <div class="testimonial-item text-center rounded pb-4">
-                <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">"{{ testimonial.feedback }}"</p>
-                </div>
-                <div class="testimonial-img p-1">
-                    {% if testimonial.image %}
-                    <img src="{{ testimonial.image|thumb:200 }}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}" width="100" height="100" loading="lazy" decoding="async">
-                    {% else %}
-                    <img src="{% static 'img/avatar-placeholder.jpg' %}" class="img-fluid rounded-circle" alt="{{ testimonial.name }}" width="100" height="100" loading="lazy" decoding="async">
-                    {% endif %}
-                </div>
-                <div style="margin-top: -35px;">
-                    <h2 class="h5 mb-0">{{ testimonial.name }}</h2>
-                    <p class="mb-0">{{ testimonial.location }}</p>
-                    <div class="d-flex justify-content-center">
-                        {% for i in ""|ljust:testimonial.starRating %}
-                        <i class="fas fa-star text-primary"></i>
-                        {% endfor %}
-                        {% for i in ""|ljust:5 %}
-                        {% if forloop.counter > testimonial.starRating %}
-                        <i class="fas fa-star text-muted"></i>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="text-center py-5">
-                <h3>{% trans "No testimonials yet" %}</h3>
-                <p>{% trans "Be the first to share your experience with us!" %}</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<!-- Testimonial End -->
-
-{% endblock body %}
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "FAQ" %}</span></nav><h1>{% trans "Frequently Asked Questions" %}</h1></div></section>
+<section class="section"><div style="max-width:820px"><label class="field" style="display:block;margin-bottom:22px">{% trans "Search" %}<input type="search" id="faqSearch" autocomplete="off" aria-label="{% trans 'Search' %}" style="height:46px;font-size:14px"></label>
+<div class="faq-list" id="faqList" style="display:block">
+<details class="faq-item"><summary>{% trans "What does Day Safaris Adventures specialize in?" %}<span>+</span></summary><p>{% trans "We specialize in African wildlife safaris, tailor-made tours, beach holidays, mountain adventures, cultural experiences, airport transfers, hotel bookings, visa assistance, and international travel packages." %}</p></details>
+<details class="faq-item"><summary>{% trans "Where are you located?" %}<span>+</span></summary><p>{% trans "Our head office is conveniently located at" %} <strong>{% trans "Nairobi Railways Museum, Nairobi, Kenya (00200)" %}</strong>{% trans ", making it easy for clients to visit us for travel consultations and bookings." %}</p></details>
+<details class="faq-item"><summary>{% trans "What are your business hours?" %}<span>+</span></summary><p>{% trans "We are open" %} <strong>{% trans "Monday to Sunday" %}</strong> {% trans "from" %} <strong>8:00 AM to 8:00 PM</strong>{% trans ". Our customer support team is available throughout these hours to assist with bookings and travel inquiries." %}</p></details>
+<details class="faq-item"><summary>{% trans "How can I contact Day Safaris Adventures?" %}<span>+</span></summary><p>{% trans "You can reach us via email at" %} <strong>info@daysafarisadventures.co.ke</strong> {% trans "or call us on" %} <strong>+254 759 379 600</strong>{% trans ". off - office number is" %} <strong>+254 734 962 965</strong>{% trans ". You may also visit our office during business hours." %}</p></details>
+<details class="faq-item"><summary>{% trans "Can you help with visa processing?" %}<span>+</span></summary><p>{% trans "Yes. We provide professional visa processing assistance, helping clients prepare documents, complete applications, and track their visa status for various destinations." %}</p></details>
+<details class="faq-item"><summary>{% trans "How do I book a safari?" %}<span>+</span></summary><p>{% trans "Booking is easy. Simply fill out our online booking form, call our travel consultants, or send us an email. We'll help you choose the perfect package and customize your adventure to suit your budget and preferences." %}</p></details>
+</div><p class="empty" id="faqNone" hidden>{% trans "No results" %}</p>
+<div class="panel" style="margin-top:30px"><h3>{% trans "Still have questions?" %}</h3><p style="font-size:14px;color:var(--muted);margin-bottom:14px">{% trans "Chat with a real person on WhatsApp or send us a message." %}</p><div class="btn-row"><button type="button" class="button primary" data-open-lead>{% trans "Get a Free Quote" %}</button><a class="button outline" href="{% url 'contact' %}">{% trans "Contact" %}</a></div></div></div></section>
+{% if testimonials %}<section class="band-alt"><div class="section"><div class="section-heading"><div><p class="eyebrow dark">{% trans "Testimonial" %}</p><h2>{% trans "What Our Clients Say About Us" %}</h2></div></div><div class="card-grid">{% for t in testimonials %}<div class="quote">{% stars t.star_rating 15 %}<p>“{{ t.feedback|truncatewords:45 }}”</p><div class="who">{% if t.image %}<img src="{{ t.image|thumb:200 }}" alt="{{ t.name }}" width="42" height="42" loading="lazy">{% endif %}<span><strong>{{ t.name }}</strong></span></div></div>{% endfor %}</div></div></section>{% endif %}
+{% endblock %}
+{% block extra_js %}<script>(function(){var box=document.getElementById('faqSearch'),items=[].slice.call(document.querySelectorAll('.faq-item')),none=document.getElementById('faqNone');if(items[0])items[0].open=true;box.addEventListener('input',function(){var q=box.value.trim().toLowerCase(),n=0;items.forEach(function(d){var hit=!q||d.textContent.toLowerCase().indexOf(q)>-1;d.hidden=!hit;if(hit)n++;if(q&&hit)d.open=true;});none.hidden=n>0;});})();</script>{% endblock %}

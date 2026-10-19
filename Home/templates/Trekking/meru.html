@@ -1,39 +1,9 @@
 {% extends "Home/base.html" %}
 {% load i18n %}
-
-{% load static custom_filters image_tags %}
-
-{% block title %}{% trans "Mt Meru - Days Safaris Adventures" %}{% endblock title %}
-
-{% block meta_description %}{% trans "Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures." %}{% endblock meta_description %}
-{% block og_description %}{% trans "Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures." %}{% endblock og_description %}
-{% block twitter_description %}{% trans "Mount Meru trekking packages in Arusha, Tanzania, with Day Safaris Adventures." %}{% endblock twitter_description %}
-
+{% block title %}{% trans "Mt Meru Trekking - Days Safaris Adventures" %}{% endblock %}
+{% block meta_description %}{% trans "Mount Meru trekking: routes, itineraries and guided climbs with Day Safaris Adventures." %}{% endblock %}
+{% block og_title_inner %}{% trans "Mt Meru Trekking" %}{% endblock %}
 {% block body %}
-
-<!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
-    <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% trans "Mt Meru Trekking" %}</h3>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'packages' %}">{% trans "Packages" %}</a></li>
-            <li class="breadcrumb-item active text-white">{% trans "Category" %}</li>
-        </ol>
-    </div>
-</div>
-<!-- Header End -->
-
-<!-- Packages Start -->
-<div class="container-fluid pk-results py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3">{% trans "Packages" %}</p>
-            <h1 class="mb-0">{% trans "Awesome Mt Meru Packages" %}</h1>
-        </div>
-        {% include "Trekking/_trek_grid.html" %}
-    </div>
-</div>
-<!-- Packages End -->
-
-{% endblock body %}
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "Trekking" %}</span></nav><h1>{% trans "Mt Meru Trekking" %}</h1><p class="lead">{% trans "Mount Meru trekking: routes, itineraries and guided climbs with Day Safaris Adventures." %}</p></div></section>
+<section class="section"><div class="section-heading"><div><p class="eyebrow dark">{% trans "Trekking" %}</p><h2>{% trans "Awesome Mt Meru packages" %}</h2></div></div>{% include "Trekking/_trek_grid.html" %}</section>
+{% endblock %}

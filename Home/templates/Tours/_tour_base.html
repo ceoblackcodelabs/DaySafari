@@ -1,0 +1,16 @@
+{% extends "Home/base.html" %}
+{% load i18n image_tags custom_filters %}
+{% block title %}{% block tour_title %}{% endblock %} - Days Safaris Adventures{% endblock %}
+{% block meta_description %}{% block tour_desc %}{% endblock %}{% endblock %}
+{% block og_title_inner %}{% block tour_og %}{% endblock %}{% endblock %}
+{% block body %}
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "Tours" %}</span></nav><h1>{% block tour_h1 %}{% endblock %}</h1><p class="lead">{% block tour_lead %}{% endblock %}</p></div></section>
+{% if africaPackages %}<section class="section"><div class="section-heading"><div><p class="eyebrow dark">{% block tour_kicker %}{% trans "Packages" %}{% endblock %}</p><h2>{% block tour_pkg_h2 %}{% trans "Safari & adventure deals" %}{% endblock %}</h2></div><a class="text-link" href="{% url 'packages' %}">{% trans "Search all packages" %} {% icon 'arrow-right' 16 %}</a></div>
+<div class="card-grid">{% for p in africaPackages %}{% include "Home/partials/package_card.html" %}{% endfor %}</div></section>{% endif %}
+<section class="section {% if africaPackages %}band-alt-section{% endif %}" style="{% if africaPackages %}padding-top:10px{% endif %}"><div class="section-heading"><div><p class="eyebrow dark">{% trans "Destination gallery" %}</p><h2>{% trans "Experience breathtaking moments in Africa" %}</h2></div></div>
+<div data-tabs>
+<div class="chips" style="margin-bottom:26px"><button type="button" class="selected" data-tab="all" aria-pressed="true">{% trans "All destinations" %}</button>{% for category in categories %}<button type="button" data-tab="c{{ category.id }}" aria-pressed="false">{{ category.category }}</button>{% endfor %}</div>
+<div data-pane="all"><div class="card-grid">{% for destination in all_destinations %}{% include "Home/partials/destination_card.html" %}{% empty %}<p class="empty" style="grid-column:1/-1">{% trans "No destinations available yet. Check back soon!" %}</p>{% endfor %}</div></div>
+{% for category in categories %}<div data-pane="c{{ category.id }}" hidden><div class="card-grid">{% with destinations=destinations_by_category|get_item:category.id %}{% for destination in destinations %}{% include "Home/partials/destination_card.html" %}{% empty %}<p class="empty" style="grid-column:1/-1">{% trans "No destinations in this category yet." %}</p>{% endfor %}{% endwith %}</div></div>{% endfor %}
+</div></section>
+{% endblock %}

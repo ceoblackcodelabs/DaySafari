@@ -1,87 +1,9 @@
 {% extends "Home/base.html" %}
-{% load i18n %}
-
-{% load static image_tags %}
-
-{% block title %}{% trans "Brochures - Day Safari Adventures" %}{% endblock title %}
-
-{% block meta_description %}{% trans "Download safari brochures, itineraries and travel guides for East Africa from Day Safaris Adventures." %}{% endblock meta_description %}
-{% block og_description %}{% trans "Download safari brochures, itineraries and travel guides for East Africa from Day Safaris Adventures." %}{% endblock og_description %}
-{% block twitter_description %}{% trans "Download safari brochures, itineraries and travel guides for East Africa from Day Safaris Adventures." %}{% endblock twitter_description %}
-
+{% load i18n image_tags %}
+{% block title %}{% trans "Brochures - Days Safaris Adventures" %}{% endblock %}
+{% block meta_description %}{% trans "Download Day Safaris Adventures brochures and travel guides." %}{% endblock %}
+{% block og_title_inner %}{% trans "Brochures" %}{% endblock %}
 {% block body %}
-
-<!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
-    <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">{% trans "Download Our Brochures" %}</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url "home" %}">{% trans "Home" %}</a></li>
-            <li class="breadcrumb-item"><a href="#">{% trans "Pages" %}</a></li>
-            <li class="breadcrumb-item active text-white">{% trans "About" %}</li>
-        </ol>
-    </div>
-</div>
-<!-- Header End -->
-
-<!-- Brochures Start -->
-<div class="container-fluid blog py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <p class="h5 section-title px-3">{% trans "Our Brochures" %}</p>
-            <h1 class="mb-4">{% trans "Download Safari Brochures & Travel Guides" %}</h1>
-            <p class="mb-0">{% trans "Explore our collection of detailed brochures featuring safari packages, tour itineraries, accommodation options, and travel tips for East Africa. Download PDF guides to plan your perfect African adventure." %}</p>
-        </div>
-        <div class="row g-4 justify-content-center">
-            {% for brochure in brochures %}
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <div class="blog-img-inner">
-                            {% if brochure.image %}
-                            <img class="img-fluid w-100 rounded-top" src="{{ brochure.image|thumb:640 }}" alt="{{ brochure.title }}" loading="lazy" decoding="async">
-                            {% else %}
-                            <img class="img-fluid w-100 rounded-top" src="{% static 'img/brochure-placeholder.jpg' %}" alt="{{ brochure.title }}" loading="lazy" decoding="async">
-                            {% endif %}
-                            <div class="blog-icon">
-                                <a href="{{ brochure.pdf_file.url }}" target="_blank" class="my-auto" aria-label="{% trans "View details" %}"><i class="fas fa-download fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ brochure.created_at|date:"d M Y" }}</small>
-                            <a href="{{ brochure.pdf_file.url }}" target="_blank" class="btn-hover flex-fill text-center text-white border-end py-2"><i class="fa fa-download text-primary me-2"></i>{% trans "Download PDF" %}</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i class="fa fa-eye text-primary me-2"></i>{% trans "Preview" %}</a>
-                        </div>
-                    </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3"><i class="fa fa-file-pdf text-primary me-2"></i>{% trans "PDF Brochure" %}</p>
-                        <a href="{{ brochure.pdf_file.url }}" target="_blank" class="h4">{{ brochure.title }}</a>
-                        <p class="my-3">{{ brochure.description|truncatewords:30 }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="{{ brochure.pdf_file.url }}" target="_blank" class="btn btn-primary rounded-pill py-2 px-4">
-                                <i class="fa fa-download me-2"></i>{% trans "Download Now" %}
-                            </a>
-                            <small class="text-muted">
-                                <i class="fa fa-file-pdf"></i> {% trans "PDF" %}
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="text-center py-5">
-                <h3>{% trans "No brochures available yet" %}</h3>
-                <p>{% trans "Check back soon for downloadable safari brochures and travel guides!" %}</p>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="text-center mt-5">
-            <a href="{% url "about" %}" class="btn btn-primary rounded-pill py-3 px-5">
-                <i class="fa fa-download me-2"></i>{% trans "Destinations" %}
-            </a>
-        </div>
-    </div>
-</div>
-<!-- Brochures End -->
-
-{% endblock body %}
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "Brochures" %}</span></nav><h1>{% trans "Travel" %} <em>{% trans "brochures" %}</em></h1><p class="lead">{% trans "Download our brochures and plan your trip offline." %}</p></div></section>
+<section class="section"><div class="card-grid">{% for b in brochures %}<article class="card"><a class="card-photo" href="{{ b.pdf_file.url }}" target="_blank" rel="noopener noreferrer">{% if b.image %}<img src="{{ b.image|thumb:640 }}" alt="{{ b.title }}" loading="lazy" decoding="async" width="640" height="440">{% else %}<img src="{% asset 'img/brochure-placeholder.jpg' %}" alt="" loading="lazy">{% endif %}</a><div class="card-body"><div class="card-meta"><span>{% icon 'calendar' 12 %}{{ b.created_at|date:"d M Y" }}</span></div><h3>{{ b.title }}</h3><p>{{ b.description|truncatewords:30 }}</p><div class="card-foot"><a class="button primary sm" href="{{ b.pdf_file.url }}" target="_blank" rel="noopener noreferrer">{% icon 'download' 14 %} {% trans "Download" %}</a></div></div></article>{% empty %}<p class="empty" style="grid-column:1/-1">{% trans "No brochures available yet." %}</p>{% endfor %}</div></section>
+{% endblock %}

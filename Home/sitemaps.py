@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from Hotels.models import AirBNB, Hotel
+from Hotels.models import Hotel
 from Home.models import Blogs, Guide, Trekking
 from Places.models import AwesomePackages, Destinations
 
@@ -19,7 +19,7 @@ class StaticPagesSitemap(_Base):
     names = ['home', 'about', 'services', 'packages', 'east_africa_tours', 'south_africa_tours',
              'west_africa_tours', 'international_tours', 'african_wildlife_tours', 'holiday_tailor_made_tours',
              'airport_transfers', 'travel_partnerships', 'cruises', 'airline', 'gallary', 'blog', 'brochures',
-             'faq', 'contact', 'hotels', 'legal_notice', 'privacy_policy', 'terms_and_conditions', 'cookie_policy', 'sitemap_page', 'booking_create', 'airbnb', 'trekking_kenya', 'trekking_kilimanjaro',
+             'faq', 'contact', 'hotels', 'legal_notice', 'privacy_policy', 'terms_and_conditions', 'cookie_policy', 'sitemap_page', 'booking_create', 'trekking_kenya', 'trekking_kilimanjaro',
              'trekking_meru', 'trekking_longonot', 'trekking_suswa']
 
     def items(self):
@@ -98,17 +98,7 @@ class HotelsSitemap(_Base):
         return obj.updated_at
 
 
-class StaysSitemap(_Base):
-    priority, changefreq = 0.5, 'monthly'
-
-    def items(self):
-        return AirBNB.objects.all()
-
-    def location(self, obj):
-        return reverse('bnb_detail', args=[obj.pk])
-
-
 sitemaps = {
     'pages': StaticPagesSitemap, 'packages': PackagesSitemap, 'destinations': DestinationsSitemap,
-    'trekking': TrekkingSitemap, 'hotels': HotelsSitemap, 'blog': BlogSitemap, 'stays': StaysSitemap, 'guides': GuidesSitemap,
+    'trekking': TrekkingSitemap, 'hotels': HotelsSitemap, 'blog': BlogSitemap, 'guides': GuidesSitemap,
 }

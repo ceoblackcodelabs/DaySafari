@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 # Configure API key
 configuration = sib_api_v3_sdk.Configuration()
-configuration.api_key['api-key'] = config('BREVO_API_KEY')
+configuration.api_key['api-key'] = config('BREVO_API_KEY', default='')
 
 # Add this function to get company profile lazily
 def get_company():

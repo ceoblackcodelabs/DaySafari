@@ -8,7 +8,7 @@ from django.core.cache import cache
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from Hotels.models import AirBNB, Hotel, HotelImage
+from Hotels.models import Hotel, HotelImage
 from ClientRequests import antispam
 from ClientRequests.models import Bookings, Contact
 from Home.models import Blogs, Trekking
@@ -32,7 +32,6 @@ class LeadFormTests(TestCase):
         cls.dest = Destinations.objects.create(category=cat, name='Amboseli', description='d', price=100)
         cls.trek = Trekking.objects.create(name='Mt Kenya', location='Kenya', days=4, price=500, persons=6,
                                            description='d', category='Mt-Kenya')
-        cls.bnb = AirBNB.objects.create(location='Nairobi', title='Flat', max_guests=4)
         cls.future = (date.today() + timedelta(days=30)).isoformat()
         cls.later = (date.today() + timedelta(days=33)).isoformat()
 
@@ -77,20 +76,6 @@ class LeadFormTests(TestCase):
         self.assertEqual((booking.booking_type, booking.trekking_package), ('trekking', self.trek))
         self.assertEqual(booking.item_name, str(self.trek))
         self.notify.assert_called_once()
-
-    def test_airbnb_form_saves_lead(self):
-        r = self.post(reverse('bnb_detail', args=[self.bnb.pk]),
-                      **self.person(persons=2, date=self.future, check_out=self.later))
-        self.assertEqual(r.status_code, 302)
-        booking = Bookings.objects.get()
-        self.assertEqual((booking.booking_type, booking.airbnb, str(booking.check_out)), ('airbnb', self.bnb, self.later))
-        self.notify.assert_called_once()
-
-    def test_airbnb_checkout_must_follow_checkin(self):
-        r = self.post(reverse('bnb_detail', args=[self.bnb.pk]),
-                      **self.person(persons=2, date=self.later, check_out=self.future))
-        self.assertEqual(r.status_code, 200)
-        self.assertEqual(Bookings.objects.count(), 0)
 
     # ---- bot protection -----------------------------------------------------
     def test_scanner_payload_is_rejected(self):
@@ -154,7 +139,6 @@ class SiteHealthTests(TestCase):
                                                      persons=4, description='<p>Great trip</p>')
         cls.trek = Trekking.objects.create(name='Mt Kenya', location='Kenya', days=4, price=500, persons=6,
                                            description='d', category='Mt-Kenya')
-        cls.bnb = AirBNB.objects.create(location='Nairobi', title='Flat')
         cls.hotel = Hotel.objects.create(name='Test Lodge', country='Kenya', location='Amboseli', summary='A lodge.',
                                          description='Nice place.', price_per_night=200, max_guests=4)
         cls.blog = Blogs.objects.create(title='Tips', author='Mr Days', content='<p>Body</p>')
@@ -164,14 +148,14 @@ class SiteHealthTests(TestCase):
 
     def urls(self):
         static = ['home', 'about', 'services', 'packages', 'faq', 'gallary', 'blog', 'brochures', 'contact',
-                  'booking_create', 'airbnb', 'cruises', 'airline', 'east_africa_tours', 'south_africa_tours',
+                  'booking_create', 'cruises', 'airline', 'east_africa_tours', 'south_africa_tours',
                   'west_africa_tours', 'international_tours', 'african_wildlife_tours',
                   'holiday_tailor_made_tours', 'airport_transfers', 'travel_partnerships', 'trekking_kenya',
                   'trekking_kilimanjaro', 'trekking_meru', 'trekking_longonot', 'trekking_suswa', 'hotels',
                   'legal_notice', 'privacy_policy', 'terms_and_conditions', 'cookie_policy', 'sitemap_page']
         urls = [reverse(n) for n in static]
         urls += [self.package.get_absolute_url(), reverse('destination_detail', args=[self.dest.pk]),
-                 reverse('kili_detail', args=[self.trek.pk]), reverse('bnb_detail', args=[self.bnb.pk]),
+                 reverse('kili_detail', args=[self.trek.pk]),
                  self.hotel.get_absolute_url(),
                  reverse('blog_detail', args=[self.blog.slug])]
         return urls

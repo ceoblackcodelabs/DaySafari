@@ -1,32 +1,4 @@
-{% load static i18n image_tags %}
-<div class="pk-grid">
-    {% for package in packages %}
-    <article class="pk-card">
-        <a class="pk-img" href="{% url 'kili_detail' package.id %}" tabindex="-1" aria-hidden="true">
-            <img src="{% if package.image %}{{ package.image|thumb:640 }}{% else %}{% static 'img/placeholder-package.jpg' %}{% endif %}" alt="" loading="{% if forloop.counter > 3 %}lazy{% else %}eager{% endif %}" decoding="async" width="640" height="480">
-            <span class="pk-badge">{{ package.category }}</span>
-        </a>
-        <div class="pk-body">
-            <p class="pk-loc"><i class="fa fa-map-marker-alt"></i> {{ package.location }}</p>
-            <h2 class="pk-title"><a href="{% url 'kili_detail' package.id %}">{{ package.name }}</a></h2>
-            <ul class="pk-meta">
-                <li><i class="far fa-calendar-alt"></i> {{ package.days }} {% trans "Days" %}</li>
-                <li><i class="fas fa-user-friends"></i> {{ package.persons }}</li>
-                <li class="pk-stars" title="{{ package.star_rating }}/5">{% for _ in "12345"|make_list %}<i class="fa fa-star {% if forloop.counter > package.star_rating %}off{% endif %}"></i>{% endfor %}</li>
-            </ul>
-            <p class="pk-desc">{{ package.description|striptags|truncatewords:24 }}</p>
-            <div class="pk-actions">
-                <a href="{% url 'kili_detail' package.id %}" class="pk-btn pk-btn-main">{% trans "Read More" %}<span class="visually-hidden"> {{ package.name }}</span></a>
-                <a href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20am%20interested%20in%3A%20{{ package.name|urlencode }}" target="_blank" rel="noopener" class="pk-btn pk-btn-wa" aria-label="{% trans 'Get a Quote' %}: {{ package.name }}"><i class="fab fa-whatsapp"></i><span>{% trans "Get a Quote" %}</span></a>
-            </div>
-        </div>
-    </article>
-    {% empty %}
-    <div class="pk-empty">
-        <i class="fas fa-mountain"></i>
-        <h3>{% trans "No packages available at the moment" %}</h3>
-        <p>{% trans "Please check back later for exciting safari packages!" %}</p>
-        <button type="button" class="pk-btn pk-btn-main" data-open-lead><i class="fab fa-whatsapp"></i> {% trans "Get a Free Quote" %}</button>
-    </div>
-    {% endfor %}
-</div>
+{% load i18n image_tags %}<div class="card-grid">{% for package in packages %}<article class="card"><a class="card-photo" href="{% url 'kili_detail' package.id %}" aria-label="{{ package.name }}"><img src="{% if package.image %}{{ package.image|thumb:640 }}{% else %}{% asset 'img/placeholder-package.jpg' %}{% endif %}" alt="{{ package.name }}" loading="lazy" decoding="async" width="640" height="440"><span class="tag">{{ package.category }}</span></a>
+<div class="card-body"><div class="card-meta"><span>{% icon 'clock' 12 %}{{ package.days }} {% trans "days" %}</span>{% if package.location %}<span>{% icon 'map-pin' 12 %}{{ package.location }}</span>{% endif %}</div><h3><a href="{% url 'kili_detail' package.id %}">{{ package.name }}</a></h3>
+<div class="card-foot"><div><small>{% trans "Price" %}</small><strong style="font-size:14px">{% trans "On request" %}</strong></div><a class="button primary sm" href="{% url 'kili_detail' package.id %}">{% trans "View" %} {% icon 'arrow-up-right' 14 %}</a></div></div></article>
+{% empty %}<div class="empty" style="grid-column:1/-1">{% icon 'mountain' 28 %}<h3 style="margin:10px 0 6px">{% trans "No packages available at the moment" %}</h3><p>{% trans "Please check back later, or ask us for a custom trek." %}</p><p style="margin-top:14px"><button type="button" class="button primary" data-open-lead>{% icon 'message-circle' 16 %} {% trans "Get a free quote" %}</button></p></div>{% endfor %}</div>
