@@ -9,8 +9,8 @@ WHATSAPP = '254759379600'
 EMAIL = 'info@daysafarisadventures.com'
 GOOGLE_REVIEWS_URL = 'https://maps.app.goo.gl/tian1a39WNTSTz3U8'
 
-_raw = json.loads((DATA / 'content.json').read_text())
-CREDITS = json.loads((DATA / 'photo_credits.json').read_text())
+_raw = json.loads((DATA / 'content.json').read_text(encoding='utf-8'))
+CREDITS = json.loads((DATA / 'photo_credits.json').read_text(encoding='utf-8'))
 
 DESTINATIONS = {}
 for _key, _d in _raw['destinations'].items():
