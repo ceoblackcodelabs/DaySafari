@@ -389,7 +389,7 @@ class GalleryView(ListView):
     def get_queryset(self):
         return Gallery.objects.select_related('category').only(
             'id', 'name', 'image', 'category__id', 'category__name'
-        )[:16]
+        ).order_by('-id')[:300]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -400,7 +400,8 @@ class GalleryView(ListView):
 
         # All galleries
         all_galleries = self.object_list
-        context['all_galleries'] = all_galleries
+        context['all_galleries'] = list(all_galleries)[:24]      # the 'All' tab shows the newest 24; each category shows its own
+        all_galleries = list(all_galleries)
 
         # Group galleries by category in Python (single query)
         galleries_by_category = {
