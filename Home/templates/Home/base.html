@@ -13,8 +13,11 @@
 <meta property="og:description" content="{% block og_description %}{% trans "Safaris, trekking, cruises and hotels across East Africa." %}{% endblock %}">
 <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% asset 'images/amboseli.webp' %}{% endblock %}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#163e34">
-<link rel="icon" href="{% asset 'favicon.svg' %}" type="image/svg+xml">
+<meta name="theme-color" content="#420d24">
+<link rel="icon" href="{% asset 'img/favicon.ico' %}" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{% asset 'img/favicon-32x32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% asset 'img/favicon-16x16.png' %}">
+<link rel="apple-touch-icon" href="{% asset 'img/apple-touch-icon.png' %}">
 {% hreflang_links request %}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{% asset 'css/site.css' %}">
