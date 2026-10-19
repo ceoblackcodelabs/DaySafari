@@ -64,3 +64,23 @@ def gallery_collection(request, key):
         g = Gallery.objects.create(name=name, category=category, image=upload)
     logger.info('API added gallery picture %s (%s) via key %s', g.pk, name, key.name)
     return reply({'ok': True, 'status': 'created', 'image': serialise(g, request)}, 201)
+
+
+@api_view('POST')
+def gallery_image(request, key, pk):
+    """Replace the picture of an existing gallery item (multipart field `image`); name and category stay."""
+    g = Gallery.objects.select_related('category').filter(pk=pk).first()
+    if not g:
+        return error('Picture not found.', 404)
+    upload = request.FILES.get('image')
+    if not upload:
+        return error('Send the picture in the multipart field "image".', 400)
+    ext, why = check_photo(upload)
+    if why:
+        return error('Validation failed.', 400, errors={'image': [why]})
+    if truthy(request, 'dry_run'):
+        return reply({'ok': True, 'dry_run': True, 'status': 'would_replace_image'})
+    upload.name = f'api-{timezone.now():%Y%m%d%H%M%S%f}.{ext}'
+    g.image = upload
+    g.save()
+    return reply({'ok': True, 'status': 'image_replaced', 'image': serialise(g, request)})
