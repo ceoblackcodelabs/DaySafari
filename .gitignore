@@ -25,3 +25,5 @@ db.sqlite3
 db.sqlite3-*
 *.zip
 backups/
+*.pdf
+!static/**/*.pdf
