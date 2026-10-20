@@ -16,7 +16,7 @@
 <label class="span-2">{% trans "A short message (optional)" %}<textarea name="message" rows="2" maxlength="600"></textarea></label>
 </div>
 <p class="form-error" id="leadError" role="alert" hidden></p>
-<button type="submit" class="button primary submit">{% icon 'message-circle' 17 %} {% trans "Send on WhatsApp" %}</button>
+<button type="submit" class="button primary submit">{% icon 'message-circle' 17 %} {% trans "Send on WhatsApp" %}</button>{% include "Home/partials/consent.html" %}
 <label class="dont-show"><input type="checkbox" id="leadDontShow"> {% trans "Don't show again" %}</label>
 </form>
 <p class="form-privacy">{% icon 'lock' 11 %}{% trans "We only use your details to reply about your trip." %}</p>

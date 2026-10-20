@@ -28,7 +28,7 @@
 </div>
 <noscript><style>.refinement[hidden],#q0-wrap[hidden],#q1-wrap[hidden]{display:block!important}</style></noscript>
 <div class="form-error" id="form-error" role="alert" hidden><span id="form-error-text"></span><small id="form-error-ref" hidden></small><a href="{{ whatsapp }}" target="_blank" rel="noopener noreferrer">Contact us on WhatsApp</a></div>
-<button class="button primary submit" id="submit-btn" type="submit"><span class="idle">Get my {% if page.destination == 'kilimanjaro' %}trek plan{% elif page.destination == 'mara' %}Mara safari plan{% elif form_dest.group == 'cruise' %}cruise quote{% elif page.destination == 'hotels' %}stay suggestions{% elif page.destination == 'services' %}service quote{% else %}safari plan{% endif %}{% icon 'arrow-right' 17 %}</span><span class="busy" hidden>{% icon 'loader' 17 'spin' %}Sending your enquiry…</span></button>
+<button class="button primary submit" id="submit-btn" type="submit"><span class="idle">Get my {% if page.destination == 'kilimanjaro' %}trek plan{% elif page.destination == 'mara' %}Mara safari plan{% elif form_dest.group == 'cruise' %}cruise quote{% elif page.destination == 'hotels' %}stay suggestions{% elif page.destination == 'services' %}service quote{% else %}safari plan{% endif %}{% icon 'arrow-right' 17 %}</span><span class="busy" hidden>{% icon 'loader' 17 'spin' %}Sending your enquiry…</span></button>{% include "Home/partials/consent.html" %}
 <p class="form-privacy">{% icon 'lock' 11 %}We use your details to respond to this enquiry. <a href="https://daysafarisadventures.co.ke/en/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy</a></p>
 </form>
 </div>
