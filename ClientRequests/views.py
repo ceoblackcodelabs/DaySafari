@@ -182,8 +182,9 @@ def lead_capture(request):
         ip=get_client_ip(request) if get_client_ip(request) != 'unknown' else None,
     )
     try:
-        from EmailSetup.utils import notify_staff_of_lead
+        from EmailSetup.utils import notify_staff_of_lead, forward_to_crm
         notify_staff_of_lead(lead)
+        forward_to_crm(lead)
     except Exception:
         pass
     return JsonResponse({'success': True})

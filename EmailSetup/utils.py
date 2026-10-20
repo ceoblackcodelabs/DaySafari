@@ -2,6 +2,7 @@ import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
 from django.template.loader import render_to_string
 import logging
+from django.conf import settings
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMultiAlternatives
@@ -63,6 +64,38 @@ def _log_email(recipient, subject, status):
         logger.exception("Could not write EmailLog")
 
 
+def forward_to_crm(lead):
+    """Send a genuine lead to the CRM webhook (settings.CRM_WEBHOOK_URL, set in .env). Background, never raises, never blocks the form.
+
+    Only the details the visitor typed are sent. Spam is never forwarded; guide leads are not forwarded by design.
+    """
+    url = getattr(settings, 'CRM_WEBHOOK_URL', '')
+    if not url.startswith('https://'):
+        return
+
+    def _send():
+        import json
+        import urllib.request
+        try:
+            kind = ('whatsapp_popup' if hasattr(lead, 'tour') else 'contact_message' if hasattr(lead, 'subject')
+                    else f"{getattr(lead, 'booking_type', 'booking')}_enquiry")
+            payload = {
+                'source': 'daysafarisadventures.co.ke', 'type': kind, 'id': lead.pk,
+                'name': getattr(lead, 'name', ''), 'email': getattr(lead, 'email', '') if '@' in (getattr(lead, 'email', '') or '') and 'example.com' not in getattr(lead, 'email', '') else '',
+                'phone': getattr(lead, 'phone', '') or '', 'subject': getattr(lead, 'subject', '') or getattr(lead, 'tour', '') or '',
+                'message': getattr(lead, 'message', '') or '', 'persons': getattr(lead, 'persons', None),
+                'travel_date': str(getattr(lead, 'date', '') or ''), 'interest': getattr(lead, 'item_name', '') or getattr(lead, 'tour', '') or '',
+                'page': getattr(lead, 'page_url', '') or '', 'created_at': (getattr(lead, 'created_at', None) or timezone.now()).isoformat(),
+            }
+            req = urllib.request.Request(url, json.dumps(payload).encode(), {'Content-Type': 'application/json', 'User-Agent': 'DaySafaris/1.0'})
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                resp.read(200)
+        except Exception:
+            logger.exception('CRM webhook failed for %s #%s', type(lead).__name__, getattr(lead, 'pk', '?'))
+
+    threading.Thread(target=_send, daemon=True).start()
+
+
 def handle_new_lead(lead, customer_email=None):
     """Single entry point after any public form is saved.
 
@@ -80,6 +113,7 @@ def handle_new_lead(lead, customer_email=None):
         logger.warning("Quarantined %s #%s as spam: %s", type(lead).__name__, lead.pk, ', '.join(reasons))
         return False
     notify_staff_of_lead(lead)
+    forward_to_crm(lead)
     if customer_email and can_email_customer(lead.email):
         threading.Thread(target=customer_email, args=(lead,), daemon=True).start()
     return True

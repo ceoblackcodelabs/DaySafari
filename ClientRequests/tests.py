@@ -1063,3 +1063,27 @@ class LandingEnquirySpamTests(TestCase):
         r = self.client.post('/api/enquiry/', json.dumps(body), content_type='application/json')
         self.assertTrue(r.json()['success'])
         self.assertEqual(Bookings.objects.count(), 0)
+
+
+class CrmWebhookTests(TestCase):
+    def test_leads_are_forwarded_once_and_spam_and_off_state_are_not(self):
+        import json
+        from django.test import override_settings
+        from unittest import mock
+        from ClientRequests.models import Bookings, Contact
+        from EmailSetup.utils import handle_new_lead
+        calls = []
+        def fake(req, timeout=0):
+            calls.append(json.loads(req.data)); return mock.MagicMock(__enter__=lambda s: s, __exit__=lambda *a: None, read=lambda n: b'')
+        good = Bookings.objects.create(name='Grace Wanjiru', email='grace@gmail.com', phone='+254722123456', persons=2, message='Mara in August')
+        spam = Contact.objects.create(name='mussymync', email='x@y.com', subject='Escort', message='Photos for my escort application https://tinyurl.com/a')
+        import threading
+        with mock.patch('urllib.request.urlopen', fake), mock.patch('EmailSetup.utils.notify_staff_of_lead'), \
+                mock.patch.object(threading, 'Thread', lambda target, daemon=True: type('T', (), {'start': staticmethod(target)})()):
+            with override_settings(CRM_WEBHOOK_URL=''):
+                handle_new_lead(good)
+            self.assertEqual(calls, [])                                   # off by default
+            with override_settings(CRM_WEBHOOK_URL='https://example.test/hook'):
+                handle_new_lead(good); handle_new_lead(spam)
+        self.assertEqual(len(calls), 1)                                   # genuine lead only
+        self.assertEqual((calls[0]['name'], calls[0]['type'], calls[0]['phone']), ('Grace Wanjiru', 'safari_enquiry', '+254722123456'))

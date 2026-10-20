@@ -328,6 +328,8 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@daysafarisadventures.co.ke')
 EMAIL_FROM_NAME = config('EMAIL_FROM_NAME', default='Day Safaris Adventures')
 BREVO_API_KEY = config('BREVO_API_KEY', default='')
+# CRM webhook that receives every genuine website lead (empty = off). Keep the URL in .env: it is a secret.
+CRM_WEBHOOK_URL = config('CRM_WEBHOOK_URL', default='')
 
 # ========== ERROR LOGGING ==========
 # With DEBUG=False and no handler500/500.html previously defined, unhandled
