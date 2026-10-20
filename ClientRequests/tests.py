@@ -1048,3 +1048,18 @@ class GalleryApiTests(TestCase):
             self.assertEqual(post().status_code, 409)
             self.assertEqual(post(category='nope').status_code, 400)
         self.assertEqual(Gallery.objects.get().category, cat)
+
+
+class LandingEnquirySpamTests(TestCase):
+    def test_spam_enquiry_is_swallowed(self):
+        import json, uuid
+        from django.core.cache import cache
+        from ClientRequests.models import Bookings
+        from safaris import content
+        cache.clear()
+        slug = content.LANDING_PAGES[0]['slug']
+        body = {'page_slug': slug, 'submission_id': str(uuid.uuid4()), 'full_name': 'Grace Wanjiru', 'contact': '0722123456',
+                'travellers': 2, 'travel_month': 'Still deciding', 'notes': 'Escort photos here https://tinyurl.com/abc https://bit.ly/x'}
+        r = self.client.post('/api/enquiry/', json.dumps(body), content_type='application/json')
+        self.assertTrue(r.json()['success'])
+        self.assertEqual(Bookings.objects.count(), 0)

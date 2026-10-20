@@ -35,7 +35,7 @@
   var qrCard = $('#qrCard'), qrBox = $('#qrBox'), qrLoaded = false, qrSvg = '';
   function qrUrl() { var u = new URL(qrCard.dataset.url); var ev = ($('#eventPick') || {}).value || ''; u.searchParams.set('src', ev ? 'event' : 'qr'); if (ev) u.searchParams.set('event', ev); return u.toString(); }
   function drawQr() { if (!window.qrcode) return; var q = qrcode(0, 'M'); q.addData(qrUrl()); q.make(); qrSvg = q.createSvgTag({ cellSize: 6, margin: 2, scalable: true }); qrBox.innerHTML = qrSvg; qrBox.firstChild.style.width = '100%'; }
-  function loadQr() { if (qrLoaded) return; qrLoaded = true; var s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js'; s.onload = drawQr; s.onerror = function () { qrBox.textContent = 'Open the link instead'; }; document.head.appendChild(s); }
+  function loadQr() { if (qrLoaded) return; qrLoaded = true; var s = document.createElement('script'); s.src = '/static/js/qrcode.min.js'; s.onload = drawQr; s.onerror = function () { qrBox.textContent = 'Open the link instead'; }; document.head.appendChild(s); }
   if (qrCard) {
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { loadQr(); o.disconnect(); } }, { rootMargin: '400px' }).observe(qrCard); else loadQr();
     var evp = $('#eventPick'); if (evp) evp.addEventListener('change', function () { if (window.qrcode) drawQr(); });

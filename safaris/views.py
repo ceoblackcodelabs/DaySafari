@@ -5,7 +5,8 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET, require_POST
 
-from ClientRequests.antispam import rate_limited
+from ClientRequests.antispam import add_strike, get_client_ip, rate_limited
+from ClientRequests.spamfilter import spam_reasons
 from . import content, leads, reviews as reviews_api
 from django.conf import settings
 
@@ -63,6 +64,10 @@ def enquiry(request):
         data = leads.validate(raw)
     except ValueError as exc:
         return _fail(str(exc), 400)
+    reasons = spam_reasons(name=data['full_name'], email=data['email'], message=data['notes'])
+    if reasons:        # bots are told it worked, but nothing is saved or emailed
+        add_strike(get_client_ip(request), 'spam landing enquiry: ' + ', '.join(reasons))
+        return JsonResponse({'success': True, 'reference': 'DSA'})
     try:
         booking, error, status = leads.save(data, request)
     except Exception:
