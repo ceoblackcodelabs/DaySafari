@@ -10,5 +10,5 @@ class EmailLogAdmin(admin.ModelAdmin):
 @admin.register(CompanyProfile)
 class CompanyAdmin(admin.ModelAdmin):
     list_display = [
-        'name', 'booking_confirmation_email'
+        'name', 'booking_confirmation_email', 'crm_webhook_active'
     ]

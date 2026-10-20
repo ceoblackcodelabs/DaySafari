@@ -70,6 +70,11 @@ def forward_to_crm(lead):
     Only the details the visitor typed are sent. Spam is never forwarded; guide leads are not forwarded by design.
     """
     url = getattr(settings, 'CRM_WEBHOOK_URL', '')
+    company = get_company()
+    if company is not None:                      # the admin setting wins: Company Profile > CRM webhook
+        if not company.crm_webhook_active:
+            return
+        url = company.crm_webhook_url.strip() or url
     if not url.startswith('https://'):
         return
 

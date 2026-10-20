@@ -1086,4 +1086,14 @@ class CrmWebhookTests(TestCase):
             with override_settings(CRM_WEBHOOK_URL='https://example.test/hook'):
                 handle_new_lead(good); handle_new_lead(spam)
         self.assertEqual(len(calls), 1)                                   # genuine lead only
+        from EmailSetup.models import CompanyProfile
+        CompanyProfile.objects.create(pk=1, crm_webhook_url='https://admin.test/hook')
+        with mock.patch('urllib.request.urlopen', fake), mock.patch('EmailSetup.utils.notify_staff_of_lead'), \
+                mock.patch.object(threading, 'Thread', lambda target, daemon=True: type('T', (), {'start': staticmethod(target)})()), \
+                override_settings(CRM_WEBHOOK_URL=''):
+            handle_new_lead(Bookings.objects.create(name='Amani Otieno', email='amani@gmail.com', persons=1, message='Amboseli in March'))   # URL pasted in the admin works with no .env
+            self.assertEqual(len(calls), 2)
+            CompanyProfile.objects.filter(pk=1).update(crm_webhook_active=False)
+            handle_new_lead(Bookings.objects.create(name='Peter Kamau', email='peter@gmail.com', persons=3, message='Zanzibar beach week'))   # inactive = stops immediately
+        self.assertEqual(len(calls), 2)
         self.assertEqual((calls[0]['name'], calls[0]['type'], calls[0]['phone']), ('Grace Wanjiru', 'safari_enquiry', '+254722123456'))

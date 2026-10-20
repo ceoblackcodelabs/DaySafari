@@ -16,3 +16,7 @@ class CompanyProfile(models.Model):
     company_whatsapp = models.CharField(max_length=20, default=" +254759379600")
     company_phone = models.CharField(max_length=20, default=" +254140919894")
     mpesa_payment_link = models.CharField(max_length=100, default="http://192.168.8.179:8001/")
+    crm_webhook_url = models.URLField("CRM webhook URL", max_length=300, blank=True,
+                                      help_text="Every genuine website lead is copied to this address. Leave empty to use the server's .env setting.")
+    crm_webhook_active = models.BooleanField("CRM webhook active", default=True,
+                                             help_text="Untick to stop sending leads to the CRM straight away.")
