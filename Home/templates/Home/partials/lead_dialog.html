@@ -1,24 +1,31 @@
-{% load i18n %}{% if show_lead_popup %}
-<div id="leadOverlay" class="modal-overlay" data-auto="1" role="dialog" aria-modal="true" aria-labelledby="leadTitle" hidden>
-<div class="modal-card">
+{% load i18n %}{% if show_lead_popup and lead_cfg %}{% with c=lead_cfg %}
+<div id="leadOverlay" class="modal-overlay" data-auto="{% if c.key == 'default' %}1{% endif %}" role="dialog" aria-modal="true" aria-labelledby="leadTitle" hidden>
+<div class="modal-card lead-card">
 <button type="button" class="modal-close" data-lead-close aria-label="{% trans 'Close' %}">{% icon 'x' 20 %}</button>
-<p class="eyebrow dark">{% trans "Free quote · reply in minutes" %}</p>
-<h2 id="leadTitle">{% trans "Hello! What's your next adventure?" %}</h2>
-<p class="form-intro">{% trans "Tell us where you dream of going and our team will contact you with a free, no-obligation quote." %}</p>
+<div class="form-heading"><span class="eyebrow dark">{{ c.eyebrow }}</span><span class="form-pill">{% trans "No commitment" %}</span></div>
+<h2 id="leadTitle">{{ c.title }}</h2>
+<p class="form-intro">{{ c.intro }}</p>
 <form id="leadForm" action="{% url 'lead_capture' %}" method="post" novalidate>{% csrf_token %}
-<input type="hidden" name="form_ts" value="{{ lead_ts }}">
+<input type="hidden" name="form_ts" value="{{ lead_ts }}"><input type="hidden" name="service" value="{{ c.key }}">
 <div class="honeypot" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
 <div class="form-grid">
-<label>{% trans "Your name" %}<input type="text" name="name" required maxlength="100" autocomplete="name"></label>
-<label>{% trans "Phone / WhatsApp" %}<input type="tel" name="phone" required maxlength="25" autocomplete="tel" inputmode="tel" placeholder="+254…"></label>
-<label class="span-2">{% trans "Which safari or tour?" %}<input type="text" name="tour" list="leadTours" maxlength="160" placeholder="{% trans 'Pick or type your own' %}"></label>
-<datalist id="leadTours">{% for t in mega.lead_tours %}<option value="{{ t }}">{% endfor %}</datalist>
-<label class="span-2">{% trans "A short message (optional)" %}<textarea name="message" rows="2" maxlength="600"></textarea></label>
+<label class="span-2">{% trans "Your name" %}<input type="text" name="name" required maxlength="100" autocomplete="name" placeholder="{% trans 'Full name' %}"></label>
+<label>{% trans "Email" %}<input type="email" name="email" maxlength="120" autocomplete="email" placeholder="you@example.com"></label>
+<label>{% trans "WhatsApp" %}<input type="tel" name="whatsapp" maxlength="30" autocomplete="tel" inputmode="tel" placeholder="+254 7xx xxx xxx"></label>
+{% for q in c.visible_q %}<label class="span-2">{{ q.label }}{% if q.type == 'text' %}<input type="text" name="q_{{ q.key }}" maxlength="120" placeholder="{{ q.placeholder }}">{% else %}<select name="q_{{ q.key }}"><option value="">{% trans "Choose an option" %}</option>{% for o in q.options %}<option>{{ o }}</option>{% endfor %}</select>{% endif %}</label>{% endfor %}
+<label{% if not c.show_people %} class="span-2"{% endif %}>{{ c.when_label }}<select name="travel_month"><option selected>{% trans "Still deciding" %}</option>{% for m in lead_months %}<option value="{{ m.value }}">{{ m.label }}</option>{% endfor %}</select></label>
+{% if c.show_people %}<label>{{ c.people_label }}<input name="travellers" type="number" min="1" max="50" value="2" inputmode="numeric"></label>{% endif %}
+</div>
+<p class="form-hint">{% trans "Email and WhatsApp: please share both if you can (one is enough). Include your country code for WhatsApp." %}</p>
+<button type="button" class="refine" id="leadRefine" aria-expanded="false">{% trans "Add more details" %} <span>({% trans "optional" %})</span>{% icon 'chevron-down' 14 %}</button>
+<div class="refinement" id="leadMore" hidden>
+{% for q in c.more_q %}<label>{{ q.label }}{% if q.type == 'text' %}<input type="text" name="q_{{ q.key }}" maxlength="120" placeholder="{{ q.placeholder }}">{% else %}<select name="q_{{ q.key }}"><option value="">{% trans "Choose an option" %}</option>{% for o in q.options %}<option>{{ o }}</option>{% endfor %}</select>{% endif %}</label>{% endfor %}
+<label>{% trans "Anything else we should know?" %}<textarea name="message" rows="2" maxlength="600" placeholder="{{ c.notes }}"></textarea></label>
 </div>
 <p class="form-error" id="leadError" role="alert" hidden></p>
-<button type="submit" class="button primary submit">{% icon 'arrow-right' 17 %} {% trans "Submit" %}</button>{% include "Home/partials/consent.html" %}
+<button type="submit" class="button primary submit">{{ c.submit }} {% icon 'arrow-right' 17 %}</button>{% include "Home/partials/consent.html" %}
 <label class="dont-show"><input type="checkbox" id="leadDontShow"> {% trans "Don't show again" %}</label>
 </form>
-<div class="lead-done" id="leadDone" role="status" aria-live="polite" hidden><span class="success-mark">{% icon 'check' 28 %}</span><h2>{% trans "Thank you!" %}</h2><p>{% trans "We have your details and our team will contact you shortly with your free quote." %}</p><button type="button" class="button primary" data-lead-close>{% trans "Close" %}</button></div>
+<div class="lead-done" id="leadDone" role="status" aria-live="polite" hidden><span class="success-mark">{% icon 'check' 28 %}</span><h2>{% trans "Thank you!" %}</h2><p>{% trans "We have your details and our team will contact you shortly." %}</p><button type="button" class="button primary" data-lead-close>{% trans "Close" %}</button></div>
 <p class="form-privacy">{% icon 'lock' 11 %}{% trans "We only use your details to reply about your trip." %}</p>
-</div></div>{% endif %}
+</div></div>{% endwith %}{% endif %}

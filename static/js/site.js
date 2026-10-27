@@ -66,15 +66,19 @@
     }
     document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-open-lead]'); if (b) { e.preventDefault(); clearTimeout(timer); showLead(true); } });
     lead.addEventListener('click', function (e) { if (e.target === lead) hideLead(); });
-    $('[data-lead-close]', lead).addEventListener('click', function () { hideLead(); });
+    Array.prototype.forEach.call(lead.querySelectorAll('[data-lead-close]'), function (b) { b.addEventListener('click', function () { hideLead(); }); });
+    var more = $('#leadMore'), rb = $('#leadRefine');
+    if (rb) rb.addEventListener('click', function () { more.hidden = !more.hidden; rb.setAttribute('aria-expanded', String(!more.hidden)); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lead.classList.contains('active')) hideLead(); });
     var bad = function (el, m) { le.textContent = m; le.hidden = false; el.focus(); };
     var reset = function () { lf.hidden = false; var d = $('#leadDone'); if (d) d.hidden = true; };
     lf.addEventListener('submit', function (e) {
       e.preventDefault(); le.hidden = true;
-      var f = lf.elements, name = f.name.value.trim(), phone = f.phone.value.trim(), tour = f.tour.value.trim(), msg = f.message.value.trim();
+      var f = lf.elements, name = f.name.value.trim(), email = f.email.value.trim(), wa = f.whatsapp.value.trim();
       if (name.length < 2) return bad(f.name, 'Please enter your name.');
-      if (!/^\+?[0-9 ()\-]{7,22}$/.test(phone)) return bad(f.phone, 'Please enter a valid phone number.');
+      if (!email && !wa) return bad(f.email, 'Please enter your email or WhatsApp number.');
+      if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return bad(f.email, 'Please enter a valid email address.');
+      if (wa && !/^\+?[0-9 ()\-.]{7,22}$/.test(wa)) return bad(f.whatsapp, 'Please enter a valid WhatsApp number.');
       var btn = $('button[type=submit]', lf); btn.disabled = true;
       var body = new URLSearchParams(new FormData(lf)); body.set('page', location.pathname); body.set('lang', document.documentElement.lang || '');
       fetch(lf.action, { method: 'POST', body: body, credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
@@ -82,7 +86,7 @@
         .then(function (r) {
           btn.disabled = false;
           if (r.ok && r.j.success) { lf.hidden = true; var d = $('#leadDone'); if (d) d.hidden = false; storePut(KEY, { until: Date.now() + 30 * DAY }); }
-          else if (r.j && r.j.error === 'phone') bad(f.phone, 'Please enter a valid phone number.');
+          else if (r.j && r.j.error === 'phone') bad(f.whatsapp, 'Please enter a valid phone number.');
           else if (r.j && r.j.error === 'name') bad(f.name, 'Please enter your name.');
           else { le.textContent = 'Something went wrong. Please try again in a moment.'; le.hidden = false; }
         })

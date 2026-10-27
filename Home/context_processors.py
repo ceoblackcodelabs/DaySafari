@@ -135,9 +135,11 @@ def lead_popup(request):
         and 'payment' not in (name or '')
     cta_skip = LEAD_POPUP_SKIP | {'home', 'packages', 'legal_notice', 'privacy_policy', 'terms_and_conditions',
                                  'cookie_policy', 'sitemap_page', 'faq', 'password_reset'}
-    token = ''
+    token, cfg, months = '', None, []
     if show:
         from ClientRequests.antispam import lead_token
-        token = lead_token()
-    return {'show_lead_popup': show, 'lead_ts': token, 'show_cta': bool(name) and name not in cta_skip and 'admin' not in app
+        from .service_forms import config_for
+        from safaris.leads import next_months
+        token, cfg, months = lead_token(), config_for(name), next_months()
+    return {'show_lead_popup': show, 'lead_ts': token, 'lead_cfg': cfg, 'lead_months': months, 'show_cta': bool(name) and name not in cta_skip and 'admin' not in app
             and '/admin/' not in request.path}

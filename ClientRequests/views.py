@@ -156,31 +156,66 @@ from .antispam import rate_limited, get_client_ip, add_strike, lead_spam_reasons
 from .models import QuickLead
 
 
+def _wa_phone(value):
+    digits = _re.sub(r'\D', '', value or '')
+    if not value or not _re.fullmatch(r'[+()\d\s.-]+', value) or not 7 <= len(digits) <= 15:
+        return ''
+    if value.strip().startswith('+'):
+        return '+' + digits
+    if _re.fullmatch(r'0[17]\d{8}', digits):
+        return '+254' + digits[1:]
+    if _re.fullmatch(r'254[17]\d{8}', digits):
+        return '+' + digits
+    return value.strip()[:25] if len(digits) >= 7 else ''
+
+
 @require_POST
 @rate_limited('quick-lead', [(4, 300), (15, 86400)])
 def lead_capture(request):
+    """Quote popup: name + email and/or WhatsApp + the questions that fit the page the visitor is on. Saved as a WhatsApp/quote lead."""
+    from Home.service_forms import config_by_key
     data = request.POST
+    contact_raw = data.get('whatsapp') or data.get('phone') or ''
     if data.get('website'):                      # honeypot: bots fill every field
         add_strike(get_client_ip(request), 'honeypot on popup', weight=3)
-        trap('popup', ['honeypot'], data.get('name', ''), '', data.get('phone', ''), data.get('message', ''), request)
+        trap('popup', ['honeypot'], data.get('name', ''), data.get('email', ''), contact_raw, data.get('message', ''), request)
         return JsonResponse({'success': True})
     name = ' '.join((data.get('name') or '').split())[:100]
-    phone = (data.get('phone') or '').strip()[:25]
-    tour = ' '.join((data.get('tour') or '').split())[:160]
-    message = (data.get('message') or '').strip()[:600]
+    email = (data.get('email') or '').strip().lower()[:120]
+    phone = _wa_phone((contact_raw or '').strip()[:30])
+    notes = (data.get('message') or '').strip()[:600]
     if len(name) < 2:
         return JsonResponse({'success': False, 'error': 'name'}, status=400)
-    if not _re.fullmatch(r'\+?[0-9 ()\-]{7,22}', phone):
+    if email and not _re.fullmatch(r'[^@\s]+@[^@\s]+\.[^@\s]+', email):
+        return JsonResponse({'success': False, 'error': 'email'}, status=400)
+    if contact_raw.strip() and not phone:
         return JsonResponse({'success': False, 'error': 'phone'}, status=400)
+    if not email and not phone:
+        return JsonResponse({'success': False, 'error': 'contact'}, status=400)
+    cfg = config_by_key(data.get('service', ''))
+    lines = []
+    for q in cfg['questions']:
+        v = ' '.join((data.get('q_' + q['key']) or '').split())[:120]
+        if v and (q.get('type') == 'text' or v in q['options']):
+            lines.append(f"{q['label']} {v}")
+    month = (data.get('travel_month') or '')[:20]
+    if month and month != 'Still deciding' and _re.fullmatch(r'\d{4}-\d{2}', month):
+        lines.append(f"{cfg['when_label']}: {month}")
+    if cfg['show_people'] and (data.get('travellers') or '').isdigit():
+        lines.append(f"{cfg['people_label']}: {min(int(data['travellers']), 99)}")
+    if notes:
+        lines.append(f"Notes: {notes}")
+    tour = cfg['service'] or ' '.join((data.get('tour') or '').split())[:160]
+    message = '\n'.join(lines)[:900]
     # Bots: judged on content, never told they failed, never saved and never emailed to the team.
     ip = get_client_ip(request)
-    reasons = lead_spam_reasons(name, tour, message, data.get('form_ts'))
+    reasons = lead_spam_reasons(name, tour, notes, data.get('form_ts'))
     if reasons:
         add_strike(ip, 'spam lead: ' + ', '.join(reasons))
-        trap('popup', reasons, name, '', phone, message, request)
+        trap('popup', reasons, name, email, phone, message, request)
         return JsonResponse({'success': True})
     lead = QuickLead.objects.create(
-        name=name, phone=phone, tour=tour, message=message,
+        name=name, phone=phone, email=email, tour=tour, message=message,
         page_url=(data.get('page') or '')[:300], language=(data.get('lang') or '')[:8],
         ip=get_client_ip(request) if get_client_ip(request) != 'unknown' else None,
     )

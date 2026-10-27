@@ -75,7 +75,8 @@ class QuickLead(models.Model):
     """A visitor who used the 'What's your next adventure?' popup and was sent on to WhatsApp."""
     STATUS = [('New', 'New'), ('Contacted', 'Contacted'), ('Booked', 'Booked'), ('Closed', 'Closed'), ('Spam', 'Spam')]
     name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=25)
+    phone = models.CharField(max_length=25, blank=True)
+    email = models.EmailField(blank=True)
     tour = models.CharField(max_length=160, blank=True)
     message = models.TextField(blank=True)
     page_url = models.CharField(max_length=300, blank=True)
