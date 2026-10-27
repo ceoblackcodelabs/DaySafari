@@ -20,3 +20,4 @@
 @keyframes xm-ring{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
 @media(max-width:700px){.xm-sleigh{width:300px}.xm-bells{display:none}.xm-branch,.xm-baubles{top:35px;width:52px}.xm-tree{display:none}.xm-gifts{width:56px;bottom:0}}
 @media(prefers-reduced-motion:reduce){.xm-sleigh{display:none}.xm,.xm-bob,.xm-legs{animation:none}}
+@media(max-width:900px){.xm-branch,.xm-baubles,.xm-bells{top:82px}}@media(max-width:700px){.xm-branch,.xm-baubles{top:65px}}
