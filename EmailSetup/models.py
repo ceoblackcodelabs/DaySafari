@@ -18,5 +18,11 @@ class CompanyProfile(models.Model):
     mpesa_payment_link = models.CharField(max_length=100, default="http://192.168.8.179:8001/")
     crm_webhook_url = models.URLField("CRM webhook URL", max_length=300, blank=True,
                                       help_text="Every genuine website lead is copied to this address. Leave empty to use the server's .env setting.")
+    christmas_mode = models.BooleanField("Christmas mode", default=False,
+                                         help_text="Tick to show the festive decorations (hanging baubles and bells, gifts, tree, garland, Santa's sleigh) on every page. Untick to remove them.")
     crm_webhook_active = models.BooleanField("CRM webhook active", default=True,
                                              help_text="Untick to stop sending leads to the CRM straight away.")
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        from django.core.cache import cache
+        cache.delete('christmas_mode')

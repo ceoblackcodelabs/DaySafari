@@ -143,3 +143,17 @@ def lead_popup(request):
         token, cfg, months = lead_token(), config_for(name), next_months()
     return {'show_lead_popup': show, 'lead_ts': token, 'lead_cfg': cfg, 'lead_months': months, 'show_cta': bool(name) and name not in cta_skip and 'admin' not in app
             and '/admin/' not in request.path}
+
+
+def christmas(request):
+    """Festive decorations switch (Company Profile > Christmas mode). Cached briefly so pages stay fast."""
+    from django.core.cache import cache
+    on = cache.get('christmas_mode')
+    if on is None:
+        try:
+            from EmailSetup.models import CompanyProfile
+            on = bool(CompanyProfile.objects.filter(pk=1).values_list('christmas_mode', flat=True).first())
+        except Exception:
+            on = False
+        cache.set('christmas_mode', on, 60)
+    return {'christmas_mode': on}

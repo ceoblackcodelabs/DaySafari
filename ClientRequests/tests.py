@@ -1225,3 +1225,15 @@ class SpamNeverStoredTests(TestCase):
             self.client.post('/en/contact/', data, REMOTE_ADDR='9.9.9.9')
             self.assertEqual(crm.call_count, 1)
         self.assertEqual(Contact.objects.count(), 1)
+
+
+class ChristmasModeTests(TestCase):
+    def test_decorations_follow_the_switch(self):
+        from django.core.cache import cache
+        from EmailSetup.models import CompanyProfile
+        cache.clear()
+        p = CompanyProfile.objects.create(pk=1)
+        self.assertNotContains(self.client.get('/en/', secure=True), 'class="xmas"')
+        p.christmas_mode = True
+        p.save()
+        self.assertContains(self.client.get('/en/', secure=True), 'class="xmas"')

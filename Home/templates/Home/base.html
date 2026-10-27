@@ -29,7 +29,7 @@
 <link rel="apple-touch-icon" href="{% asset 'img/apple-touch-icon.png' %}">
 {% hreflang_links request %}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{% asset 'css/site.css' %}">
+<link rel="stylesheet" href="{% asset 'css/site.css' %}">{% if christmas_mode %}<link rel="stylesheet" href="{% asset 'css/christmas.css' %}">{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"></noscript>
 {% block lcp_preload %}{% endblock %}
@@ -45,6 +45,7 @@
 {% if show_cta %}<section class="closing-cta"><div><p class="eyebrow">{% trans "YOUR JOURNEY, YOUR WAY" %}</p><h2>{% trans "Ready to plan your trip?" %}</h2><p>{% trans "Tell us your dates and budget and we will send you a free, no-obligation quote." %}</p></div><button type="button" class="button light" data-open-lead>{% trans "Get a free quote" %} {% icon 'arrow-up-right' 17 %}</button></section>{% endif %}
 {% include "Home/partials/footer.html" %}
 {% include "Home/partials/lead_dialog.html" %}
+{% include "Home/partials/christmas.html" %}
 {% if popup_ads %}{% include "Home/partials/ad_popup.html" %}{% endif %}
 <a class="whatsapp-widget" href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20would%20like%20a%20quote" target="_blank" rel="noopener noreferrer" aria-label="{% trans 'Chat on WhatsApp' %}">{% icon 'message-circle' 24 %}<span>{% trans "Chat on WhatsApp" %}<small>{% trans "Let’s plan your adventure" %}</small></span>{% icon 'arrow-up-right' 15 %}</a>
 <script src="{% asset 'js/site.js' %}" defer></script>

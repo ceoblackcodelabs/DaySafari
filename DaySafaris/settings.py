@@ -105,6 +105,7 @@ TEMPLATES = [
                 'Home.context_processors.footer_gallery',
                 'Home.context_processors.mega_menu',
                 'Home.context_processors.lead_popup',
+                'Home.context_processors.christmas',
                 'safaris.context_processors.nav',
             ],
         },

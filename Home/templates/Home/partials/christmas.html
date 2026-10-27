@@ -1,0 +1,37 @@
+{% load static %}{% if christmas_mode %}
+<div class="xmas" aria-hidden="true">
+  <img class="xm xm-branch" src="{% static 'img/xmas/branch.png' %}" alt="" width="150" height="267">
+  <img class="xm xm-baubles" src="{% static 'img/xmas/baubles.png' %}" alt="" width="150" height="174">
+  <img class="xm xm-bells" src="{% static 'img/xmas/bells.png' %}" alt="" width="96" height="82">
+  <img class="xm xm-garland" src="{% static 'img/xmas/garland.png' %}" alt="" width="360" height="163">
+  <img class="xm xm-tree" src="{% static 'img/xmas/tree.png' %}" alt="" width="120" height="144">
+  <img class="xm xm-gifts" src="{% static 'img/xmas/gifts.png' %}" alt="" width="110" height="110">
+  <div class="xm-sleigh">
+    <svg viewBox="0 0 700 220" width="340" height="107" xmlns="http://www.w3.org/2000/svg">
+      <defs><g id="deer">
+        <g class="xm-legs" stroke="#6b4423" stroke-width="7" stroke-linecap="round" fill="none">
+          <path d="M18 60 L2 92 L-4 104"/><path d="M30 62 L40 92 L36 104"/><path d="M78 62 L62 92 L56 104"/><path d="M90 60 L104 90 L112 100"/>
+        </g>
+        <ellipse cx="54" cy="46" rx="44" ry="21" fill="#8a5a2d"/><ellipse cx="54" cy="55" rx="34" ry="10" fill="#c9a06a" opacity=".6"/>
+        <path d="M86 36 L112 12 L126 18 L124 40 L100 56Z" fill="#8a5a2d"/>
+        <ellipse cx="126" cy="24" rx="10" ry="9" fill="#7a4d25"/><circle cx="108" cy="22" r="3" fill="#1b1b1b"/>
+        <g stroke="#5a3a1c" stroke-width="4" stroke-linecap="round" fill="none"><path d="M106 12 L100 -8 L88 -14 M100 -8 L108 -22 M112 10 L120 -10 L134 -14 M120 -10 L122 -26"/></g>
+      </g></defs>
+      <g class="xm-bob">
+        <g stroke="#f1c75c" stroke-width="2" fill="none" opacity=".85"><path d="M236 112 Q380 80 530 108"/><path d="M236 118 Q330 122 420 124"/></g>
+        <use href="#deer" x="515" y="64"/><circle cx="655" cy="90" r="6" fill="#ff2b2b"><animate attributeName="opacity" values="1;.4;1" dur="1s" repeatCount="indefinite"/></circle>
+        <use href="#deer" x="400" y="76"/><use href="#deer" x="285" y="86" opacity=".95"/>
+        <g class="xm-sled">
+          <path d="M30 168 Q20 168 22 150 L24 140" stroke="#d8a838" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M26 176 L230 176" stroke="#d8a838" stroke-width="7" stroke-linecap="round"/><path d="M60 176 L60 146 M190 176 L190 146" stroke="#d8a838" stroke-width="5"/>
+          <path d="M34 108 Q38 160 70 160 L206 160 Q232 156 238 112 Q200 124 150 120 Q90 116 34 108Z" fill="#c4161c"/><path d="M40 134 Q130 146 232 130" stroke="#f1c75c" stroke-width="5" fill="none"/>
+          <path d="M70 108 Q60 70 100 64 Q124 62 128 92 Z" fill="#7a4d25"/><circle cx="88" cy="70" r="14" fill="#9b6a35"/>
+          <rect x="120" y="68" width="44" height="46" rx="14" fill="#d41920"/><circle cx="148" cy="52" r="15" fill="#f5cfa5"/>
+          <path d="M134 56 Q148 82 164 56 Q150 64 134 56Z" fill="#fff"/><path d="M133 46 Q148 22 166 44 Q150 36 133 46Z" fill="#d41920"/><path d="M130 46 L170 46" stroke="#fff" stroke-width="7" stroke-linecap="round"/><circle cx="168" cy="26" r="6" fill="#fff"/>
+          <circle cx="153" cy="50" r="2" fill="#222"/><path d="M162 84 L196 98" stroke="#d41920" stroke-width="9" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+</div>
+{% endif %}
