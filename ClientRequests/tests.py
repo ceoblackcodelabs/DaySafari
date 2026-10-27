@@ -1191,3 +1191,37 @@ class BotTrapTests(TestCase):
         for _ in range(3):
             trap('contact', ['spam keywords'], 'Bot', '', '', 'same text', req)
         t = BotAttempt.objects.get(ip='7.7.7.7'); self.assertEqual(t.hits, 3)
+
+
+class SpamNeverStoredTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+        cache.clear()
+
+    def test_spam_contact_form_stores_nothing_and_goes_to_trap(self):
+        import time
+        from django.core import signing
+        from ClientRequests.antispam import TS_SALT
+        from ClientRequests.models import BotAttempt, Contact
+        ts = signing.dumps(int(time.time()) - 20, salt=TS_SALT)
+        data = {'name': 'Grace Wanjiru', 'email': 'grace@gmail.com', 'subject': 'Hello', 'form_ts': ts,
+                'message': 'Photos for my escort application are uploaded, let me know if the quality is good'}
+        with mock.patch('EmailSetup.utils.notify_staff_of_lead'), mock.patch('EmailSetup.utils.forward_to_crm') as crm:
+            r = self.client.post('/en/contact/', data, REMOTE_ADDR='8.8.8.8')
+            crm.assert_not_called()
+        self.assertEqual(r.status_code, 400)
+        self.assertEqual(Contact.objects.count(), 0)                  # never stored
+        t = BotAttempt.objects.get(ip='8.8.8.8'); self.assertEqual(t.form, 'contact'); self.assertIn('content', t.reasons)
+
+    def test_genuine_contact_is_stored_and_forwarded_once(self):
+        import time
+        from django.core import signing
+        from ClientRequests.antispam import TS_SALT
+        from ClientRequests.models import Contact
+        ts = signing.dumps(int(time.time()) - 20, salt=TS_SALT)
+        data = {'name': 'Amani Otieno', 'email': 'amani@gmail.com', 'subject': 'Amboseli in March', 'form_ts': ts,
+                'message': 'We are two adults and would like a three day Amboseli safari. What are the options?'}
+        with mock.patch('EmailSetup.utils.notify_staff_of_lead'), mock.patch('EmailSetup.utils.forward_to_crm') as crm:
+            self.client.post('/en/contact/', data, REMOTE_ADDR='9.9.9.9')
+            self.assertEqual(crm.call_count, 1)
+        self.assertEqual(Contact.objects.count(), 1)

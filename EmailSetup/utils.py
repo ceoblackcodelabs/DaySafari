@@ -111,7 +111,8 @@ def handle_new_lead(lead, customer_email=None):
     """
     from ClientRequests.spamfilter import spam_reasons, can_email_customer
     reasons = spam_reasons(name=getattr(lead, 'name', ''), email=getattr(lead, 'email', ''),
-                           subject=getattr(lead, 'subject', ''), message=getattr(lead, 'message', '') or '')
+                           subject=getattr(lead, 'subject', ''), message=getattr(lead, 'message', '') or '',
+                           count_campaign=False)       # (the form already counted this one before saving)
     if reasons:
         from ClientRequests.antispam import trap
         is_contact = hasattr(lead, 'subject')

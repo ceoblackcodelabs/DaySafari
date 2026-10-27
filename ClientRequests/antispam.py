@@ -259,6 +259,18 @@ class AntiSpamFormMixin(forms.Form):
             raise forms.ValidationError(_('This form has expired. Please reload the page and try again.'))
         return token
 
+    def clean(self):
+        """Judge the content before anything is saved: spam never reaches Bookings, Contact messages or the CRM webhook."""
+        data = super().clean()
+        if not self.spam_detected and self.is_bound and not self.errors:      # a human fixing a field error comes first
+            from .spamfilter import spam_reasons
+            g = lambda *keys: next((str(self.data.get(k)) for k in keys if self.data.get(k)), '')
+            reasons = spam_reasons(name=g('name', 'full_name'), email=g('email'), subject=g('subject'),
+                                   message=g('message', 'special_requests', 'notes'))
+            if reasons:
+                self._flag('content: ' + ', '.join(reasons))
+        return data
+
     # -- shared validators -------------------------------------------------
     def clean_name(self):
         name = ' '.join((self.cleaned_data.get('name') or '').split())
