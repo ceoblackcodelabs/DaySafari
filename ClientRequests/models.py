@@ -91,3 +91,74 @@ class QuickLead(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.tour or 'general'}"
+
+
+
+class BlockedIP(models.Model):
+    """An address that may no longer submit any form on the website. Managed in the admin."""
+    ip = models.GenericIPAddressField(unique=True)
+    reason = models.CharField(max_length=200, blank=True)
+    is_active = models.BooleanField(default=True, help_text='Untick to let this address back in')
+    auto = models.BooleanField(default=False, help_text='Added by the system, not by a person')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Blocked IP'
+        verbose_name_plural = 'Blocked IPs'
+
+    def __str__(self):
+        return self.ip
+
+
+class BotAttempt(models.Model):
+    """Automated or spam submissions land here instead of in Bookings, Contact messages or Leads.
+    Tick `blacklist` on a row to block its IP address on every form."""
+    FORMS = [('contact', 'Contact form'), ('booking', 'Booking form'), ('hotel', 'Hotel enquiry'), ('landing', 'Landing enquiry'),
+             ('popup', 'WhatsApp popup'), ('guide', 'Guide lead'), ('register', 'Sign-up'), ('other', 'Other')]
+    ip = models.GenericIPAddressField(null=True, blank=True, db_index=True)
+    form = models.CharField(max_length=10, choices=FORMS, default='other', db_index=True)
+    reasons = models.CharField(max_length=300, blank=True)
+    name = models.CharField(max_length=120, blank=True)
+    email = models.CharField(max_length=254, blank=True)
+    phone = models.CharField(max_length=40, blank=True)
+    message = models.TextField(blank=True)
+    user_agent = models.CharField(max_length=300, blank=True)
+    path = models.CharField(max_length=200, blank=True)
+    hits = models.PositiveIntegerField(default=1, help_text='Repeat submissions of the same thing from this address')
+    blacklist = models.BooleanField('Blacklist IP', default=False, db_index=True,
+                                    help_text='Tick to block this IP address on every form')
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Bot trap entry'
+        verbose_name_plural = 'Bot trap (blocked automations)'
+
+    def __str__(self):
+        return f'{self.get_form_display()} from {self.ip or "?"}: {self.reasons[:40]}'
+
+    def save(self, *args, **kwargs):
+        adding = self._state.adding
+        super().save(*args, **kwargs)
+        if not self.ip:
+            return
+        if self.blacklist:
+            set_ip_blocked(self.ip, True, f'Blacklisted from the bot trap ({self.get_form_display()})')
+        elif not adding and BlockedIP.objects.filter(ip=self.ip, is_active=True).exists():
+            set_ip_blocked(self.ip, False)             # the box was unticked: let the address back in
+
+
+def set_ip_blocked(ip, blocked, reason='', auto=False):
+    """Create/update the block for `ip` and keep every trap row for that address in step."""
+    row, _ = BlockedIP.objects.get_or_create(ip=ip, defaults={'reason': reason[:200], 'auto': auto, 'is_active': blocked})
+    if row.is_active != blocked:
+        row.is_active = blocked
+        row.save(update_fields=['is_active'])
+    BotAttempt.objects.filter(ip=ip).exclude(blacklist=blocked).update(blacklist=blocked)
+    from django.core.cache import cache
+    cache.delete('antispam:blocked-ips')
+    if not blocked:                                    # also lift the automatic 24h ban and the strike count
+        from . import antispam
+        cache.delete(antispam._key('block', 'all', ip))
+        cache.delete(antispam._key('strike', 'all', ip))

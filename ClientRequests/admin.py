@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (
-    Contact, Bookings
+    Contact, Bookings, BotAttempt, BlockedIP, set_ip_blocked
 )
 
 # contact
@@ -81,3 +81,51 @@ class QuickLeadAdmin(admin.ModelAdmin):
             w.writerow([q.created_at.strftime('%Y-%m-%d %H:%M'), q.name, q.phone, q.tour, q.message, q.language, q.status, q.page_url])
         return resp
     export_csv.short_description = 'Download selected leads as CSV'
+
+
+
+@admin.register(BotAttempt)
+class BotAttemptAdmin(admin.ModelAdmin):
+    list_display = ('created_at', 'ip', 'form', 'reasons', 'name', 'short_message', 'hits', 'blacklist')
+    list_editable = ('blacklist',)
+    list_filter = ('blacklist', 'form', 'created_at')
+    search_fields = ('ip', 'name', 'email', 'phone', 'message', 'reasons')
+    date_hierarchy = 'created_at'
+    readonly_fields = ('created_at', 'user_agent', 'path', 'hits')
+    list_per_page = 50
+    actions = ['blacklist_ips', 'unblock_ips']
+
+    @admin.display(description='Message')
+    def short_message(self, obj):
+        return (obj.message or '')[:70]
+
+    @admin.action(description='Blacklist the IP address of the selected entries')
+    def blacklist_ips(self, request, queryset):
+        ips = {i for i in queryset.values_list('ip', flat=True) if i}
+        for ip in ips:
+            set_ip_blocked(ip, True, 'Blacklisted from the bot trap')
+        self.message_user(request, f'{len(ips)} IP address(es) blacklisted.')
+
+    @admin.action(description='Unblock the IP address of the selected entries')
+    def unblock_ips(self, request, queryset):
+        ips = {i for i in queryset.values_list('ip', flat=True) if i}
+        for ip in ips:
+            set_ip_blocked(ip, False)
+        self.message_user(request, f'{len(ips)} IP address(es) unblocked.')
+
+
+@admin.register(BlockedIP)
+class BlockedIPAdmin(admin.ModelAdmin):
+    list_display = ('ip', 'is_active', 'reason', 'auto', 'created_at')
+    list_editable = ('is_active',)
+    search_fields = ('ip', 'reason')
+    list_filter = ('is_active', 'auto')
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        set_ip_blocked(obj.ip, obj.is_active, obj.reason)
+
+    def delete_model(self, request, obj):
+        super().delete_model(request, obj)
+        from django.core.cache import cache
+        cache.delete('antispam:blocked-ips')

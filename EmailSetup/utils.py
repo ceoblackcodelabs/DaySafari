@@ -113,9 +113,16 @@ def handle_new_lead(lead, customer_email=None):
     reasons = spam_reasons(name=getattr(lead, 'name', ''), email=getattr(lead, 'email', ''),
                            subject=getattr(lead, 'subject', ''), message=getattr(lead, 'message', '') or '')
     if reasons:
-        lead.status = 'Spam' if hasattr(lead, 'subject') else 'spam'
-        lead.save(update_fields=['status'])
-        logger.warning("Quarantined %s #%s as spam: %s", type(lead).__name__, lead.pk, ', '.join(reasons))
+        from ClientRequests.antispam import trap
+        is_contact = hasattr(lead, 'subject')
+        kind = 'contact' if is_contact else ('hotel' if getattr(lead, 'booking_type', '') == 'hotel' else 'booking')
+        msg = (getattr(lead, 'subject', '') + '\n' if is_contact else '') + (getattr(lead, 'message', '') or '')
+        if trap(kind, reasons, getattr(lead, 'name', ''), getattr(lead, 'email', ''), getattr(lead, 'phone', ''), msg.strip()):
+            lead.delete()                          # the bot trap keeps everything; the real lists stay clean
+        else:
+            lead.status = 'Spam' if is_contact else 'spam'
+            lead.save(update_fields=['status'])
+        logger.warning("Bot trap caught a %s: %s", kind, ', '.join(reasons))
         return False
     notify_staff_of_lead(lead)
     forward_to_crm(lead)

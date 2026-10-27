@@ -243,8 +243,9 @@ class SpamProtectionTests(TestCase):
         with mock.patch.object(utils, 'notify_staff_of_lead') as notify, \
                 mock.patch.object(utils.threading, 'Thread') as thread:
             self.assertFalse(utils.handle_new_lead(contact, customer_email=lambda lead: None))
-        contact.refresh_from_db()
-        self.assertEqual(contact.status, 'Spam')
+        from ClientRequests.models import BotAttempt
+        self.assertFalse(Contact.objects.filter(pk=contact.pk).exists())      # moved out of the real list...
+        self.assertEqual(BotAttempt.objects.get().form, 'contact')            # ...into the bot trap
         notify.assert_not_called()
         thread.assert_not_called()
 
@@ -914,6 +915,7 @@ class GuidesTests(TestCase):
         self.assertEqual(self.post_lead(name='A').status_code, 400)                      # validation
         self.assertEqual(self.post_lead(phone='abc').status_code, 400)
         for bot in ({'message': 'Visit https://tinyurl.com/abc now'}, {'website': 'x'}, {'form_ts': 'forged'}):
+            from django.core.cache import cache; cache.clear()                           # (a honeypot hit bans the address)
             self.assertTrue(self.post_lead(**bot).json()['ok'])                          # bots are never told
         self.assertEqual(GuideLead.objects.count(), 1)
 
@@ -1146,3 +1148,46 @@ class LandingFormContactFieldsTests(TestCase):
         self.assertEqual(self.post(whatsapp='abc').status_code, 400)
         self.assertTrue(self.post(contact='grace@gmail.com').json().get('success'))       # old single-box clients still work
         self.assertEqual(Bookings.objects.count(), 2)
+
+
+class BotTrapTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+        cache.clear()
+
+    def test_spam_contact_goes_to_trap_not_to_contact_list(self):
+        from ClientRequests.antispam import lead_token
+        from ClientRequests.models import BotAttempt, Contact
+        from EmailSetup.utils import handle_new_lead
+        c = Contact.objects.create(name='mussymync', email='x@y.com', subject='Escort', message='Photos for my escort application https://tinyurl.com/a')
+        with mock.patch('EmailSetup.utils.notify_staff_of_lead'):
+            self.assertFalse(handle_new_lead(c))
+        self.assertEqual(Contact.objects.count(), 0)
+        t = BotAttempt.objects.get()
+        self.assertEqual((t.form, t.name), ('contact', 'mussymync'))
+
+    def test_honeypot_popup_is_trapped_and_blacklisting_blocks_every_form(self):
+        from ClientRequests.antispam import lead_token
+        from ClientRequests.models import BotAttempt, BlockedIP
+        r = self.client.post('/en/lead/', {'name': 'Bot Bot', 'phone': '+254712345678', 'website': 'spam.com'}, REMOTE_ADDR='6.6.6.6')
+        self.assertTrue(r.json()['success'])
+        t = BotAttempt.objects.get(ip='6.6.6.6'); self.assertEqual((t.form, t.reasons), ('popup', 'honeypot'))
+        # ticking the checkbox blocks the address everywhere
+        t.blacklist = True; t.save()
+        self.assertTrue(BlockedIP.objects.get(ip='6.6.6.6').is_active)
+        blocked = self.client.post('/en/lead/', {'name': 'Real Person', 'phone': '+254712345678'}, REMOTE_ADDR='6.6.6.6')
+        self.assertEqual(blocked.status_code, 429)
+        self.assertEqual(self.client.post('/en/contact/', {'name': 'a'}, REMOTE_ADDR='6.6.6.6').status_code, 429)
+        # unticking lets them back in
+        t.refresh_from_db(); t.blacklist = False; t.save()
+        self.assertFalse(BlockedIP.objects.get(ip='6.6.6.6').is_active)
+        self.assertNotEqual(self.client.post('/en/lead/', {'name': 'Real Person', 'phone': '+254712345678'}, REMOTE_ADDR='6.6.6.6').status_code, 429)
+
+    def test_repeats_only_bump_a_counter(self):
+        from ClientRequests.models import BotAttempt
+        from ClientRequests.antispam import trap
+        from django.test import RequestFactory
+        req = RequestFactory().post('/x', REMOTE_ADDR='7.7.7.7')
+        for _ in range(3):
+            trap('contact', ['spam keywords'], 'Bot', '', '', 'same text', req)
+        t = BotAttempt.objects.get(ip='7.7.7.7'); self.assertEqual(t.hits, 3)

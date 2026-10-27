@@ -58,8 +58,21 @@ def _key(kind, scope, ip, extra=''):
     return f'antispam:{kind}:{scope}:{ip}{extra}'
 
 
+def _admin_blocked():
+    """Addresses blacklisted in the admin (cached for a minute; cleared when the list changes)."""
+    ips = cache.get('antispam:blocked-ips')
+    if ips is None:
+        try:
+            from .models import BlockedIP
+            ips = set(BlockedIP.objects.filter(is_active=True).values_list('ip', flat=True))
+        except Exception:
+            ips = set()
+        cache.set('antispam:blocked-ips', ips, 60)
+    return ips
+
+
 def is_blocked(ip):
-    return bool(cache.get(_key('block', 'all', ip)))
+    return bool(cache.get(_key('block', 'all', ip))) or ip in _admin_blocked()
 
 
 def block_ip(ip, reason, seconds=BLOCK_SECONDS):
@@ -148,6 +161,10 @@ class AntiSpamViewMixin:
             # Honeypot hits are near-certain bots: weigh them heavily.
             add_strike(ip, f'bot signature on {self.antispam_scope}: {form.spam_reason}',
                        weight=STRIKES_BEFORE_BLOCK if form.spam_reason == 'honeypot' else 1)
+            d = getattr(form, 'data', {})
+            trap({'booking': 'booking', 'home-booking': 'booking', 'trekking': 'booking', 'contact': 'contact', 'register': 'register', 'hotel': 'hotel'}.get(self.antispam_scope, 'other'),
+                 [form.spam_reason], d.get('name') or d.get('username', ''), d.get('email', ''), d.get('phone', ''),
+                 d.get('message', '') or d.get('special_requests', ''), self.request)
             return HttpResponse('Bad request.', status=400)
         return super().form_invalid(form)
 
@@ -310,3 +327,52 @@ def lead_spam_reasons(name, tour, message, token):
         reasons.append('contains a link')
     reasons += spam_reasons(name=name, subject=tour, message=message)
     return reasons
+
+
+# --------------------------------------------------------------------------
+# Bot trap: automations are recorded here (admin: Client Requests > Bot trap) instead of in the real lists
+# --------------------------------------------------------------------------
+import contextvars
+_current_request = contextvars.ContextVar('dsa_request', default=None)
+
+
+class CurrentRequestMiddleware:
+    """Remembers the request so spam handlers deep in the code can record who sent it."""
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        token = _current_request.set(request)
+        try:
+            return self.get_response(request)
+        finally:
+            _current_request.reset(token)
+
+
+def trap(form, reasons, name='', email='', phone='', message='', request=None):
+    """Record a bot/spam submission. Never raises. Repeats of the same text from one address only bump a counter."""
+    try:
+        from .models import BotAttempt
+        request = request or _current_request.get()
+        ip = get_client_ip(request) if request else ''
+        ip = ip if ip and ip != 'unknown' else None
+        reason = ', '.join(reasons) if isinstance(reasons, (list, tuple)) else str(reasons)
+        message = (message or '')[:1500]
+        same = BotAttempt.objects.filter(ip=ip, form=form, message=message, name=(name or '')[:120]).order_by('-id').first() if ip else None
+        if same:
+            BotAttempt.objects.filter(pk=same.pk).update(hits=same.hits + 1)
+            return same
+        day_key = f'antispam:trapcount:{ip}:{int(time.time()) // 86400}'
+        cache.add(day_key, 0, 90000)
+        try:
+            if cache.incr(day_key) > 30:      # a flood from one address: keep counting, stop filling the table
+                return None
+        except ValueError:
+            pass
+        return BotAttempt.objects.create(
+            ip=ip, form=form, reasons=reason[:300], name=(name or '')[:120], email=(email or '')[:254], phone=(phone or '')[:40],
+            message=message, blacklist=bool(ip and ip in _admin_blocked()), user_agent=(request.META.get('HTTP_USER_AGENT', '')[:300] if request else ''),
+            path=(request.path[:200] if request else ''))
+    except Exception:
+        logger.exception('Could not record bot attempt')
+        return None

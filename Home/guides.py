@@ -17,7 +17,7 @@ from django.utils import timezone
 from django.utils.html import escape, strip_tags
 from django.views.decorators.http import require_POST
 
-from ClientRequests.antispam import get_client_ip, hit_rate_limit, lead_spam_reasons, lead_token, add_strike, is_blocked
+from ClientRequests.antispam import get_client_ip, hit_rate_limit, lead_spam_reasons, lead_token, add_strike, is_blocked, trap
 from EmailSetup.utils import get_company, send_transactional_email
 
 from .blogs_api import sanitise
@@ -127,6 +127,8 @@ def guide_lead(request, slug):
         return JsonResponse({'ok': False, 'error': 'Too many requests. Please slow down.'}, status=429)
     data = request.POST
     if data.get('website'):                                   # honeypot
+        add_strike(ip, 'honeypot on guide form', weight=3)
+        trap('guide', ['honeypot'], data.get('name', ''), data.get('email', ''), data.get('phone', ''), data.get('message', ''), request)
         return JsonResponse({'ok': True})
     name = ' '.join((data.get('name') or '').split())[:100]
     phone = (data.get('phone') or '').strip()[:25]
@@ -147,6 +149,7 @@ def guide_lead(request, slug):
         reasons = lead_spam_reasons(name, '', message, data.get('form_ts'))
         if reasons:
             add_strike(ip, 'spam guide lead: ' + ', '.join(reasons))
+            trap('guide', reasons, name, email, phone, message, request)
             return JsonResponse({'ok': True})                 # bots are never told
     try:
         group = min(max(int(data.get('group_size') or 0), 0), 200) or None

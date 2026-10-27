@@ -5,7 +5,7 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET, require_POST
 
-from ClientRequests.antispam import add_strike, get_client_ip, rate_limited
+from ClientRequests.antispam import add_strike, get_client_ip, rate_limited, trap
 from ClientRequests.spamfilter import spam_reasons
 from . import content, leads, reviews as reviews_api
 from django.conf import settings
@@ -59,6 +59,8 @@ def enquiry(request):
     except ValueError:
         return _fail('Please check the form and try again.', 400)
     if raw.get('website'):  # honeypot
+        add_strike(get_client_ip(request), 'honeypot on landing form', weight=3)
+        trap('landing', ['honeypot'], str(raw.get('full_name', '')), str(raw.get('email', '')), str(raw.get('whatsapp', '')), str(raw.get('notes', '')), request)
         return _fail('Please refresh the form and try again.', 400)
     try:
         data = leads.validate(raw)
@@ -67,6 +69,7 @@ def enquiry(request):
     reasons = spam_reasons(name=data['full_name'], email=data['email'], message=data['notes'])
     if reasons:        # bots are told it worked, but nothing is saved or emailed
         add_strike(get_client_ip(request), 'spam landing enquiry: ' + ', '.join(reasons))
+        trap('landing', reasons, data['full_name'], data['email'], data['phone'], data['notes'], request)
         return JsonResponse({'success': True, 'reference': 'DSA'})
     try:
         booking, error, status = leads.save(data, request)
