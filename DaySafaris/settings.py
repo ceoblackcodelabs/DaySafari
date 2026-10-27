@@ -391,8 +391,8 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
-    # Opt in once you've confirmed the host forwards X-Forwarded-Proto
-    # (otherwise a redirect loop is possible):
-    SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
+    # Every http:// visit is redirected to https:// (the host reports the scheme correctly; set SECURE_SSL_REDIRECT=False
+    # in .env only if a redirect loop ever appears).
+    SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=True, cast=bool)
     if config('TRUST_PROXY_SSL_HEADER', default=False, cast=bool):
         SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
