@@ -16,5 +16,5 @@
 @keyframes xm-gallop{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
 @keyframes xm-sway{50%{transform:rotate(1.8deg)}}
 @keyframes xm-ring{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
-@media(max-width:700px){.xm-sleigh{width:220px;top:14%}.xm-bells{display:none}.xm-branch,.xm-baubles{top:124px;width:52px}.xm-tree{display:none}.xm-gifts{width:56px;bottom:0}}
+@media(max-width:700px){.xm-sleigh{width:220px;top:14%}.xm-bells{display:none}.xm-branch,.xm-baubles{top:104px;width:52px}.xm-tree{display:none}.xm-gifts{width:56px;bottom:0}}
 @media(prefers-reduced-motion:reduce){.xm-sleigh{display:none}.xm,.xm-bob,.xm-legs{animation:none}}
