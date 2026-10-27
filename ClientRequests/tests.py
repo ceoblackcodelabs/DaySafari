@@ -1118,3 +1118,31 @@ class AboutImagesApiTests(TestCase):
             self.assertEqual(post().status_code, 201); self.assertEqual(post().status_code, 201)
             html = self.client.get('/en/').content.decode()
             self.assertIn('id="aboutRot"', html); self.assertEqual(html.count('Team at the stand'), 2)
+
+
+class LandingFormContactFieldsTests(TestCase):
+    def post(self, **over):
+        import json, uuid
+        from django.core.cache import cache
+        from safaris import content
+        cache.clear()
+        body = {'page_slug': content.LANDING_PAGES[0]['slug'], 'submission_id': str(uuid.uuid4()), 'full_name': 'Grace Wanjiru',
+                'travellers': 2, 'travel_month': 'Still deciding', 'notes': ''}
+        body.update(over)
+        return self.client.post('/api/enquiry/', json.dumps(body), content_type='application/json')
+
+    def test_email_and_whatsapp_are_saved_separately(self):
+        from ClientRequests.models import Bookings
+        r = self.post(email='grace@gmail.com', whatsapp='0722123456')
+        self.assertTrue(r.json().get('success'), r.content)
+        b = Bookings.objects.get()
+        self.assertEqual((b.email, b.phone), ('grace@gmail.com', '+254722123456'))
+
+    def test_one_of_them_is_enough_and_bad_values_are_rejected(self):
+        from ClientRequests.models import Bookings
+        self.assertTrue(self.post(whatsapp='+44 7911 123456').json().get('success'))
+        self.assertEqual(self.post().status_code, 400)                                    # neither
+        self.assertEqual(self.post(email='nope').status_code, 400)
+        self.assertEqual(self.post(whatsapp='abc').status_code, 400)
+        self.assertTrue(self.post(contact='grace@gmail.com').json().get('success'))       # old single-box clients still work
+        self.assertEqual(Bookings.objects.count(), 2)

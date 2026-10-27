@@ -29,6 +29,19 @@ def next_months(count=24):
     return out
 
 
+def _phone(value):
+    digits = re.sub(r'\D', '', value or '')
+    if not value or not re.fullmatch(r'[+()\d\s.-]+', value) or not 7 <= len(digits) <= 15:
+        return ''
+    if value.startswith('+'):
+        return '+' + digits
+    if re.fullmatch(r'0[17]\d{8}', digits):
+        return '+254' + digits[1:]
+    if re.fullmatch(r'254[17]\d{8}', digits):
+        return '+' + digits
+    return ''
+
+
 def validate(raw):
     """Returns cleaned fields or raises ValueError with a visitor-friendly message."""
     page = content.PAGE_BY_SLUG.get(_text(raw.get('page_slug'), 70))
@@ -40,19 +53,22 @@ def validate(raw):
     name = _text(raw.get('full_name'), 100)
     if len(name) < 2:
         raise ValueError('Please enter your name.')
-    contact = _text(raw.get('contact'), 120)
-    email = contact.lower() if re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+', contact) else ''
-    digits = re.sub(r'\D', '', contact)
-    phone = ''
-    if not email and re.fullmatch(r'[+()\d\s.-]+', contact) and 7 <= len(digits) <= 15:
-        if contact.startswith('+'):
-            phone = '+' + digits
-        elif re.fullmatch(r'0[17]\d{8}', digits):
-            phone = '+254' + digits[1:]
-        elif re.fullmatch(r'254[17]\d{8}', digits):
-            phone = '+' + digits
+    email_raw = _text(raw.get('email'), 120).lower()
+    wa_raw = _text(raw.get('whatsapp'), 30)
+    legacy = _text(raw.get('contact'), 120)          # older forms sent one "email or WhatsApp" box
+    if legacy and not email_raw and not wa_raw:
+        if '@' in legacy:
+            email_raw = legacy.lower()
+        else:
+            wa_raw = legacy
+    email = email_raw if re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+', email_raw) else ''
+    phone = _phone(wa_raw)
+    if email_raw and not email:
+        raise ValueError('That email address does not look right.')
+    if wa_raw and not phone:
+        raise ValueError('Enter your WhatsApp number with country code, for example +254 7xx xxx xxx.')
     if not email and not phone:
-        raise ValueError('Enter a valid email or a WhatsApp number with country code.')
+        raise ValueError('Please enter an email, a WhatsApp number, or both.')
 
     candidate = _text(raw.get('destination_key'), 30)
     key = page['destination'] or (candidate if candidate in content.DESTINATIONS else None)
@@ -117,6 +133,8 @@ def save(data, request):
         lines.append('Campaign: ' + ', '.join(f'{k}={v}' for k, v in data['utm'].items()))
     if not data['email']:
         lines.append('Preferred contact: WhatsApp')
+    elif data['phone']:
+        lines.append('Reach me on: email and WhatsApp')
     month = data['travel_month']
     when = date.today() if month == 'Still deciding' else date(int(month[:4]), int(month[5:]), 1)
     booking = Bookings(

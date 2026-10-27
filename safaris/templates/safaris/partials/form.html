@@ -12,14 +12,15 @@
 <input type="hidden" name="trip_id" id="trip-id" value="{% if selected %}{{ selected.id }}{% endif %}">
 {% if page.destination %}<input type="hidden" name="destination_key" id="destination" value="{{ page.destination }}">{% endif %}
 <div class="form-grid">
-<label>Your name<input name="full_name" autocomplete="name" placeholder="Full name" required minlength="2" maxlength="100"></label>
-<label>Email or WhatsApp<input name="contact" autocomplete="email" placeholder="Email or +country code" required maxlength="120" aria-describedby="contact-note"></label>
+<label class="span-2">Your name<input name="full_name" autocomplete="name" placeholder="Full name" required minlength="2" maxlength="100"></label>
+<label>Email<input name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="120" aria-describedby="contact-note"></label>
+<label>WhatsApp<input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="+254 7xx xxx xxx" maxlength="30" aria-describedby="contact-note"></label>
 {% if not page.destination %}<label class="span-2">What would you love to experience?<select name="destination_key" id="destination"><option value="">Help me choose</option>{% for d in select_options %}<option value="{{ d.key }}" {% if d.key == form_destination %}selected{% endif %}>{{ d.label }}</option>{% endfor %}</select></label>{% endif %}
 <label class="span-2" id="q0-wrap" {% if not form_questions %}hidden{% endif %}><span id="q0-label">{{ form_questions.0.label }}</span><select id="q0" name="answer__{{ form_questions.0.key }}"><option value="">Choose an option</option>{% for o in form_questions.0.options %}<option>{{ o }}</option>{% endfor %}</select></label>
 <label>When would you travel?<select name="travel_month"><option selected>Still deciding</option>{% for m in months %}<option value="{{ m.value }}">{{ m.label }}</option>{% endfor %}</select></label>
 <label>Travellers<input name="travellers" type="number" min="1" max="50" value="2" required inputmode="numeric"></label>
 </div>
-<span id="contact-note" class="sr-only">For WhatsApp, include your country code.</span>
+<span id="contact-note" class="form-hint">Email and WhatsApp: please share both if you can (one is enough). Include your country code for WhatsApp.</span>
 <div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
 <button type="button" class="refine" id="refine" aria-expanded="false">Add trip preferences <span>(optional)</span>{% icon 'chevron-down' 14 %}</button>
 <div class="refinement" id="refinement" hidden>

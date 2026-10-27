@@ -211,3 +211,5 @@ body:not(.editing) .edbar{display:none}
 .about-dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px}
 .about-dots i{width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.55);transition:width .3s,background .3s}.about-dots i.on{width:22px;background:#fff}
 @media(prefers-reduced-motion:reduce){.about-rot img{transition:none}}
+
+.form-hint{display:block;font-size:12px;color:#65736d;margin:-2px 0 10px}
