@@ -157,7 +157,7 @@ class HomeView(AntiSpamViewMixin, ListView):
         # static default image in the template if none are uploaded yet
         context['about_images'] = AboutImage.objects.filter(
             is_active=True
-        ).only('id', 'image', 'caption')[:8]
+        ).only('id', 'image', 'caption')[:12]
 
         # Hero carousel slides - falls back to the hardcoded static
         # slides in the template if none are uploaded yet
@@ -248,7 +248,7 @@ class AboutView(ListView):
         if cached is None:
             cached = {
                 'about_images': list(
-                    AboutImage.objects.filter(is_active=True).only('id', 'image', 'caption')[:8]
+                    AboutImage.objects.filter(is_active=True).only('id', 'image', 'caption')[:12]
                 ),
             }
             cache.set(cache_key, cached, 900)

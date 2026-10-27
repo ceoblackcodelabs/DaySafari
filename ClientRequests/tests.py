@@ -1097,3 +1097,24 @@ class CrmWebhookTests(TestCase):
             handle_new_lead(Bookings.objects.create(name='Peter Kamau', email='peter@gmail.com', persons=3, message='Zanzibar beach week'))   # inactive = stops immediately
         self.assertEqual(len(calls), 2)
         self.assertEqual((calls[0]['name'], calls[0]['type'], calls[0]['phone']), ('Grace Wanjiru', 'safari_enquiry', '+254722123456'))
+
+
+class AboutImagesApiTests(TestCase):
+    def test_add_and_list_and_home_rotates(self):
+        import json, tempfile
+        from io import BytesIO
+        from PIL import Image
+        from django.test import override_settings
+        from Hotels.models import ApiKey
+        from Home.models import AboutImage
+        _, token = ApiKey.create_key('t')
+        auth = {'HTTP_AUTHORIZATION': f'Bearer {token}'}
+        self.assertEqual(self.client.get('/api/v1/about-images/').status_code, 401)
+        def post(q=''):
+            buf = BytesIO(); Image.new('RGB', (1200, 1500), 'tan').save(buf, 'JPEG'); buf.seek(0); buf.name = 'x.jpg'
+            return self.client.post('/api/v1/about-images/' + q, {'data': json.dumps({'caption': 'Team at the stand', 'order': 2}), 'image': buf}, **auth)
+        with tempfile.TemporaryDirectory() as tmp, override_settings(MEDIA_ROOT=tmp):
+            self.assertEqual(post('?dry_run=1').json()['status'], 'would_create'); self.assertEqual(AboutImage.objects.count(), 0)
+            self.assertEqual(post().status_code, 201); self.assertEqual(post().status_code, 201)
+            html = self.client.get('/en/').content.decode()
+            self.assertIn('id="aboutRot"', html); self.assertEqual(html.count('Team at the stand'), 2)
