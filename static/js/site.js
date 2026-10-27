@@ -58,7 +58,7 @@
   var lead = $('#leadOverlay');
   if (lead) {
     var lf = $('#leadForm'), le = $('#leadError'), timer, shown = false, KEY = 'dsaLead';
-    var showLead = function (force) { if (!force && (shown || $('#popupOverlay.active'))) return; shown = true; openOverlay(lead); };
+    var showLead = function (force) { if (typeof reset === 'function') reset(); if (!force && (shown || $('#popupOverlay.active'))) return; shown = true; openOverlay(lead); };
     var hideLead = function (days) { closeOverlay(lead); clearTimeout(timer); var d = $('#leadDontShow').checked ? 3650 : (days || 3); storePut(KEY, { until: Date.now() + d * DAY }); };
     if (lead.dataset.auto === '1' && !((storeGet(KEY).until || 0) > Date.now())) {
       timer = setTimeout(showLead, 9000);
@@ -69,18 +69,24 @@
     $('[data-lead-close]', lead).addEventListener('click', function () { hideLead(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lead.classList.contains('active')) hideLead(); });
     var bad = function (el, m) { le.textContent = m; le.hidden = false; el.focus(); };
+    var reset = function () { lf.hidden = false; var d = $('#leadDone'); if (d) d.hidden = true; };
     lf.addEventListener('submit', function (e) {
       e.preventDefault(); le.hidden = true;
       var f = lf.elements, name = f.name.value.trim(), phone = f.phone.value.trim(), tour = f.tour.value.trim(), msg = f.message.value.trim();
       if (name.length < 2) return bad(f.name, 'Please enter your name.');
       if (!/^\+?[0-9 ()\-]{7,22}$/.test(phone)) return bad(f.phone, 'Please enter a valid phone number.');
-      var text = 'Hello Day Safaris! My name is ' + name + '.' + (tour ? ' I am interested in: ' + tour + '.' : ' I would like to plan a trip.') + (msg ? ' ' + msg : '') + ' My phone: ' + phone;
-      var url = 'https://wa.me/254759379600?text=' + encodeURIComponent(text);
-      var w = window.open(url, '_blank'); if (w) { try { w.opener = null; } catch (x) {} }
+      var btn = $('button[type=submit]', lf); btn.disabled = true;
       var body = new URLSearchParams(new FormData(lf)); body.set('page', location.pathname); body.set('lang', document.documentElement.lang || '');
-      try { fetch(lf.action, { method: 'POST', body: body, keepalive: true, credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } }).catch(function () {}); } catch (x) {}
-      hideLead(30);
-      if (!w) location.href = url;
+      fetch(lf.action, { method: 'POST', body: body, credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (r) {
+          btn.disabled = false;
+          if (r.ok && r.j.success) { lf.hidden = true; var d = $('#leadDone'); if (d) d.hidden = false; storePut(KEY, { until: Date.now() + 30 * DAY }); }
+          else if (r.j && r.j.error === 'phone') bad(f.phone, 'Please enter a valid phone number.');
+          else if (r.j && r.j.error === 'name') bad(f.name, 'Please enter your name.');
+          else { le.textContent = 'Something went wrong. Please try again in a moment.'; le.hidden = false; }
+        })
+        .catch(function () { btn.disabled = false; le.textContent = 'Network problem. Please try again.'; le.hidden = false; });
     });
   }
 

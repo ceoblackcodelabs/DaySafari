@@ -20,7 +20,7 @@
           btn.disabled = false;
           if (x.ok && x.j.ok) {
             $('.fields', form).hidden = true; $('.done', form).hidden = false;
-            if (x.j.whatsapp) $('[data-wa]', form).href = x.j.whatsapp;
+
             form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
           } else {
             var er = x.j.errors || {};

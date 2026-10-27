@@ -4,7 +4,7 @@
 <button type="button" class="modal-close" data-lead-close aria-label="{% trans 'Close' %}">{% icon 'x' 20 %}</button>
 <p class="eyebrow dark">{% trans "Free quote · reply in minutes" %}</p>
 <h2 id="leadTitle">{% trans "Hello! What's your next adventure?" %}</h2>
-<p class="form-intro">{% trans "Tell us where you dream of going and we will chat with you on WhatsApp with a free, no-obligation quote." %}</p>
+<p class="form-intro">{% trans "Tell us where you dream of going and our team will contact you with a free, no-obligation quote." %}</p>
 <form id="leadForm" action="{% url 'lead_capture' %}" method="post" novalidate>{% csrf_token %}
 <input type="hidden" name="form_ts" value="{{ lead_ts }}">
 <div class="honeypot" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
@@ -16,8 +16,9 @@
 <label class="span-2">{% trans "A short message (optional)" %}<textarea name="message" rows="2" maxlength="600"></textarea></label>
 </div>
 <p class="form-error" id="leadError" role="alert" hidden></p>
-<button type="submit" class="button primary submit">{% icon 'message-circle' 17 %} {% trans "Send on WhatsApp" %}</button>{% include "Home/partials/consent.html" %}
+<button type="submit" class="button primary submit">{% icon 'arrow-right' 17 %} {% trans "Submit" %}</button>{% include "Home/partials/consent.html" %}
 <label class="dont-show"><input type="checkbox" id="leadDontShow"> {% trans "Don't show again" %}</label>
 </form>
+<div class="lead-done" id="leadDone" role="status" aria-live="polite" hidden><span class="success-mark">{% icon 'check' 28 %}</span><h2>{% trans "Thank you!" %}</h2><p>{% trans "We have your details and our team will contact you shortly with your free quote." %}</p><button type="button" class="button primary" data-lead-close>{% trans "Close" %}</button></div>
 <p class="form-privacy">{% icon 'lock' 11 %}{% trans "We only use your details to reply about your trip." %}</p>
 </div></div>{% endif %}
