@@ -322,7 +322,7 @@
 
   // Homepage scroll reveal: fade/slide sections in once as they enter the screen (IntersectionObserver, transform/opacity only)
   if ($('.home-hero') && 'IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-    var sel = '.destination-ribbon,.stat-row>div,.section-heading,.card-grid>*,.dest-mosaic>*,.split>div,.forest-feature>div,.offer-strip>*,.quote,.about-rot,.form-card,.band-alt .btn-row';
+    var sel = '.destination-ribbon,.stat-row>div,.section-heading,.card-grid>*,.dest-mosaic>*,.split>div,.forest-feature>div,.quote,.about-rot,.form-card,.band-alt .btn-row';
     var vh = window.innerHeight, seen = [];
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
