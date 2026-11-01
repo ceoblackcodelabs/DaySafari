@@ -1237,3 +1237,21 @@ class ChristmasModeTests(TestCase):
         p.christmas_mode = True
         p.save()
         self.assertContains(self.client.get('/en/', secure=True), 'class="xmas"')
+
+
+class TestimonialsApiTests(TestCase):
+    def test_create_once_and_list(self):
+        import json
+        from django.core.cache import cache
+        from Hotels.models import ApiKey
+        from Home.models import Testimonials
+        cache.clear()
+        _, token = ApiKey.create_key('t')
+        h = {'HTTP_AUTHORIZATION': f'Bearer {token}', 'content_type': 'application/json', 'secure': True}
+        body = json.dumps({'name': 'Fabienne Depover', 'feedback': 'It was a wonderful safari! Everything was very well organised.', 'star_rating': 5})
+        self.assertEqual(self.client.post('/api/v1/testimonials/?dry_run=1', body, **h).json()['status'], 'would_create')
+        self.assertEqual(Testimonials.objects.count(), 0)
+        self.assertEqual(self.client.post('/api/v1/testimonials/', body, **h).status_code, 201)
+        self.assertEqual(self.client.post('/api/v1/testimonials/', body, **h).json()['status'], 'exists')
+        self.assertEqual(Testimonials.objects.count(), 1)
+        self.assertEqual(self.client.post('/api/v1/testimonials/', json.dumps({'name': 'X'}), **h).status_code, 400)
