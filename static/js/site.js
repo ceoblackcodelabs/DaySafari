@@ -319,4 +319,37 @@
       io.observe(rv);
     } else load();
   }
+
+  // Homepage scroll reveal: fade/slide sections in once as they enter the screen (IntersectionObserver, transform/opacity only)
+  if ($('.home-hero') && 'IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    var sel = '.destination-ribbon,.stat-row>div,.section-heading,.card-grid>*,.dest-mosaic>*,.split>div,.forest-feature>div,.offer-strip>*,.quote,.about-rot,.form-card,.band-alt .btn-row';
+    var vh = window.innerHeight, seen = [];
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var t = e.target; io.unobserve(t); t.classList.add('rv-in');
+        var n = t.matches('.stat-row>div') && $('strong', t);
+        if (n) countUp(n);
+        setTimeout(function () { t.classList.remove('rv', 'rv-in'); t.style.removeProperty('--d'); }, 1000);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    var countUp = function (el) {
+      var m = el.textContent.match(/^(\D*)(\d[\d,]*)(.*)$/); if (!m) return;
+      var end = parseInt(m[2].replace(/,/g, ''), 10), t0 = null;
+      if (!end || end > 100000) return;
+      var step = function (ts) { t0 = t0 || ts; var k = Math.min((ts - t0) / 900, 1); el.textContent = m[1] + Math.round(end * (1 - Math.pow(1 - k, 3))).toLocaleString('en') + m[3]; if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    };
+    $$(sel, $('main')).forEach(function (el) {
+      if (el.closest('.hero') || el.getBoundingClientRect().top < vh * 0.9) return;
+      var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+      el.style.setProperty('--d', Math.min(i, 5) * 70 + 'ms');
+      el.classList.add('rv'); io.observe(el);
+    });
+    // a jump (End key, anchor link) can skip past elements without them ever intersecting: reveal those once scrolling settles
+    var settle; window.addEventListener('scroll', function () {
+      clearTimeout(settle);
+      settle = setTimeout(function () { $$('.rv:not(.rv-in)').forEach(function (el) { if (el.getBoundingClientRect().bottom < 0) { io.unobserve(el); el.classList.remove('rv'); el.style.removeProperty('--d'); } }); }, 150);
+    }, { passive: true });
+  }
 })();
