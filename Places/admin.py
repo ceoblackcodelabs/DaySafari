@@ -66,7 +66,7 @@ class AwesomePackagesAdmin(TranslationAdmin):
     def star_rating_display(self, obj):
         if obj.star_rating:
             stars = '⭐' * obj.star_rating
-            return format_html(f'<span style="font-size: 14px;">{stars}</span>')
+            return format_html('<span style="font-size: 14px;">{}</span>', stars)
         return 'No Rating'
     star_rating_display.short_description = 'Rating'
     star_rating_display.admin_order_field = 'star_rating'
