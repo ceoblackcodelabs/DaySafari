@@ -29,6 +29,11 @@ _STRONG_TEXT = re.compile(
     r"web ?site (redesign|design feedback)|explainer video|lead generation|"
     r"loan offer|make \$?\d+ ?(k|usd|dollars)|work from home|investment opportunity|"
     r"restore any site|wayback machine|pippit|ai-v?ideo)", re.I)
+# Generated "product review" filler that form-spam bots paste into the message box (nothing to do with travel)
+_NONSENSE = re.compile(
+    r"(this product (works|is|has|looks|feels)\b|improves my [a-z]+ by a lot|loves to play with it|"
+    r"has one of these|heard about this on|decided to give it a try|i tried to attack it|"
+    r"it only works when i'?m)", re.I)
 _URL = re.compile(r'(https?://|www\.|\b[\w-]+\.(?:ru|su|xyz|top|click|work|site|online)\b)', re.I)
 _CYRILLIC = re.compile(r'[Ѐ-ӿ]')
 _LETTER = re.compile(r'[^\W\d_]', re.UNICODE)
@@ -58,6 +63,8 @@ def spam_reasons(name='', email='', subject='', message='', count_campaign=True)
 
     if _STRONG_TEXT.search(text):
         score += 2; reasons.append('spam keywords')
+    if _NONSENSE.search(text):
+        score += 2; reasons.append('generated filler text')
     letters = _LETTER.findall(text)
     if letters and len(_CYRILLIC.findall(text)) / len(letters) > 0.3:
         score += 2; reasons.append('mostly Cyrillic text')
@@ -124,3 +131,26 @@ def can_email_customer(address):
         cache.delete(per_recipient)
         return False
     return True
+
+
+# ---- booking history checks (need the database) --------------------------------
+BURST_PER_HOUR = 4          # bookings for the same destination within an hour before more are suspect
+
+
+def booking_history_reasons(email='', name='', destination=None):
+    """Patterns only visible across bookings: bursts for one destination, one email under unrelated names."""
+    from datetime import timedelta
+    from django.utils import timezone
+    from .models import Bookings
+    now, reasons = timezone.now(), []
+    if destination is not None and Bookings.objects.filter(
+            destination=destination, created_at__gte=now - timedelta(hours=1)).count() >= BURST_PER_HOUR - 1:
+        reasons.append('burst of bookings for one destination')
+    email = (email or '').strip().lower()
+    if email:
+        tokens = set(normalise(name).split())
+        for other in Bookings.objects.filter(email__iexact=email, created_at__gte=now - timedelta(days=2)).values_list('name', flat=True)[:5]:
+            if tokens and not tokens & set(normalise(other).split()):
+                reasons.append('same email under a different name')
+                break
+    return reasons

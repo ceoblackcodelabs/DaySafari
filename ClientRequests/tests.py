@@ -1255,3 +1255,35 @@ class TestimonialsApiTests(TestCase):
         self.assertEqual(self.client.post('/api/v1/testimonials/', body, **h).json()['status'], 'exists')
         self.assertEqual(Testimonials.objects.count(), 1)
         self.assertEqual(self.client.post('/api/v1/testimonials/', json.dumps({'name': 'X'}), **h).status_code, 400)
+
+
+class BookingBotPatternTests(TestCase):
+    """The 2 Nov 2026 bot wave: grammatical 'product review' filler, bursts for one destination, one email under many names."""
+    def setUp(self):
+        from django.core.cache import cache
+        cache.clear()
+
+    def test_generated_filler_is_spam_but_real_messages_are_not(self):
+        from ClientRequests.spamfilter import spam_reasons
+        for msg in ('This product works quite well. It professionally improves my soccer by a lot.', 'My locust loves to play with it.',
+                    "heard about this on new jersey hip hop radio, decided to give it a try.", 'I tried to attack it but got meatball all over it.',
+                    "My co-worker Kazuo has one of these. He says it looks transparent."):
+            self.assertTrue(spam_reasons(name='Jesse Schinner', message=msg, count_campaign=False), msg)
+        for msg in ('We would like a 3 day Amboseli safari for two adults in March.', '', 'Do you pick up from the airport?'):
+            self.assertFalse(spam_reasons(name='Amani Otieno', message=msg, count_campaign=False), msg)
+
+    def test_burst_and_email_reuse(self):
+        from datetime import date
+        from ClientRequests.models import Bookings
+        from ClientRequests.spamfilter import booking_history_reasons
+        from Places.models import Destinations, DestinationsCategory
+        cat = DestinationsCategory.objects.create(location='Kenya', category='Parks')
+        dest = Destinations.objects.create(category=cat, name='Amboseli Test', description='d', price=100)
+        for i in range(3):
+            Bookings.objects.create(name=f'Person {i}', email=f'p{i}@gmail.com', phone='1', destination=dest, date=date.today())
+        self.assertIn('burst of bookings for one destination', booking_history_reasons('new@gmail.com', 'New Guy', dest))
+        other = Destinations.objects.create(category=cat, name='Other Test', description='d', price=100)
+        self.assertEqual(booking_history_reasons('new@gmail.com', 'New Guy', other), [])
+        Bookings.objects.create(name='Evalyn Reichert', email='same@gmail.com', phone='1', destination=other, date=date.today())
+        self.assertTrue(booking_history_reasons('same@gmail.com', 'Samir Cronin', other))        # unrelated names
+        self.assertFalse(booking_history_reasons('same@gmail.com', 'Evalyn R Reichert', other))  # same person, spelt differently

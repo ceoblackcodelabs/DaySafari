@@ -85,6 +85,11 @@ class BookingsForm(AntiSpamFormMixin, forms.ModelForm):
     
     # clean_name / clean_email / clean_phone / clean_message come from AntiSpamFormMixin.
 
+    def extra_spam_reasons(self):
+        from .spamfilter import booking_history_reasons
+        d = self.cleaned_data
+        return booking_history_reasons(d.get('email'), d.get('name'), d.get('destination'))
+
 
 #  contact
 class ContactForm(AntiSpamFormMixin, forms.ModelForm):

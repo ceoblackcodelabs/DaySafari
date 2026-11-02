@@ -267,9 +267,15 @@ class AntiSpamFormMixin(forms.Form):
             g = lambda *keys: next((str(self.data.get(k)) for k in keys if self.data.get(k)), '')
             reasons = spam_reasons(name=g('name', 'full_name'), email=g('email'), subject=g('subject'),
                                    message=g('message', 'special_requests', 'notes'))
+            if not reasons:
+                reasons = self.extra_spam_reasons()
             if reasons:
                 self._flag('content: ' + ', '.join(reasons))
         return data
+
+    def extra_spam_reasons(self):
+        """Hook for form-specific checks that need the database (see BookingsForm)."""
+        return []
 
     # -- shared validators -------------------------------------------------
     def clean_name(self):
