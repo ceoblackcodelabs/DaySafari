@@ -4,13 +4,14 @@ from .views import (BrochureView, HomeView, AboutView, ServicesView, ServiceDeta
                     CruisesView, AirLineView, BlogsView, GalleryView,
                     AfricanWildLifeToursView, TravelPartnershipsView, HolidayTailorMadeToursView, AirportTransfersView,
                     BlogDetailView, TanzaniaTrekking, KenyaTrekking, KilimanjaroTrekking, SuswaTrekking, LongonotTrekking,
-                    TrekkingDetailView, MeruTrekking, FAQView, LegalPageView, SitemapPageView
+                    TrekkingDetailView, MeruTrekking, FAQView, SocialsView, LegalPageView, SitemapPageView
                     )
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('about/', AboutView.as_view(), name='about'),
     path('faq/', FAQView.as_view(), name='faq'),
+    path('socials/', SocialsView.as_view(), name='socials'),
     path('legal-notice/', LegalPageView.as_view(template_name='Legal/legal_notice.html'), name='legal_notice'),
     path('privacy-policy/', LegalPageView.as_view(template_name='Legal/privacy_policy.html'), name='privacy_policy'),
     path('terms-and-conditions/', LegalPageView.as_view(template_name='Legal/terms.html'), name='terms_and_conditions'),

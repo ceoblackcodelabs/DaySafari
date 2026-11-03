@@ -1287,3 +1287,11 @@ class BookingBotPatternTests(TestCase):
         Bookings.objects.create(name='Evalyn Reichert', email='same@gmail.com', phone='1', destination=other, date=date.today())
         self.assertTrue(booking_history_reasons('same@gmail.com', 'Samir Cronin', other))        # unrelated names
         self.assertFalse(booking_history_reasons('same@gmail.com', 'Evalyn R Reichert', other))  # same person, spelt differently
+
+
+class SocialsPageTests(TestCase):
+    def test_socials_page_lists_every_account(self):
+        r = self.client.get('/en/socials/', secure=True)
+        self.assertEqual(r.status_code, 200)
+        for needle in ('instagram.com/day_safaris', 'facebook.com/profile.php?id=1481097984', 'tiktok.com/@daysafarisadventures', 'x.com/dayssafaris', 'wa.me/254759379600', 'g.page/r/'):
+            self.assertContains(r, needle)

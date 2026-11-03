@@ -217,6 +217,10 @@ class HomeView(AntiSpamViewMixin, ListView):
         return {f'landscape_{i}': None for i in range(1, 8)} | {'portrait': None}
 
 
+class SocialsView(TemplateView):
+    template_name = 'Home/socials.html'
+
+
 class FAQView(TemplateView):
     template_name = 'Home/faq.html'
 

@@ -1,0 +1,25 @@
+{% extends "Home/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Follow Day Safaris Adventures: Instagram, Facebook, TikTok and more" %}{% endblock %}
+{% block meta_description %}{% trans "All the ways to follow and reach Day Safaris Adventures: Instagram, Facebook, TikTok, X, WhatsApp, email and our Google reviews." %}{% endblock %}
+{% block og_title_inner %}{% trans "Follow Day Safaris Adventures" %}{% endblock %}
+{% block body %}
+<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "Socials" %}</span></nav><h1>{% trans "Find us everywhere" %}</h1><p>{% trans "Follow our trips, see our guests' moments and message us anytime." %}</p></div></section>
+<section class="section"><div class="socials-wrap">
+<p class="eyebrow dark">{% trans "Follow us" %}</p>
+<div class="socials-grid">
+<a class="social-card" href="https://www.instagram.com/day_safaris?igsh=eWVybW1yYm1ycW0=" target="_blank" rel="noopener noreferrer">{% icon 'instagram' 22 %}<span><strong>Instagram</strong><small>@day_safaris</small></span>{% icon 'arrow-up-right' 16 %}</a>
+<a class="social-card" href="https://www.facebook.com/profile.php?id=1481097984" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8.2h2.8l.5-3.3h-3.3V8.4c0-.9.4-1.7 1.8-1.7h1.6V3.9S15.6 3.7 14.4 3.7c-2.5 0-4.1 1.5-4.1 4.2v2.6H7.5v3.3h2.8V22z"/></svg><span><strong>Facebook</strong><small>Day Safaris Adventures</small></span>{% icon 'arrow-up-right' 16 %}</a>
+<a class="social-card" href="https://www.tiktok.com/@daysafarisadventures" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-3.2v13.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .8.1V9.1a6.1 6.1 0 1 0 5.3 6V8.6a7.4 7.4 0 0 0 4.3 1.4V6.8A4.3 4.3 0 0 1 16.6 2z"/></svg><span><strong>TikTok</strong><small>@daysafarisadventures</small></span>{% icon 'arrow-up-right' 16 %}</a>
+<a class="social-card" href="https://x.com/dayssafaris" target="_blank" rel="noopener noreferrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg><span><strong>X</strong><small>@dayssafaris</small></span>{% icon 'arrow-up-right' 16 %}</a>
+</div>
+<p class="eyebrow dark" style="margin-top:34px">{% trans "Talk to us" %}</p>
+<div class="socials-grid">
+<a class="social-card" href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20would%20like%20a%20quote" target="_blank" rel="noopener noreferrer">{% icon 'message-circle' 22 %}<span><strong>WhatsApp</strong><small>+254 759 379 600</small></span>{% icon 'arrow-up-right' 16 %}</a>
+<a class="social-card" href="mailto:info@daysafarisadventures.co.ke">{% icon 'mail' 22 %}<span><strong>{% trans "Email" %}</strong><small>info@daysafarisadventures.co.ke</small></span>{% icon 'arrow-up-right' 16 %}</a>
+<a class="social-card" href="tel:+254759379600">{% icon 'phone' 22 %}<span><strong>{% trans "Call" %}</strong><small>+254 759 379 600</small></span>{% icon 'arrow-up-right' 16 %}</a>
+<a class="social-card" href="https://g.page/r/CZJs5SyNuHl5EBM/review" target="_blank" rel="noopener noreferrer">{% icon 'star' 22 %}<span><strong>{% trans "Review us on Google" %}</strong><small>{% trans "Tell others about your trip" %}</small></span>{% icon 'arrow-up-right' 16 %}</a>
+</div>
+<p style="margin-top:34px"><a class="button primary" href="{% url 'home' %}">{% trans "Back to the website" %} {% icon 'arrow-right' 16 %}</a></p>
+</div></section>
+{% endblock %}
