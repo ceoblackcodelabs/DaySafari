@@ -1,25 +1,68 @@
-{% extends "Home/base.html" %}
-{% load i18n %}
-{% block title %}{% trans "Follow Day Safaris Adventures: Instagram, Facebook, TikTok and more" %}{% endblock %}
-{% block meta_description %}{% trans "All the ways to follow and reach Day Safaris Adventures: Instagram, Facebook, TikTok, X, WhatsApp, email and our Google reviews." %}{% endblock %}
-{% block og_title_inner %}{% trans "Follow Day Safaris Adventures" %}{% endblock %}
-{% block body %}
-<section class="page-hero"><div class="page-hero-in"><nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">{% trans "Home" %}</a><span>{% trans "Socials" %}</span></nav><h1>{% trans "Find us everywhere" %}</h1><p>{% trans "Follow our trips, see our guests' moments and message us anytime." %}</p></div></section>
-<section class="section"><div class="socials-wrap">
-<p class="eyebrow dark">{% trans "Follow us" %}</p>
-<div class="socials-grid">
-<a class="social-card" href="https://www.instagram.com/day_safaris?igsh=eWVybW1yYm1ycW0=" target="_blank" rel="noopener noreferrer">{% icon 'instagram' 22 %}<span><strong>Instagram</strong><small>@day_safaris</small></span>{% icon 'arrow-up-right' 16 %}</a>
-<a class="social-card" href="https://www.facebook.com/profile.php?id=1481097984" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8.2h2.8l.5-3.3h-3.3V8.4c0-.9.4-1.7 1.8-1.7h1.6V3.9S15.6 3.7 14.4 3.7c-2.5 0-4.1 1.5-4.1 4.2v2.6H7.5v3.3h2.8V22z"/></svg><span><strong>Facebook</strong><small>Day Safaris Adventures</small></span>{% icon 'arrow-up-right' 16 %}</a>
-<a class="social-card" href="https://www.tiktok.com/@daysafarisadventures" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-3.2v13.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .8.1V9.1a6.1 6.1 0 1 0 5.3 6V8.6a7.4 7.4 0 0 0 4.3 1.4V6.8A4.3 4.3 0 0 1 16.6 2z"/></svg><span><strong>TikTok</strong><small>@daysafarisadventures</small></span>{% icon 'arrow-up-right' 16 %}</a>
-<a class="social-card" href="https://x.com/dayssafaris" target="_blank" rel="noopener noreferrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg><span><strong>X</strong><small>@dayssafaris</small></span>{% icon 'arrow-up-right' 16 %}</a>
-</div>
-<p class="eyebrow dark" style="margin-top:34px">{% trans "Talk to us" %}</p>
-<div class="socials-grid">
-<a class="social-card" href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20would%20like%20a%20quote" target="_blank" rel="noopener noreferrer">{% icon 'message-circle' 22 %}<span><strong>WhatsApp</strong><small>+254 759 379 600</small></span>{% icon 'arrow-up-right' 16 %}</a>
-<a class="social-card" href="mailto:info@daysafarisadventures.co.ke">{% icon 'mail' 22 %}<span><strong>{% trans "Email" %}</strong><small>info@daysafarisadventures.co.ke</small></span>{% icon 'arrow-up-right' 16 %}</a>
-<a class="social-card" href="tel:+254759379600">{% icon 'phone' 22 %}<span><strong>{% trans "Call" %}</strong><small>+254 759 379 600</small></span>{% icon 'arrow-up-right' 16 %}</a>
-<a class="social-card" href="https://g.page/r/CZJs5SyNuHl5EBM/review" target="_blank" rel="noopener noreferrer">{% icon 'star' 22 %}<span><strong>{% trans "Review us on Google" %}</strong><small>{% trans "Tell others about your trip" %}</small></span>{% icon 'arrow-up-right' 16 %}</a>
-</div>
-<p style="margin-top:34px"><a class="button primary" href="{% url 'home' %}">{% trans "Back to the website" %} {% icon 'arrow-right' 16 %}</a></p>
-</div></section>
-{% endblock %}
+{% load static i18n seo_tags %}{% get_current_language as LANGUAGE_CODE %}<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% trans "Day Safaris Adventures | Follow us and get in touch" %}</title>
+<meta name="description" content="{% trans "Follow Day Safaris Adventures on Instagram, Facebook, TikTok and X, or message us on WhatsApp, email and phone." %}">
+<link rel="canonical" href="https://daysafarisadventures.co.ke{{ request.path }}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Day Safaris Adventures">
+<meta property="og:title" content="{% trans "Day Safaris Adventures | Follow us and get in touch" %}">
+<meta property="og:description" content="{% trans "All our links in one place: social media, WhatsApp, email and phone." %}">
+<meta property="og:url" content="https://daysafarisadventures.co.ke{{ request.path }}">
+<meta property="og:image" content="https://daysafarisadventures.co.ke{% asset 'images/og-default.jpg' %}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#163e34">
+<link rel="icon" href="{% asset 'img/favicon.ico' %}" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{% asset 'img/favicon-32x32.png' %}">
+<link rel="apple-touch-icon" href="{% asset 'img/apple-touch-icon.png' %}">
+{% hreflang_links request %}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap"></noscript>
+<style>
+*{box-sizing:border-box}html,body{margin:0}html{background:#0f2b24}
+body{min-height:100vh;min-height:100dvh;font-family:'DM Sans',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#fff;background:#163e34;background:radial-gradient(120% 70% at 50% -10%,#2a6a56 0%,rgba(42,106,86,0) 60%),radial-gradient(60% 40% at 90% 100%,rgba(232,181,109,.22) 0%,rgba(232,181,109,0) 70%),linear-gradient(180deg,#163e34 0%,#0f2b24 100%);display:flex;justify-content:center;padding:44px 18px 28px;-webkit-font-smoothing:antialiased}
+.wrap{width:100%;max-width:440px;text-align:center}
+.avatar{width:104px;height:104px;margin:0 auto 16px;border-radius:50%;background:#fff;overflow:hidden;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(232,181,109,.55),0 14px 34px rgba(0,0,0,.28)}
+.avatar img{width:84px;height:auto;display:block}
+h1{font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:27px;line-height:1.15;letter-spacing:-.02em;margin:0}
+.tag{margin:8px 0 0;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:15px;color:#f1d3a1}
+.bio{margin:12px auto 0;max-width:330px;font-size:14px;line-height:1.55;color:#d6e4dd}
+.links{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:12px}
+.link{position:relative;display:flex;align-items:center;justify-content:center;min-height:56px;padding:0 54px;border-radius:16px;background:rgba(255,255,255,.96);color:#163e34;text-decoration:none;font-weight:600;font-size:15px;box-shadow:0 6px 18px rgba(0,0,0,.16);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.link:hover,.link:focus-visible{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.24);background:#fff}
+.link:focus-visible{outline:3px solid #e8b56d;outline-offset:3px}
+.link svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:22px;height:22px}
+.link small{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:0;width:16px;height:16px;opacity:.45}
+.link.primary{background:#e8b56d;color:#163e34;min-height:60px;font-size:16px}
+.link.primary:hover{background:#f0c78c}
+.sep{margin:22px 0 2px;font-size:11px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:#a9c4b8}
+.foot{margin-top:30px;font-size:12px;color:#93b0a3}
+.foot a{color:inherit}
+@media(prefers-reduced-motion:reduce){.link{transition:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="avatar"><img src="{% asset 'images/logo.webp' %}" alt="Day Safaris Adventures" width="84" height="66"></div>
+<h1>Day Safaris Adventures</h1>
+<p class="tag">Where Everyday is An Exploration</p>
+<p class="bio">{% trans "Safaris, beach escapes and travel across Africa and beyond. Follow our trips or message us for a free quote." %}</p>
+<ul class="links">
+<li><a class="link primary" href="https://wa.me/254759379600?text=Hello%20Day%20Safaris%2C%20I%20would%20like%20a%20quote" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>{% trans "Chat on WhatsApp" %}</a></li>
+<li><a class="link" href="{% url 'home' %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>{% trans "Visit our website" %}</a></li>
+<li class="sep">{% trans "Follow us" %}</li>
+<li><a class="link" href="https://www.instagram.com/day_safaris?igsh=eWVybW1yYm1ycW0=" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>Instagram</a></li>
+<li><a class="link" href="https://www.facebook.com/profile.php?id=1481097984" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8.2h2.8l.5-3.3h-3.3V8.4c0-.9.4-1.7 1.8-1.7h1.6V3.9S15.6 3.7 14.4 3.7c-2.5 0-4.1 1.5-4.1 4.2v2.6H7.5v3.3h2.8V22z"/></svg>Facebook</a></li>
+<li><a class="link" href="https://www.tiktok.com/@daysafarisadventures" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-3.2v13.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .8.1V9.1a6.1 6.1 0 1 0 5.3 6V8.6a7.4 7.4 0 0 0 4.3 1.4V6.8A4.3 4.3 0 0 1 16.6 2z"/></svg>TikTok</a></li>
+<li><a class="link" href="https://x.com/dayssafaris" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg>X</a></li>
+<li class="sep">{% trans "Get in touch" %}</li>
+<li><a class="link" href="mailto:info@daysafarisadventures.co.ke"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>{% trans "Email us" %}</a></li>
+<li><a class="link" href="tel:+254759379600"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>{% trans "Call +254 759 379 600" %}</a></li>
+<li><a class="link" href="https://g.page/r/CZJs5SyNuHl5EBM/review" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>{% trans "Review us on Google" %}</a></li>
+</ul>
+<p class="foot">&copy; {% now "Y" %} Day Safaris Adventures</p>
+</main>
+</body>
+</html>

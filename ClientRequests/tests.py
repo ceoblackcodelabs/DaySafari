@@ -1295,3 +1295,5 @@ class SocialsPageTests(TestCase):
         self.assertEqual(r.status_code, 200)
         for needle in ('instagram.com/day_safaris', 'facebook.com/profile.php?id=1481097984', 'tiktok.com/@daysafarisadventures', 'x.com/dayssafaris', 'wa.me/254759379600', 'g.page/r/'):
             self.assertContains(r, needle)
+        self.assertNotContains(r, 'site-header')     # stand-alone page: no site header, footer or decorations
+        self.assertNotContains(r, 'site-footer')
