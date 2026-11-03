@@ -216,4 +216,3 @@ body:not(.editing) .edbar{display:none}
 
 @media(max-width:900px){.topbar{display:none}}.mobile-lang{padding:8px 11px 14px}.mobile-lang select{margin:0;height:40px}
 .mobile-lang select{width:100%;background:#fff;color:var(--ink);border:1px solid var(--line);font-size:14px;padding:0 12px}
-.rv{opacity:0;transform:translateY(26px);transition:opacity .5s ease var(--d,0ms),transform .5s cubic-bezier(.2,.7,.2,1) var(--d,0ms);will-change:opacity,transform}.rv.rv-in{opacity:1;transform:none}

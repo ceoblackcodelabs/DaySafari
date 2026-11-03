@@ -1,23 +1,24 @@
-.xmas{position:fixed;inset:0;pointer-events:none;z-index:55;overflow:hidden;perspective:900px;perspective-origin:50% 40%}
-.xm{position:absolute;height:auto;max-width:none;filter:drop-shadow(0 6px 8px #0003)}
-/* hanging decorations sit just under the sticky header, always relative to the viewport */
-.xm-branch{top:37px;left:0;width:clamp(80px,8vw,120px);-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent);transform-origin:top left;animation:xm-sway 7s ease-in-out infinite}
-.xm-baubles{top:37px;right:0;width:clamp(70px,6.5vw,100px);transform-origin:top center;animation:xm-sway 6s ease-in-out infinite reverse}
+/* Light on purpose: transform/opacity only, no filters, masks or 3D contexts; the sleigh is hidden between flights */
+.xmas{position:fixed;inset:0;pointer-events:none;z-index:55;overflow:hidden;contain:strict}
+.xm{position:absolute;height:auto;max-width:none}
+.xm-branch{top:37px;left:0;width:clamp(80px,8vw,120px);-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent)}
+.xm-baubles{top:37px;right:0;width:clamp(70px,6.5vw,100px)}
 .xm-bells{top:37px;right:clamp(150px,16vw,230px);width:clamp(54px,6vw,96px);transform-origin:50% 0;animation:xm-ring 3.2s ease-in-out infinite}
-/* gifts and tree stand on the bottom edge of the screen */
 .xm-gifts{bottom:0;left:0;width:clamp(64px,7vw,110px)}
 .xm-tree{bottom:0;left:clamp(58px,6.4vw,100px);width:clamp(70px,8vw,124px)}
-.xm-sleigh{position:absolute;top:0;left:0;width:460px;transform-style:preserve-3d;will-change:transform;animation:xm-fly 24s ease-in-out infinite;animation-delay:2s;transform:translate3d(-60vw,60vh,-1200px)}
-.xm-sleigh svg{display:block;filter:drop-shadow(0 8px 8px #0004)}
-.xm-bob{animation:xm-bob 1.6s ease-in-out infinite}
-.xm-leg{transform-box:fill-box;transform-origin:50% 0!important;animation:xm-gallop .45s ease-in-out infinite alternate}
-.xm-arm{transform-box:fill-box;transform-origin:0 50%;animation:xm-wave .6s ease-in-out infinite alternate}
-@keyframes xm-fly{0%{transform:translate3d(-60vw,58vh,-1300px) rotateY(-32deg) rotateZ(4deg)}18%{transform:translate3d(-25vw,40vh,-700px) rotateY(-24deg) rotateZ(2deg)}50%{transform:translate3d(20vw,16vh,120px) rotateY(-6deg) rotateZ(-3deg)}78%{transform:translate3d(62vw,2vh,-500px) rotateY(16deg) rotateZ(-4deg)}100%{transform:translate3d(115vw,-14vh,-1200px) rotateY(30deg) rotateZ(-6deg)}}
-@keyframes xm-wave{to{transform:rotate(-24deg)}}
-@keyframes xm-bob{50%{transform:translateY(-6px)}}
-@keyframes xm-gallop{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
-@keyframes xm-sway{50%{transform:rotate(1.8deg)}}
-@keyframes xm-ring{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
-@media(max-width:700px){.xm-sleigh{width:300px}.xm-bells{display:none}.xm-branch,.xm-baubles{top:35px;width:52px}.xm-tree{display:none}.xm-gifts{width:56px;bottom:0}}
-@media(prefers-reduced-motion:reduce){.xm-sleigh{display:none}.xm,.xm-bob,.xm-legs{animation:none}}
-@media(max-width:900px){.xm-branch,.xm-baubles,.xm-bells{top:82px}}@media(max-width:700px){.xm-branch,.xm-baubles{top:65px}}
+/* one flight of about 14 s every minute: far, then close, then far again (perspective inside the transform) */
+.xm-sleigh{position:absolute;top:0;left:0;width:420px;visibility:hidden;animation:xm-fly 60s linear infinite;animation-delay:3s}
+.xm-sleigh svg{display:block}
+.xm-leg{transform-box:fill-box;transform-origin:50% 0;animation:xm-gallop .45s ease-in-out infinite alternate}
+@keyframes xm-fly{
+0%{visibility:visible;transform:perspective(900px) translate3d(-60vw,58vh,-1300px) rotateY(-32deg)}
+6%{transform:perspective(900px) translate3d(-25vw,40vh,-700px) rotateY(-24deg)}
+12%{transform:perspective(900px) translate3d(20vw,16vh,120px) rotateY(-6deg)}
+18%{transform:perspective(900px) translate3d(62vw,2vh,-500px) rotateY(16deg)}
+23.3%{visibility:visible;transform:perspective(900px) translate3d(115vw,-14vh,-1200px) rotateY(30deg)}
+23.4%,100%{visibility:hidden;transform:perspective(900px) translate3d(-60vw,58vh,-1300px)}}
+@keyframes xm-gallop{from{transform:rotate(-20deg)}to{transform:rotate(20deg)}}
+@keyframes xm-ring{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@media(max-width:900px){.xm-branch,.xm-baubles,.xm-bells{top:82px}}
+@media(max-width:700px){.xm-sleigh{width:280px}.xm-bells{display:none}.xm-branch,.xm-baubles{top:65px;width:52px}.xm-tree{display:none}.xm-gifts{width:56px}}
+@media(prefers-reduced-motion:reduce){.xm-sleigh{display:none}.xm,.xm-leg{animation:none}}
