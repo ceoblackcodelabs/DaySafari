@@ -31,9 +31,11 @@ _STRONG_TEXT = re.compile(
     r"restore any site|wayback machine|pippit|ai-v?ideo)", re.I)
 # Generated "product review" filler that form-spam bots paste into the message box (nothing to do with travel)
 _NONSENSE = re.compile(
-    r"(this product (works|is|has|looks|feels)\b|improves my [a-z]+ by a lot|loves to play with it|"
-    r"has one of these|heard about this on|decided to give it a try|i tried to attack it|"
-    r"it only works when i'?m)", re.I)
+    r"(\bthis product\b|improves my [a-z]+ by a lot|loves to play with it|has one of these|heard about this on|"
+    r"decided to give it a try|i tried to \w+ it but got \w+ all over it|it only works when i'?m|"
+    r"the box this comes in is|i saw one of these in .+ and i bought one|i use it .* when i'?m (in|at) my|"
+    r"one of my hobbies is .* this works great|^\s*talk about \w+\.?\s*$|"
+    r"works? (great|well) (for|on) my [a-z]+\b.*\bby a lot)", re.I | re.M)
 _URL = re.compile(r'(https?://|www\.|\b[\w-]+\.(?:ru|su|xyz|top|click|work|site|online)\b)', re.I)
 _CYRILLIC = re.compile(r'[Ѐ-ӿ]')
 _LETTER = re.compile(r'[^\W\d_]', re.UNICODE)

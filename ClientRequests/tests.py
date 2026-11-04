@@ -1269,7 +1269,10 @@ class BookingBotPatternTests(TestCase):
                     "heard about this on new jersey hip hop radio, decided to give it a try.", 'I tried to attack it but got meatball all over it.',
                     "My co-worker Kazuo has one of these. He says it looks transparent."):
             self.assertTrue(spam_reasons(name='Jesse Schinner', message=msg, count_campaign=False), msg)
-        for msg in ('We would like a 3 day Amboseli safari for two adults in March.', '', 'Do you pick up from the airport?'):
+        for msg in ('I saw one of these in Canada and I bought one.', 'talk about sadness.', 'I tried to kidnap it but got apricot all over it.',
+                    'The box this comes in is 4 yard by 5 inch and weights 12 pound!', "i use it every Tuesday when i'm in my store.", 'this product is standard.'):
+            self.assertTrue(spam_reasons(name='Odell Leuschke', message=msg, count_campaign=False), msg)
+        for msg in ('We would like a 3 day Amboseli safari for two adults in March.', '', 'Do you pick up from the airport?', 'Do you have a product for corporate team building?'):
             self.assertFalse(spam_reasons(name='Amani Otieno', message=msg, count_campaign=False), msg)
 
     def test_burst_and_email_reuse(self):
