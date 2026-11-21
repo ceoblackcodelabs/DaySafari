@@ -84,3 +84,23 @@ def gallery_image(request, key, pk):
     g.image = upload
     g.save()
     return reply({'ok': True, 'status': 'image_replaced', 'image': serialise(g, request)})
+
+
+@api_view('POST')
+def gallery_categories(request, key):
+    """POST /api/v1/gallery/categories/  JSON {"name": "TOSK End Year Gala 2026"}  (?dry_run=1 validates only).
+    Creates an empty gallery category so pictures can then be uploaded to it. An existing name returns status "exists"."""
+    try:
+        data, _ = read_payload(request)
+    except ValueError as exc:
+        return error(str(exc), 400)
+    name = ' '.join(str(data.get('name') or '').split())[:100]
+    if len(name) < 2:
+        return error('Validation failed.', 400, errors={'name': ['Required (2 to 100 characters).']})
+    existing = GalleryCategory.objects.filter(name__iexact=name).first()
+    if existing:
+        return reply({'ok': True, 'status': 'exists', 'category': {'id': existing.pk, 'name': existing.name}})
+    if truthy(request, 'dry_run'):
+        return reply({'ok': True, 'dry_run': True, 'status': 'would_create', 'name': name})
+    cat = GalleryCategory.objects.create(name=name)
+    return reply({'ok': True, 'status': 'created', 'category': {'id': cat.pk, 'name': cat.name}}, 201)

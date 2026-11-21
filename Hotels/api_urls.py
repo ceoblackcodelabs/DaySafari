@@ -10,6 +10,7 @@ urlpatterns = [
     path('blogs/<slug:slug>/', blogs_api.blog_detail, name='api_blog_detail'),
     path('blogs/<slug:slug>/image/', blogs_api.blog_image, name='api_blog_image'),
     path('gallery/', gallery_api.gallery_collection, name='api_gallery'),
+    path('gallery/categories/', gallery_api.gallery_categories, name='api_gallery_categories'),
     path('gallery/<int:pk>/image/', gallery_api.gallery_image, name='api_gallery_image'),
     path('testimonials/', testimonials_api.testimonials, name='api_testimonials'),
     path('about-images/', about_api.about_images, name='api_about_images'),

@@ -1300,3 +1300,20 @@ class SocialsPageTests(TestCase):
             self.assertContains(r, needle)
         self.assertNotContains(r, 'site-header')     # stand-alone page: no site header, footer or decorations
         self.assertNotContains(r, 'site-footer')
+
+
+class GalleryCategoryApiTests(TestCase):
+    def test_create_category_once(self):
+        import json
+        from django.core.cache import cache
+        from Hotels.models import ApiKey
+        from Home.models import GalleryCategory
+        cache.clear()
+        _, token = ApiKey.create_key('t')
+        h = {'HTTP_AUTHORIZATION': f'Bearer {token}', 'content_type': 'application/json', 'secure': True}
+        body = json.dumps({'name': 'TOSK End Year Gala 2026'})
+        self.assertEqual(self.client.post('/api/v1/gallery/categories/?dry_run=1', body, **h).json()['status'], 'would_create')
+        self.assertEqual(GalleryCategory.objects.count(), 0)
+        self.assertEqual(self.client.post('/api/v1/gallery/categories/', body, **h).status_code, 201)
+        self.assertEqual(self.client.post('/api/v1/gallery/categories/', body, **h).json()['status'], 'exists')
+        self.assertEqual(GalleryCategory.objects.count(), 1)
